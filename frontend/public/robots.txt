@@ -1,0 +1,30 @@
+# KMStoneX robots.txt file
+# Allows search engines to crawl the site
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /*.pdf$
+Disallow: /private
+Crawl-delay: 1
+
+# Google specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Specify sitemap location
+Sitemap: https://kmstonex.in/sitemap.xml
+
+# Prevent crawling of duplicate content
+User-agent: *
+Disallow: /*?*utm
+Disallow: /*?*fbclid
+
+# Allow media indexing for image search
+User-agent: Googlebot-Image
+Allow: /
