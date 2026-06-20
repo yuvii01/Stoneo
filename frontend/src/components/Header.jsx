@@ -196,6 +196,10 @@ export default function Header() {
             Blogs
           </Link>
 
+          <Link to="/admin" className="nav-link" onClick={closeMenus}>
+            Admin
+          </Link>
+
           <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
             Send Requirement
           </Link>
