@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import CountUpPkg from 'react-countup';
+const CountUp = CountUpPkg.default || CountUpPkg;
 import { COMPANY_INFO, GRANITE_TYPES, PROJECTS } from '../utils/constants';
 import '../styles/pages.css';
 import SEOHead from '../components/SEOHead';
@@ -49,9 +51,8 @@ export default function Home() {
           <div style={{
             position: "relative",
             width: "100%",
-            aspectRatio: "16/7",
-            minHeight: "180px",
-            borderRadius: "12px",
+            minHeight: "100%",
+            borderRadius: "20px",
             overflow: "hidden",
             border: "0.5px solid rgba(0,0,0,0.15)"
           }}>
@@ -136,6 +137,33 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <section style={{ backgroundColor: "#ffffff", color: "#111", padding: "clamp(40px, 8vw, 80px) 20px", fontFamily: "'Jost', sans-serif" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "30px", textAlign: "center" }}>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+                <CountUp end={1000} duration={2.5} enableScrollSpy scrollSpyOnce />+
+              </div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Projects</div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+                <CountUp end={25} duration={2.5} enableScrollSpy scrollSpyOnce />+
+              </div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Years in Industry</div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+                <CountUp end={28} duration={2.5} enableScrollSpy scrollSpyOnce />
+              </div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>States we are available</div>
+            </div>
+
+          </div>
+        </section>
         <section>
           <GraniteCarousel />
         </section>
@@ -167,7 +195,7 @@ export default function Home() {
             <p className="section-subtitle">Browse our collection of premium granite varieties</p>
             <div className="products-grid">
               {GRANITE_TYPES.slice(0, 6).map((product) => (
-                <div key={product.id} className="product-card">
+                <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}>
                   <div className="product-image">
                     <img src={product.image} alt={product.name} />
                   </div>
@@ -241,7 +269,7 @@ export default function Home() {
                   </div>
                   <div className="info-item">
                     <span className="info-label">📞 Call Us:</span>
-                    <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'left' }}>
+                    <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
                       <a href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
                     </p>
                   </div>

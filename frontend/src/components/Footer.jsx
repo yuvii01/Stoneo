@@ -9,7 +9,9 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-section">
             <div className="footer-logo">
-              <img src="/logo2.png" alt="KM STONEX Logo" className="footer-logo-img" />
+              {/* <img src="/logo2.png" alt="STONEO INDIA Logo" className="footer-logo-img" /> */}
+              {/* <img src="https://via.placeholder.com/150x50?text=Demo+Logo" alt="Demo Logo" className="footer-logo-img" /> */}
+              <span className="text-logo" style={{ color: '#fff', fontSize: '32px' }}>Stoneo India</span>
             </div>
             <p className="footer-tagline">{COMPANY_INFO.tagline}</p>
             <p className="footer-description">{COMPANY_INFO.description}</p>
@@ -53,7 +55,9 @@ export default function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; 2024 KM Stonex. All rights reserved. | Premium Granite Supplier</p>
+          {/* <p>&copy; 2024 Stoneo India. All rights reserved. | Premium Granite Supplier</p> */}
+          {/* <p>&copy; 2024 Demo Company. All rights reserved. | Demo Subtitle</p> */}
+          <p>&copy; 2024 Stoneo India. All rights reserved. | Premium Granite Supplier</p>
         </div>
       </div>
     </footer>

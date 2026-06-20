@@ -266,7 +266,6 @@
 @media (max-width: 1024px) {
   .hero {
     min-height: 400px;
-    padding: ;
     background-attachment: scroll;
   }
 }
@@ -2423,13 +2422,27 @@
 .containerr {
   position: relative;
   overflow: hidden;
-  height: 75vh;
+  height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 !important;
   padding-inline: 50px !important;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .containerr {
+    height: 40vh;
+    padding-inline: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .containerr {
+    height: 30vh;
+    padding-inline: 10px !important;
+  }
 }
 
 /* ========== RESPONSIVE ========== */

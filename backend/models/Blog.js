@@ -19,12 +19,16 @@ const blogSchema = new mongoose.Schema({
   },
   author: {
     type: String,
-    default: 'KM Stonex Team'
+    default: 'Stoneo India Team'
   },
   date: {
     type: String,
     default: () => new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: '2-digit' })
-  }
+  },
+  tags: [{
+    type: String,
+    trim: true
+  }]
 }, { timestamps: true });
 
 // Convert _id to id when sending to frontend

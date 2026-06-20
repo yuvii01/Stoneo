@@ -16,7 +16,7 @@ export default function About() {
       {/* Page Header */}
       <section className="about-header page-header">
         <div className="container">
-          <h1>About KM Stonex</h1>
+          <h1>About Stoneo India</h1>
           <p>India's Premium Stone Supplier</p>
         </div>
       </section>
@@ -29,7 +29,7 @@ export default function About() {
               <h2>Our Story</h2>
               <div style={{fontSize : '20px'}}>
                 <p>
-                Founded in 2008, KM Stonex has grown to become one of the most trusted granite suppliers in India. 
+                Founded in 2008, Stoneo India has grown to become one of the most trusted granite suppliers in India. 
                 Located in the heart of Kishangarh, Rajasthan - the granite capital of India - we have direct access 
                 to the finest quarries and have built a reputation for quality, reliability, and exceptional service.
               </p>
@@ -39,7 +39,7 @@ export default function About() {
                 consistent quality and honest business practices.
               </p>
               <p>
-                Today, KM Stonex serves residential, commercial, and industrial clients across India and beyond, 
+                Today, Stoneo India serves residential, commercial, and industrial clients across India and beyond, 
                 delivering not just stone, but premium solutions for spaces that matter.
               </p>
               </div>

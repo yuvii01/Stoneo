@@ -16,7 +16,7 @@ export default function BlogDetail() {
 
     const fetchBlog = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/blogs/${id}`);
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blogs/${id}`);
             setPost(res.data);
             setLoading(false);
         } catch (err) {
@@ -34,8 +34,8 @@ export default function BlogDetail() {
         return (
             <div style={{ padding: "120px 20px", textAlign: "center", fontFamily: "'Jost', sans-serif" }}>
                 <h2>{error || 'Blog post not found.'}</h2>
-                <button 
-                    onClick={() => navigate('/blogs')} 
+                <button
+                    onClick={() => navigate('/blogs')}
                     style={{ padding: "12px 24px", marginTop: "20px", cursor: "pointer", background: "#111", color: "#fff", border: "none", borderRadius: "4px" }}
                 >
                     Back to Blogs
@@ -45,19 +45,19 @@ export default function BlogDetail() {
     }
 
     return (
-        <article style={{ fontFamily: "'Jost', sans-serif", backgroundColor: "#fff", color: "#333", padding: "80px 20px" }}>
+        <article className="blog-detail-article" style={{ fontFamily: "'Jost', sans-serif", backgroundColor: "#fff", color: "#333" }}>
             <div style={{ maxWidth: "840px", margin: "0 auto" }}>
-                <button 
+                <button
                     onClick={() => navigate('/blogs')}
                     style={{ background: "none", border: "none", fontSize: "15px", color: "#666", cursor: "pointer", display: "flex", alignItems: "center", gap: "8px", padding: 0, marginBottom: "40px", textTransform: "uppercase", letterSpacing: "1px" }}
                 >
                     &larr; Back to Blogs
                 </button>
-                
+
                 <h1 style={{ fontSize: "46px", fontWeight: 300, lineHeight: 1.2, marginBottom: "20px", color: "#111" }}>
                     {post.title}
                 </h1>
-                
+
                 <div style={{ display: "flex", alignItems: "center", gap: "15px", marginBottom: "40px", color: "#777", fontSize: "15px" }}>
                     <span>By <strong style={{ color: "#333" }}>{post.author}</strong></span>
                     <span>•</span>

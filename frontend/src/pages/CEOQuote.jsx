@@ -115,10 +115,10 @@ const CEOQuote = () => {
         <div className="ceo-card">
 
           <div className="ceo-portrait">
-            
-            <div className="ceo-portrait-placeholder">
+
+            {/* <div className="ceo-portrait-placeholder">
               <img src="/kamalji.png" alt="Mr. Kamal Maheshwari" />
-            </div>
+            </div> */}
           </div>
 
           {/* Quote + attribution */}
@@ -129,7 +129,7 @@ const CEOQuote = () => {
               and attention."
             </p>
             <div className="ceo-attribution">
-              <span className="ceo-name">Mr. Kamal Maheshwari</span>
+              <span className="ceo-name">Mr. </span>
               <span className="ceo-title">(CEO)</span>
             </div>
           </div>

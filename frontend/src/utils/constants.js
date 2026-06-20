@@ -1,13 +1,13 @@
 // Company Information
 export const COMPANY_INFO = {
-  name: 'KM Stonex',
-  description: 'Premium Granite Supplier in Kishangarh, Rajasthan',
-  tagline: 'Quality Granite for Every Project',
-  address: 'Kali Dungri, Khatoli, Kishangarh, Rajasthan 305801',
-  phone: '9256901351',
-  email: 'infokmstonex@gmail.com',
-  businessHours: '10:00 AM - 7:00 PM',
-  established: '2008',
+  name: 'Stoneo India', // 'Stoneo India',
+  description: 'Premium Granite Supplier in Kishangarh, Rajasthan', // 'Premium Granite Supplier in Kishangarh, Rajasthan',
+  tagline: 'Quality Granite for Every Project', // 'Quality Granite for Every Project',
+  address: '123 Demo Street, Demo City, 123456', // 'Kali Dungri, Khatoli, Kishangarh, Rajasthan 305801',
+  phone: '1234567890', // '9256901351',
+  email: 'demo@example.com', // 'infokmstonex@gmail.com',
+  businessHours: '9:00 AM - 5:00 PM', // '10:00 AM - 7:00 PM',
+  established: '2024', // '2008',
 };
 
 // Granite Types/Products
@@ -116,8 +116,8 @@ export const FAQS = [
   },
   {
     id: 3,
-    question: 'Where is KM Stonex located?',
-    answer: 'KM Stonex is located in Kali Dungri, Khatoli, Kishangarh, Rajasthan. We have direct access to premium granite quarries and offer competitive pricing due to our location in the heart of India\'s stone industry.',
+    question: 'Where is Stoneo India located?',
+    answer: 'Stoneo India is located in Kali Dungri, Khatoli, Kishangarh, Rajasthan. We have direct access to premium granite quarries and offer competitive pricing due to our location in the heart of India\'s stone industry.',
   },
   {
     id: 4,

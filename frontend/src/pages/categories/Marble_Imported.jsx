@@ -119,6 +119,7 @@ export default function MarbleImported() {
  
 
   return (
+    <>
     <div className="page products-page">
       <section className="marble-header page-header">
         <div className="container container-heading">
@@ -150,8 +151,9 @@ export default function MarbleImported() {
             {paginatedProducts.map((product) => (
               <div 
                 key={product.id}
-                className={`product-card ${selectedProduct.id === product.id ? 'selected' : ''}`}
-                onClick={() => setSelectedProduct(product) }
+                className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}
               >
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />
@@ -173,15 +175,17 @@ export default function MarbleImported() {
                 <div className="product-info">
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
-                  <button 
-                    className="get-quote-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate( `/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`);
-                    }}
-                  >
-                    Get Quote
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <button 
+                      className="get-quote-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate( `/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`);
+                      }}
+                    >
+                      Get Quote
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -329,9 +333,12 @@ export default function MarbleImported() {
                     Our specialists help you find the perfect marble for your project. Inspect slabs in person to see the unique veining and patterns.
                   </p>
                   <div style={{ fontSize: '16px', color: '#555' }}>
-                    <p>📞 <strong>Call:</strong> +91-9256901351</p>
-                    <p>✉️ <strong>Email:</strong> infokmstonex@gmail.com</p>
-                    <p>💬 <strong>WhatsApp:</strong> +91-9256901351</p>
+                    {/* <p>📞 <strong>Call:</strong> +91-9256901351</p> */}
+                    <p>📞 <strong>Call:</strong> +91-1234567890</p>
+                    {/* <p>✉️ <strong>Email:</strong> infokmstonex@gmail.com</p> */}
+                    <p>✉️ <strong>Email:</strong> demo@example.com</p>
+                    {/* <p>💬 <strong>WhatsApp:</strong> +91-9256901351</p> */}
+                    <p>💬 <strong>WhatsApp:</strong> +91-1234567890</p>
                   </div>
                 </div>
               )}
@@ -414,5 +421,6 @@ export default function MarbleImported() {
       </section>
 
     </div>
+    </>
   );
 }

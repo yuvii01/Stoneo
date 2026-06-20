@@ -15,7 +15,7 @@ export default function GetQuote() {
   );
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const graniteName = searchParams.get('stone') || 'KM Stonex';
+  const graniteName = searchParams.get('stone') || 'Stoneo India';
   const graniteMessage = searchParams.get('stone') || '';
   const graniteImage = searchParams.get('image') || 'http://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg';
 
