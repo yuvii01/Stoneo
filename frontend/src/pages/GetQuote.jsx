@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { COMPANY_INFO, GRANITE_TYPES, PROJECTS } from '../utils/constants';
@@ -9,14 +9,14 @@ import { useDemand } from '../context/DemandContext';
 
 export default function GetQuote() {
   const SEOHeadComponent = (
-    <SEOHead 
+    <SEOHead
       pageKey="getQuote"
       structured={getOrganizationSchema()}
     />
   );
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { demands, clearDemands } = useDemand();
+  const { demands, clearDemands, removeDemand } = useDemand();
 
   const graniteName = searchParams.get('stone') || '';
   const graniteImage = searchParams.get('image') || 'http://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg';
@@ -32,13 +32,16 @@ export default function GetQuote() {
       if (d.color) params.push(`Color: ${d.color}`);
       if (d.finish) params.push(`Finish: ${d.finish}`);
       if (d.features && d.features.length) params.push(`Features: ${d.features.join(', ')}`);
-      
+
       const paramStr = params.length > 0 ? ` (${params.join(' | ')})` : '';
       return `${index + 1}. ${d.name}${paramStr}`;
     }).join('\n');
-    
+
     initialRequirements = `I am interested in the following demands:\n${demandList}`;
     displayTitle = `Selected Demands (${demands.length})`;
+  } else if (fromCart) {
+    initialRequirements = 'I am looking for...';
+    displayTitle = 'Custom Requirement';
   }
 
   const [formData, setFormData] = useState({
@@ -47,6 +50,33 @@ export default function GetQuote() {
     phone: '',
     requirements: initialRequirements,
   });
+
+  // Sync requirements text when demands change (e.g. when an item is removed)
+  useEffect(() => {
+    if (fromCart) {
+      if (demands && demands.length > 0) {
+        const demandList = demands.map((d, index) => {
+          let params = [];
+          if (d.color) params.push(`Color: ${d.color}`);
+          if (d.finish) params.push(`Finish: ${d.finish}`);
+          if (d.features && d.features.length) params.push(`Features: ${d.features.join(', ')}`);
+
+          const paramStr = params.length > 0 ? ` (${params.join(' | ')})` : '';
+          return `${index + 1}. ${d.name}${paramStr}`;
+        }).join('\n');
+
+        setFormData(prev => ({
+          ...prev,
+          requirements: `I am interested in the following demands:\n${demandList}`
+        }));
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          requirements: 'My cart is empty, I am looking for...'
+        }));
+      }
+    }
+  }, [demands, fromCart]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
@@ -119,156 +149,172 @@ export default function GetQuote() {
     <>
       {SEOHeadComponent}
       <div className="page get-quote-page">
-      <section className="quote-header page-header">
-        <div className="container">
-          <h1>Get a Quote</h1>
-          <p>Request a custom quote for {displayTitle}</p>
-        </div>
-      </section>
-
-      <section className="quote-section">
-        <div className="container">
-          <div className="quote-container">
-            <div className="quote-info">
-              <p className="granite-name">{displayTitle}</p>
-              
-              {demands && demands.length > 0 ? (
-                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '10px' }}>
-                  {demands.map((d, i) => (
-                    <div key={i} style={{ width: '80px', height: '80px', borderRadius: '10px', overflow: 'hidden' }}>
-                      <img src={d.image || d.url} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div style={{borderRadius : '10px'}} className='product-image'>
-                  <img src={graniteImage} alt={displayTitle} />
-                </div>
-              )}
-             
-              
-              <p className="granite-note">
-                Fill out the form below. Clicking "Send Quote Request" will open WhatsApp
-                with your details pre-filled — just hit send!
-              </p>
-            </div>
-
-            <form className="quote-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Name </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your Name"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="requirements">Requirements </label>
-                <textarea
-                  id="requirements"
-                  name="requirements"
-                  value={formData.requirements}
-                  onChange={handleChange}
-                  placeholder="Describe your project requirements..."
-                  rows="6"
-                  required
-                />
-              </div>
-
-              {message && (
-                <div className={`message ${message.includes('opening') ? 'success' : 'error'}`}>
-                  {message}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                className="send-btn"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? 'Opening WhatsApp...' : 'Send Quote Request'}
-              </button>
-            </form>
+        <section className="quote-header page-header">
+          <div className="container">
+            <h1>Get a Quote</h1>
+            <p>Request a custom quote for {displayTitle}</p>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section className="quote-section">
+          <div className="container">
+            <div className="quote-container">
+              <div className="quote-info">
+                <p className="granite-name">{displayTitle}</p>
+
+                {demands && demands.length > 0 ? (
+                  <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '10px' }}>
+                    {demands.map((d, i) => (
+                      <div key={i} style={{ width: '80px', height: '80px', borderRadius: '10px', overflow: 'hidden', position: 'relative', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                        <img src={d.image || d.url} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <button
+                          type="button"
+                          onClick={(e) => { e.preventDefault(); removeDemand(d.name); }}
+                          style={{
+                            position: 'absolute', top: '4px', right: '4px',
+                            background: 'rgba(220, 53, 69, 0.9)', color: 'white',
+                            border: 'none', borderRadius: '50%',
+                            width: '20px', height: '20px',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            cursor: 'pointer', fontSize: '14px', fontWeight: 'bold', padding: 0,
+                            lineHeight: 1, zIndex: 10
+                          }}
+                          title={`Remove ${d.name}`}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div style={{ borderRadius: '10px' }} className='product-image'>
+                    <img src={graniteImage} alt={displayTitle} />
+                  </div>
+                )}
+
+
+                <p className="granite-note">
+                  Fill out the form below. Clicking "Send Quote Request" will open WhatsApp
+                  with your details pre-filled — just hit send!
+                </p>
+              </div>
+
+              <form className="quote-form" onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="name">Name </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Enter your Name"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="requirements">Requirements </label>
+                  <textarea
+                    id="requirements"
+                    name="requirements"
+                    value={formData.requirements}
+                    onChange={handleChange}
+                    placeholder="Describe your project requirements..."
+                    rows="6"
+                    required
+                  />
+                </div>
+
+                {message && (
+                  <div className={`message ${message.includes('opening') ? 'success' : 'error'}`}>
+                    {message}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  className="send-btn"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Opening WhatsApp...' : 'Send Quote Request'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
 
 
 
-      <section className="showroom-section">
-  <div className="container">
-    <div className="showroom-content">
-      <div className="showroom-text">
-        <h2>Visit Our Showroom</h2>
-        {/* <p>
+        <section className="showroom-section">
+          <div className="container">
+            <div className="showroom-content">
+              <div className="showroom-text">
+                <h2>Visit Our Showroom</h2>
+                {/* <p>
           See our complete collection of premium granite samples. Our experts
           are ready to help you find the perfect stone for your project.
         </p> */}
 
-        <div className="showroom-info">
-          <div className="info-item">
-            <span className="info-label">📍 Location:</span>
-            <p>{COMPANY_INFO.address}</p>
-          </div>
-          <div className="info-item">
-            <span className="info-label">🕐 Hours:</span>
-            <p>{COMPANY_INFO.businessHours}</p>
-          </div>
-          <div className="info-item">
-            <span className="info-label">📞 Call Us:</span>
-            <p>
-              <a href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
-            </p>
-          </div>
-        </div>
+                <div className="showroom-info">
+                  <div className="info-item">
+                    <span className="info-label">📍 Location:</span>
+                    <p>{COMPANY_INFO.address}</p>
+                  </div>
+                  <div className="info-item">
+                    <span className="info-label">🕐 Hours:</span>
+                    <p>{COMPANY_INFO.businessHours}</p>
+                  </div>
+                  <div className="info-item">
+                    <span className="info-label">📞 Call Us:</span>
+                    <p>
+                      <a href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
+                    </p>
+                  </div>
+                </div>
 
-      </div>
+              </div>
 
-      <div className="showroom-map">
-        <div
-          className="map-link"
-          onClick={() =>
-            window.open(
-              "https://www.google.com/maps/dir//B.G.+Stonex,+JRXW%2BW6,+Khatoli,+Rajasthan+305801/",
-              "_blank"
-            )
-          }
-          style={{ cursor: "pointer" }}
-        >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.4872!2d74.8455201!3d26.6497679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39695ef1819f25f_!2sB.G.+Stonex!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin"
-            width="100%"
-            height="350"
-            style={{
-              border: 0,
-              borderRadius: "12px",
-              display: "block",
-              pointerEvents: "none",
-            }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="B.G. Stonex Showroom Location"
-          />
-          <div className="map-overlay">
-            <div className="map-overlay-content">
-              <span className="map-pin-icon">📍</span>
-              <span className="map-overlay-text">Open in Google Maps</span>
-              <span className="map-overlay-address">
-                K.M Stonex, Khatoli, Kishangarh, Rajasthan 305801
-              </span>
+              <div className="showroom-map">
+                <div
+                  className="map-link"
+                  onClick={() =>
+                    window.open(
+                      "https://www.google.com/maps/dir//B.G.+Stonex,+JRXW%2BW6,+Khatoli,+Rajasthan+305801/",
+                      "_blank"
+                    )
+                  }
+                  style={{ cursor: "pointer" }}
+                >
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.4872!2d74.8455201!3d26.6497679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39695ef1819f25f_!2sB.G.+Stonex!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin"
+                    width="100%"
+                    height="350"
+                    style={{
+                      border: 0,
+                      borderRadius: "12px",
+                      display: "block",
+                      pointerEvents: "none",
+                    }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="B.G. Stonex Showroom Location"
+                  />
+                  <div className="map-overlay">
+                    <div className="map-overlay-content">
+                      <span className="map-pin-icon">📍</span>
+                      <span className="map-overlay-text">Open in Google Maps</span>
+                      <span className="map-overlay-address">
+                        K.M Stonex, Khatoli, Kishangarh, Rajasthan 305801
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        </section>
 
       </div>
     </>

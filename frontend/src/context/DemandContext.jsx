@@ -18,7 +18,11 @@ export const DemandProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    localStorage.setItem('stoneo_demands', JSON.stringify(demands));
+    if (demands.length === 0) {
+      localStorage.removeItem('stoneo_demands');
+    } else {
+      localStorage.setItem('stoneo_demands', JSON.stringify(demands));
+    }
   }, [demands]);
 
   const addDemand = (product) => {
