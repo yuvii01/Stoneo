@@ -5,6 +5,7 @@ import '../../styles/pages.css';
 import { GRANITE_TYPES } from '../../utils/constants';
 import SEOHead from '../../components/SEOHead';
 import { getBreadcrumbSchema } from '../../utils/seo';
+import { useDemand } from '../../context/DemandContext';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -70,6 +71,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 export default function Sandstone() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { addDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   
   // 2. Get category from URL (e.g. ?category=Black)
@@ -91,6 +93,7 @@ export default function Sandstone() {
   }, [filteredProducts]);
 
   return (
+    <>
     <div className="page products-page">
       <section className="sandstone-header page-header">
         <div className="container container-heading">
@@ -122,9 +125,10 @@ export default function Sandstone() {
             {filteredProducts.map((product) => (
               <div 
                 key={product.id}
-                className={`product-card ${selectedProduct.id === product.id ? 'selected' : ''}`}
-                onClick={() => setSelectedProduct(product) }
-              >
+                  className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}
+                >
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />
 
@@ -145,15 +149,17 @@ export default function Sandstone() {
                 <div className="product-info">
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
-                  <button 
-                    className="get-quote-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate( `/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`);
-                    }}
-                  >
-                    Get Quote
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <button 
+                      className="get-quote-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addDemand(product);
+                      }}
+                    >
+                      {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -217,8 +223,10 @@ export default function Sandstone() {
                     Browse our collection and find the perfect sandstone for your project. Our experts are here to help.
                   </p>
                   <div style={{ fontSize: '16px', color: '#555' }}>
-                    <p>📞 <strong>Call:</strong> +91-9256901351</p>
-                    <p>✉️ <strong>Email:</strong> infokmstonex@gmail.com</p>
+                    {/* <p>📞 <strong>Call:</strong> +91-9256901351</p> */}
+                    <p>📞 <strong>Call:</strong> +91-1234567890</p>
+                    {/* <p>✉️ <strong>Email:</strong> infokmstonex@gmail.com</p> */}
+                    <p>✉️ <strong>Email:</strong> demo@example.com</p>
                   </div>
                 </div>
               )}
@@ -300,5 +308,6 @@ export default function Sandstone() {
         </div>
       </section>
     </div>
+    </>
   );
 }

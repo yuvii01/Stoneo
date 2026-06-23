@@ -68,11 +68,17 @@ export default function Header() {
       <div className="header-container">
         <div className="logo-div">
           <Link to="/" className="logo" onClick={closeMenus}>
-            <img
+            {/* <img
               src={isScrolled ? '/logo2.png' : '/logo_white.png'}
-              alt="KM STONEX Logo"
+              alt="STONEO INDIA Logo"
               className="logo-img"
-            />
+            /> */}
+            {/* <img
+              src="https://via.placeholder.com/150x50?text=Demo+Logo"
+              alt="Demo Logo"
+              className="logo-img"
+            /> */}
+            <span className="text-logo" style={{ color: isScrolled ? '#000' : '#fff', fontSize: '28px' }}>Stoneo India</span>
           </Link>
         </div>
 
@@ -122,13 +128,6 @@ export default function Header() {
               </Link>
 
               <Link
-                to="/category/Imported_Marble"
-                onClick={closeMenus}
-              >
-                Imported Marbles
-              </Link>
-
-              <Link
                 to="/category/Indian_Marble"
                 onClick={closeMenus}
               >
@@ -141,8 +140,73 @@ export default function Header() {
               >
                 Sandstones
               </Link>
+              <Link
+                to="/category/quartz"
+                onClick={closeMenus}
+              >
+                Quartz
+              </Link>
+
+              <Link
+                to="/category/quartzite"
+                onClick={closeMenus}
+              >
+                Quartzite
+              </Link>
+
+              <Link
+                to="/category/cobbles"
+                onClick={closeMenus}
+              >
+                Cobbles
+              </Link>
+
+              <Link
+                to="/category/statues"
+                onClick={closeMenus}
+              >
+                Statues
+              </Link>
+
+              <Link
+                to="/category/temples"
+                onClick={closeMenus}
+              >
+                Temples
+              </Link>
+
+              <Link
+                to="/category/home-decor"
+                onClick={closeMenus}
+              >
+                Home Decor
+              </Link>
+
+
             </div>
           </div>
+
+          <Link
+            to="/#application"
+            className="nav-link"
+            onClick={() => {
+              closeMenus();
+              setTimeout(() => {
+                const el = document.getElementById('application');
+                if (el) {
+                  const headerOffset = 150;
+                  const elementPosition = el.getBoundingClientRect().top;
+                  const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }, 100);
+            }}
+          >
+            Application
+          </Link>
 
 
 
@@ -154,8 +218,12 @@ export default function Header() {
             Blogs
           </Link>
 
+          {/* <Link to="/admin" className="nav-link" onClick={closeMenus}>
+            Admin
+          </Link> */}
+
           <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
-            Send Requirement
+            Get Quote
           </Link>
         </nav>
       </div>

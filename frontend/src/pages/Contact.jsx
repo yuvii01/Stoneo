@@ -237,7 +237,7 @@ export default function Contact() {
       {/* Why Contact */}
       <section className="contact-benefits">
         <div className="container">
-          <h2>Why Contact KM Stonex?</h2>
+          <h2>Why Contact Stoneo India?</h2>
           <div className="benefits-grid">
             <div className="benefit">
               <div className="benefit-icon">⚡</div>

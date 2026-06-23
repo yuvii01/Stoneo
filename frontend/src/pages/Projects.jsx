@@ -115,7 +115,7 @@ export default function Projects() {
             <div className="testimonial-card">
               <div className="stars">⭐⭐⭐⭐⭐</div>
               <p className="testimonial-text">
-                "Excellent quality and professionalism. KM Stonex delivered our project on time with outstanding attention to detail. Highly recommended!"
+                "Excellent quality and professionalism. Stoneo India delivered our project on time with outstanding attention to detail. Highly recommended!"
               </p>
               <div className="testimonial-author">
                 <strong>Rahul Sharma</strong>
@@ -125,7 +125,7 @@ export default function Projects() {
             <div className="testimonial-card">
               <div className="stars">⭐⭐⭐⭐⭐</div>
               <p className="testimonial-text">
-                "Working with KM Stonex was seamless. Their expertise in granite selection and installation guidance was invaluable for our commercial project."
+                "Working with Stoneo India was seamless. Their expertise in granite selection and installation guidance was invaluable for our commercial project."
               </p>
               <div className="testimonial-author">
                 <strong>Priya Malik</strong>

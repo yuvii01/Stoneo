@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom'; // Required for URL filtering
+import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
 import { GRANITE_TYPES } from '../utils/constants';
 import '../styles/pages.css';
 
@@ -72,6 +72,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   
   // 2. Get category from URL (e.g. ?category=Black)
   const categoryFilter = searchParams.get('category') || 'All';
@@ -102,7 +103,7 @@ export default function Products() {
 
       {/* Category Tabs (Optional but good for UX) */}
       <section className="filter-bar">
-        <div className="container" style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '40px' }}>
+        <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '40px' }}>
           {['All', 'Black', 'White', 'Blue', 'Gold', 'Green', 'Brown', 'Red'].map(cat => (
             <button 
               key={cat}
@@ -129,8 +130,9 @@ export default function Products() {
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className={`product-card ${selectedProduct.id === product.id ? 'selected' : ''}`}
-                onClick={() => setSelectedProduct(product)}
+                className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}
               >
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />

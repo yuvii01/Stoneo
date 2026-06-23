@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import { Link, useNavigate } from 'react-router-dom';
+import CountUpPkg from 'react-countup';
+const CountUp = CountUpPkg.default || CountUpPkg;
 import { COMPANY_INFO, GRANITE_TYPES, PROJECTS } from '../utils/constants';
+import { useDemand } from '../context/DemandContext';
 import '../styles/pages.css';
 import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema, getLocalBusinessSchema } from '../utils/seo';
@@ -17,6 +24,54 @@ export default function Home() {
     section: { backgroundColor: '#fdfbf8', padding: '50px 0', textAlign: 'center', overflow: 'hidden' },
   };
   const navigate = useNavigate();
+  const { addDemand, demands } = useDemand();
+
+  const intExtContainerRef = useRef(null);
+  const interiorRef = useRef(null);
+  const exteriorRef = useRef(null);
+
+  useEffect(() => {
+    if (intExtContainerRef.current && interiorRef.current && exteriorRef.current) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: intExtContainerRef.current,
+          start: "top 80%",
+        }
+      });
+
+      tl.fromTo(interiorRef.current,
+        { xPercent: -100, opacity: 0 },
+        { xPercent: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+        0
+      );
+
+      tl.fromTo(exteriorRef.current,
+        { xPercent: 100, opacity: 0 },
+        { xPercent: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
+        0
+      );
+
+      gsap.to(interiorRef.current, {
+        x: -3,
+        y: -2,
+        duration: 12,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 1.2
+      });
+
+      gsap.to(exteriorRef.current, {
+        x: 3,
+        y: 2,
+        duration: 15,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        delay: 1.2
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -33,107 +88,139 @@ export default function Home() {
       <div className="rotate-on-load page home-page">
         {/* Hero Section */}
         <section className="hero">
-
           <div className="hero-background">
-            <div className="gradient-bg"></div>
+            <video
+              src="/hero.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="none"
+              className="hero-video"
+            ></video>
+            <div className="hero-overlay"></div>
           </div>
         </section>
 
         <section className="containerr">
-          <h1>Royal Stones</h1>
+          <div style={{ position: "relative", width: "100%", height: "100%", borderRadius: "20px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <video
+              src="/royal_gem_stones.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="none"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                zIndex: 1
+              }}
+            ></video>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                backgroundColor: "rgba(0, 0, 0, 0.4)",
+                zIndex: 2
+              }}
+            ></div>
+            <h1 style={{ position: "relative", zIndex: 3, color: "white", margin: 0 }}>Royal Stones</h1>
+          </div>
         </section>
 
-        <section className="containerr">
+        <section className="containerr" id="application">
           {/* <h1>Applications</h1> */}
 
-          <div style={{
+          <div ref={intExtContainerRef} style={{
             position: "relative",
             width: "100%",
-            aspectRatio: "16/7",
-            minHeight: "180px",
-            borderRadius: "12px",
+            height: "100%",
+            borderRadius: "20px",
             overflow: "hidden",
-            border: "0.5px solid rgba(0,0,0,0.15)"
+            border: "0.5px solid rgba(0,0,0,0.15)",
+            // backgroundColor: "#111"
           }}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <clipPath id="interior-clip">
-                  <polygon points="0,0 60,0 40,100 0,100" />
-                </clipPath>
-                <clipPath id="exterior-clip">
-                  <polygon points="60,0 100,0 100,100 40,100" />
-                </clipPath>
-              </defs>
-
-              {/* Interior: image + dark overlay */}
-              <image
-                href="https://thethekedaar.in/assets/images/moreInfo/5.webp"
-                x="0" y="0" width="60" height="100"
-                preserveAspectRatio="xMidYMid slice"
-                clipPath="url(#interior-clip)"
-              />
-              <polygon
-                onClick={() => { navigate('application/interior') }}
-                points="0,0 60,0 40,100 0,100"
-                fill="rgba(0,0,0,0.45)"
-                clipPath="url(#interior-clip)"
-              />
-
-              {/* Exterior: image + dark overlay */}
-              <image
-                href="https://www.maramani.com/cdn/shop/articles/house-2252301_640_4a79bfef-9331-4a70-a3ff-34fc1d2dd9ff.jpg"
-                x="40" y="0" width="60" height="100"
-                preserveAspectRatio="xMidYMid slice"
-                clipPath="url(#exterior-clip)"
-              />
-              <polygon
-                onClick={() => { navigate('application/exterior') }}
-                points="60,0 100,0 100,100 40,100"
-                fill="rgba(0,0,0,0.45)"
-                clipPath="url(#exterior-clip)"
-              />
-            </svg>
-
-            <div style={{
+            {/* Interior */}
+            <div ref={interiorRef} onClick={() => { navigate('application/interior') }} style={{
               position: "absolute",
               inset: 0,
-              display: "flex",
-              pointerEvents: "none"
+              clipPath: "polygon(0 0, 60% 0, 40% 100%, 0 100%)",
+              cursor: "pointer",
+              transformOrigin: "center center"
             }}>
-              {/* Interior label */}
+              <img src="https://thethekedaar.in/assets/images/moreInfo/5.webp" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0,0,0,0.45)" }}></div>
               <div style={{
-                flex: "0 0 45%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                justifyContent: "center",
-                padding: "clamp(12px, 4%, 40px)",
-                gap: "6px"
+                position: "absolute",
+                top: 0, left: 0, bottom: 0, width: "45%",
+                display: "flex", flexDirection: "column",
+                alignItems: "flex-start", justifyContent: "center",
+                padding: "clamp(12px, 4%, 40px)", gap: "6px",
+                pointerEvents: "none"
               }}>
                 <span style={{ fontSize: "clamp(11px, 2.5vw, 15px)", fontWeight: 500, color: "rgba(255,255,255,0.7)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Interior</span>
                 <span style={{ fontSize: "clamp(13px, 3vw, 18px)", fontWeight: 500, color: "#fff", lineHeight: 1.3 }}>Indoor spaces &<br />built environments</span>
               </div>
+            </div>
 
-              {/* Exterior label */}
+            {/* Exterior */}
+            <div ref={exteriorRef} onClick={() => { navigate('application/exterior') }} style={{
+              position: "absolute",
+              inset: 0,
+              clipPath: "polygon(60% 0, 100% 0, 100% 100%, 40% 100%)",
+              cursor: "pointer",
+              transformOrigin: "center center"
+            }}>
+              <img src="https://www.maramani.com/cdn/shop/articles/house-2252301_640_4a79bfef-9331-4a70-a3ff-34fc1d2dd9ff.jpg" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0,0,0,0.45)" }}></div>
               <div style={{
-                flex: "0 0 55%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end",
-                justifyContent: "center",
-                padding: "clamp(12px, 4%, 40px)",
-                gap: "6px",
-                textAlign: "right"
+                position: "absolute",
+                top: 0, right: 0, bottom: 0, width: "55%",
+                display: "flex", flexDirection: "column",
+                alignItems: "flex-end", justifyContent: "center",
+                padding: "clamp(12px, 4%, 40px)", gap: "6px",
+                textAlign: "right",
+                pointerEvents: "none"
               }}>
                 <span style={{ fontSize: "clamp(11px, 2.5vw, 15px)", fontWeight: 500, color: "rgba(255,255,255,0.7)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Exterior</span>
                 <span style={{ fontSize: "clamp(13px, 3vw, 18px)", fontWeight: 500, color: "#fff", lineHeight: 1.3 }}>Outdoor spaces &<br />open environments</span>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section style={{ backgroundColor: "#ffffff", color: "#111", padding: "clamp(40px, 8vw, 80px) 20px", fontFamily: "'Jost', sans-serif" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "30px", textAlign: "center" }}>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+                <CountUp end={1000} duration={2.5} enableScrollSpy scrollSpyOnce />+
+              </div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Projects</div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+                <CountUp end={25} duration={2.5} enableScrollSpy scrollSpyOnce />+
+              </div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Years in Industry</div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+                <CountUp end={28} duration={2.5} enableScrollSpy scrollSpyOnce />
+              </div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>States we are available</div>
+            </div>
+
           </div>
         </section>
         <section>
@@ -149,9 +236,9 @@ export default function Home() {
           <IndianMarbleCarousel />
         </section>
 
-        <section>
+        {/* <section>
           <SandStoneCarousel />
-        </section>
+        </section> */}
 
 
         <section>
@@ -167,7 +254,7 @@ export default function Home() {
             <p className="section-subtitle">Browse our collection of premium granite varieties</p>
             <div className="products-grid">
               {GRANITE_TYPES.slice(0, 6).map((product) => (
-                <div key={product.id} className="product-card">
+                <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}>
                   <div className="product-image">
                     <img src={product.image} alt={product.name} />
                   </div>
@@ -183,10 +270,10 @@ export default function Home() {
                       className="get-quote-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`);
+                        addDemand(product);
                       }}
                     >
-                      Get Quote
+                      {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
                     </button>
                   </div>
                 </div>
@@ -241,7 +328,7 @@ export default function Home() {
                   </div>
                   <div className="info-item">
                     <span className="info-label">📞 Call Us:</span>
-                    <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'left' }}>
+                    <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
                       <a href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
                     </p>
                   </div>

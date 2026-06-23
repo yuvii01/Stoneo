@@ -4,16 +4,16 @@
  */
 
 export const SEO_CONFIG = {
-  siteName: 'KMStoneX',
-  baseUrl: 'https://kmstonex.in',
+  siteName: 'Stoneo India', // 'KMStoneX',
+  baseUrl: 'https://stoneo.in', // 'https://kmstonex.in',
   siteDescription: 'Premium granite, marble, and natural stone supplier in India. Expert suppliers for residential and commercial projects.',
-  defaultImage: 'https://kmstonex.in/og-image.png',
-  phone: '+91-XXXXXXXXXX',
-  email: 'contact@kmstonex.in',
+  defaultImage: 'https://example.com/og-image.png', // 'https://kmstonex.in/og-image.png',
+  phone: '+91-1234567890', // '+91-XXXXXXXXXX',
+  email: 'demo@example.com', // 'contact@kmstonex.in',
   socialLinks: {
-    facebook: 'https://www.facebook.com/kmstonex',
-    instagram: 'https://www.instagram.com/kmstonex',
-    linkedin: 'https://www.linkedin.com/company/kmstonex',
+    facebook: 'https://www.facebook.com/demo', // 'https://www.facebook.com/kmstonex',
+    instagram: 'https://www.instagram.com/demo', // 'https://www.instagram.com/kmstonex',
+    linkedin: 'https://www.linkedin.com/company/demo', // 'https://www.linkedin.com/company/kmstonex',
   },
 };
 
