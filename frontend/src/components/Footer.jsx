@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { COMPANY_INFO } from '../utils/constants';
 import '../styles/footer.css';
 
 export default function Footer() {
+  const navigate = useNavigate();
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -29,7 +32,13 @@ export default function Footer() {
           </div> */}
 
           <div className="footer-section">
-            <h3>Get in Touch</h3>
+            <h3 
+              onClick={() => navigate('/get-quote')} 
+              style={{ cursor: 'pointer', display: 'inline-block' }}
+              title="Click to get a quote"
+            >
+              Get in Touch
+            </h3>
             <div className="footer-contact">
               <p>
                 <strong>📍 Address</strong>
@@ -39,7 +48,7 @@ export default function Footer() {
                 <strong>📞 Call Us</strong>
                 <a style={{display : 'flex' , alignItems : 'top'}} href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
               </p>
-              <p style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '25px' }}>
+              <p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <strong>✉️ Email</strong>
                 <a href={`mailto:${COMPANY_INFO.email}`}>{COMPANY_INFO.email}</a>
               </p>
@@ -48,7 +57,7 @@ export default function Footer() {
 
           <div className="footer-section">
             <h3>Business Hours</h3>
-            <p style={{ marginBottom: '25px', lineHeight: '1.8' }}>
+            <p style={{ lineHeight: '1.8' }}>
               ⏰ {COMPANY_INFO.businessHours}
             </p>
           </div>
