@@ -160,7 +160,22 @@ export default function GetQuote() {
           <div className="container">
             <div className="quote-container">
               <div className="quote-info">
-                <p className="granite-name">{displayTitle}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <p className="granite-name" style={{ marginBottom: 0 }}>{displayTitle}</p>
+                  {demands && demands.length > 0 && (
+                    <button 
+                      type="button"
+                      onClick={(e) => { e.preventDefault(); clearDemands(); }}
+                      style={{
+                        padding: '4px 10px', background: 'transparent', 
+                        border: '1px solid #dc3545', color: '#dc3545', borderRadius: '4px',
+                        cursor: 'pointer', fontSize: '13px', fontWeight: '500'
+                      }}
+                    >
+                      Clear All
+                    </button>
+                  )}
+                </div>
 
                 {demands && demands.length > 0 ? (
                   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '10px' }}>
@@ -169,16 +184,8 @@ export default function GetQuote() {
                         <img src={d.image || d.url} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         <button
                           type="button"
+                          className="remove-demand-btn"
                           onClick={(e) => { e.preventDefault(); removeDemand(d.name); }}
-                          style={{
-                            position: 'absolute', top: '4px', right: '4px',
-                            background: 'rgba(220, 53, 69, 0.9)', color: 'white',
-                            border: 'none', borderRadius: '50%',
-                            width: '20px', height: '20px',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            cursor: 'pointer', fontSize: '14px', fontWeight: 'bold', padding: 0,
-                            lineHeight: 1, zIndex: 10
-                          }}
                           title={`Remove ${d.name}`}
                         >
                           ×
