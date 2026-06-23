@@ -2427,14 +2427,14 @@
 
 @media (max-width: 768px) {
   .containerr {
-    height: 50vh;
+    height: 40vh;
     padding-inline: 20px !important;
   }
 }
 
 @media (max-width: 480px) {
   .containerr {
-    height: 60vh;
+    height: 40vh;
     padding-inline: 10px !important;
   }
 }
