@@ -5,6 +5,7 @@ import { COMPANY_INFO, GRANITE_TYPES, PROJECTS } from '../utils/constants';
 import '../styles/pages.css';
 import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema } from '../utils/seo';
+import { useDemand } from '../context/DemandContext';
 
 export default function GetQuote() {
   const SEOHeadComponent = (
@@ -15,15 +16,36 @@ export default function GetQuote() {
   );
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const graniteName = searchParams.get('stone') || 'Stoneo India';
-  const graniteMessage = searchParams.get('stone') || '';
+  const { demands, clearDemands } = useDemand();
+
+  const graniteName = searchParams.get('stone') || '';
   const graniteImage = searchParams.get('image') || 'http://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg';
+  const fromCart = searchParams.get('from') === 'cart';
+
+  // Format demands if they exist
+  let initialRequirements = graniteName ? `Interested in: ${graniteName}` : 'I am looking for...';
+  let displayTitle = graniteName || 'Custom Requirement';
+
+  if (demands && demands.length > 0) {
+    const demandList = demands.map((d, index) => {
+      let params = [];
+      if (d.color) params.push(`Color: ${d.color}`);
+      if (d.finish) params.push(`Finish: ${d.finish}`);
+      if (d.features && d.features.length) params.push(`Features: ${d.features.join(', ')}`);
+      
+      const paramStr = params.length > 0 ? ` (${params.join(' | ')})` : '';
+      return `${index + 1}. ${d.name}${paramStr}`;
+    }).join('\n');
+    
+    initialRequirements = `I am interested in the following demands:\n${demandList}`;
+    displayTitle = `Selected Demands (${demands.length})`;
+  }
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    requirements: `Interested in: ${graniteMessage}`,
+    requirements: initialRequirements,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,12 +96,15 @@ export default function GetQuote() {
         name: '',
         email: '',
         phone: '',
-        requirements: `Interested in: ${graniteName}`,
+        requirements: initialRequirements,
       });
+
+      // Clear demands upon successful submission intent
+      clearDemands();
 
       // Redirect to products after a short delay
       setTimeout(() => {
-        navigate('/products');
+        navigate('/category/granite');
       }, 3000);
 
     } catch (error) {
@@ -97,7 +122,7 @@ export default function GetQuote() {
       <section className="quote-header page-header">
         <div className="container">
           <h1>Get a Quote</h1>
-          <p>Request a custom quote for {graniteName}</p>
+          <p>Request a custom quote for {displayTitle}</p>
         </div>
       </section>
 
@@ -105,10 +130,21 @@ export default function GetQuote() {
         <div className="container">
           <div className="quote-container">
             <div className="quote-info">
-              <p className="granite-name">{graniteName}</p>
-              <div style={{borderRadius : '10px'}} className='product-image'>
-                <img src={graniteImage} alt={graniteName} />
-              </div>
+              <p className="granite-name">{displayTitle}</p>
+              
+              {demands && demands.length > 0 ? (
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '10px' }}>
+                  {demands.map((d, i) => (
+                    <div key={i} style={{ width: '80px', height: '80px', borderRadius: '10px', overflow: 'hidden' }}>
+                      <img src={d.image || d.url} alt={d.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div style={{borderRadius : '10px'}} className='product-image'>
+                  <img src={graniteImage} alt={displayTitle} />
+                </div>
+              )}
              
               
               <p className="granite-note">

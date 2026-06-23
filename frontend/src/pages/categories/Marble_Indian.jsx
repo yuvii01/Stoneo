@@ -4,6 +4,7 @@ import { GRANITE_TYPES } from '../../utils/constants';
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
 import { getBreadcrumbSchema } from '../../utils/seo';
+import { useDemand } from '../../context/DemandContext';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -78,6 +79,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 export default function MarbleIndian() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { addDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
@@ -169,10 +171,10 @@ export default function MarbleIndian() {
                       className="get-quote-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                       navigate( `/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`);
+                        addDemand(product);
                       }}
                     >
-                      Get Quote
+                      {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
                     </button>
                   </div>
                 </div>

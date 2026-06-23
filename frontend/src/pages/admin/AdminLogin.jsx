@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Admin.css';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -34,14 +35,7 @@ export default function AdminLogin() {
       backgroundColor: '#f5f5f5',
       fontFamily: "'Jost', sans-serif"
     }}>
-      <div style={{
-        background: 'white',
-        padding: '40px',
-        borderRadius: '8px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-        width: '100%',
-        maxWidth: '400px'
-      }}>
+      <div className="admin-login-box">
         <h2 style={{ textAlign: 'center', marginBottom: '24px', fontWeight: 300, fontSize: '32px' }}>Admin Login</h2>
         {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

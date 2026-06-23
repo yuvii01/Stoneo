@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
+import './Admin.css';
 
 export default function AdminBlogs() {
     const [blogs, setBlogs] = useState([]);
@@ -143,8 +144,8 @@ export default function AdminBlogs() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-                <h1 style={{ fontSize: '32px', fontWeight: 300 }}>Manage Blogs</h1>
+            <div className="admin-page-header">
+                <h1 className="admin-page-title">Manage Blogs</h1>
                 <button 
                     onClick={() => {
                         setShowForm(!showForm);
@@ -160,7 +161,7 @@ export default function AdminBlogs() {
             </div>
 
             {showForm && (
-                <div style={{ background: "white", padding: "30px", marginBottom: "40px", borderRadius: "8px", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}>
+                <div className="admin-form-container">
                     <h2 style={{ marginBottom: "20px", fontSize: "20px" }}>{editingId ? "Edit Blog" : "Add a New Blog"}</h2>
                     <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
                         <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Blog Title" required style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
@@ -224,14 +225,7 @@ export default function AdminBlogs() {
                     placeholder="Search blogs..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                        padding: '12px 20px',
-                        width: '100%',
-                        maxWidth: '400px',
-                        border: '1px solid #ddd',
-                        borderRadius: '4px',
-                        fontSize: '15px'
-                    }}
+                    className="admin-search-input"
                 />
             </div>
 
@@ -242,23 +236,15 @@ export default function AdminBlogs() {
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     {filteredBlogs.map(blog => (
-                        <div key={blog.id} style={{ 
-                            background: 'white', 
-                            padding: '20px', 
-                            borderRadius: '8px', 
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-                            display: 'flex',
-                            gap: '20px',
-                            alignItems: 'center'
-                        }}>
-                            <img src={blog.image} alt={blog.title} style={{ width: '120px', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
-                            <div style={{ flex: 1 }}>
+                        <div key={blog.id} className="admin-blog-card">
+                            <img src={blog.image} alt={blog.title} className="admin-blog-image" />
+                            <div className="admin-blog-content">
                                 <h3 style={{ margin: '0 0 8px 0', fontSize: '18px' }}>{blog.title}</h3>
                                 <p style={{ margin: '0', color: '#666', fontSize: '14px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                                     {blog.excerpt}
                                 </p>
                             </div>
-                            <div style={{ display: 'flex', gap: '10px' }}>
+                            <div className="admin-blog-actions">
                                 <button 
                                     onClick={() => handleEdit(blog)}
                                     style={{ padding: '8px 16px', background: '#f0f0f0', border: 'none', borderRadius: '4px', cursor: 'pointer' }}

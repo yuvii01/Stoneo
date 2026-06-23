@@ -248,40 +248,33 @@
 }
 
 .hero {
-  background-image: url('https://5.imimg.com/data5/SELLER/Default/2023/8/339702270/ZD/TC/RL/7145658/img-20210606-093141.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  color: var(--color-white);
-  padding: var(--spacing-3xl) 0;
   position: relative;
   overflow: hidden;
-  min-height: 600px;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10px;
   transition: all 0.3s ease;
 }
 
 @media (max-width: 1024px) {
   .hero {
-    min-height: 400px;
-    background-attachment: scroll;
+    height: 100vh;
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    min-height: 350px;
-    padding: 230px 0;
-    background-attachment: scroll;
+    height: 90vh;
+    padding: var(--spacing-2xl) 0;
   }
 }
 
 @media (max-width: 480px) {
   .hero {
-    min-height: 300px;
-    padding: 230px 0;
+    height: 75vh;
+    padding: var(--spacing-xl) 0;
   }
 }
 
@@ -301,18 +294,18 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* background: linear-gradient(135deg, rgba(139, 69, 19, 0.6) 0%, rgba(101, 67, 33, 0.6) 100%); */
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
 
 .hero-background {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 50%;
+  left: 0;
+  width: 100%;
   height: 100%;
-  opacity: 0.1;
-  z-index: 1;
+  opacity: 1;
+  z-index: 0;
 }
 
 .hero-background .gradient-bg {
@@ -2427,7 +2420,8 @@
   align-items: center;
   justify-content: center;
   padding: 0 !important;
-  padding-inline: 50px !important;
+  padding-block: 10px !important;
+  padding-inline: 30px !important;
   transition: all 0.3s ease;
 }
 
@@ -2440,7 +2434,7 @@
 
 @media (max-width: 480px) {
   .containerr {
-    height: 30vh;
+    height: 40vh;
     padding-inline: 10px !important;
   }
 }

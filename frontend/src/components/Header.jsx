@@ -201,7 +201,7 @@ export default function Header() {
           </Link>
 
           <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
-            Send Requirement
+            Get Quote
           </Link>
         </nav>
       </div>

@@ -24,6 +24,10 @@ import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
 import ProductDetail from './pages/ProductDetail';
 
+// Context
+import { DemandProvider } from './context/DemandContext';
+import FloatingDemandButton from './components/FloatingDemandButton';
+
 // Admin Imports
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
@@ -79,6 +83,7 @@ function AppContent() {
       </main>
 
       {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <FloatingDemandButton />}
     </div>
   );
 }
@@ -86,9 +91,11 @@ function AppContent() {
 function App() {
   return (
     <HelmetProvider>
-      <Router>
-        <AppContent />
-      </Router>
+      <DemandProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </DemandProvider>
     </HelmetProvider>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
+import './Admin.css';
 
 const FINISH_ENUM = [
     'Polished', 'Honed', 'Leather', 'Flamed',
@@ -196,9 +197,9 @@ export default function AdminProducts() {
     );
 
     return (
-        <div style={{ padding: '40px 20px', maxWidth: '1000px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-                <h1 style={{ fontSize: '32px', fontWeight: 300 }}>Manage Products</h1>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+            <div className="admin-page-header">
+                <h1 className="admin-page-title">Manage Products</h1>
                 <button 
                     onClick={() => {
                         setShowForm(!showForm);
@@ -222,11 +223,11 @@ export default function AdminProducts() {
             </div>
 
             {showForm && (
-                <div style={{ backgroundColor: '#fff', padding: '30px', borderRadius: '8px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', marginBottom: '40px' }}>
+                <div className="admin-form-container">
                     <h2 style={{ marginBottom: '20px', fontSize: '24px' }}>{editingId ? 'Edit Product' : 'Create Product'}</h2>
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                         
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                        <div className="admin-form-grid">
                             <div>
                                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Name *</label>
                                 <input type="text" name="name" value={formData.name} onChange={handleInputChange} required style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
@@ -363,7 +364,7 @@ export default function AdminProducts() {
                     placeholder="Search products by name or color..." 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{ padding: '12px 20px', width: '100%', maxWidth: '400px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '15px' }}
+                    className="admin-search-input"
                 />
             </div>
 
@@ -374,7 +375,7 @@ export default function AdminProducts() {
                     No products found. Add a new product above!
                 </div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+                <div className="admin-product-grid">
                     {filteredProducts.map(product => (
                         <div key={product.id || product._id} style={{ border: '1px solid #eee', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff', display: 'flex', flexDirection: 'column' }}>
                             <div style={{ height: '200px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
 import { GRANITE_TYPES } from '../utils/constants';
 import '../styles/pages.css';
+import { useDemand } from '../context/DemandContext';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -212,6 +213,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 export default function Tiles() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { addDemand, demands } = useDemand();
   
   // 2. Get category from URL (e.g. ?category=Black)
   const categoryFilter = searchParams.get('category') || 'All';
@@ -291,10 +293,10 @@ export default function Tiles() {
                     className="get-quote-btn"
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/get-quote?granite=${encodeURIComponent(product.name)}`);
+                      addDemand(product);
                     }}
                   >
-                    Get Quote
+                    {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
                   </button>
                 </div>
               </div>

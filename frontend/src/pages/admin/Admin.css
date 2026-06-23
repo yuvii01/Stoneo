@@ -1,0 +1,235 @@
+/* Admin.css */
+
+/* Dashboard Layout */
+.admin-dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Jost', sans-serif;
+}
+
+.admin-dashboard-container {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.admin-mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #111;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-hamburger {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.admin-sidebar {
+  width: 250px;
+  background-color: #111;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.admin-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 90;
+}
+
+.admin-main-content {
+  flex: 1;
+  background-color: #f9f9f9;
+  padding: 40px;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Page Headers */
+.admin-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.admin-page-title {
+  font-size: 32px;
+  font-weight: 300;
+  margin: 0;
+}
+
+/* Forms */
+.admin-form-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Product Grid */
+.admin-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Blog List */
+.admin-blog-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.admin-blog-image {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.admin-blog-content {
+  flex: 1;
+}
+
+.admin-blog-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Search input */
+.admin-search-input {
+  padding: 12px 20px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.admin-login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+/* Media Queries for Tablets and Phones */
+@media (max-width: 768px) {
+  .admin-dashboard-container {
+    flex-direction: column;
+  }
+
+  .admin-mobile-header {
+    display: flex;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    height: 100vh;
+    z-index: 1000;
+  }
+
+  .admin-sidebar.open {
+    left: 0;
+  }
+
+  .admin-overlay.open {
+    display: block;
+  }
+
+  .admin-main-content {
+    padding: 20px;
+  }
+
+  .admin-page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .admin-page-title {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .admin-form-container {
+    padding: 20px;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-blog-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-blog-image {
+    width: 100%;
+    height: 200px;
+  }
+
+  .admin-blog-actions {
+    width: 100%;
+  }
+
+  .admin-blog-actions button {
+    flex: 1;
+  }
+
+  .admin-search-input {
+    max-width: 100%;
+  }
+
+  .admin-login-box {
+    margin: 0 20px;
+    padding: 30px 20px;
+  }
+}

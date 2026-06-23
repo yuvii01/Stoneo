@@ -5,6 +5,7 @@ import '../../styles/pages.css';
 import { GRANITE_TYPES } from '../../utils/constants';
 import SEOHead from '../../components/SEOHead';
 import { getBreadcrumbSchema } from '../../utils/seo';
+import { useDemand } from '../../context/DemandContext';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -70,6 +71,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 export default function Sandstone() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const { addDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   
   // 2. Get category from URL (e.g. ?category=Black)
@@ -152,10 +154,10 @@ export default function Sandstone() {
                       className="get-quote-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate( `/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.image)}`);
+                        addDemand(product);
                       }}
                     >
-                      Get Quote
+                      {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
                     </button>
                   </div>
                 </div>

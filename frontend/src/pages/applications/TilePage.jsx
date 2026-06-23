@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useDemand } from '../../context/DemandContext';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -7,6 +8,7 @@ export default function TilePage() {
     const { tileName } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
+    const { addDemand, demands } = useDemand();
     const isInterior = location.pathname.toLowerCase().includes('interior');
 
     // Define exact titles to match against slugs
@@ -176,10 +178,13 @@ export default function TilePage() {
                                                 className="get-quote-btn"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    navigate(`/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(product.images?.[0] || '')}`);
+                                                    addDemand({
+                                                        ...product,
+                                                        image: product.images?.[0] || ''
+                                                    });
                                                 }}
                                             >
-                                                Get Quote
+                                                {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
                                             </button>
                                         </div>
                                     </div>

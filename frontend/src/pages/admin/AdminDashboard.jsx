@@ -1,25 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import './Admin.css';
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     document.cookie = "admin_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     navigate('/admin/login');
   };
 
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', fontFamily: "'Jost', sans-serif" }}>
+    <div className="admin-dashboard-wrapper">
+      {/* Mobile Header */}
+      <div className="admin-mobile-header">
+        <h2 style={{ fontSize: '20px', margin: 0, fontWeight: 400, letterSpacing: '2px', textTransform: 'uppercase' }}>Stoneo</h2>
+        <button className="admin-hamburger" onClick={toggleSidebar}>☰</button>
+      </div>
+
+      <div className={`admin-overlay ${sidebarOpen ? 'open' : ''}`} onClick={toggleSidebar}></div>
+
+      <div className="admin-dashboard-container">
       {/* Sidebar */}
-      <aside style={{
-        width: '250px',
-        backgroundColor: '#111',
-        color: 'white',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '20px 0'
-      }}>
+      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div style={{ padding: '0 20px', marginBottom: '40px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 400, letterSpacing: '2px', textTransform: 'uppercase' }}>
             Stoneo India
@@ -30,6 +36,7 @@ export default function AdminDashboard() {
         <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <NavLink 
             to="/admin/blogs" 
+            onClick={() => setSidebarOpen(false)}
             style={({ isActive }) => ({
               padding: '12px 20px',
               textDecoration: 'none',
@@ -43,6 +50,7 @@ export default function AdminDashboard() {
           </NavLink>
           <NavLink 
             to="/admin/products" 
+            onClick={() => setSidebarOpen(false)}
             style={({ isActive }) => ({
               padding: '12px 20px',
               textDecoration: 'none',
@@ -84,9 +92,10 @@ export default function AdminDashboard() {
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, backgroundColor: '#f9f9f9', padding: '40px', overflowY: 'auto' }}>
+      <main className="admin-main-content">
         <Outlet />
       </main>
+      </div>
     </div>
   );
 }
