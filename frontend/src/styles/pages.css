@@ -266,14 +266,14 @@
 
 @media (max-width: 768px) {
   .hero {
-    height: 90vh;
+    height: 100vh;
     padding: var(--spacing-2xl) 0;
   }
 }
 
 @media (max-width: 480px) {
   .hero {
-    height: 75vh;
+    height: 100vh;
     padding: var(--spacing-xl) 0;
   }
 }
@@ -2427,14 +2427,14 @@
 
 @media (max-width: 768px) {
   .containerr {
-    height: 40vh;
+    height: 50vh;
     padding-inline: 20px !important;
   }
 }
 
 @media (max-width: 480px) {
   .containerr {
-    height: 40vh;
+    height: 60vh;
     padding-inline: 10px !important;
   }
 }
