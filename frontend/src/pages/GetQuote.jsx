@@ -72,7 +72,7 @@ export default function GetQuote() {
       } else {
         setFormData(prev => ({
           ...prev,
-          requirements: 'My cart is empty, I am looking for...'
+          requirements: 'I am looking for...'
         }));
       }
     }
