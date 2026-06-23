@@ -46,7 +46,8 @@ button {
 }
 
 /* Remove default list styles */
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -58,7 +59,9 @@ img {
 }
 
 /* Form elements */
-input, textarea, select {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
@@ -86,6 +89,7 @@ a:focus:not(:focus-visible),
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -103,7 +107,7 @@ a:focus:not(:focus-visible),
     max-width: 100%;
     height: auto;
   }
-  
+
   /* Prevent layout shift on smaller screens */
   body {
     overflow-x: hidden;
@@ -112,6 +116,7 @@ a:focus:not(:focus-visible),
 
 /* Mobile-first approach for touch targets */
 @media (max-width: 480px) {
+
   button,
   a {
     min-height: 44px;
@@ -120,16 +125,21 @@ a:focus:not(:focus-visible),
     align-items: center;
     justify-content: center;
   }
-  
-  input, textarea, select {
-    font-size: 16px; /* Prevents zoom on iOS */
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+    /* Prevents zoom on iOS */
     padding: 10px;
   }
 }
 
 /* Improve touch interaction on tablets */
 @media (min-width: 481px) and (max-width: 1024px) {
-  button, a {
+
+  button,
+  a {
     min-height: 40px;
   }
 }
@@ -150,7 +160,7 @@ a:focus:not(:focus-visible),
   color: #fff;
   padding: 12px 24px;
   border-radius: 30px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   z-index: 2147483647;
   border: none;
   cursor: pointer;
@@ -177,9 +187,9 @@ a:focus:not(:focus-visible),
 
 @media (max-width: 768px) {
   .floating-demand-btn {
-    bottom: 80px;
-    right: 20px;
-    padding: 12px 18px;
+    bottom: 20px;
+    right: 15px;
+    padding: 10px 16px;
     font-size: 14px;
     z-index: 2147483647;
   }
