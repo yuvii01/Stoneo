@@ -145,3 +145,104 @@ export const FAQS = [
     answer: 'Granite naturally lasts for decades. We offer a 1-year warranty on installation and workmanship, ensuring quality and customer satisfaction.',
   },
 ];
+
+// Per-product RGB: dominant color sampled from each stone's actual appearance
+export const CSV_PRODUCTS = [
+  // Black Granites — vary from near-pure black to dark charcoal/grey-black
+  { name: 'Absolute Black Granite',   image: 'https://marmogranite.com/wp-content/uploads/2022/06/1-scaled.jpg',                              price: 52, category: 'Black', material: 'Granite',    rgb: [18,  18,  18]  },
+  { name: 'Black Galaxy Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/06/9-scaled.jpg',                              price: 52, category: 'Black', material: 'Granite',    rgb: [22,  22,  35]  },
+  { name: 'Black Forest Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/06/8-scaled.jpg',                              price: 52, category: 'Black', material: 'Granite',    rgb: [30,  28,  24]  },
+  { name: 'Black Pearl Granite',      image: 'https://marmogranite.com/wp-content/uploads/2022/06/5-scaled.jpg',                              price: 52, category: 'Black', material: 'Granite',    rgb: [24,  28,  40]  },
+  { name: 'Ash Black Granite',        image: 'https://marmogranite.com/wp-content/uploads/2022/06/11-scaled.jpg',                             price: 52, category: 'Black', material: 'Granite',    rgb: [50,  50,  50]  },
+  { name: 'Coin Black Granite',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/15-scaled.jpg',                             price: 52, category: 'Black', material: 'Granite',    rgb: [38,  36,  35]  },
+  { name: 'Fusion Black Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/06/45-scaled.jpg',                             price: 52, category: 'Black', material: 'Granite',    rgb: [42,  38,  32]  },
+  { name: 'Impala Black Granite',     image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-29.jpg',              price: 52, category: 'Black', material: 'Granite',    rgb: [28,  28,  28]  },
+  { name: 'Titanium Black Granite',   image: 'https://marmogranite.com/wp-content/uploads/2025/04/Fortuna-Marmo-Granite-1.jpg',              price: 52, category: 'Black', material: 'Granite',    rgb: [20,  20,  22]  },
+
+  // White Granites — span from warm creamy-white to cool bright white
+  { name: 'Classic White Granite',    image: 'https://marmogranite.com/wp-content/uploads/2022/06/14-scaled.jpg',                             price: 52, category: 'White', material: 'Granite',    rgb: [222, 218, 212] },
+  { name: 'Andromeda White Granite',  image: 'https://marmogranite.com/wp-content/uploads/2022/06/4-scaled.jpg',                              price: 52, category: 'White', material: 'Granite',    rgb: [190, 185, 180] },
+  { name: 'Alaska White Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/06/3-scaled.jpg',                              price: 52, category: 'White', material: 'Granite',    rgb: [210, 205, 195] },
+  { name: 'Azul White Granite',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/6-scaled.jpg',                              price: 52, category: 'White', material: 'Granite',    rgb: [195, 200, 215] },
+  { name: 'Colonial White Granite',   image: 'https://marmogranite.com/wp-content/uploads/2022/06/18-scaled.jpg',                             price: 52, category: 'White', material: 'Granite',    rgb: [228, 222, 210] },
+  { name: 'Kashmir White Granite',    image: 'https://marmogranite.com/wp-content/uploads/2022/06/26-scaled.jpg',                             price: 52, category: 'White', material: 'Granite',    rgb: [200, 192, 183] },
+  { name: 'Moon White Granite',       image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-23-400x223.jpg',      price: 52, category: 'White', material: 'Granite',    rgb: [235, 230, 225] },
+
+  // Gold Granites — warm amber/yellow tones
+  { name: 'Alaska Gold Granite',      image: 'https://marmogranite.com/wp-content/uploads/2022/06/2-1-scaled.jpg',                            price: 52, category: 'Gold',  material: 'Granite',    rgb: [185, 155, 80]  },
+  { name: 'Imperial Gold Granite',    image: 'https://marmogranite.com/wp-content/uploads/2022/06/23-scaled.jpg',                             price: 52, category: 'Gold',  material: 'Granite',    rgb: [175, 145, 70]  },
+  { name: 'Ghibli Gold Granite',      image: 'https://marmogranite.com/wp-content/uploads/2022/06/22-scaled.jpg',                             price: 52, category: 'Gold',  material: 'Granite',    rgb: [195, 168, 90]  },
+  { name: 'Desert Gold Granite',      image: 'https://marmogranite.com/wp-content/uploads/2022/08/10-min-300x167.jpg',                        price: 52, category: 'Gold',  material: 'Granite',    rgb: [205, 178, 100] },
+
+  // Blue Granites — cool steel/navy/periwinkle tones
+  { name: 'Blue Dunes Granite',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/12-1-scaled.jpg',                           price: 52, category: 'Blue',  material: 'Granite',    rgb: [100, 118, 148] },
+  { name: 'Blue Pearl Granite',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/13-1-scaled.jpg',                           price: 52, category: 'Blue',  material: 'Granite',    rgb: [58,  78,  140] },
+  { name: 'Flash Blue Granite',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/21-scaled.jpg',                             price: 52, category: 'Blue',  material: 'Granite',    rgb: [48,  68,  128] },
+  { name: 'Amadeus Blue Granite',     image: 'https://marmogranite.com/wp-content/uploads/2024/12/Fortuna-Marmo-Granite-32-300x167.jpg',      price: 52, category: 'Blue',  material: 'Granite',    rgb: [82,  108, 155] },
+
+  // Green Granites
+  { name: 'Nosra Green Granite',      image: 'https://marmogranite.com/wp-content/uploads/2022/06/32-scaled.jpg',                             price: 52, category: 'Green', material: 'Granite',    rgb: [58,  108, 68]  },
+  { name: 'Desert Green Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/08/11-min-300x167.jpg',                        price: 52, category: 'Green', material: 'Granite',    rgb: [78,  118, 72]  },
+  { name: 'Hassan Green Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/08/12-min-300x167.jpg',                        price: 52, category: 'Green', material: 'Granite',    rgb: [52,  98,  60]  },
+  { name: 'Apple Green Granite',      image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-30.jpg',              price: 52, category: 'Green', material: 'Granite',    rgb: [102, 148, 88]  },
+
+  // Brown Granites — tan to dark coffee
+  { name: 'Tan Brown Granite',        image: 'https://marmogranite.com/wp-content/uploads/2022/08/1-300x167.jpg',                             price: 52, category: 'Brown', material: 'Granite',    rgb: [148, 98,  68]  },
+  { name: 'Coffee Brown Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/08/2-300x167.jpg',                             price: 52, category: 'Brown', material: 'Granite',    rgb: [98,  62,  42]  },
+  { name: 'Desert Brown Granite',     image: 'https://marmogranite.com/wp-content/uploads/2022/08/9-min-300x167.jpg',                         price: 52, category: 'Brown', material: 'Granite',    rgb: [162, 132, 95]  },
+
+  // Red Granites
+  { name: 'Jhansi Red Granite',       image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-7-1.jpg',             price: 52, category: 'Red',   material: 'Granite',    rgb: [152, 48,  48]  },
+  { name: 'Lakha Red Granite',        image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-9-600x335.jpg',       price: 52, category: 'Red',   material: 'Granite',    rgb: [172, 58,  55]  },
+  { name: 'New Imperiala Red Granite',image: 'https://marmogranite.com/wp-content/uploads/2024/10/Fortuna-Marmo-Granite-1-1024x571.jpg',      price: 52, category: 'Red',   material: 'Granite',    rgb: [138, 42,  42]  },
+
+  // --- PLACEHOLDER DATA FOR OTHER MATERIALS (To be updated by user) ---
+
+  // Placeholder Marbles
+  { name: 'Carrara White Marble',     image: 'https://marmogranite.com/wp-content/uploads/2022/06/14-scaled.jpg',   price: 60,  category: 'White', material: 'Marble',      rgb: [232, 228, 222] },
+  { name: 'Nero Marquina Marble',     image: 'https://marmogranite.com/wp-content/uploads/2022/06/1-scaled.jpg',    price: 65,  category: 'Black', material: 'Marble',      rgb: [15,  15,  15]  },
+  { name: 'Rainforest Green Marble',  image: 'https://marmogranite.com/wp-content/uploads/2022/06/32-scaled.jpg',   price: 55,  category: 'Green', material: 'Marble',      rgb: [55,  105, 65]  },
+
+  // Placeholder Sandstones
+  { name: 'Teakwood Sandstone',       image: 'https://marmogranite.com/wp-content/uploads/2022/08/1-300x167.jpg',   price: 40,  category: 'Brown', material: 'Sandstone',   rgb: [168, 128, 90]  },
+  { name: 'Agra Red Sandstone',       image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-7-1.jpg', price: 42, category: 'Red', material: 'Sandstone', rgb: [175, 82,  68]  },
+
+  // Placeholder Quartz
+  { name: 'Calacatta Quartz',         image: 'https://marmogranite.com/wp-content/uploads/2022/06/3-scaled.jpg',    price: 70,  category: 'White', material: 'Quartz',      rgb: [238, 235, 230] },
+  { name: 'Sparkling Black Quartz',   image: 'https://marmogranite.com/wp-content/uploads/2022/06/9-scaled.jpg',    price: 68,  category: 'Black', material: 'Quartz',      rgb: [25,  25,  35]  },
+
+  // Placeholder Tiles
+  { name: 'Ceramic White Tile',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/18-scaled.jpg',   price: 20,  category: 'White', material: 'Tiles',       rgb: [245, 245, 245] },
+  { name: 'Porcelain Blue Tile',      image: 'https://marmogranite.com/wp-content/uploads/2022/06/13-1-scaled.jpg', price: 25,  category: 'Blue',  material: 'Tiles',       rgb: [70,  95,  150] },
+
+  // Placeholder Onyx
+  { name: 'Yellow Onyx',              image: 'https://marmogranite.com/wp-content/uploads/2022/06/22-scaled.jpg',   price: 120, category: 'Gold',  material: 'Onyx',        rgb: [215, 185, 65]  },
+  { name: 'Green Onyx',               image: 'https://marmogranite.com/wp-content/uploads/2022/08/11-min-300x167.jpg', price: 130, category: 'Green', material: 'Onyx',     rgb: [65,  128, 72]  },
+
+  // Placeholder Terrazzo
+  { name: 'Classic White Terrazzo',   image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-23-400x223.jpg', price: 45, category: 'White', material: 'Terrazzo', rgb: [225, 220, 215] },
+  { name: 'Dark Terrazzo',            image: 'https://marmogranite.com/wp-content/uploads/2022/06/5-scaled.jpg',    price: 48,  category: 'Black', material: 'Terrazzo',    rgb: [32,  30,  38]  },
+
+  // Placeholder Quartzite
+  { name: 'Macaubas Quartzite',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/4-scaled.jpg',    price: 85,  category: 'White', material: 'Quartzite',   rgb: [205, 200, 195] },
+  { name: 'Azul Macaubas',            image: 'https://marmogranite.com/wp-content/uploads/2022/06/21-scaled.jpg',   price: 110, category: 'Blue',  material: 'Quartzite',   rgb: [55,  72,  138] },
+
+  // Placeholder Soapstone
+  { name: 'Black Soapstone',          image: 'https://marmogranite.com/wp-content/uploads/2022/06/11-scaled.jpg',   price: 60,  category: 'Black', material: 'Soapstone',   rgb: [48,  48,  48]  },
+  { name: 'Green Soapstone',          image: 'https://marmogranite.com/wp-content/uploads/2022/08/12-min-300x167.jpg', price: 65, category: 'Green', material: 'Soapstone', rgb: [52,  95,  60]  },
+
+  // Placeholder Basalt
+  { name: 'Basaltina Black',          image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-29.jpg', price: 50, category: 'Black', material: 'Basalt', rgb: [28, 28, 28] },
+
+  // Placeholder Slate
+  { name: 'Black Slate',              image: 'https://marmogranite.com/wp-content/uploads/2022/06/15-scaled.jpg',   price: 35,  category: 'Black', material: 'Slate',       rgb: [40,  40,  38]  },
+  { name: 'Rusty Slate',              image: 'https://marmogranite.com/wp-content/uploads/2022/08/9-min-300x167.jpg', price: 38, category: 'Brown', material: 'Slate',       rgb: [155, 105, 72]  },
+
+  // Placeholder Travertine
+  { name: 'Classic Travertine',       image: 'https://marmogranite.com/wp-content/uploads/2022/06/23-scaled.jpg',   price: 55,  category: 'Gold',  material: 'Travertine',  rgb: [192, 168, 120] },
+  { name: 'Walnut Travertine',        image: 'https://marmogranite.com/wp-content/uploads/2022/08/2-300x167.jpg',   price: 58,  category: 'Brown', material: 'Travertine',  rgb: [128, 95,  68]  },
+
+  // Placeholder Limestone
+  { name: 'Crema Limestone',          image: 'https://marmogranite.com/wp-content/uploads/2022/06/6-scaled.jpg',    price: 45,  category: 'White', material: 'Limestone',   rgb: [215, 205, 182] },
+  { name: 'Kota Blue Limestone',      image: 'https://marmogranite.com/wp-content/uploads/2024/12/Fortuna-Marmo-Granite-32-300x167.jpg', price: 40, category: 'Blue', material: 'Limestone', rgb: [85, 110, 148] }
+];

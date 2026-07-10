@@ -1,51 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
-import { GRANITE_TYPES } from '../utils/constants';
-import '../styles/pages.css';
-
-// 1. Updated Data with Category Column
-const CSV_PRODUCTS = [
-  { name: 'Absolute Black Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/1-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Black Galaxy Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/9-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Black Forest Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/8-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Black Pearl Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/5-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Ash Black Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/11-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Coin Black Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/15-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Fusion Black Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/45-scaled.jpg', price: 52, category: 'Black' },
-  { name: 'Impala Black Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-29.jpg', price: 52, category: 'Black' },
-  { name: 'Titanium Black Granite', image: 'https://marmogranite.com/wp-content/uploads/2025/04/Fortuna-Marmo-Granite-1.jpg', price: 52, category: 'Black' },
-
-  { name: 'Classic White Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/14-scaled.jpg', price: 52, category: 'White' },
-  { name: 'Andromeda White Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/4-scaled.jpg', price: 52, category: 'White' },
-  { name: 'Alaska White Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/3-scaled.jpg', price: 52, category: 'White' },
-  { name: 'Azul White Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/6-scaled.jpg', price: 52, category: 'White' },
-  { name: 'Colonial White Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/18-scaled.jpg', price: 52, category: 'White' },
-  { name: 'Kashmir White Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/26-scaled.jpg', price: 52, category: 'White' },
-  { name: 'Moon White Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-23-400x223.jpg', price: 52, category: 'White' },
-
-  { name: 'Alaska Gold Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/2-1-scaled.jpg', price: 52, category: 'Gold' },
-  { name: 'Imperial Gold Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/23-scaled.jpg', price: 52, category: 'Gold' },
-  { name: 'Ghibli Gold Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/22-scaled.jpg', price: 52, category: 'Gold' },
-  { name: 'Desert Gold Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/08/10-min-300x167.jpg', price: 52, category: 'Gold' },
-
-  { name: 'Blue Dunes Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/12-1-scaled.jpg', price: 52, category: 'Blue' },
-  { name: 'Blue Pearl Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/13-1-scaled.jpg', price: 52, category: 'Blue' },
-  { name: 'Flash Blue Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/21-scaled.jpg', price: 52, category: 'Blue' },
-  { name: 'Amadeus Blue Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/12/Fortuna-Marmo-Granite-32-300x167.jpg', price: 52, category: 'Blue' },
-
-  { name: 'Nosra Green Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/06/32-scaled.jpg', price: 52, category: 'Green' },
-  { name: 'Desert Green Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/08/11-min-300x167.jpg', price: 52, category: 'Green' },
-  { name: 'Hassan Green Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/08/12-min-300x167.jpg', price: 52, category: 'Green' },
-  { name: 'Apple Green Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-30.jpg', price: 52, category: 'Green' },
-
-  { name: 'Tan Brown Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/08/1-300x167.jpg', price: 52, category: 'Brown' },
-  { name: 'Coffee Brown Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/08/2-300x167.jpg', price: 52, category: 'Brown' },
-  { name: 'Desert Brown Granite', image: 'https://marmogranite.com/wp-content/uploads/2022/08/9-min-300x167.jpg', price: 52, category: 'Brown' },
-
-  { name: 'Jhansi Red Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-7-1.jpg', price: 52, category: 'Red' },
-  { name: 'Lakha Red Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/11/Fortuna-Marmo-Granite-9-600x335.jpg', price: 52, category: 'Red' },
-  { name: 'New Imperiala Red Granite', image: 'https://marmogranite.com/wp-content/uploads/2024/10/Fortuna-Marmo-Granite-1-1024x571.jpg', price: 52, category: 'Red' },
-];
+import { GRANITE_TYPES, CSV_PRODUCTS } from '../utils/constants';
 
 const DEFAULT_DESCRIPTION = 'Premium quality granite, sourced from verified quarries.';
 const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to maintain'];
