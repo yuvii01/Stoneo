@@ -35,11 +35,11 @@ const CSV_PRODUCTS = [
   { "name": "Kota Stone", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Kota-stone-300x224.png", "category": "Grey" }
 ];
 
-const DEFAULT_DESCRIPTION = 'Premium quality granite, sourced from verified quarries.';
+const DEFAULT_DESCRIPTION = 'Premium quality sandstone, sourced from verified quarries.';
 const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to maintain'];
 
 // Build Lookup Map
-const graniteTypesMap = {};
+const sandstoneTypesMap = {};
 
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leather", "Flamed", "Lapato", "Bush Hammered", "Antique", "Sandblasted"];
 const TYPE_OPTIONS = ["Kota Stone", "Agra Sandstone", "Raj Green Sandstone", "Teakwood Sandstone", "Dholpur Sandstone"];
@@ -48,7 +48,7 @@ const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 // Merge Data
 const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   const key = csvItem.name.toLowerCase().trim();
-  const existing = graniteTypesMap[key];
+  const existing = sandstoneTypesMap[key];
 
   let type = TYPE_OPTIONS[index % TYPE_OPTIONS.length];
   if (csvItem.name.toLowerCase().includes('kota')) type = 'Kota Stone';
@@ -109,13 +109,20 @@ export default function Sandstone() {
 
   useEffect(() => {
     const type = searchParams.get('type');
-    if (type === 'south') {
-      setFilters(prev => ({ ...prev, type: ['South India'] }));
-    } else if (type === 'north') {
-      setFilters(prev => ({ ...prev, type: ['North India'] }));
-    } else if (type === 'imported') {
-      setFilters(prev => ({ ...prev, type: ['Imported'] }));
-    }
+    setFilters(prev => {
+      let newType = [];
+      if (type === 'kota_stone') newType = ['Kota Stone'];
+      else if (type === 'agra_sandstone') newType = ['Agra Sandstone'];
+      else if (type === 'raj_green_sandstone') newType = ['Raj Green Sandstone'];
+      else if (type === 'teakwood_sandstone') newType = ['Teakwood Sandstone'];
+      else if (type === 'dholpur_sandstone') newType = ['Dholpur Sandstone'];
+
+      // Prevent infinite loop by checking if state actually needs to change
+      if (prev.type.length === newType.length && prev.type.every((v, i) => v === newType[i])) {
+        return prev;
+      }
+      return { ...prev, type: newType };
+    });
   }, [searchParams]);
 
   const handleFilterChange = (category, value) => {
@@ -149,7 +156,9 @@ export default function Sandstone() {
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 50);
   };
 
   const [selectedProduct, setSelectedProduct] = useState(filteredProducts[0] || ALL_PRODUCTS[0]);
@@ -242,18 +251,14 @@ export default function Sandstone() {
                 <div className="color-swatches">
                   {[
                     { name: 'Black', hex: '#000000' },
-                    { name: 'White', hex: '#ffffff' },
-                    { name: 'Blue', hex: '#3a5a9c' },
-                    { name: 'Gold', hex: '#d4af37' },
                     { name: 'Green', hex: '#2e8b57' },
                     { name: 'Brown', hex: '#8b4513' },
                     { name: 'Red', hex: '#b22222' },
                     { name: 'Yellow', hex: '#ffd700' },
                     { name: 'Multicolor', hex: 'linear-gradient(45deg, red, blue, green)' },
-                    { name: 'Cream', hex: '#fffdd0' },
+                    { name: 'Beige', hex: '#f5f5dc' },
                     { name: 'Grey', hex: '#808080' },
-                    { name: 'Pink', hex: '#ffc0cb' },
-                    { name: 'Orange', hex: '#ffa500' }
+                    { name: 'Pink', hex: '#ffc0cb' }
                   ].map(c => (
                     <div
                       key={c.name}
@@ -498,10 +503,10 @@ export default function Sandstone() {
           </div>
         </section>
 
-        {/* Granite Buying Guide - Slider */}
+        {/* Sandstone Buying Guide - Slider */}
         <section className="guide-slider-section" style={{ backgroundImage: 'url("https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Stream-White-Swatch.webp")', padding: '60px 0' }}>
           <div className="container">
-            <h2 style={{ textAlign: 'center', marginBottom: '40px', fontSize: '40px' }}>Granite Buying Guide</h2>
+            <h2 style={{ textAlign: 'center', marginBottom: '40px', fontSize: '40px' }}>Sandstone Buying Guide</h2>
 
             <div style={{
               maxWidth: '900px',
@@ -515,9 +520,9 @@ export default function Sandstone() {
               <div style={{ padding: '60px 50px', minHeight: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 {currentSlide === 0 && (
                   <div>
-                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>What is Granite?</h3>
+                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>What is Sandstone?</h3>
                     <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#333' }}>
-                      Granite is one of the most popular natural stones, available in 100+ unique varieties worldwide. Each piece has distinctive designs, shades, and color combinations. Prized for exceptional durability, strength, and resistance to acids, alkalis, and extreme temperatures - making it perfect for residential and commercial applications.
+                      Sandstone is a beautiful and versatile natural stone, available in a wide range of warm, earthy colors and unique textures. Formed over millions of years, each piece features distinctive granular patterns. Prized for its natural aesthetic, slip resistance, and durability, it is perfect for both indoor and outdoor residential and commercial applications.
                     </p>
                   </div>
                 )}
@@ -528,8 +533,8 @@ export default function Sandstone() {
                     <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#333' }}>
                       <p><strong>🏢 Visit Showrooms:</strong> Explore varieties under one roof to find the perfect match</p>
                       <p><strong>📦 Collect Samples:</strong> Take samples to your space - compare colors and designs in actual lighting</p>
-                      <p><strong>💧 Porosity Test:</strong> Pour water drops, wait 15 min. If traces remain, too porous for kitchens</p>
-                      <p><strong>🍋 Acid Test:</strong> Place lemon overnight. Dullness indicates poor acid resistance</p>
+                      <p><strong>💧 Porosity Test:</strong> Sandstone is naturally porous and requires quality sealants for wet areas.</p>
+                      <p><strong>🍋 Acid Test:</strong> Some sandstones can react to acids. Test samples with lemon before kitchen use.</p>
                     </div>
                   </div>
                 )}
@@ -548,9 +553,9 @@ export default function Sandstone() {
 
                 {currentSlide === 3 && (
                   <div style={{ textAlign: 'center' }}>
-                    <h3 style={{ fontSize: '28px', marginBottom: '30px', color: '#a45040' }}>Ready to Choose Your Granite?</h3>
+                    <h3 style={{ fontSize: '28px', marginBottom: '30px', color: '#a45040' }}>Ready to Choose Your Sandstone?</h3>
                     <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#333', marginBottom: '25px' }}>
-                      With proper selection and maintenance, granite lasts for decades. Our experts are ready to help you find the perfect granite for your project.
+                      With proper selection and maintenance, sandstone lasts for decades. Our experts are ready to help you find the perfect sandstone for your project.
                     </p>
                     <div style={{ fontSize: '16px', color: '#555' }}>
                       {/* <p>📞 <strong>Call:</strong> +91-9256901351</p> */}
