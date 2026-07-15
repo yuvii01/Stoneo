@@ -91,7 +91,7 @@ export default function Products() {
               >
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />
-                  <div className="price-badge">₹{product.price}/sq ft</div>
+
                   <div className="category-tag" style={{
                     position: 'absolute',
                     top: '10px',

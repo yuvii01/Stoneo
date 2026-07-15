@@ -65,9 +65,14 @@ body {
 
 /* Container */
 .container {
-  max-width: 1250px;
-  margin: 0 auto;
+  margin: 0 60px;
   padding: 0 var(--spacing-lg);
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 20px;
+  }
 }
 
 /* Typography */

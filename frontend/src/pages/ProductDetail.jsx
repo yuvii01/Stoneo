@@ -121,11 +121,7 @@ export default function ProductDetail() {
                         </div>
                     )}
                     
-                    {product.priceRange && (
-                        <div style={{ fontSize: '20px', fontWeight: 600, color: '#a45040', marginBottom: '20px' }}>
-                            Price: {product.priceRange}
-                        </div>
-                    )}
+
                     
                     <p style={{ fontSize: '18px', color: '#555', lineHeight: '1.6', whiteSpace: 'pre-line' }}>
                         {product.description || 'No description available for this product.'}

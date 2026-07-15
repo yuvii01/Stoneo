@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .main-content {
@@ -110,7 +110,7 @@ a:focus:not(:focus-visible),
 
   /* Prevent layout shift on smaller screens */
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 }
 

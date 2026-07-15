@@ -353,3 +353,26 @@ export const Quartz_products = [
   { name: 'Brentwood Grey', image: '/quartz_images/Brentwood_Grey.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Durham Grey', image: '/quartz_images/Durham_Grey.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
 ];
+
+export const Onyx_products = [
+  { name: 'Orange Ice Onyx', image: '/onyx_images/Orange_Ice_Onyx.jpg', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 165, 0], texture: 10 },
+  { name: 'Blue Ice Onyx', image: '/onyx_images/Blue_Ice_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [0, 0, 255], texture: 10 },
+  { name: 'Green Ice Onyx', image: '/onyx_images/Green_Ice_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [0, 255, 0], texture: 10 },
+  { name: 'Pink Ice Onyx', image: '/onyx_images/Pink_Ice_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 192, 203], texture: 10 },
+  { name: 'Tiger Onyx', image: '/onyx_images/Tiger_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 204, 0], texture: 10 },
+  { name: 'Wooden Onyx', image: '/onyx_images/Wooden_Onyx.jpg', price: 120, category: 'Onyx', material: 'Onyx', rgb: [139, 69, 19], texture: 10 },
+  { name: 'White Onyx Gemstone', image: '/onyx_images/White_Onyx_Gemstone.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 255, 255], texture: 10 },
+  { name: 'Honey Onyx', image: '/onyx_images/Honey_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 204, 0], texture: 10 },
+  { name: 'Green Onyx', image: '/onyx_images/Green_Onyx.jpg', price: 120, category: 'Onyx', material: 'Onyx', rgb: [0, 128, 0], texture: 10 },
+  { name: 'Bubble Onyx', image: '/onyx_images/Bubble_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 255, 255], texture: 10 },
+  { name: 'Cappuccino Onyx', image: '/onyx_images/Cappuccino_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [210, 180, 140], texture: 10 },
+  { name: 'Velluto Onyx', image: '/onyx_images/Velluto_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [222, 184, 135], texture: 10 },
+  { name: 'Silver Onyx', image: '/onyx_images/Silver_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [192, 192, 192], texture: 10 },
+  { name: 'Gold Onyx', image: '/onyx_images/Gold_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 215, 0], texture: 10 },
+  { name: 'Coca Cola Onyx', image: '/onyx_images/Coca_Cola_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [139, 69, 19], texture: 10 },
+  { name: 'Satin Onyx', image: '/onyx_images/Satin_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [245, 245, 245], texture: 10 },
+  { name: 'Salmon Onyx', image: '/onyx_images/Salmon_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [250, 128, 114], texture: 10 },
+  { name: 'White Onyx', image: '/onyx_images/White_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 255, 255], texture: 10 },
+  { name: 'Dark Desert Rose', image: '/onyx_images/Dark_Desert_Rose.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [165, 42, 42], texture: 10 },
+  { name: 'Light Desert Rose', image: '/onyx_images/Light_Desert_Rose.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [205, 92, 92], texture: 10 }
+];

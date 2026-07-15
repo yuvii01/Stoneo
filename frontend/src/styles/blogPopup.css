@@ -1,0 +1,153 @@
+.blog-popup-overlay {
+  position: fixed;
+  top: 90px;
+  right: -400px;
+  width: 320px;
+  background-color: var(--color-white, #ffffff);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 1050;
+  transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden; /* to clip the image to border-radius */
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-popup-overlay.show {
+  right: 20px;
+}
+
+.blog-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  color: #333;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 50%;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.blog-popup-close:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.blog-popup-image-container {
+  position: relative;
+  width: 100%;
+  height: 160px;
+}
+
+.blog-popup-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-popup-tag {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background-color: var(--color-primary, #b48e5d);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.blog-popup-content {
+  padding: 16px 20px;
+}
+
+.blog-popup-content h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+
+.blog-popup-link {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--color-primary, #b48e5d);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.blog-popup-link:hover {
+  text-decoration: underline;
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .blog-popup-overlay {
+    top: 75px; /* Below the hamburger menu */
+    bottom: auto;
+    right: -100%;
+    width: 60vw;
+    max-width: 60vw;
+    padding: 8px 12px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  
+  .blog-popup-overlay.show {
+    right: 10px;
+  }
+
+  .blog-popup-close {
+    top: 2px;
+    right: 2px;
+    font-size: 18px;
+    padding: 4px;
+    background: transparent;
+  }
+
+  .blog-popup-image-container {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .blog-popup-tag {
+    display: none;
+  }
+
+  .blog-popup-content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 15px; /* space for the close button */
+  }
+
+  .blog-popup-content h4 {
+    font-size: 13px;
+    margin: 0 0 4px 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-popup-link {
+    font-size: 12px;
+  }
+}

@@ -350,6 +350,22 @@
   padding: 10px 16px;
 }
 
+.mega-menu-subheading-link {
+  display: block;
+  margin: 16px 16px 4px !important;
+  padding: 0 !important;
+  font-size: 13px !important;
+  color: #888 !important;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.mega-menu-subheading-link:hover {
+  color: var(--color-primary) !important;
+  background: transparent !important;
+}
+
 /* Dropdown links */
 .dropdown-menu a {
   padding: 10px 16px;
