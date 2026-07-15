@@ -105,7 +105,7 @@ export default function Quartz() {
       const matchesColor = filters.color.length === 0 || filters.color.includes(p.color);
       const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
       const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
-      
+
       return matchesType && matchesColor && matchesTouch && matchesThickness;
     });
   }, [filters]);
@@ -141,7 +141,7 @@ export default function Quartz() {
         ])}
       />
       <div className="page products-page">
-        <section className="granite-header page-header">
+        <section className="quartz-header page-header">
           <div className="container container-heading">
             <h1>Our Quartz Collections</h1>
             <p>Browse our premium selection of engineered quartz varieties</p>
@@ -278,21 +278,21 @@ export default function Quartz() {
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('type', val)}>×</span>
                     </div>
                   ))}
-                  
+
                   {filters.color.map(val => (
                     <div key={val} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       Color: {val}
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('color', val)}>×</span>
                     </div>
                   ))}
-                  
+
                   {filters.touch.map(val => (
                     <div key={val} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       {val}
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('touch', val)}>×</span>
                     </div>
                   ))}
-                  
+
                   {filters.thickness.map(val => (
                     <div key={val} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       {val}mm

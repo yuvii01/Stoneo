@@ -18,7 +18,7 @@ const COLOR_OPTIONS = ['Red', 'Brown', 'Black', 'Grey', 'Blue', 'Green', 'Ivory'
 
 const ALL_PRODUCTS = PAVING_PRODUCTS.map((csvItem, index) => {
   const nameLower = csvItem.name.toLowerCase();
-  
+
   let color = 'Grey'; // default
   for (let c of COLOR_OPTIONS) {
     if (nameLower.includes(c.toLowerCase())) {
@@ -101,7 +101,7 @@ export default function PavingAndLandscape() {
       origins = ['landscaping pebbles', 'Stepping stones'];
     }
     if (type) {
-        setFilters(prev => ({ ...prev, origin: origins }));
+      setFilters(prev => ({ ...prev, origin: origins }));
     }
   }, [searchParams]);
 
@@ -121,7 +121,7 @@ export default function PavingAndLandscape() {
     return ALL_PRODUCTS.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
       const matchesType = filters.category.length === 0 || filters.category.includes(p.category);
-      
+
       const matchesOrigin = filters.origin.length === 0 || filters.origin.some(o => {
         const nameMatch = p.name.toLowerCase();
         if (o === 'Granite Cobbles') return nameMatch.includes('granite') && p.category === 'Cobbles';
@@ -175,7 +175,7 @@ export default function PavingAndLandscape() {
         ])}
       />
       <div className="page products-page">
-        <section className="granite-header page-header">
+        <section className="paving-header page-header">
           <div className="container container-heading">
             <h1>Our Paving & Landscape Collections</h1>
             <p>Premium selection of cobbles, pavers, and landscaping stones.</p>
@@ -226,7 +226,7 @@ export default function PavingAndLandscape() {
 
               <div className="filter-section">
                 <h4>Origin</h4>
-                
+
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Cobbles</h5>
                 <div className="filter-checkbox-group" style={{ marginBottom: '15px' }}>
                   {['Granite Cobbles', 'Sandstone Cobbles', 'Limestone Cobbles'].map(org => (
@@ -243,7 +243,7 @@ export default function PavingAndLandscape() {
 
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Pavers</h5>
                 <div className="filter-checkbox-group">
-                  {['Bricks' , 'Sandstone' , 'Travertino'].map(org => (
+                  {['Bricks', 'Sandstone', 'Travertino'].map(org => (
                     <label key={org} className="filter-checkbox-label">
                       <input
                         type="checkbox"
@@ -255,7 +255,7 @@ export default function PavingAndLandscape() {
                   ))}
                 </div>
 
-  <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Stones</h5>
+                <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Stones</h5>
                 <div className="filter-checkbox-group" style={{ marginBottom: '15px' }}>
                   {['landscaping pebbles', 'Stepping stones'].map(org => (
                     <label key={org} className="filter-checkbox-label">
@@ -548,49 +548,46 @@ export default function PavingAndLandscape() {
               <div style={{ padding: '60px 50px', minHeight: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 {currentSlide === 0 && (
                   <div>
-                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>What is Granite?</h3>
+                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>What are Paving & Landscape Stones?</h3>
                     <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#333' }}>
-                      Granite is one of the most popular natural stones, available in 100+ unique varieties worldwide. Each piece has distinctive designs, shades, and color combinations. Prized for exceptional durability, strength, and resistance to acids, alkalis, and extreme temperatures - making it perfect for residential and commercial applications.
+                      Paving and landscape stones, including cobbles, pavers, and stepping stones, are durable natural materials used to enhance outdoor spaces. They offer exceptional strength to withstand heavy foot and vehicle traffic, weather resistance for outdoor environments, and come in various textures like flamed or natural split for slip resistance. Perfect for driveways, patios, walkways, and garden edging.
                     </p>
                   </div>
                 )}
 
                 {currentSlide === 1 && (
                   <div>
-                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>Selection & Testing</h3>
+                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>Selection & Planning</h3>
                     <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#333' }}>
-                      <p><strong>🏢 Visit Showrooms:</strong> Explore varieties under one roof to find the perfect match</p>
-                      <p><strong>📦 Collect Samples:</strong> Take samples to your space - compare colors and designs in actual lighting</p>
-                      <p><strong>💧 Porosity Test:</strong> Pour water drops, wait 15 min. If traces remain, too porous for kitchens</p>
-                      <p><strong>🍋 Acid Test:</strong> Place lemon overnight. Dullness indicates poor acid resistance</p>
+                      <p><strong>📐 Assess the Space:</strong> Consider the size of the area and the intended use (e.g., heavy vehicle traffic requires thicker cobbles/pavers).</p>
+                      <p><strong>🎨 Choose the Right Material:</strong> Granite cobbles offer unmatched durability, while sandstone and limestone provide natural, rustic charm.</p>
+                      <p><strong>🦶 Safety First:</strong> Always prioritize slip-resistant finishes (like flamed, bush-hammered, or natural split) for outdoor and pool areas.</p>
+                      <p><strong>💧 Drainage Considerations:</strong> Plan for proper water runoff. Permeable paving layouts allow water to seep through joints.</p>
                     </div>
                   </div>
                 )}
 
                 {currentSlide === 2 && (
                   <div>
-                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>Finalization</h3>
+                    <h3 style={{ fontSize: '28px', marginBottom: '20px', color: '#a45040' }}>Installation & Maintenance</h3>
                     <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#333' }}>
-                      <p><strong>📏 Measure Precisely:</strong> Record exact length & width. Use measuring tape, not estimates</p>
-                      <p><strong>🔧 Find Fabricators:</strong> Locate 2-3 local options, compare experience & reviews. They'll discuss edge options & provide quotes</p>
-                      <p><strong>🧩 Get Seaming Samples:</strong> Two pieces should match perfectly & appear as one continuous piece</p>
-                      <p><strong>📋 Check Warranty:</strong> Review coverage thoroughly. Many offer lifetime workmanship warranties</p>
+                      <p><strong>🏗️ Base Preparation:</strong> A solid compacted sub-base is crucial to prevent sinking and shifting over time.</p>
+                      <p><strong>🧱 Joint Sand & Grout:</strong> Use polymeric sand for joints to lock pavers in place and prevent weed growth.</p>
+                      <p><strong>🛡️ Sealing:</strong> Consider applying a breathable stone sealer to protect against stains, oil spills, and weathering.</p>
+                      <p><strong>🧹 Easy Upkeep:</strong> Regular sweeping and occasional pressure washing will keep your landscape stones looking pristine for decades.</p>
                     </div>
                   </div>
                 )}
 
                 {currentSlide === 3 && (
                   <div style={{ textAlign: 'center' }}>
-                    <h3 style={{ fontSize: '28px', marginBottom: '30px', color: '#a45040' }}>Ready to Choose Your Granite?</h3>
+                    <h3 style={{ fontSize: '28px', marginBottom: '30px', color: '#a45040' }}>Ready to Transform Your Outdoors?</h3>
                     <p style={{ fontSize: '16px', lineHeight: '1.8', color: '#333', marginBottom: '25px' }}>
-                      With proper selection and maintenance, granite lasts for decades. Our experts are ready to help you find the perfect granite for your project.
+                      With the right selection and proper installation, natural paving stones will elevate your landscape and last a lifetime. Our experts are ready to assist you.
                     </p>
                     <div style={{ fontSize: '16px', color: '#555' }}>
-                      {/* <p>📞 <strong>Call:</strong> +91-9256901351</p> */}
                       <p>📞 <strong>Call:</strong> +91-1234567890</p>
-                      {/* <p>✉️ <strong>Email:</strong> infokmstonex@gmail.com</p> */}
                       <p>✉️ <strong>Email:</strong> demo@example.com</p>
-                      {/* <p>💬 <strong>WhatsApp:</strong> +91-9256901351</p> */}
                       <p>💬 <strong>WhatsApp:</strong> +91-1234567890</p>
                     </div>
                   </div>
