@@ -21,6 +21,7 @@ import Granite from './pages/categories/Granite';
 import Marble from './pages/categories/Marble';
 import Quartz from './pages/categories/Quartz';
 import Onyx from './pages/categories/Onyx';
+import PavingAndLandscape from './pages/categories/PavingAndLandscape';
 import House from './pages/applications/House';
 import TilePage from './pages/applications/TilePage';
 import Blogs from './pages/Blogs';
@@ -60,6 +61,7 @@ function AppContent() {
           <Route path="/category/sandstone" element={<Sandstone />} />
           <Route path="/category/quartz" element={<Quartz />} />
           <Route path="/category/onyx" element={<Onyx />} />
+          <Route path="/category/paving-landscape" element={<PavingAndLandscape />} />
 
           <Route path="/application/interior" element={<House />} />
           <Route path="/application/exterior" element={<House />} />

@@ -255,20 +255,19 @@ export default function Header() {
               <div className="mega-menu-column">
                 <h3 className="mega-menu-heading">Paving & Landscape</h3>
 
-                <Link to="/category/cobbles" onClick={closeMenus} className="mega-menu-subheading-link">Cobbles &rsaquo;</Link>
-                <Link to="/category/cobbles-granite" onClick={closeMenus}>Granite Cobbles</Link>
-                <Link to="/category/cobbles-sandstone" onClick={closeMenus}>Sandstone Cobbles</Link>
-                <Link to="/category/cobbles-limestone" onClick={closeMenus}>Limestone Cobbles</Link>
+                <Link to="/category/paving-landscape?type=cobbles" onClick={closeMenus} className="mega-menu-subheading-link">Cobbles &rsaquo;</Link>
+                <Link to="/category/paving-landscape?type=cobbles-granite" onClick={closeMenus}>Granite Cobbles</Link>
+                <Link to="/category/paving-landscape?type=cobbles-sandstone" onClick={closeMenus}>Sandstone Cobbles</Link>
+                <Link to="/category/paving-landscape?type=cobbles-limestone" onClick={closeMenus}>Limestone Cobbles</Link>
 
-                <Link to="/category/brick-travertine" onClick={closeMenus} className="mega-menu-subheading-link">Brick & Travertine &rsaquo;</Link>
-                <Link to="/category/brick-paving" onClick={closeMenus}>Paving Bricks</Link>
-                <Link to="/category/sandstone-pavers" onClick={closeMenus}>Sandstone Pavers</Link>
-                <Link to="/category/travertine-pavers" onClick={closeMenus}>Travertine Pavers</Link>
-                <Link to="/category/ligerio-paving" onClick={closeMenus}>Ligerio Pavers</Link>
+                <Link to="/category/paving-landscape?type=pavers" onClick={closeMenus} className="mega-menu-subheading-link">Brick & Travertine &rsaquo;</Link>
+                <Link to="/category/paving-landscape?type=pavers-brick" onClick={closeMenus}>Paving Bricks</Link>
+                <Link to="/category/paving-landscape?type=pavers-sandstone" onClick={closeMenus}>Sandstone Pavers</Link>
+                <Link to="/category/paving-landscape?type=pavers-travertine" onClick={closeMenus}>Travertine Pavers</Link>
 
-                <Link to="/category/stones" onClick={closeMenus} className="mega-menu-subheading-link">Stones & Others &rsaquo;</Link>
-                <Link to="/category/pebbles-gravels" onClick={closeMenus}>Landscaping Pebbles</Link>
-                <Link to="/category/stepping-stones" onClick={closeMenus}>Stepping Stones</Link>
+                <Link to="/category/paving-landscape?type=stones" onClick={closeMenus} className="mega-menu-subheading-link">Stones & Others &rsaquo;</Link>
+                <Link to="/category/paving-landscape?type=stones-pebbles" onClick={closeMenus}>Landscaping Pebbles</Link>
+                <Link to="/category/paving-landscape?type=stones-stepping" onClick={closeMenus}>Stepping Stones</Link>
               </div>
             </div>
           </div>
