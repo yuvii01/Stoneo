@@ -14,7 +14,10 @@ export default function Footer() {
             <div className="footer-logo">
               {/* <img src="/logo2.png" alt="STONEO INDIA Logo" className="footer-logo-img" /> */}
               {/* <img src="https://via.placeholder.com/150x50?text=Demo+Logo" alt="Demo Logo" className="footer-logo-img" /> */}
-              <span className="text-logo" style={{ color: '#fff', fontSize: '32px' }}>Stoneo India</span>
+              <span className="text-logo" style={{ color: '#fff', fontSize: '32px', display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <img src="/logos/logo_light_transparent.png" alt="Logo Light" style={{ height: '80px', objectFit: 'contain' }} />
+                <img src="/logos/detail_light_transparent.png" alt="Details Light" style={{ height: '45px', objectFit: 'contain' }} />
+              </span>
             </div>
             <p className="footer-tagline">{COMPANY_INFO.tagline}</p>
             <p className="footer-description">{COMPANY_INFO.description}</p>
@@ -32,8 +35,8 @@ export default function Footer() {
           </div> */}
 
           <div className="footer-section">
-            <h3 
-              onClick={() => navigate('/get-quote')} 
+            <h3
+              onClick={() => navigate('/get-quote')}
               style={{ cursor: 'pointer', display: 'inline-block' }}
               title="Click to get a quote"
             >
@@ -44,9 +47,9 @@ export default function Footer() {
                 <strong>📍 Address</strong>
                 {COMPANY_INFO.address}
               </p>
-              <p style={{ display: 'flex', alignItems: 'center', gap: '10px'}}>
+              <p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <strong>📞 Call Us</strong>
-                <a style={{display : 'flex' , alignItems : 'top'}} href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
+                <a style={{ display: 'flex', alignItems: 'top' }} href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
               </p>
               <p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <strong>✉️ Email</strong>

@@ -83,7 +83,19 @@ export default function Header() {
               alt="Demo Logo"
               className="logo-img"
             /> */}
-            <span className="text-logo" style={{ color: isScrolled ? '#000' : '#fff', fontSize: '28px' }}>Stoneo India</span>
+            <span className="text-logo" style={{ color: isScrolled ? '#000' : '#fff', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', paddingTop: "10px" }}>
+              {isScrolled ? (
+                <>
+                  <img src="/logos/logo_dark_transparent.png" alt="Logo Dark" style={{ height: '60px', objectFit: 'contain' }} />
+                  <img src="/logos/detail_dark_transparent.png" alt="Details Dark" style={{ height: '35px', objectFit: 'contain' }} />
+                </>
+              ) : (
+                <>
+                  <img src="/logos/logo_light_transparent.png" alt="Logo Light" style={{ height: '60px', objectFit: 'contain' }} />
+                  <img src="/logos/detail_light_transparent.png" alt="Details Light" style={{ height: '35px', objectFit: 'contain' }} />
+                </>
+              )}
+            </span>
           </Link>
         </div>
 
