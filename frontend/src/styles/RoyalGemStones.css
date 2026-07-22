@@ -1,0 +1,246 @@
+.royal-page {
+  background-color: #050505;
+  color: #fff;
+  font-family: 'Jost', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Preloader (Typing Effect) */
+.royal-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #000;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.royal-preloader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.typing-container {
+  display: inline-block;
+}
+
+.typing-text {
+  /* Using an elegant serif font fallback */
+  font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: #fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+  width: 0;
+  border-right: none;
+  animation: typing 2s steps(40, end) forwards;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+
+/* Carousel Section */
+.royal-carousel-section {
+  width: 100%;
+  height: 100vh;
+}
+
+.royal-slide {
+  position: relative;
+  height: 100vh;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.royal-slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.royal-slide-content {
+  position: absolute;
+  top: 60%;
+  transform: translateY(-50%);
+  width: 100%;
+  left: 0;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+}
+
+.royal-slide-content h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.btn-view-product {
+  background-color: transparent;
+  color: #fff;
+  /* Add more padding to top than bottom to make text appear lower */
+  padding: 18px 40px 12px 40px;
+  font-size: 1.1rem;
+  border: 1px solid white;
+  cursor: pointer;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.btn-view-product:hover {
+  background-color: #d4af37;
+  color: #000;
+}
+
+/* Slick Customization */
+.slick-dots li button:before {
+  color: #fff !important;
+  font-size: 14px !important;
+  opacity: 0.5 !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #e32d36 !important;
+  opacity: 1 !important;
+}
+
+.slick-dots {
+  bottom: 25px !important;
+}
+
+
+/* Stone Types Alternating Section */
+.royal-stone-types {
+  padding: 100px 20px;
+  background-color: #050505;
+}
+
+.royal-section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #d4af37;
+  font-weight: 300;
+  margin-bottom: 80px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.stone-type-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto 100px auto;
+  gap: 60px;
+}
+
+.stone-type-row:last-child {
+  margin-bottom: 0;
+}
+
+.stone-type-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.stone-image {
+  flex: 1 1 550px;
+  height: 450px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.stone-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.5s ease;
+}
+
+.stone-type-row:hover .stone-image img {
+  transform: scale(1.05);
+}
+
+.stone-info {
+  flex: 1 1 400px;
+  padding: 20px;
+}
+
+.stone-info h3 {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 300;
+  margin-bottom: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.stone-info p {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.btn-view-collection {
+  background-color: transparent;
+  color: #fff;
+  padding: 12px 30px;
+  font-size: 1rem;
+  border: 1px solid #d4af37;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.btn-view-collection:hover {
+  background-color: #d4af37;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+
+  .stone-type-row,
+  .stone-type-row.reverse {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .stone-image {
+    height: 300px;
+    width: 100%;
+  }
+
+  .royal-slide {
+    height: 60vh;
+  }
+}

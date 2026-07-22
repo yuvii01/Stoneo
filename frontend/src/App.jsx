@@ -27,6 +27,7 @@ import TilePage from './pages/applications/TilePage';
 import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
 import ProductDetail from './pages/ProductDetail';
+import RoyalGemStones from './pages/RoyalGemStones';
 
 // Context
 import { DemandProvider } from './context/DemandContext';
@@ -74,6 +75,7 @@ function AppContent() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/get-quote" element={<GetQuote />} />
+          <Route path="/royal-gem-stones" element={<RoyalGemStones />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

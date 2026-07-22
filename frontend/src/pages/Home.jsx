@@ -103,7 +103,10 @@ export default function Home() {
         </section>
 
         <section className="containerr">
-          <div style={{ position: "relative", width: "100%", height: "100%", borderRadius: "20px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div 
+            onClick={() => navigate('/royal-gem-stones')}
+            style={{ cursor: "pointer", position: "relative", width: "100%", height: "100%", borderRadius: "20px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}
+          >
             <video
               src="/royal_gem_stones.mp4"
               autoPlay

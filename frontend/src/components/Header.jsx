@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import VisualSearchModal from './VisualSearchModal';
 import { useDemand } from '../context/DemandContext';
 import '../styles/header.css';
 
 export default function Header() {
   const { demands } = useDemand();
+  const location = useLocation();
+  const isRoyalPage = location.pathname === '/royal-gem-stones';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isApplicationsOpen, setIsApplicationsOpen] = useState(false);
@@ -70,8 +72,10 @@ export default function Header() {
     });
   };
 
+  const effectiveScrolled = isRoyalPage ? false : isScrolled;
+
   return (
-    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+    <header className={`header ${effectiveScrolled ? 'scrolled' : ''} ${isRoyalPage ? 'royal-theme' : ''}`}>
       <div className="header-container">
         <div className="logo-div">
           <Link to="/" className="logo" onClick={closeMenus}>
@@ -85,8 +89,12 @@ export default function Header() {
               alt="Demo Logo"
               className="logo-img"
             /> */}
-            <span className="text-logo" style={{ color: isScrolled ? '#000' : '#fff', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', paddingTop: "10px" }}>
-              {isScrolled ? (
+            <span className="text-logo" style={{ color: effectiveScrolled ? '#000' : '#fff', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', paddingTop: "10px" }}>
+              {isRoyalPage ? (
+                <div style={{ fontFamily: "'Jost', sans-serif", fontSize: '1.2rem', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 300, color: '#fff' }}>
+                  ROYAL GEM STONES <span style={{ color: '#d4af37', margin: '0 5px' }}>X</span> STONEO
+                </div>
+              ) : effectiveScrolled ? (
                 <>
                   <img src="/logos/logo_dark_transparent.png" alt="Logo Dark" style={{ height: '60px', objectFit: 'contain' }} />
                   <img src="/logos/detail_dark_transparent.png" alt="Details Dark" style={{ height: '35px', objectFit: 'contain' }} />
@@ -124,7 +132,7 @@ export default function Header() {
           aria-expanded={isMenuOpen}
         >
           <img
-            src={isScrolled ? '/hamburger.png' : '/hamburger_white.png'}
+            src={effectiveScrolled ? '/hamburger.png' : '/hamburger_white.png'}
             alt=""
             className="hamburger"
           />

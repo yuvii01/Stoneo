@@ -19,6 +19,12 @@
   box-shadow: var(--shadow-md);
 }
 
+.header.royal-theme {
+  background-color: #050505 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
 .header-container {
   width: 100%;
   margin: 0 auto;
