@@ -27,7 +27,7 @@ export default function FloatingDemandButton() {
     <button
       ref={buttonRef}
       className="floating-demand-btn"
-      onClick={() => navigate('/get-quote?from=cart')}
+      onClick={() => navigate('/get-quote?from=quote')}
     >
       Send your Demands
       <span className="floating-demand-badge">

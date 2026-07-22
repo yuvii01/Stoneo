@@ -20,7 +20,7 @@ export default function GetQuote() {
 
   const graniteName = searchParams.get('stone') || '';
   const graniteImage = searchParams.get('image') || 'http://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg';
-  const fromCart = searchParams.get('from') === 'cart';
+  const fromQuote = searchParams.get('from') === 'quote';
 
   // Format demands if they exist
   let initialRequirements = graniteName ? `Interested in: ${graniteName}` : 'I am looking for...';
@@ -39,7 +39,7 @@ export default function GetQuote() {
 
     initialRequirements = `I am interested in the following demands:\n${demandList}`;
     displayTitle = `Selected Demands (${demands.length})`;
-  } else if (fromCart) {
+  } else if (fromQuote) {
     initialRequirements = 'I am looking for...';
     displayTitle = 'Custom Requirement';
   }
@@ -53,7 +53,7 @@ export default function GetQuote() {
 
   // Sync requirements text when demands change (e.g. when an item is removed)
   useEffect(() => {
-    if (fromCart) {
+    if (fromQuote) {
       if (demands && demands.length > 0) {
         const demandList = demands.map((d, index) => {
           let params = [];
@@ -76,7 +76,7 @@ export default function GetQuote() {
         }));
       }
     }
-  }, [demands, fromCart]);
+  }, [demands, fromQuote]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
@@ -163,11 +163,11 @@ export default function GetQuote() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                   <p className="granite-name" style={{ marginBottom: 0 }}>{displayTitle}</p>
                   {demands && demands.length > 0 && (
-                    <button 
+                    <button
                       type="button"
                       onClick={(e) => { e.preventDefault(); clearDemands(); }}
                       style={{
-                        padding: '4px 10px', background: 'transparent', 
+                        padding: '4px 10px', background: 'transparent',
                         border: '1px solid #dc3545', color: '#dc3545', borderRadius: '4px',
                         cursor: 'pointer', fontSize: '13px', fontWeight: '500'
                       }}
@@ -244,7 +244,7 @@ export default function GetQuote() {
                   className="send-btn"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Opening WhatsApp...' : 'Send Quote Request'}
+                  {isSubmitting ? 'Opening WhatsApp...' : 'Send your Demands'}
                 </button>
               </form>
             </div>

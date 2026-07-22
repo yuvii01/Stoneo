@@ -30,8 +30,8 @@ import ProductDetail from './pages/ProductDetail';
 
 // Context
 import { DemandProvider } from './context/DemandContext';
-import FloatingDemandButton from './components/FloatingDemandButton';
 import BlogPopup from './components/BlogPopup';
+import ExpertAdviceButton from './components/ExpertAdviceButton';
 
 // Admin Imports
 import AdminLogin from './pages/admin/AdminLogin';
@@ -92,7 +92,7 @@ function AppContent() {
       </main>
 
       {!isAdminRoute && <Footer />}
-      {!isAdminRoute && <FloatingDemandButton />}
+      {!isAdminRoute && <ExpertAdviceButton />}
       {!isAdminRoute && <BlogPopup />}
     </div>
   );

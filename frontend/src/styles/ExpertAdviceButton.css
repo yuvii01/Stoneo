@@ -1,0 +1,35 @@
+.expert-advice-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25D366; /* WhatsApp Green */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2147483646; /* High z-index */
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.expert-advice-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background-color: #128C7E;
+}
+
+@media (max-width: 768px) {
+  .expert-advice-btn {
+    bottom: 20px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}

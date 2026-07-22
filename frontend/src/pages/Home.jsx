@@ -24,7 +24,7 @@ export default function Home() {
     section: { backgroundColor: '#fdfbf8', padding: '50px 0', textAlign: 'center', overflow: 'hidden' },
   };
   const navigate = useNavigate();
-  const { addDemand, demands } = useDemand();
+  const { addDemand, demands, removeDemand } = useDemand();
 
   const intExtContainerRef = useRef(null);
   const interiorRef = useRef(null);
@@ -268,12 +268,20 @@ export default function Home() {
                     </div>
                     <button
                       className="get-quote-btn"
+                      style={{
+                        backgroundColor: demands.some(d => d.name === product.name) ? '#d9534f' : '',
+                        color: demands.some(d => d.name === product.name) ? '#fff' : ''
+                      }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        addDemand(product);
+                        if (demands.some(d => d.name === product.name)) {
+                          removeDemand(product.name);
+                        } else {
+                          addDemand(product);
+                        }
                       }}
                     >
-                      {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
+                      {demands.some(d => d.name === product.name) ? "Remove from Quote" : "Add to Quote"}
                     </button>
                   </div>
                 </div>

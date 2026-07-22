@@ -184,7 +184,7 @@ export default function TilePage() {
                                                     });
                                                 }}
                                             >
-                                                {demands.some(d => d.name === product.name) ? "Added!" : "Add to Demands"}
+                                                {demands.some(d => d.name === product.name) ? "Remove from Quote" : "Add to Quote"}
                                             </button>
                                         </div>
                                     </div>

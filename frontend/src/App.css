@@ -154,7 +154,7 @@ a:focus:not(:focus-visible),
 /* Floating Demand Button */
 .floating-demand-btn {
   position: fixed;
-  bottom: 30px;
+  bottom: 90px;
   right: 30px;
   background-color: #3d2b0f;
   color: #fff;
@@ -187,7 +187,7 @@ a:focus:not(:focus-visible),
 
 @media (max-width: 768px) {
   .floating-demand-btn {
-    bottom: 20px;
+    bottom: 80px;
     right: 15px;
     padding: 10px 16px;
     font-size: 14px;

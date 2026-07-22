@@ -397,7 +397,7 @@ export default function Sandstone() {
                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                           <button
                             className="get-quote-btn"
-                            style={demands.some(d => d.name === product.name) ? { backgroundColor: '#4CAF50', color: 'white' } : {}}
+                            style={demands.some(d => d.name === product.name) ? { backgroundColor: '#d9534f', color: 'white' } : {}}
                             onClick={(e) => {
                               e.stopPropagation();
                               if (demands.some(d => d.name === product.name)) {
@@ -407,11 +407,7 @@ export default function Sandstone() {
                               }
                             }}
                           >
-                            {demands.some(d => d.name === product.name) ? (
-                              <span style={{ display: 'flex', alignItems: 'center', gap: '5px', justifyContent: 'center' }}>
-                                Added! <span style={{ fontSize: '14px', fontWeight: 'bold' }}>✕</span>
-                              </span>
-                            ) : "Add to Demands"}
+                            {demands.some(d => d.name === product.name) ? "Remove from Quote" : "Add to Quote"}
                           </button>
                         </div>
                       </div>

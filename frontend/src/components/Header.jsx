@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import VisualSearchModal from './VisualSearchModal';
+import { useDemand } from '../context/DemandContext';
 import '../styles/header.css';
 
 export default function Header() {
+  const { demands } = useDemand();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isApplicationsOpen, setIsApplicationsOpen] = useState(false);
@@ -284,21 +286,24 @@ export default function Header() {
             </div>
           </div>
 
+          <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
+            Project Gallery
+          </Link>
 
           <Link to="/blogs" className="nav-link" onClick={closeMenus}>
             Blogs
           </Link>
 
-          <Link to="/about" className="nav-link" onClick={closeMenus}>
+          {/* <Link to="/about" className="nav-link" onClick={closeMenus}>
             Company
-          </Link>
+          </Link> */}
 
           {/* <Link to="/admin" className="nav-link" onClick={closeMenus}>
             Admin
           </Link> */}
 
           <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
-            Get Quote
+            {demands.length > 0 ? `Send Quote (${demands.length})` : 'Send Quote'}
           </Link>
         </nav>
       </div>
