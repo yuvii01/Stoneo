@@ -183,7 +183,9 @@ export default function Header() {
 
             <div className={`dropdown-menu mega-menu ${isApplicationsOpen ? 'show' : ''}`}>
               <div className="mega-menu-column">
-                <h3 className="mega-menu-heading">Interior</h3>
+                <h3 className="mega-menu-heading">
+                  <Link to="/application/interior" onClick={closeMenus} style={{ textDecoration: 'none', color: 'inherit' }}>Interior &rsaquo;</Link>
+                </h3>
                 <Link to="/application/interior?type=interior-flooring" onClick={closeMenus}>Interior Flooring</Link>
                 <Link to="/application/interior?type=wall-cladding" onClick={closeMenus}>Wall Cladding</Link>
                 <Link to="/application/interior?type=kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
@@ -194,7 +196,9 @@ export default function Header() {
               </div>
 
               <div className="mega-menu-column">
-                <h3 className="mega-menu-heading">Exterior</h3>
+                <h3 className="mega-menu-heading">
+                  <Link to="/application/exterior" onClick={closeMenus} style={{ textDecoration: 'none', color: 'inherit' }}>Exterior &rsaquo;</Link>
+                </h3>
                 <Link to="/application/exterior?type=elevation-cladding" onClick={closeMenus}>Elevation Cladding</Link>
                 <Link to="/application/exterior?type=outdoor-flooring" onClick={closeMenus}>Outdoor Flooring & Paving</Link>
                 <Link to="/application/exterior?type=garden-landscaping" onClick={closeMenus}>Garden & Landscaping</Link>
