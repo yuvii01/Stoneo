@@ -22,7 +22,8 @@ import Marble from './pages/categories/Marble';
 import Quartz from './pages/categories/Quartz';
 import Onyx from './pages/categories/Onyx';
 import PavingAndLandscape from './pages/categories/PavingAndLandscape';
-import House from './pages/applications/House';
+import Interior from './pages/applications/Interior';
+import Exterior from './pages/applications/Exterior';
 import TilePage from './pages/applications/TilePage';
 import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
@@ -65,8 +66,8 @@ function AppContent() {
           <Route path="/category/onyx" element={<Onyx />} />
           <Route path="/category/paving-landscape" element={<PavingAndLandscape />} />
 
-          <Route path="/application/interior" element={<House />} />
-          <Route path="/application/exterior" element={<House />} />
+          <Route path="/application/interior" element={<Interior />} />
+          <Route path="/application/exterior" element={<Exterior />} />
           <Route path="/application/interior/:tileName" element={<TilePage />} />
           <Route path="/application/exterior/:tileName" element={<TilePage />} />
 

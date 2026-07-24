@@ -184,22 +184,22 @@ export default function Header() {
             <div className={`dropdown-menu mega-menu ${isApplicationsOpen ? 'show' : ''}`}>
               <div className="mega-menu-column">
                 <h3 className="mega-menu-heading">Interior</h3>
-                <Link to="/category/flooring" onClick={closeMenus}>Flooring</Link>
-                <Link to="/category/wall-cladding" onClick={closeMenus}>Wall Cladding</Link>
-                <Link to="/category/kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
-                <Link to="/category/bathroom-vanity" onClick={closeMenus}>Bathroom & Vanity</Link>
-                <Link to="/category/staircase" onClick={closeMenus}>Staircase</Link>
-                {/* <Link to="/category/pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link> */}
-                <Link to="/category/table-tops-furniture" onClick={closeMenus}>Table Tops & Furniture</Link>
+                <Link to="/application/interior?type=interior-flooring" onClick={closeMenus}>Interior Flooring</Link>
+                <Link to="/application/interior?type=wall-cladding" onClick={closeMenus}>Wall Cladding</Link>
+                <Link to="/application/interior?type=kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
+                <Link to="/application/interior?type=bathroom-vanity" onClick={closeMenus}>Bathroom & Vanity</Link>
+                <Link to="/application/interior?type=staircase" onClick={closeMenus}>Staircase</Link>
+                {/* <Link to="/application/interior?type=pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link> */}
+                <Link to="/application/interior?type=table-tops-furniture" onClick={closeMenus}>Table Tops & Furniture</Link>
               </div>
 
               <div className="mega-menu-column">
                 <h3 className="mega-menu-heading">Exterior</h3>
-                <Link to="/category/elevation-facade-cladding" onClick={closeMenus}>Elevation Cladding</Link>
-                <Link to="/category/outdoor-flooring-paving" onClick={closeMenus}>Outdoor Flooring & Paving</Link>
-                <Link to="/category/garden-landscaping" onClick={closeMenus}>Garden & Landscaping</Link>
-                <Link to="/category/driveways-pathways" onClick={closeMenus}>Driveways & Pathways</Link>
-                <Link to="/category/swimming-pool-areas" onClick={closeMenus}>Swimming Pool Areas</Link>
+                <Link to="/application/exterior?type=elevation-cladding" onClick={closeMenus}>Elevation Cladding</Link>
+                <Link to="/application/exterior?type=outdoor-flooring" onClick={closeMenus}>Outdoor Flooring & Paving</Link>
+                <Link to="/application/exterior?type=garden-landscaping" onClick={closeMenus}>Garden & Landscaping</Link>
+                <Link to="/application/exterior?type=driveways-pathways" onClick={closeMenus}>Driveways & Pathways</Link>
+                <Link to="/application/exterior?type=swimming-pool" onClick={closeMenus}>Swimming Pool Areas</Link>
               </div>
             </div>
           </div>
