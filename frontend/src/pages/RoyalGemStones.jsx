@@ -85,6 +85,8 @@ const RoyalGemStones = () => {
     autoplaySpeed: 2000,
     pauseOnHover: false,
     arrows: false,
+    swipeToSlide: true,
+    touchThreshold: 100,
   };
 
   const sliderSettings = {
@@ -98,6 +100,8 @@ const RoyalGemStones = () => {
     pauseOnHover: false,
     fade: true,
     arrows: false,
+    swipeToSlide: true,
+    touchThreshold: 100,
   };
 
   useEffect(() => {

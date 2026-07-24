@@ -2,7 +2,7 @@
   background-color: #050505;
   color: #fff;
   font-family: 'Jost', sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Preloader (Typing Effect) */
