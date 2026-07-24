@@ -8,14 +8,18 @@
 /* Preloader (Typing Effect) */
 .royal-preloader {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100vh;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
   background-color: #050505;
   z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 50px; /* Separate rows for 5 loaders */
+  gap: 50px;
+  /* Separate rows for 5 loaders */
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
@@ -39,11 +43,25 @@
   color: transparent;
   animation: light-sweep 1s linear forwards;
 }
+
 @keyframes light-sweep {
-  0% { background-position: -200% center; opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { background-position: 200% center; opacity: 0; }
+  0% {
+    background-position: -200% center;
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    background-position: 200% center;
+    opacity: 0;
+  }
 }
 
 
@@ -118,6 +136,7 @@
     opacity: 0;
     transform: translateY(50px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -200,7 +219,7 @@
   border-radius: 8px;
 }
 
-.stone-image-slider .slick-slider, 
+.stone-image-slider .slick-slider,
 .stone-image-slider .slick-list,
 .stone-image-slider .slick-track {
   height: 100%;
@@ -269,13 +288,16 @@
   .stone-type-row {
     gap: 40px;
   }
+
   .stone-image-slider {
     flex: 1 1 450px;
     height: 350px;
   }
+
   .stone-slide-item {
     height: 350px !important;
   }
+
   .stone-info {
     flex: 1 1 350px;
   }
@@ -283,43 +305,61 @@
 
 @media (max-width: 768px) {
   .royal-stone-types {
-    padding: 60px 15px;
+    padding: 60px 20px;
   }
+
   .royal-section-title {
-    font-size: 2rem;
-    margin-bottom: 50px;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
   }
+
   .stone-type-row,
   .stone-type-row.reverse {
     flex-direction: column;
-    gap: 30px;
-    margin-bottom: 60px;
+    gap: 20px;
+    margin-bottom: 40px;
   }
+
   .stone-info {
     flex: 1 1 auto;
     text-align: center;
-    padding: 10px;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
+
   .stone-info h3 {
     font-size: 2rem;
   }
+
   .stone-info p {
     font-size: 1rem;
     margin-bottom: 20px;
   }
+
+  .btn-view-collection {
+    margin: 0 auto;
+  }
+
   .stone-image-slider {
+    width: 100%;
     max-width: 100%;
     height: 300px;
   }
+
   .stone-slide-item {
     height: 300px !important;
   }
+
   .royal-slide {
     height: 70vh;
   }
+
   .royal-carousel-section {
     height: 70vh;
   }
+
   .loader-fade-2 {
     font-size: 1.2rem;
     letter-spacing: 5px;
@@ -328,31 +368,46 @@
 
 @media (max-width: 480px) {
   .royal-stone-types {
-    padding: 40px 10px;
+    padding: 40px 20px;
   }
+
   .royal-section-title {
     font-size: 1.5rem;
     letter-spacing: 2px;
   }
+
+  .stone-type-row,
+  .stone-type-row.reverse {
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
   .stone-image-slider {
+    width: 100%;
     height: 250px;
   }
+
   .stone-slide-item {
     height: 250px !important;
   }
+
   .royal-slide {
     height: 60vh;
   }
+
   .royal-carousel-section {
     height: 60vh;
   }
+
   .royal-slide-content h2 {
     font-size: 1.5rem;
   }
+
   .btn-view-product {
     padding: 12px 20px 8px;
     font-size: 0.9rem;
   }
+
   .loader-fade-2 {
     font-size: 1rem;
     letter-spacing: 3px;
