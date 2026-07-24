@@ -7,10 +7,31 @@ import SEOHead from '../components/SEOHead';
 
 gsap.registerPlugin(ScrollTrigger);
 
+import { gemstoneImages } from '../gemstoneImages';
+
 // Dummy products to populate the collection
 const STONE_TYPES = ["Agate", "Quartz", "Gemstone", "Shellstone", "Fossil", "Jasper"];
 
-const generateDummyProducts = (categoryName) => {
+const generateDummyProducts = (categoryName, collectionId) => {
+  const images = collectionId && gemstoneImages[collectionId.toLowerCase()];
+
+  if (images && images.length > 0) {
+    return images.map((img, index) => {
+      const isTranslucent = Math.random() > 0.5;
+      // Extract filename without extension to use as a better name
+      const rawName = img.split('/').pop().replace(/\.[^/.]+$/, "");
+      const displayName = rawName.charAt(0).toUpperCase() + rawName.slice(1).replace(/([A-Z])/g, ' $1');
+
+      return {
+        id: index + 1,
+        name: displayName || `${categoryName} ${index + 1}`,
+        stoneType: categoryName,
+        isTranslucent: isTranslucent,
+        image: img
+      };
+    });
+  }
+
   return Array.from({ length: 12 }).map((_, index) => {
     const stoneType = STONE_TYPES[index % STONE_TYPES.length];
     const isTranslucent = Math.random() > 0.5;
@@ -30,20 +51,20 @@ const RoyalCollection = ({ showFilters = false }) => {
 
   const categoryName = collectionId ? collectionId.replace(/-/g, ' ').toUpperCase() : 'STONE';
   // Use useMemo to avoid re-generating products on every render which breaks images
-  const products = React.useMemo(() => generateDummyProducts(categoryName), [categoryName]);
+  const products = React.useMemo(() => generateDummyProducts(categoryName, collectionId), [categoryName, collectionId]);
 
   const [selectedStoneTypes, setSelectedStoneTypes] = useState([]);
   const [selectedBacklight, setSelectedBacklight] = useState([]);
 
   // Filter handlers
   const toggleStoneType = (type) => {
-    setSelectedStoneTypes(prev => 
+    setSelectedStoneTypes(prev =>
       prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
     );
   };
 
   const toggleBacklight = (value) => {
-    setSelectedBacklight(prev => 
+    setSelectedBacklight(prev =>
       prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]
     );
   };
@@ -85,8 +106,8 @@ const RoyalCollection = ({ showFilters = false }) => {
 
   return (
     <div className="royal-collection-page page">
-      <SEOHead 
-        pageKey="home" 
+      <SEOHead
+        pageKey="home"
         title={`${categoryName} Collection | Royal Gem Stones`}
       />
 
@@ -102,8 +123,8 @@ const RoyalCollection = ({ showFilters = false }) => {
               <h3>Stone Type</h3>
               {STONE_TYPES.map(type => (
                 <label key={type} className="custom-checkbox">
-                  <input 
-                    type="checkbox" 
+                  <input
+                    type="checkbox"
                     checked={selectedStoneTypes.includes(type)}
                     onChange={() => toggleStoneType(type)}
                   />
@@ -115,8 +136,8 @@ const RoyalCollection = ({ showFilters = false }) => {
             <div className="filter-group">
               <h3>Back Light</h3>
               <label className="custom-checkbox">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={selectedBacklight.includes('Translucent')}
                   onChange={() => toggleBacklight('Translucent')}
                 />
@@ -124,8 +145,8 @@ const RoyalCollection = ({ showFilters = false }) => {
                 Translucent <span className="helper-text">(allows light to pass)</span>
               </label>
               <label className="custom-checkbox">
-                <input 
-                  type="checkbox" 
+                <input
+                  type="checkbox"
                   checked={selectedBacklight.includes('Non-Translucent')}
                   onChange={() => toggleBacklight('Non-Translucent')}
                 />
@@ -139,8 +160,8 @@ const RoyalCollection = ({ showFilters = false }) => {
         <div className="collection-grid-container">
           <div className="collection-grid">
             {filteredProducts.map((product, index) => (
-              <div 
-                key={product.id} 
+              <div
+                key={product.id}
                 className="collection-item"
                 ref={el => gridItemsRef.current[index] = el}
               >
@@ -149,7 +170,7 @@ const RoyalCollection = ({ showFilters = false }) => {
                   <div className="item-overlay">
                     <div className="item-details">
                       <h3>{product.name}</h3>
-                      <button className="btn-view-details">View Details</button>
+                      {/* <button className="btn-view-details">View Details</button> */}
                     </div>
                   </div>
                 </div>

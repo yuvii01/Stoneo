@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/RoyalGemStones.css';
 import SEOHead from '../components/SEOHead';
+import { gemstoneImages } from '../gemstoneImages';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -20,7 +21,7 @@ const RoyalGemStones = () => {
     // Hide preloader after typing animation completes (2.5s)
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -46,34 +47,45 @@ const RoyalGemStones = () => {
     {
       name: "AGATE",
       description: "Discover the mesmerizing banding and translucent beauty of natural Agate. Perfect for creating a dramatic and luxurious statement piece in any space.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSnsCZjlc6ItSzy-XFExEtrg2QgNJ6t5gCKOSpEYteVg&s=10"
+      images: gemstoneImages['agate'] || []
     },
     {
       name: "QUARTZ",
       description: "Experience the unparalleled clarity and brilliance of Quartz. A timeless choice that blends durability with an ethereal aesthetic.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSnsCZjlc6ItSzy-XFExEtrg2QgNJ6t5gCKOSpEYteVg&s=10"
+      images: gemstoneImages['quartz'] || []
     },
     {
       name: "GEMSTONE",
       description: "Indulge in the vibrant colors and rare allure of our Gemstone collection. Crafted for those who appreciate the extraordinary.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSnsCZjlc6ItSzy-XFExEtrg2QgNJ6t5gCKOSpEYteVg&s=10"
+      images: gemstoneImages['gemstone'] || []
     },
     {
       name: "SHELLSTONE",
       description: "Bring the delicate textures of the ocean into your interiors. Shellstone offers a unique, organic feel with a touch of pearlescent shine.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSnsCZjlc6ItSzy-XFExEtrg2QgNJ6t5gCKOSpEYteVg&s=10"
+      images: gemstoneImages['shellstone'] || []
     },
     {
       name: "FOSSIL",
       description: "Own a piece of history with our Fossil stones. These incredible natural formations add a captivating historical depth to any design.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSnsCZjlc6ItSzy-XFExEtrg2QgNJ6t5gCKOSpEYteVg&s=10"
+      images: gemstoneImages['fossil'] || []
     },
     {
       name: "JASPER",
       description: "Admire the rich, earthy tones and intricate patterns of Jasper. A grounding stone that brings warmth and sophisticated character.",
-      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSnsCZjlc6ItSzy-XFExEtrg2QgNJ6t5gCKOSpEYteVg&s=10"
+      images: gemstoneImages['jasper'] || []
     }
   ];
+
+  const stoneSliderSettings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    pauseOnHover: false,
+    arrows: false,
+  };
 
   const sliderSettings = {
     dots: true,
@@ -121,11 +133,7 @@ const RoyalGemStones = () => {
 
       {/* Fullscreen Preloader */}
       <div className={`royal-preloader ${!loading ? 'hidden' : ''}`}>
-        <div className="typing-container">
-          <h1 className="typing-text">
-            ROYAL GEM STONES <span style={{ color: '#d4af37', margin: '0 8px' }}>X</span> STONEO
-          </h1>
-        </div>
+        <div className="loader-fade-2">ROYAL GEM STONES</div>
       </div>
 
       {/* Large Carousel */}
@@ -141,7 +149,7 @@ const RoyalGemStones = () => {
                 <div className="royal-slide-content">
                   <p style={{ color: '#ccc', marginBottom: '15px', letterSpacing: '4px', textTransform: 'uppercase', fontSize: '1.2rem', fontWeight: 300 }}>{item.subtitle}</p>
                   <h2>{item.title}</h2>
-                  <button 
+                  <button
                     className="btn-view-product"
                     onClick={() => navigate(`/royal-gem-stones/application/${item.subtitle.toLowerCase().replace(/\s+/g, '-')}`)}
                   >
@@ -161,21 +169,34 @@ const RoyalGemStones = () => {
         {stoneCategories.map((stone, index) => (
           <div
             key={stone.name}
+            onClick={() => navigate(`/royal-gem-stones/stone/${stone.name.toLowerCase()}`)}
             className={`stone-type-row ${index % 2 !== 0 ? 'reverse' : ''}`}
             ref={el => stoneRowsRef.current[index] = el}
           >
             <div className="stone-info">
               <h3>{stone.name}</h3>
               <p>{stone.description}</p>
-              <button 
+              <button
                 className="btn-view-collection"
-                onClick={() => navigate(`/royal-gem-stones/stone/${stone.name.toLowerCase()}`)}
+
               >
                 View Collection
               </button>
             </div>
-            <div className="stone-image">
-              <img src={stone.image} alt={stone.name} />
+            <div className="stone-image-slider" style={{ cursor: 'pointer' }}>
+              {stone.images && stone.images.length > 0 ? (
+                <Slider {...stoneSliderSettings}>
+                  {stone.images.map((imgSrc, i) => (
+                    <div key={i} className="stone-slide-item">
+                      <img src={imgSrc} alt={`${stone.name} ${i + 1}`} />
+                    </div>
+                  ))}
+                </Slider>
+              ) : (
+                <div className="stone-slide-item">
+                  <p style={{ color: '#555', textAlign: 'center', paddingTop: '40%' }}>No images available</p>
+                </div>
+              )}
             </div>
           </div>
         ))}
