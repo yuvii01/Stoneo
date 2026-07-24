@@ -90,11 +90,7 @@ export default function Header() {
               className="logo-img"
             /> */}
             <span className="text-logo" style={{ color: effectiveScrolled ? '#000' : '#fff', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', paddingTop: "10px" }}>
-              {isRoyalPage ? (
-                <div style={{ fontFamily: "'Jost', sans-serif", fontSize: '1.2rem', letterSpacing: '4px', textTransform: 'uppercase', fontWeight: 300, color: '#fff' }}>
-                  ROYAL GEM STONES <span style={{ color: '#d4af37', margin: '0 5px' }}>X</span> STONEO
-                </div>
-              ) : effectiveScrolled ? (
+              {effectiveScrolled ? (
                 <>
                   <img src="/logos/logo_dark_transparent.png" alt="Logo Dark" style={{ height: '60px', objectFit: 'contain' }} />
                   <img src="/logos/detail_dark_transparent.png" alt="Details Dark" style={{ height: '35px', objectFit: 'contain' }} />

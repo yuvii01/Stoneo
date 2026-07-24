@@ -30,11 +30,10 @@
 }
 
 .typing-text {
-  /* Using an elegant serif font fallback */
-  font-family: 'Playfair Display', 'Times New Roman', Times, serif;
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: 0.1em;
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: 4px;
   color: #fff;
   text-transform: uppercase;
   white-space: nowrap;
@@ -42,7 +41,7 @@
   margin: 0;
   width: 0;
   border-right: none;
-  animation: typing 2s steps(40, end) forwards;
+  animation: typing 2.5s ease-out forwards;
 }
 
 @keyframes typing {

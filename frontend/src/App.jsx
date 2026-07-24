@@ -28,6 +28,7 @@ import Blogs from './pages/Blogs';
 import BlogDetail from './pages/BlogDetail';
 import ProductDetail from './pages/ProductDetail';
 import RoyalGemStones from './pages/RoyalGemStones';
+import RoyalCollection from './pages/RoyalCollection';
 
 // Context
 import { DemandProvider } from './context/DemandContext';
@@ -76,6 +77,8 @@ function AppContent() {
           <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/get-quote" element={<GetQuote />} />
           <Route path="/royal-gem-stones" element={<RoyalGemStones />} />
+          <Route path="/royal-gem-stones/application/:collectionId" element={<RoyalCollection showFilters={true} />} />
+          <Route path="/royal-gem-stones/stone/:collectionId" element={<RoyalCollection showFilters={false} />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

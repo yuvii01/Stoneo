@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactSlick from 'react-slick';
 const Slider = ReactSlick.default || ReactSlick;
 import gsap from 'gsap';
@@ -13,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 const RoyalGemStones = () => {
   const [loading, setLoading] = useState(true);
   const stoneRowsRef = useRef([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Hide preloader after typing animation completes (2.5s)
@@ -120,7 +122,9 @@ const RoyalGemStones = () => {
       {/* Fullscreen Preloader */}
       <div className={`royal-preloader ${!loading ? 'hidden' : ''}`}>
         <div className="typing-container">
-          <h1 className="typing-text">ROYAL GEM STONES</h1>
+          <h1 className="typing-text">
+            ROYAL GEM STONES <span style={{ color: '#d4af37', margin: '0 8px' }}>X</span> STONEO
+          </h1>
         </div>
       </div>
 
@@ -137,7 +141,12 @@ const RoyalGemStones = () => {
                 <div className="royal-slide-content">
                   <p style={{ color: '#ccc', marginBottom: '15px', letterSpacing: '4px', textTransform: 'uppercase', fontSize: '1.2rem', fontWeight: 300 }}>{item.subtitle}</p>
                   <h2>{item.title}</h2>
-                  <button className="btn-view-product">View Collection</button>
+                  <button 
+                    className="btn-view-product"
+                    onClick={() => navigate(`/royal-gem-stones/application/${item.subtitle.toLowerCase().replace(/\s+/g, '-')}`)}
+                  >
+                    View Collection
+                  </button>
                 </div>
               </div>
             </div>
@@ -158,7 +167,12 @@ const RoyalGemStones = () => {
             <div className="stone-info">
               <h3>{stone.name}</h3>
               <p>{stone.description}</p>
-              <button className="btn-view-collection">View Collection</button>
+              <button 
+                className="btn-view-collection"
+                onClick={() => navigate(`/royal-gem-stones/stone/${stone.name.toLowerCase()}`)}
+              >
+                View Collection
+              </button>
             </div>
             <div className="stone-image">
               <img src={stone.image} alt={stone.name} />

@@ -1,0 +1,265 @@
+.royal-collection-page {
+  background-color: #050505;
+  color: #fff;
+  font-family: 'Jost', sans-serif;
+  min-height: 100vh;
+  padding-top: 100px;
+  /* Account for fixed header */
+  overflow-x: hidden;
+}
+
+/* Header Section */
+.collection-header {
+  text-align: center;
+  padding: 30px 30px 30px 30px;
+  background-color: #050505;
+}
+
+.collection-header h1 {
+  font-family: 'Playfair Display', 'Times New Roman', Times, serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: #d4af37;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.collection-header p {
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Layout */
+.collection-layout {
+  display: flex;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+  gap: 60px;
+}
+
+/* Sidebar & Filters */
+.collection-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(212, 175, 55, 0.2);
+  padding-right: 40px;
+}
+
+.filter-group {
+  margin-bottom: 40px;
+}
+
+.filter-group h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #d4af37;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #fff;
+  user-select: none;
+  font-weight: 300;
+  transition: color 0.3s;
+}
+
+.custom-checkbox:hover {
+  color: #d4af37;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border: 1px solid #d4af37;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.custom-checkbox input:checked~.checkmark {
+  background-color: #d4af37;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked~.checkmark:after {
+  display: block;
+}
+
+.custom-checkbox .checkmark:after {
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.helper-text {
+  display: block;
+  font-size: 0.8rem;
+  color: #a0a0a0;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* Product Grid */
+.collection-grid-container {
+  flex: 1;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+}
+
+.collection-item {
+  position: relative;
+  background-color: #0a0a0a;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.collection-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+}
+
+.item-image-container {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.item-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.collection-item:hover .item-image-container img {
+  transform: scale(1.08);
+}
+
+.item-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 30px;
+}
+
+.collection-item:hover .item-overlay {
+  opacity: 1;
+}
+
+.item-details {
+  width: 100%;
+  text-align: center;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+  transition-delay: 0.1s;
+}
+
+.collection-item:hover .item-details {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.item-details h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.btn-view-details {
+  background-color: transparent;
+  color: #d4af37;
+  border: 1px solid #d4af37;
+  padding: 10px 25px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-view-details:hover {
+  background-color: #d4af37;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .collection-layout {
+    flex-direction: column;
+    padding: 0 20px 60px;
+    gap: 40px;
+  }
+
+  .collection-sidebar {
+    width: 100%;
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .collection-grid-container {
+    padding: 0;
+  }
+
+  .collection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .item-image-container {
+    height: 350px;
+  }
+}
