@@ -34,6 +34,75 @@
   font-weight: 300;
 }
 
+/* Knowledge Section */
+.stone-knowledge-section {
+  max-width: 1300px;
+  margin: 0 auto 100px;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.knowledge-block {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.knowledge-block.reverse {
+  flex-direction: row-reverse;
+}
+
+.knowledge-text {
+  flex: 1;
+}
+
+.knowledge-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #d4af37;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+}
+
+.knowledge-text p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.2rem;
+  color: #ccc;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.knowledge-image {
+  flex: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.knowledge-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.knowledge-block:hover .knowledge-image img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 992px) {
+  .knowledge-block, .knowledge-block.reverse {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+}
+
 /* Layout */
 .collection-layout {
   display: flex;

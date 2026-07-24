@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/RoyalCollection.css';
 import SEOHead from '../components/SEOHead';
+import { stoneKnowledge } from '../stoneKnowledge';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -48,6 +49,10 @@ const generateDummyProducts = (categoryName, collectionId) => {
 const RoyalCollection = ({ showFilters = false }) => {
   const { collectionId } = useParams();
   const gridItemsRef = useRef([]);
+
+  const collectionIdLower = collectionId ? collectionId.toLowerCase() : '';
+  const knowledge = stoneKnowledge[collectionIdLower];
+  const knowledgeImages = gemstoneImages[collectionIdLower] || [];
 
   const categoryName = collectionId ? collectionId.replace(/-/g, ' ').toUpperCase() : 'STONE';
   // Use useMemo to avoid re-generating products on every render which breaks images
@@ -116,6 +121,7 @@ const RoyalCollection = ({ showFilters = false }) => {
         <p>Explore our exclusive range of {categoryName.toLowerCase()} products, crafted for the ultimate luxurious aesthetic. Hand-selected for quality, elegance, and timeless beauty.</p>
       </section>
 
+
       <section className="collection-layout">
         {showFilters && (
           <aside className="collection-sidebar">
@@ -179,6 +185,40 @@ const RoyalCollection = ({ showFilters = false }) => {
           </div>
         </div>
       </section>
+
+      {knowledge && !showFilters && (
+        <section className="stone-knowledge-section" style={{ marginTop: '50px' }}>
+          <div className="knowledge-block">
+            <div className="knowledge-text">
+              <h2>Geological Origins & Formation</h2>
+              <p>{knowledge.origins}</p>
+            </div>
+            <div className="knowledge-image">
+              <img src={knowledgeImages[0] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Origins'} alt="Geological Origins" />
+            </div>
+          </div>
+          
+          <div className="knowledge-block reverse">
+            <div className="knowledge-text">
+              <h2>Architectural Benefits & Properties</h2>
+              <p>{knowledge.whyUsed}</p>
+            </div>
+            <div className="knowledge-image">
+              <img src={knowledgeImages[1] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Why+Used'} alt="Architectural Benefits" />
+            </div>
+          </div>
+
+          <div className="knowledge-block">
+            <div className="knowledge-text">
+              <h2>Luxury Interior Design Applications</h2>
+              <p>{knowledge.whereUsed}</p>
+            </div>
+            <div className="knowledge-image">
+              <img src={knowledgeImages[2] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Where+Used'} alt="Interior Design Applications" />
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 };
