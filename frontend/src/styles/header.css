@@ -1,12 +1,13 @@
 /* Header Styles */
 .header {
-  background-color: rgb(0 0 0 / 30%);;
+  background-color: rgb(0 0 0 / 30%);
+  ;
   box-shadow: var(--shadow-sm);
   position: fixed;
   top: 0;
   z-index: 100;
   width: 100%;
-  font-weight: 100 ;
+  font-weight: 100;
   padding: 20px 0;
   font-size: 19px;
   color: white;
@@ -20,7 +21,9 @@
 }
 
 .header.royal-theme {
-  background-color: #050505 !important;
+  background-color: rgba(5, 5, 5, 0.5) !important;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
   color: #fff !important;
   box-shadow: none !important;
 }
@@ -30,7 +33,7 @@
   margin: 0 auto;
   padding-inline: 80px;
   display: flex;
-  font-size : 17px ;
+  font-size: 17px;
   justify-content: space-between;
   align-items: center;
   height: 70px;
@@ -67,10 +70,10 @@
 }
 
 .logo-img {
-  margin-block : -20px;
-  height: 101px;  
-  transform : scale(1.05) ;
-              /* main size control */
+  margin-block: -20px;
+  height: 101px;
+  transform: scale(1.05);
+  /* main size control */
   width: auto;
   /* object-fit: contain; */
   display: block;
@@ -87,15 +90,15 @@
   transform: scale(1.05);
 }
 
-.logo-div{
-  overflow : hidden !important;
-  height : 90px ;
+.logo-div {
+  overflow: hidden !important;
+  height: 90px;
 }
 
 .logo:hover {
   color: var(--color-primary-light);
-  
-  
+
+
 }
 
 /* Optional fallback logo icon (if needed) */
@@ -176,7 +179,7 @@
 
 .header.scrolled .camera-icon-container {
   background-color: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .camera-icon {
@@ -196,7 +199,8 @@
 
 @media (max-width: 768px) {
   .search-bar-container:not(.mobile-search-bar) {
-    display: none; /* Hide desktop search bar on small mobile */
+    display: none;
+    /* Hide desktop search bar on small mobile */
   }
 
   .mobile-search-bar {
@@ -220,7 +224,7 @@
 
   .mobile-search-bar .camera-icon-container {
     background-color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   .mobile-search-bar .camera-icon {
@@ -233,6 +237,7 @@
     margin: 0 10px;
     padding: 4px 10px;
   }
+
   .search-bar-input {
     font-size: 14px;
     padding: 6px 8px;
@@ -320,7 +325,7 @@
   min-width: 200px;
   display: none;
   flex-direction: column;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
   z-index: 1000;
@@ -394,7 +399,7 @@
 
 /* CTA Button */
 .nav-link.cta-button {
-  
+
   /* border-style: outset; */
   padding: 8px 8px;
   border-radius: var(--border-radius-md);
@@ -412,10 +417,10 @@
 }
 
 .nav-link.cta-button:hover {
-  
+
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
-  
+
 }
 
 .header.scrolled .nav-link.cta-button {
@@ -476,7 +481,7 @@
   }
 
   /* Mobile nav */
-   .nav {
+  .nav {
     position: absolute;
     top: 100%;
     right: 0;
@@ -503,7 +508,7 @@
     font-size: 15px;
     color: #333 !important;
   }
-  
+
   .header.scrolled .nav-link {
     color: #333 !important;
   }
@@ -526,20 +531,20 @@
   .logo-text {
     font-size: 14px;
   }
-  
+
   .header {
     padding: 12px 0;
   }
-  
+
   .nav-link {
     padding: 12px 14px;
     font-size: 14px;
   }
-  
+
   .dropdown-menu {
     padding: 8px 0 !important;
   }
-  
+
   .dropdown-menu a {
     padding: 10px 14px;
     font-size: 14px;
@@ -565,7 +570,7 @@
   .dropdown-menu.show {
     max-height: 800px;
   }
-  
+
   .dropdown-menu.mega-menu {
     flex-direction: column;
     left: 0;
@@ -580,7 +585,8 @@
   }
 
   .dropdown-menu a {
-    padding: 12px 30px;   /* indent */
+    padding: 12px 30px;
+    /* indent */
     font-size: 14px;
   }
 
