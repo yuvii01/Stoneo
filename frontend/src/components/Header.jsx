@@ -7,7 +7,7 @@ import '../styles/header.css';
 export default function Header() {
   const { demands } = useDemand();
   const location = useLocation();
-  const isRoyalPage = location.pathname === '/royal-gem-stones';
+  const isRoyalPage = location.pathname.includes('/royal-gem-stones');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isApplicationsOpen, setIsApplicationsOpen] = useState(false);
