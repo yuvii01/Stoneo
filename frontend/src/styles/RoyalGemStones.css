@@ -316,8 +316,8 @@
   .stone-type-row,
   .stone-type-row.reverse {
     flex-direction: column;
-    gap: 20px;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   .stone-info {
@@ -378,8 +378,8 @@
 
   .stone-type-row,
   .stone-type-row.reverse {
-    gap: 15px;
-    margin-bottom: 30px;
+    gap: 10px;
+    margin-bottom: 15px;
   }
 
   .stone-image-slider {
