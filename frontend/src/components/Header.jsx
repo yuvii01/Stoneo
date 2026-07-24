@@ -189,13 +189,13 @@ export default function Header() {
                 <Link to="/category/kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
                 <Link to="/category/bathroom-vanity" onClick={closeMenus}>Bathroom & Vanity</Link>
                 <Link to="/category/staircase" onClick={closeMenus}>Staircase</Link>
-                <Link to="/category/pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link>
+                {/* <Link to="/category/pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link> */}
                 <Link to="/category/table-tops-furniture" onClick={closeMenus}>Table Tops & Furniture</Link>
               </div>
 
               <div className="mega-menu-column">
                 <h3 className="mega-menu-heading">Exterior</h3>
-                <Link to="/category/elevation-facade-cladding" onClick={closeMenus}>Elevation/Facade Cladding</Link>
+                <Link to="/category/elevation-facade-cladding" onClick={closeMenus}>Elevation Cladding</Link>
                 <Link to="/category/outdoor-flooring-paving" onClick={closeMenus}>Outdoor Flooring & Paving</Link>
                 <Link to="/category/garden-landscaping" onClick={closeMenus}>Garden & Landscaping</Link>
                 <Link to="/category/driveways-pathways" onClick={closeMenus}>Driveways & Pathways</Link>
@@ -234,30 +234,30 @@ export default function Header() {
                 <Link to="/category/granite" onClick={closeMenus} className="mega-menu-subheading-link">Granite &rsaquo;</Link>
                 <Link to="/category/granite?type=south" onClick={closeMenus}>South India Granites</Link>
                 <Link to="/category/granite?type=north" onClick={closeMenus}>North India Granites</Link>
-                <Link to="/category/granite?type=imported" onClick={closeMenus}>Imported Granites</Link>
+                {/* <Link to="/category/granite?type=imported" onClick={closeMenus}>Imported Granites</Link> */}
                 {/* <Link to="/category/granite-tiles" onClick={closeMenus}>Granite Tiles</Link> */}
 
                 <Link to="/category/marble" onClick={closeMenus} className="mega-menu-subheading-link">Marble &rsaquo;</Link>
                 <Link to="/category/marble?type=imported" onClick={closeMenus}>Imported Marble</Link>
                 <Link to="/category/marble?type=indian" onClick={closeMenus}>Indian Marble</Link>
-                <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link>
+                {/* <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link> */}
 
 
                 <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Sandstones &rsaquo;</Link>
                 <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Kota Stone</Link>
-                <Link to="/category/sandstone?type=agra_sandstone" onClick={closeMenus}>Agra Sandstone</Link>
-                <Link to="/category/sandstone?type=raj_green_sandstone" onClick={closeMenus}>Raj Green Sandstone</Link>
+                {/* <Link to="/category/sandstone?type=agra_sandstone" onClick={closeMenus}>Agra Sandstone</Link>
+                <Link to="/category/sandstone?type=raj_green_sandstone" onClick={closeMenus}>Raj Green Sandstone</Link> */}
               </div>
 
               {/* Column 2: Engineered Surfaces */}
               <div className="mega-menu-column">
                 <h3 className="mega-menu-heading">Engineered Surfaces</h3>
 
-                <Link to="/category/tiles" onClick={closeMenus} className="mega-menu-subheading-link">Tiles &rsaquo;</Link>
+                {/* <Link to="/category/tiles" onClick={closeMenus} className="mega-menu-subheading-link">Tiles &rsaquo;</Link>
                 <Link to="/category/tiles-vitrified" onClick={closeMenus}>Vitrified Tiles</Link>
                 <Link to="/category/tiles-ceramic" onClick={closeMenus}>Ceramic Tiles</Link>
                 <Link to="/category/tiles-porcelain" onClick={closeMenus}>Porcelain Tiles</Link>
-                <Link to="/category/tiles-elevation" onClick={closeMenus}>Elevation Tiles</Link>
+                <Link to="/category/tiles-elevation" onClick={closeMenus}>Elevation Tiles</Link> */}
 
                 <Link to="/category/quartz" onClick={closeMenus} className="mega-menu-subheading-link">Quartz &rsaquo;</Link>
                 <Link to="/category/quartz?type=calacatta" onClick={closeMenus}>Calacatta Quartz</Link>
@@ -276,16 +276,16 @@ export default function Header() {
                 <Link to="/category/paving-landscape?type=cobbles" onClick={closeMenus} className="mega-menu-subheading-link">Cobbles &rsaquo;</Link>
                 <Link to="/category/paving-landscape?type=cobbles-granite" onClick={closeMenus}>Granite Cobbles</Link>
                 <Link to="/category/paving-landscape?type=cobbles-sandstone" onClick={closeMenus}>Sandstone Cobbles</Link>
-                <Link to="/category/paving-landscape?type=cobbles-limestone" onClick={closeMenus}>Limestone Cobbles</Link>
+                {/* <Link to="/category/paving-landscape?type=cobbles-limestone" onClick={closeMenus}>Limestone Cobbles</Link> */}
 
                 <Link to="/category/paving-landscape?type=pavers" onClick={closeMenus} className="mega-menu-subheading-link">Brick & Travertine &rsaquo;</Link>
-                <Link to="/category/paving-landscape?type=pavers-brick" onClick={closeMenus}>Paving Bricks</Link>
+                {/* <Link to="/category/paving-landscape?type=pavers-brick" onClick={closeMenus}>Paving Bricks</Link> */}
                 <Link to="/category/paving-landscape?type=pavers-sandstone" onClick={closeMenus}>Sandstone Pavers</Link>
                 <Link to="/category/paving-landscape?type=pavers-travertine" onClick={closeMenus}>Travertine Pavers</Link>
 
                 <Link to="/category/paving-landscape?type=stones" onClick={closeMenus} className="mega-menu-subheading-link">Stones & Others &rsaquo;</Link>
                 <Link to="/category/paving-landscape?type=stones-pebbles" onClick={closeMenus}>Landscaping Pebbles</Link>
-                <Link to="/category/paving-landscape?type=stones-stepping" onClick={closeMenus}>Stepping Stones</Link>
+                {/* <Link to="/category/paving-landscape?type=stones-stepping" onClick={closeMenus}>Stepping Stones</Link> */}
               </div>
             </div>
           </div>
