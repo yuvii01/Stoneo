@@ -460,10 +460,10 @@ export default function MarbleCarousel() {
         onMouseLeave={onMouseLeave}
       >
         {/* Header */}
-        <div className="gc-header">
-          {<p className="gc-eyebrow">[ Our Premium Selection ]</p>}
-          <h2 className="gc-title"> Marble Collection</h2>
-          <p className="gc-eyebrow">[ Click any color to view its patterns ]</p>
+        <div className="gc-header" style={{ textAlign: "center", marginBottom: "2rem" }}>
+          <p className="gc-eyebrow" style={{ letterSpacing: "3px", textTransform: "uppercase", color: "#c8a97e", fontSize: "0.9rem", fontWeight: "600", marginBottom: "0.5rem" }}>✦ The Premium Selection ✦</p>
+          <h2 className="gc-title" style={{ fontSize: "2.8rem", fontWeight: "300", margin: "10px 0", color: "#333", fontFamily: "serif" }}>Exquisite <span style={{ fontWeight: "700", color: "#1a1a1a" }}>Marble</span> Collection</h2>
+          <p className="gc-eyebrow" style={{ opacity: 0.8, fontStyle: "italic", fontSize: "1rem" }}>Click any color to explore its luxurious patterns</p>
         </div>
 
         {/* Carousel track */}
@@ -487,7 +487,7 @@ export default function MarbleCarousel() {
                   style={cardStyle(clonedIdx)}
                   onClick={() => {
 
-                    navigate(`/category/Imported_Marble?category=${encodeURIComponent(item.name.trim())}`)
+                    navigate(`/category/marble?category=${encodeURIComponent(item.name.trim())}`)
                     pausedRef.current = true;
                     goTo(virtualIdx + diff);
                     scheduleResume();
@@ -548,9 +548,9 @@ export default function MarbleCarousel() {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             className="marble-view-all-btn"
-            onClick={() => navigate("/category/Imported_Marble")}
+            onClick={() => navigate("/category/marble")}
           >
-            View All Imported Marbles
+            View All Marbles
           </button>
         </div>
       </section>

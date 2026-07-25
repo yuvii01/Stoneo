@@ -15,8 +15,6 @@ import './App.css';
 import ScrollToTop from './pages/ScrollToTop';
 
 import Sandstone from './pages/categories/Sandstone';
-import MarbleImported from './pages/categories/Marble_Imported';
-import MarbleIndian from './pages/categories/Marble_Indian';
 import Granite from './pages/categories/Granite';
 import Marble from './pages/categories/Marble';
 import Quartz from './pages/categories/Quartz';
@@ -59,8 +57,6 @@ function AppContent() {
           {/* Categories */}
           <Route path="/category/granite" element={<Granite />} />
           <Route path="/category/marble" element={<Marble />} />
-          <Route path="/category/Imported_Marble" element={<MarbleImported />} />
-          <Route path="/category/Indian_Marble" element={<MarbleIndian />} />
           <Route path="/category/sandstone" element={<Sandstone />} />
           <Route path="/category/quartz" element={<Quartz />} />
           <Route path="/category/onyx" element={<Onyx />} />
