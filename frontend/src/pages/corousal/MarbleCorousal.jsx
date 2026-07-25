@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 
 const originalItems = [
-  { id: "s1", name: "Black",  color: "#1a1a1a", url: "/marble/black.png" },
-  { id: "s2", name: "White",  color: "#d6d6d6", url: "/marble/white.png" },
-  { id: "s4", name: "Beige",  color: "#c8a97e", url: "/marble/beige.png" },
-  { id: "s5", name: "Brown",  color: "#7b4f2e", url: "/marble/brown.png" },
-  { id: "s6", name: "Red",    color: "#b52a2a", url: "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Cheery-red-marble-300x297.png" },
+  { id: "s1", name: "Black", color: "#1a1a1a", url: "/marble/black.png" },
+  { id: "s2", name: "White", color: "#d6d6d6", url: "/marble/white.png" },
+  { id: "s4", name: "Beige", color: "#c8a97e", url: "/marble/beige.png" },
+  { id: "s5", name: "Brown", color: "#7b4f2e", url: "/marble/brown.png" },
+  { id: "s6", name: "Red", color: "#b52a2a", url: "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Cheery-red-marble-300x297.png" },
   { id: "s8", name: "Yellow", color: "#d4b400", url: "/marble/yellow.png" },
-  { id: "s9", name: "Pink",   color: "#d4607a", url: "/marble/pink.png" },
-  { id: "s10", name: "Grey",  color: "#7a7a7a", url: "/marble/grey.png" },
+  { id: "s9", name: "Pink", color: "#d4607a", url: "/marble/pink.png" },
+  { id: "s10", name: "Grey", color: "#7a7a7a", url: "/marble/grey.png" },
   { id: "s11", name: "Green", color: "#2e7d32", url: "/marble/green.png" },
 ];
 
@@ -382,54 +382,54 @@ export default function MarbleCarousel() {
   }, [scheduleResume]);
 
   /* ── Touch handlers ── */
-const dragOffset = useRef(0);
-const [, forceRender] = useState(0); // for drag visual feedback
+  const dragOffset = useRef(0);
+  const [, forceRender] = useState(0); // for drag visual feedback
 
-const onTouchStart = useCallback((e) => {
-  pausedRef.current = true;
-  clearTimeout(resumeTimerRef.current);
-  touchStartX.current = e.touches[0].clientX;
-  touchStartY.current = e.touches[0].clientY;
-  isDragging.current = true;
-  dragOffset.current = 0;
-}, []);
-
-const onTouchMove = useCallback((e) => {
-  if (!isDragging.current) return;
-  const dx = e.touches[0].clientX - touchStartX.current;
-  const dy = e.touches[0].clientY - touchStartY.current;
-
-  if (Math.abs(dy) > Math.abs(dx) + 5) {
-    isDragging.current = false;
+  const onTouchStart = useCallback((e) => {
+    pausedRef.current = true;
+    clearTimeout(resumeTimerRef.current);
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isDragging.current = true;
     dragOffset.current = 0;
+  }, []);
+
+  const onTouchMove = useCallback((e) => {
+    if (!isDragging.current) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+
+    if (Math.abs(dy) > Math.abs(dx) + 5) {
+      isDragging.current = false;
+      dragOffset.current = 0;
+      forceRender(n => n + 1);
+      return;
+    }
+
+    e.preventDefault();
+    dragOffset.current = dx;
     forceRender(n => n + 1);
-    return;
-  }
+  }, []);
 
-  e.preventDefault();
-  dragOffset.current = dx;
-  forceRender(n => n + 1);
-}, []);
+  const onTouchEnd = useCallback((e) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
 
-const onTouchEnd = useCallback((e) => {
-  if (!isDragging.current) return;
-  isDragging.current = false;
+    const dx = dragOffset.current;
+    dragOffset.current = 0;
 
-  const dx = dragOffset.current;
-  dragOffset.current = 0;
+    const threshold = CARD_W * 0.18;
+    if (dx < -threshold) goTo(virtualIdxRef.current + 1);
+    else if (dx > threshold) goTo(virtualIdxRef.current - 1);
+    else goTo(virtualIdxRef.current);
 
-  const threshold = CARD_W * 0.18;
-  if (dx < -threshold) goTo(virtualIdxRef.current + 1);
-  else if (dx > threshold) goTo(virtualIdxRef.current - 1);
-  else goTo(virtualIdxRef.current);
-
-  scheduleResume();
-}, [CARD_W, goTo, scheduleResume]);
+    scheduleResume();
+  }, [CARD_W, goTo, scheduleResume]);
 
 
   /* ── Track translate ── */
-const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset.current;
-const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2 + GAP / 2}px))`;
+  const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset.current;
+  const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2 + GAP / 2}px))`;
 
   /* ── Per-card style ── */
   const cardStyle = (clonedIdx) => {
@@ -462,7 +462,7 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
         {/* Header */}
         <div className="gc-header">
           {<p className="gc-eyebrow">[ Our Premium Selection ]</p>}
-          <h2 className="gc-title">Imported Marble Collection</h2>
+          <h2 className="gc-title"> Marble Collection</h2>
           <p className="gc-eyebrow">[ Click any color to view its patterns ]</p>
         </div>
 
@@ -512,7 +512,7 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
         <div className="gc-nav">
           <button className="gc-arrow" onClick={prev} aria-label="Previous">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
 
@@ -539,13 +539,13 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
 
           <button className="gc-arrow" onClick={next} aria-label="Next">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
         </div>
 
 
-         <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             className="marble-view-all-btn"
             onClick={() => navigate("/category/Imported_Marble")}

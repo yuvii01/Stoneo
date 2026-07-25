@@ -14,7 +14,6 @@ import { getOrganizationSchema, getLocalBusinessSchema } from '../utils/seo';
 
 import GraniteCarousel from './corousal/GraniteCorousal';
 import MarbleCarousel from './corousal/MarbleCorousal';
-import TilesCarousel from './corousal/IndianMarbleCorousal';
 import IndianMarbleCarousel from './corousal/IndianMarbleCorousal';
 import SandStoneCarousel from './corousal/SandStoneCorousal';
 import ReviewsCarousel from './corousal/ReviewsCorousal';
@@ -103,7 +102,7 @@ export default function Home() {
         </section>
 
         <section className="containerr">
-          <div 
+          <div
             onClick={() => navigate('/royal-gem-stones')}
             style={{ cursor: "pointer", position: "relative", width: "100%", height: "100%", borderRadius: "20px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}
           >
@@ -236,7 +235,7 @@ export default function Home() {
         </section> */}
 
         <section>
-          <IndianMarbleCarousel />
+          <MarbleCarousel />
         </section>
 
         {/* <section>
