@@ -1,4 +1,4 @@
-# KMStoneX SEO Implementation Guide
+# Stoneo SEO Implementation Guide
 
 ## 🚀 SEO Setup Complete!
 
@@ -51,7 +51,7 @@ Replace placeholder values:
 ```javascript
 export const SEO_CONFIG = {
   phone: '+91-YOUR-ACTUAL-PHONE', // Replace with actual phone
-  email: 'contact@kmstonex.in',   // Update email if needed
+  email: 'contact@stoneo.in',   // Update email if needed
   socialLinks: {
     facebook: 'https://www.facebook.com/YOUR-PAGE',  // Add actual links
     instagram: 'https://www.instagram.com/YOUR-PAGE',
@@ -66,19 +66,19 @@ Edit `index.html` and replace:
 - Email address
 - Address information (streetAddress, city, state, postalCode)
 - Social media links
-- Logo URL: `https://kmstonex.in/logo.png`
+- Logo URL: `https://stoneo.in/logo.png`
 
 ### 3. **Register Google Search Console**
 1. Go to: https://search.google.com/search-console
-2. Add your domain: kmstonex.in
+2. Add your domain: stoneo.in
 3. Verify ownership (DNS verification recommended)
-4. Submit sitemap: https://kmstonex.in/sitemap.xml
+4. Submit sitemap: https://stoneo.in/sitemap.xml
 5. Check indexation status
 
 ### 4. **Submit Sitemap to Bing**
 1. Go to: https://www.bing.com/webmasters/
 2. Add your site
-3. Submit sitemap: https://kmstonex.in/sitemap.xml
+3. Submit sitemap: https://stoneo.in/sitemap.xml
 
 ### 5. **Set Google Analytics**
 1. Create GA4 property: https://analytics.google.com/
@@ -97,7 +97,7 @@ Add these to `public/` folder:
 - `apple-touch-icon.png` - 180x180px for iOS bookmarks
 
 ### 7. **Enable HTTPS** (Essential for SEO)
-- Verify your domain uses HTTPS (https://kmstonex.in)
+- Verify your domain uses HTTPS (https://stoneo.in)
 - Update `index.html` base URL if needed
 - Update `seo.js` baseUrl if using different domain
 
@@ -161,7 +161,7 @@ Your pages are now optimized for these search terms:
 After registering in Search Console:
 
 1. **Submit URL for Indexing**:
-   - Submit your homepage: https://kmstonex.in
+   - Submit your homepage: https://stoneo.in
    - Google will follow internal links and crawl all pages
 
 2. **Monitor Coverage Report**:

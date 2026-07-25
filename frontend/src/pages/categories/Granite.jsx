@@ -669,7 +669,7 @@ export default function Granite() {
                     <div style={{ fontSize: '16px', color: '#555' }}>
                       {/* <p>📞 <strong>Call:</strong> +91-9256901351</p> */}
                       <p>📞 <strong>Call:</strong> +91-1234567890</p>
-                      {/* <p>✉️ <strong>Email:</strong> infokmstonex@gmail.com</p> */}
+                      {/* <p>✉️ <strong>Email:</strong> infostoneo@gmail.com</p> */}
                       <p>✉️ <strong>Email:</strong> demo@example.com</p>
                       {/* <p>💬 <strong>WhatsApp:</strong> +91-9256901351</p> */}
                       <p>💬 <strong>WhatsApp:</strong> +91-1234567890</p>

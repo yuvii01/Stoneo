@@ -1,61 +1,61 @@
 /**
- * SEO Configuration for KMStoneX
+ * SEO Configuration for Stoneo
  * Manages meta tags, canonical URLs, and structured data
  */
 
 export const SEO_CONFIG = {
-  siteName: 'Stoneo India', // 'KMStoneX',
-  baseUrl: 'https://stoneo.in', // 'https://kmstonex.in',
+  siteName: 'Stoneo India', // 'Stoneo',
+  baseUrl: 'https://stoneo.in', // 'https://stoneo.in',
   siteDescription: 'Premium granite, marble, and natural stone supplier in India. Expert suppliers for residential and commercial projects.',
-  defaultImage: 'https://example.com/og-image.png', // 'https://kmstonex.in/og-image.png',
+  defaultImage: 'https://example.com/og-image.png', // 'https://stoneo.in/og-image.png',
   phone: '+91-1234567890', // '+91-XXXXXXXXXX',
-  email: 'demo@example.com', // 'contact@kmstonex.in',
+  email: 'demo@example.com', // 'contact@stoneo.in',
   socialLinks: {
-    facebook: 'https://www.facebook.com/demo', // 'https://www.facebook.com/kmstonex',
-    instagram: 'https://www.instagram.com/demo', // 'https://www.instagram.com/kmstonex',
-    linkedin: 'https://www.linkedin.com/company/demo', // 'https://www.linkedin.com/company/kmstonex',
+    facebook: 'https://www.facebook.com/demo', // 'https://www.facebook.com/stoneo',
+    instagram: 'https://www.instagram.com/demo', // 'https://www.instagram.com/stoneo',
+    linkedin: 'https://www.linkedin.com/company/demo', // 'https://www.linkedin.com/company/stoneo',
   },
 };
 
 export const PAGE_METADATA = {
   home: {
-    title: 'KMStoneX - Premium Granite, Marble & Natural Stone Supplier in India',
-    description: 'Buy premium quality granite, marble, sandstone & tiles at KMStoneX. Expert stone supplier for residential & commercial projects. Get best prices on imported & Indian marble.',
+    title: 'Stoneo - Premium Granite, Marble & Natural Stone Supplier in India',
+    description: 'Buy premium quality granite, marble, sandstone & tiles at Stoneo. Expert stone supplier for residential & commercial projects. Get best prices on imported & Indian marble.',
     keywords: 'granite supplier, marble supplier, sandstone, tiles, natural stone, granite in india, marble in india, stone supplier',
     path: '/',
   },
   about: {
-    title: 'About KMStoneX - Natural Stone Experts | Quality & Reliability',
-    description: 'Learn about KMStoneX - your trusted stone supplier. Discover our commitment to quality, expertise, and customer satisfaction since 2020.',
-    keywords: 'about kmstonex, stone supplier, natural stone experts, granite marble supplier',
+    title: 'About Stoneo - Natural Stone Experts | Quality & Reliability',
+    description: 'Learn about Stoneo - your trusted stone supplier. Discover our commitment to quality, expertise, and customer satisfaction since 2020.',
+    keywords: 'about stoneo, stone supplier, natural stone experts, granite marble supplier',
     path: '/about',
   },
   granite: {
-    title: 'Premium Granite Supplier - Best Quality & Prices | KMStoneX',
+    title: 'Premium Granite Supplier - Best Quality & Prices | Stoneo',
     description: 'Explore our premium collection of granite varieties. From classic to exotic designs, find the perfect granite for your project. Expert guidance & competitive prices.',
     keywords: 'granite supplier, granite types, granite prices, black granite, granite tiles, premium granite',
     path: '/category/granite',
   },
   marbleImported: {
-    title: 'Imported Marble Supplier - International Varieties | KMStoneX',
+    title: 'Imported Marble Supplier - International Varieties | Stoneo',
     description: 'Premium imported marble from around the world. Italian marble, Portuguese marble, Turkish marble & more. Perfect for luxury projects and high-end finishes.',
     keywords: 'imported marble, italian marble, marble supplier, international marble, marble tiles',
     path: '/category/Imported_Marble',
   },
   marbleIndian: {
-    title: 'Indian Marble Supplier - Best Quality & Affordable Prices | KMStoneX',
+    title: 'Indian Marble Supplier - Best Quality & Affordable Prices | Stoneo',
     description: 'High-quality Indian marble at the best prices. Rajasthan marble, Makrana marble, and more. Ideal for all residential and commercial applications.',
     keywords: 'indian marble, rajasthan marble, makrana marble, marble supplier india, domestic marble',
     path: '/category/Indian_Marble',
   },
   sandstone: {
-    title: 'Sandstone Supplier - Natural Beauty for Your Project | KMStoneX',
+    title: 'Sandstone Supplier - Natural Beauty for Your Project | Stoneo',
     description: 'Premium quality sandstone for outdoor and indoor applications. Durable, beautiful, and cost-effective. Perfect for landscaping, facades, and interior design.',
     keywords: 'sandstone supplier, sandstone tiles, natural sandstone, landscape sandstone, outdoor stone',
     path: '/category/sandstone',
   },
   getQuote: {
-    title: 'Get Quote - Stone Pricing & Estimates | KMStoneX',
+    title: 'Get Quote - Stone Pricing & Estimates | Stoneo',
     description: 'Request a personalized quote for your stone project. Get competitive pricing on granite, marble, sandstone, and tiles. Fast response guaranteed.',
     keywords: 'get quote, stone pricing, estimate, stone supplier quote, granite price marble price',
     path: '/get-quote',

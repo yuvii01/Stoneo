@@ -1,7 +1,23 @@
 {
   "name": "stoneo-root",
   "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/yuvii01/Stoneo#readme",
+  "bugs": {
+    "url": "https://github.com/yuvii01/Stoneo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuvii01/Stoneo.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "dev": "npx concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^10.0.4"
   }
 }
