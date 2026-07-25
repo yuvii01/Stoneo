@@ -463,10 +463,10 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
         onMouseLeave={onMouseLeave}
       >
         {/* Header */}
-        <div className="gc-header">
-          {<p className="gc-eyebrow">[ Our Premium Selection ]</p>}
-          <h2 className="gc-title">Exquisite Granite Collection</h2>
-          <p className="gc-eyebrow">[ Click any color to view its patterns ]</p>
+        <div className="gc-header" style={{ textAlign: "center", marginBottom: "2rem" }}>
+          <p className="gc-eyebrow" style={{ letterSpacing: "3px", textTransform: "uppercase", color: "#c8a97e", fontSize: "0.9rem", fontWeight: "600", marginBottom: "0.5rem" }}>✦ The Premium Selection ✦</p>
+          <h2 className="gc-title" style={{ fontSize: "2.8rem", fontWeight: "300", margin: "10px 0", color: "#333", fontFamily: "serif" }}>Exquisite <span style={{ fontWeight: "700", color: "#1a1a1a" }}>Granite</span> Collection</h2>
+          <p className="gc-eyebrow" style={{ opacity: 0.8, fontStyle: "italic", fontSize: "1rem" }}>Click any color to explore its luxurious patterns</p>
         </div>
 
         {/* Carousel track */}
