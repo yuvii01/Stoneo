@@ -218,9 +218,9 @@ export default function Home() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
-                <CountUp end={28} duration={2.5} enableScrollSpy scrollSpyOnce />
+                <CountUp end={8} duration={2.5} enableScrollSpy scrollSpyOnce />
               </div>
-              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>States we are available</div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Countries we are available</div>
             </div>
 
           </div>

@@ -35,7 +35,7 @@ function deltaE(lab1, lab2) {
 // Trimmed mean: discard darkest & brightest 10% of pixels to remove shadow/highlight noise
 function trimmedMeanRGB(pixels, trim = 0.1) {
   if (pixels.length === 0) return [128, 128, 128];
-  const sorted = [...pixels].sort((a, b) => (a[0]+a[1]+a[2]) - (b[0]+b[1]+b[2]));
+  const sorted = [...pixels].sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]));
   const cut = Math.floor(sorted.length * trim);
   const kept = sorted.slice(cut, sorted.length - cut);
   const n = kept.length || 1;
@@ -54,7 +54,7 @@ function computeVariance(pixels) {
   const mB = pixels.reduce((a, p) => a + p[2], 0) / n;
   return pixels.reduce((a, p) =>
     a + Math.pow(p[0] - mR, 2) + Math.pow(p[1] - mG, 2) + Math.pow(p[2] - mB, 2)
-  , 0) / (n * 3);
+    , 0) / (n * 3);
 }
 
 // Returns a 0–100 score for how well the image's HSL/variance matches a named color
@@ -140,8 +140,8 @@ function scoreColorMatch(colorName, h, s, l, variance) {
       // High pixel variance = many colors in the region
       if (variance > 3500) return 90;
       if (variance > 2000) return 75;
-      if (variance > 900)  return 55;
-      if (variance > 300)  return 35;
+      if (variance > 900) return 55;
+      if (variance > 300) return 35;
       return 15;
     }
     default:
@@ -209,7 +209,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
         const data = ctx.getImageData(0, 0, GRID, GRID).data;
         const pxs = [];
         for (let i = 0; i < data.length; i += 4) {
-          pxs.push([data[i], data[i+1], data[i+2]]);
+          pxs.push([data[i], data[i + 1], data[i + 2]]);
         }
         return pxs;
       });
@@ -265,14 +265,14 @@ export default function VisualSearchModal({ isOpen, onClose }) {
   useEffect(() => {
     const handleMove = (e) => {
       if (!dragRef.current.isDragging && !dragRef.current.isResizing) return;
-      
+
       const container = document.querySelector('.vs-image-container');
       if (!container) return;
       const rect = container.getBoundingClientRect();
-      
+
       const dxPercent = ((e.clientX - dragRef.current.startX) / rect.width) * 100;
       const dyPercent = ((e.clientY - dragRef.current.startY) / rect.height) * 100;
-      
+
       if (dragRef.current.isDragging) {
         let newX = dragRef.current.startBox.x + dxPercent;
         let newY = dragRef.current.startBox.y + dyPercent;
@@ -307,7 +307,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    
+
     const reader = new FileReader();
     reader.onload = (event) => {
       const dataUrl = event.target.result;
@@ -324,12 +324,12 @@ export default function VisualSearchModal({ isOpen, onClose }) {
     <div className="vs-modal-overlay" onClick={onClose}>
       <div className={`vs-modal-content ${mode === 'results' ? 'vs-results-mode' : ''}`} onClick={(e) => e.stopPropagation()}>
         <button className="vs-close-btn" onClick={onClose}>✕</button>
-        
+
         {mode === 'upload' ? (
           <div className="vs-upload-view">
-            <h2>Material Bank Match</h2>
+            <h2>Stoneo Image Match</h2>
             <p>Upload an image and see similar items available for sampling.</p>
-            
+
             <div className="vs-dropzone">
               <p>Drag an image here or</p>
               <label className="vs-upload-btn">
@@ -337,9 +337,9 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                 <input type="file" accept="image/*" onChange={handleImageUpload} hidden />
               </label>
             </div>
-            
+
             <div className="vs-divider">or</div>
-            
+
             <div className="vs-paste-link">
               <input type="text" placeholder="Paste image link" />
               <button>Search</button>
@@ -353,12 +353,12 @@ export default function VisualSearchModal({ isOpen, onClose }) {
             <div className="vs-results-left">
               <div className="vs-image-container">
                 <img src={uploadedImage} alt="Uploaded" className="vs-uploaded-img" />
-                <div 
+                <div
                   className="vs-scan-box"
-                  style={{ 
-                    left: `${scanBox.x}%`, 
-                    top: `${scanBox.y}%`, 
-                    width: `${scanBox.w}%`, 
+                  style={{
+                    left: `${scanBox.x}%`,
+                    top: `${scanBox.y}%`,
+                    width: `${scanBox.w}%`,
                     height: `${scanBox.h}%`,
                     cursor: 'move'
                   }}
@@ -368,7 +368,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                     dragRef.current = { isDragging: true, isResizing: false, startX: e.clientX, startY: e.clientY, startBox: { ...scanBox } };
                   }}
                 >
-                  <div 
+                  <div
                     className="vs-resize-handle"
                     style={{
                       position: 'absolute',
@@ -389,15 +389,15 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                 </div>
               </div>
             </div>
-            
+
             <div className="vs-results-right">
               <div className="vs-results-header">
                 <h2>Product Matches</h2>
               </div>
-              
+
               <div className="vs-category-filters">
                 {CATEGORIES.map(cat => (
-                  <button 
+                  <button
                     key={cat}
                     className={`vs-filter-pill ${activeCategory === cat ? 'active' : ''}`}
                     onClick={() => setActiveCategory(cat)}
@@ -406,7 +406,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                   </button>
                 ))}
               </div>
-              
+
               <div className="vs-product-grid">
                 {sortedProducts
                   .filter(p => activeCategory === 'All' || p.material === activeCategory)
@@ -423,7 +423,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                         <button className="vs-add-btn">Add to Quote</button>
                       </div>
                     </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>
