@@ -161,12 +161,25 @@ const css = `
   }
 
   .marble-view-all-btn{
-      margin-top: 50px;
-    padding: 10px 10px;
-    width: 250px;
-    border: solid;
+    margin-top: 50px;
+    padding: 16px 32px;
+    width: 300px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Jost', sans-serif;
+    border: 1.5px solid var(--text-dark);
     border-radius: 50px;
-    }
+    background: transparent;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .marble-view-all-btn:hover {
+    background: var(--text-dark);
+    color: #fff;
+  }
 
   /* ── Arrow buttons ── */
   .gc-arrow {
