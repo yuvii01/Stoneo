@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { CSV_PRODUCTS } from '../utils/constants';
 import '../styles/visual-search.css'; // Reusing visual search styles
 
@@ -87,7 +88,7 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery, onQuery
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="vs-modal-overlay" onClick={handleClose}>
       <div className="vs-modal-content vs-results-mode" style={{ maxWidth: '1000px', width: '90%' }} onClick={(e) => e.stopPropagation()}>
         <button className="vs-close-btn" onClick={handleClose}>✕</button>
@@ -202,6 +203,7 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery, onQuery
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
