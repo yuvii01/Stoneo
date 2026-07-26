@@ -5,8 +5,8 @@
 
 /* Page Header */
 .page-header {
-  /* background-image: url('https://i.pinimg.com/736x/e1/a8/7e/e1a87e326df152aba5b3db8ab6bf091c.jpg');
-  background-size: cover; */
+  background-image: linear-gradient(rgba(15, 16, 19, 0.7), rgba(15, 16, 19, 0.8)), url('https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Stone-texture-Banner.webp');
+  background-size: cover;
   color: var(--color-white);
   padding: var(--spacing-3xl) var(--spacing-lg);
   text-align: center;

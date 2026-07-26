@@ -35,29 +35,27 @@ export default function GetQuote() {
 
   const graniteName = searchParams.get('stone') || '';
   const graniteImage = searchParams.get('image') || 'http://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg';
-  const fromQuote = searchParams.get('from') === 'quote';
+  // Helper to format requirements string from current demands or URL params
+  const formatRequirementsText = (currentDemands, stoneName) => {
+    if (currentDemands && currentDemands.length > 0) {
+      const demandList = currentDemands.map((d, index) => {
+        let params = [];
+        if (d.color) params.push(`Color: ${d.color}`);
+        if (d.finish) params.push(`Finish: ${d.finish}`);
+        if (d.features && d.features.length) params.push(`Features: ${d.features.join(', ')}`);
 
-  // Format demands if they exist
-  let initialRequirements = graniteName ? `Interested in: ${graniteName}` : 'I am looking for...';
-  let displayTitle = graniteName || 'Custom Requirement';
+        const paramStr = params.length > 0 ? ` (${params.join(' | ')})` : '';
+        return `${index + 1}. ${d.name}${paramStr}`;
+      }).join('\n');
 
-  if (demands && demands.length > 0) {
-    const demandList = demands.map((d, index) => {
-      let params = [];
-      if (d.color) params.push(`Color: ${d.color}`);
-      if (d.finish) params.push(`Finish: ${d.finish}`);
-      if (d.features && d.features.length) params.push(`Features: ${d.features.join(', ')}`);
+      return `I am interested in the following demands:\n${demandList}`;
+    }
+    return stoneName ? `Interested in: ${stoneName}` : 'I am looking for...';
+  };
 
-      const paramStr = params.length > 0 ? ` (${params.join(' | ')})` : '';
-      return `${index + 1}. ${d.name}${paramStr}`;
-    }).join('\n');
-
-    initialRequirements = `I am interested in the following demands:\n${demandList}`;
-    displayTitle = `Selected Demands (${demands.length})`;
-  } else if (fromQuote) {
-    initialRequirements = 'I am looking for...';
-    displayTitle = 'Custom Requirement';
-  }
+  const displayTitle = (demands && demands.length > 0)
+    ? `Selected Demands (${demands.length})`
+    : (graniteName || 'Custom Requirement');
 
   const [selectedScope, setSelectedScope] = useState('');
   const [selectedArea, setSelectedArea] = useState('');
@@ -66,35 +64,16 @@ export default function GetQuote() {
     name: '',
     email: '',
     phone: '',
-    requirements: initialRequirements,
+    requirements: formatRequirementsText(demands, graniteName),
   });
 
-  // Sync requirements text when demands change (e.g. when an item is removed)
+  // Sync requirements text in real time whenever demands change (e.g. when an item is removed)
   useEffect(() => {
-    if (fromQuote) {
-      if (demands && demands.length > 0) {
-        const demandList = demands.map((d, index) => {
-          let params = [];
-          if (d.color) params.push(`Color: ${d.color}`);
-          if (d.finish) params.push(`Finish: ${d.finish}`);
-          if (d.features && d.features.length) params.push(`Features: ${d.features.join(', ')}`);
-
-          const paramStr = params.length > 0 ? ` (${params.join(' | ')})` : '';
-          return `${index + 1}. ${d.name}${paramStr}`;
-        }).join('\n');
-
-        setFormData(prev => ({
-          ...prev,
-          requirements: `I am interested in the following demands:\n${demandList}`
-        }));
-      } else {
-        setFormData(prev => ({
-          ...prev,
-          requirements: 'I am looking for...'
-        }));
-      }
-    }
-  }, [demands, fromQuote]);
+    setFormData(prev => ({
+      ...prev,
+      requirements: formatRequirementsText(demands, graniteName)
+    }));
+  }, [demands, graniteName]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState('');
@@ -141,7 +120,7 @@ export default function GetQuote() {
         name: '',
         email: '',
         phone: '',
-        requirements: initialRequirements,
+        requirements: formatRequirementsText([], graniteName),
       });
       setSelectedScope('');
       setSelectedArea('');
@@ -169,7 +148,7 @@ export default function GetQuote() {
           <div className="container">
             <div className="quote-badge-pill">
               <span className="quote-pulse-dot"></span>
-              Atelier Quotation Desk • Instant WhatsApp Dispatch
+              Quotation Desk • Instant WhatsApp Dispatch
             </div>
             <h1>Request Your Stone Quotation</h1>
             <p>
@@ -264,12 +243,12 @@ export default function GetQuote() {
                   <span>📋</span>
                   Project Specifications
                 </h2>
-                <span
+                {/* <span
                   className="panel-count-badge"
                   style={{ borderColor: '#25d366', color: '#25d366', background: 'rgba(37, 211, 102, 0.1)' }}
                 >
                   ● 15-Min Reply Avg.
-                </span>
+                </span> */}
               </div>
               <p className="quote-form-subtitle">
                 Customize your project scope below. Hitting "Send via WhatsApp" will launch a pre-formatted inquiry with our senior desk.
@@ -350,8 +329,8 @@ export default function GetQuote() {
                   className="whatsapp-dispatch-btn"
                   disabled={isSubmitting}
                 >
-                  <span style={{ fontSize: '22px' }}>💬</span>
-                  {isSubmitting ? 'Launching WhatsApp Desk...' : 'Send Quote Request via WhatsApp'}
+                  <span style={{ fontSize: '22px' }}></span>
+                  {isSubmitting ? 'Launching WhatsApp Desk...' : 'Send Quote Request'}
                 </button>
 
                 <div className="quote-trust-bar">

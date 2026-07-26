@@ -420,7 +420,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                       <div className="vs-product-info">
                         <span className="vs-product-cat">{product.material ? product.material.toUpperCase() : ''}</span>
                         <h4>{product.name}</h4>
-                        <button className="vs-add-btn">Add to Quote</button>
+                        <button className="vs-add-btn">Add to Requirement</button>
                       </div>
                     </div>
                   ))}

@@ -64,10 +64,10 @@
 
 .luxury-quote-hero {
   position: relative;
-  padding: 130px 0 60px 0;
+  padding: 140px 0 60px 0;
   text-align: center;
-  background: linear-gradient(180deg, rgba(248, 246, 242, 0.92) 0%, rgba(255, 255, 255, 0.99) 100%),
-              url('https://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(15, 16, 19, 0.75) 0%, rgba(15, 16, 19, 0.85) 100%),
+              url('https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Black-Galaxy-Granite-Swatch.webp') center/cover no-repeat;
   border-bottom: 1px solid var(--quote-card-border);
   z-index: 1;
 }
@@ -77,16 +77,16 @@
   align-items: center;
   gap: 8px;
   padding: 6px 18px;
-  background: #ffffff;
-  border: 1px solid var(--quote-card-border);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50px;
-  color: var(--quote-gold-bright);
+  color: #f3d2a8;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .quote-pulse-dot {
@@ -109,14 +109,15 @@
   font-family: 'Playfair Display', serif;
   font-size: clamp(36px, 5vw, 56px);
   font-weight: 700;
-  color: #141518;
+  color: #ffffff;
   margin: 0 0 16px 0;
   letter-spacing: -0.5px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
 .luxury-quote-hero p {
   font-size: clamp(16px, 2vw, 19px);
-  color: var(--quote-text-secondary);
+  color: rgba(255, 255, 255, 0.9);
   max-width: 680px;
   margin: 0 auto;
   line-height: 1.6;

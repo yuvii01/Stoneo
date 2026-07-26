@@ -30,7 +30,7 @@ const CSV_PRODUCTS = [
   { "name": "Michel Angelo", "image": "/indian_marble_images/Michel Angelo.jpg", "category": "White" },
   { "name": "Perlato Royal", "image": "/indian_marble_images/Perlato Royal.png", "category": "Beige" },
 
-  { "name": "Agaria white marble", "image": "/indian_marble_images/Agaria white marble.png", "category": "White", "place": "India" },
+  { "name": "Agaria white marble", "image": "/indian_marble_images/Agaria White Marble.jpg", "category": "White", "place": "India" },
   { "name": "Albeta white marble", "image": "/indian_marble_images/Albeta white marble.png", "category": "White", "place": "India" },
   { "name": "Arna white marble", "image": "/indian_marble_images/Arna white marble.png", "category": "White", "place": "India" },
   { "name": "Dungari white marble", "image": "/indian_marble_images/Dungari white marble.png", "category": "White", "place": "India" },
@@ -44,7 +44,7 @@ const CSV_PRODUCTS = [
   { "name": "Pure White Marble", "image": "/indian_marble_images/Pure White Marble.png", "category": "White", "place": "India" },
   { "name": "Banswara white marble", "image": "/indian_marble_images/Banswara white marble.png", "category": "White", "place": "India" },
   { "name": "Indian carrara marble", "image": "/indian_marble_images/Indian carrara marble.png", "category": "White", "place": "India" },
-  { "name": "Ambaji white marble", "image": "/indian_marble_images/Ambaji white marble.png", "category": "White", "place": "India" },
+  { "name": "Ambaji white marble", "image": "/indian_marble_images/Ambaji White Marble.jpg", "category": "White", "place": "India" },
   { "name": "Dharmeta white marble", "image": "/indian_marble_images/Dharmeta white marble.png", "category": "White", "place": "India" },
   { "name": "Ardosia black grey marble", "image": "/indian_marble_images/Ardosia black grey marble.png", "category": "Grey", "place": "India" },
 
@@ -97,7 +97,7 @@ const CSV_PRODUCTS = [
   { "name": "Keshairya green marble", "image": "/indian_marble_images/Keshairya green marble.png", "category": "Green", "place": "India" },
   { "name": "Tobacco black marble", "image": "/indian_marble_images/Tobacco black marble.png", "category": "Black", "place": "India" },
   { "name": "Cheery red marble", "image": "/indian_marble_images/Cheery red marble.png", "category": "Red", "place": "India" },
-  { "name": "Katni Marble", "image": "/indian_marble_images/Katni Marble.png", "category": "Beige", "place": "India" },
+  { "name": "Katni Marble", "image": "/indian_marble_images/Katni Marble.jpg", "category": "Beige", "place": "India" },
   { "name": "Brown Albeta Marble", "image": "/indian_marble_images/Brown Albeta Marble.png", "category": "Brown", "place": "India" },
   { "name": "Bliss White Marble", "image": "/indian_marble_images/Bliss White Marble.png", "category": "White", "place": "India" },
   { "name": "Pista White Marble", "image": "/indian_marble_images/Pista White Marble.png", "category": "White", "place": "India" },
@@ -495,7 +495,7 @@ export default function Marble() {
                               }
                             }}
                           >
-                            {demands.some(d => d.name === product.name) ? "Remove from Quote" : "Add to Quote"}
+                            {demands.some(d => d.name === product.name) ? "Remove from Requirement" : "Add to Requirement"}
                           </button>
                         </div>
                       </div>

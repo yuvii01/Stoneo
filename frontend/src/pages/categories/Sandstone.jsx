@@ -8,31 +8,31 @@ import { useDemand } from '../../context/DemandContext';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
-  { "name": "Agra Red Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/agra-red/agra-red-sawn-wet-sandstone-tiles.jpg", "category": "Red" },
-  { "name": "Autumn Brown Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/autumn-brown/automn-brown-sandstone-honed-surface-cut-to-size-tiles.jpg", "category": "Brown" },
-  { "name": "Bansi Pink Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/bansi-pink/bansi-pink-sandstone-honed-finish-tiles.jpg", "category": "Pink" },
-  { "name": "Camel Dust Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/camel-dust/camel-dust-sandstone-natural-paving-tiles.jpg", "category": "Beige" },
-  { "name": "Chocolate Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/chocolate/chocolate-sandstone-natural-finish-calibrated-tiles.jpg", "category": "Brown" },
-  { "name": "Sagar Black Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/sagar-black/sagar-black-natural-wet-sandstone-paving-exterior-tiles.jpg", "category": "Black" },
-  { "name": "Dholpur Beige Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/dholpur-beige/dholpur-beige-sandstone-natural-finish-tiles.jpg", "category": "Beige" },
-  { "name": "Modak Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/modak/modak-sandstone-natural-surface-hand-split-tiles.jpg", "category": "Brown" },
-  { "name": "Mandana Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/mandana/mandana-red-sandstone-natural-tile-exporter-india.jpg", "category": "Red" },
-  { "name": "Jodhpur Pink Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/jodhpur-pink/jodhpur-pink-sandstone-honed-tiles.jpg", "category": "Pink" },
-  { "name": "Jodhpur Brown Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/jodhpur-brown/jodhpur-brown-sandstone-honed-finish-tiles.jpg", "category": "Brown" },
-  { "name": "Jaisalmer Yellow Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/jaisalmer-yellow/jaisalmer-yellow-sandstone-honed-polished-cut-to-size-tiles.jpg", "category": "Yellow" },
-  { "name": "Mint Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/mint/white-mint-natural-split-surface-sandstone-tile.jpg", "category": "Green" },
-  { "name": "Yellow Mint Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/yellow-mint/yellow-mint-sandstone-natural-finish-calibrated-tiles.jpg", "category": "Yellow" },
-  { "name": "Pink Mint Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/pink-mint/pink-mint-sandstone-cut-to-size-natural-tiles.jpg", "category": "Pink" },
-  { "name": "Lalitpur Grey Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/lalitpur-grey/lalitpur-grey-sandstone-natural-patio-pack-tiles.jpg", "category": "Grey" },
-  { "name": "Lalitpur Yellow Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/lalitpur-yellow/lalitpur-yellow-sandstone-natural-split-finish-tiles.jpg", "category": "Yellow" },
-  { "name": "Raveena Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/raveena/raveena-sandstone-natural-paving-tile-setts.jpg", "category": "Brown" },
-  { "name": "Kandla Grey Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/kandla-grey/kandla-grey-sandstone-natural-finish-tiles.jpg", "category": "Grey" },
-  { "name": "Raj Green Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/raj-green/raj-green-natural-sandstone-floor-covering-tiles.jpg", "category": "Green" },
-  { "name": "Fossil Mint Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/fossil-mint/fossil-mint-sandstone-paving-tiles.jpg", "category": "Green" },
-  { "name": "Teak Wood Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/teak-wood/teakwood-sandstone-honed-paving-tiles.jpg", "category": "Brown" },
-  { "name": "Rainbow Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/rainbow/rainbow-sandstone-swan-finish-paving-tiles.jpg", "category": "Multicolor" },
-  { "name": "Panther Sandstone", "image": "https://www.royalindianstones.com/assets/img/products/sandstone/panther/panter-sandstone-patio-pack-paving-tiles.jpg", "category": "Brown" },
-  { "name": "Kota Stone", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Kota-stone-300x224.png", "category": "Grey" }
+  { "name": "Agra Red Sandstone", "image": "/paving_and_stones/Agra Red Sandstone.jpg", "category": "Red" },
+  { "name": "Autumn Brown Sandstone", "image": "/paving_and_stones/Autumn Brown Sandstone.jpg", "category": "Brown" },
+  { "name": "Bansi Pink Sandstone", "image": "/sandstone_images/Bansi Pink Sandstone.jpg", "category": "Pink" },
+  { "name": "Camel Dust Sandstone", "image": "/sandstone_images/Camel Dust Sandstone.jpg", "category": "Beige" },
+  { "name": "Chocolate Sandstone", "image": "/sandstone_images/Chocolate Sandstone.jpg", "category": "Brown" },
+  { "name": "Sagar Black Sandstone", "image": "/sandstone_images/Sagar Black Sandstone.jpg", "category": "Black" },
+  { "name": "Dholpur Beige Sandstone", "image": "/paving_and_stones/Dholpur Beige Sandstone.jpg", "category": "Beige" },
+  { "name": "Modak Sandstone", "image": "/paving_and_stones/Modak Sandstone.jpg", "category": "Brown" },
+  { "name": "Mandana Sandstone", "image": "/sandstone_images/Mandana Sandstone.jpg", "category": "Red" },
+  { "name": "Jodhpur Pink Sandstone", "image": "/sandstone_images/Jodhpur Pink Sandstone.jpg", "category": "Pink" },
+  { "name": "Jodhpur Brown Sandstone", "image": "/sandstone_images/Jodhpur Brown Sandstone.jpg", "category": "Brown" },
+  { "name": "Jaisalmer Yellow Sandstone", "image": "/sandstone_images/Jaisalmer Yellow Sandstone.jpg", "category": "Yellow" },
+  { "name": "Mint Sandstone", "image": "/sandstone_images/Mint Sandstone.jpg", "category": "Green" },
+  { "name": "Yellow Mint Sandstone", "image": "/sandstone_images/Yellow Mint Sandstone.jpg", "category": "Yellow" },
+  { "name": "Pink Mint Sandstone", "image": "/sandstone_images/Pink Mint Sandstone.jpg", "category": "Pink" },
+  { "name": "Lalitpur Grey Sandstone", "image": "/sandstone_images/Lalitpur Grey Sandstone.jpg", "category": "Grey" },
+  { "name": "Lalitpur Yellow Sandstone", "image": "/sandstone_images/Lalitpur Yellow Sandstone.jpg", "category": "Yellow" },
+  { "name": "Raveena Sandstone", "image": "/paving_and_stones/Raveena Sandstone.jpg", "category": "Brown" },
+  { "name": "Kandla Grey Sandstone", "image": "/paving_and_stones/Kandla Grey Sandstone.jpg", "category": "Grey" },
+  { "name": "Raj Green Sandstone", "image": "/sandstone_images/Raj Green Sandstone.jpg", "category": "Green" },
+  { "name": "Fossil Mint Sandstone", "image": "/sandstone_images/Fossil Mint Sandstone.jpg", "category": "Green" },
+  { "name": "Teak Wood Sandstone", "image": "/sandstone_images/Teak Wood Sandstone.jpg", "category": "Brown" },
+  { "name": "Rainbow Sandstone", "image": "/paving_and_stones/Rainbow Sandstone.jpg", "category": "Multicolor" },
+  { "name": "Panther Sandstone", "image": "/sandstone_images/Panther Sandstone.jpg", "category": "Brown" },
+  { "name": "Kota Stone", "image": "/indian_marble_images/Kota stone.png", "category": "Grey" }
 ];
 
 const DEFAULT_DESCRIPTION = 'Premium quality sandstone, sourced from verified quarries.';
@@ -407,7 +407,7 @@ export default function Sandstone() {
                               }
                             }}
                           >
-                            {demands.some(d => d.name === product.name) ? "Remove from Quote" : "Add to Quote"}
+                            {demands.some(d => d.name === product.name) ? "Remove from Requirement" : "Add to Requirement"}
                           </button>
                         </div>
                       </div>

@@ -1,4 +1,4 @@
-# KMStoneX robots.txt file
+# Stoneo robots.txt file
 # Allows search engines to crawl the site
 User-agent: *
 Allow: /
@@ -18,7 +18,7 @@ Allow: /
 Crawl-delay: 1
 
 # Specify sitemap location
-Sitemap: https://kmstonex.in/sitemap.xml
+Sitemap: https://stoneo.in/sitemap.xml
 
 # Prevent crawling of duplicate content
 User-agent: *

@@ -527,7 +527,7 @@ export default function Granite() {
                               }
                             }}
                           >
-                            {demands.some(d => d.name === product.name) ? "Remove from Quote" : "Add to Quote"}
+                            {demands.some(d => d.name === product.name) ? "Remove from Requirement" : "Add to Requirement"}
                           </button>
                         </div>
                       </div>

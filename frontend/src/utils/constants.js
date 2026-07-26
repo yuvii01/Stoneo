@@ -15,7 +15,7 @@ export const GRANITE_TYPES = [
   {
     id: 1,
     name: 'Black Galaxy Granite',
-    image: '/granite_images/Black Galaxy Granite.jpg',
+    image: '/granite_images/Black Galaxy Granite.webp',
     description: 'Premium quality black granite with fine grain texture. Perfect for countertops and flooring.',
     pricePerSqft: 45,
     features: ['Highly durable', 'Scratch resistant', 'Low maintenance', 'Heat resistant'],
@@ -23,7 +23,7 @@ export const GRANITE_TYPES = [
   {
     id: 2,
     name: 'Absolute Black Granite',
-    image: '/granite_images/Absolute Black Granite.jpg',
+    image: '/granite_images/Absolute Black Granite.webp',
     description: 'Elegant Black granite with subtle patterns. Ideal for premium interiors.',
     pricePerSqft: 55,
     features: ['Elegant appearance', 'Weather resistant', 'Polished finish', 'Long lasting'],
@@ -39,7 +39,7 @@ export const GRANITE_TYPES = [
   {
     id: 4,
     name: 'Rosy Pink Granite',
-    image: '/granite_images/Rosy Pink Granite.jpg',
+    image: '/granite_images/Rosy Pink Granite.webp',
     description: 'Vibrant multicolor granite combining various hues. Perfect for statement designs.',
     pricePerSqft: 60,
     features: ['Bold appearance', 'Premium finish', 'Unique patterns', 'High demand'],
@@ -47,7 +47,7 @@ export const GRANITE_TYPES = [
   {
     id: 5,
     name: 'Jhansi Red Granite',
-    image: '/granite_images/Jhansi Red Granite.jpg',
+    image: '/granite_images/Jhansi Red Granite.webp',
     description: 'Rich red granite with striking appearance. Excellent for both residential and commercial use.',
     pricePerSqft: 48,
     features: ['Bold color', 'Durable', 'Versatile use', 'Easy maintenance'],
@@ -149,51 +149,51 @@ export const FAQS = [
 // Per-product RGB: dominant color from each stone. texture: 0=smooth/uniform, 100=heavily speckled
 export const CSV_PRODUCTS = [
   // Black Granites
-  { name: 'Absolute Black Granite', image: '/granite_images/Absolute Black Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [18, 18, 18], texture: 5 },
-  { name: 'Black Galaxy Granite', image: '/granite_images/Black Galaxy Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [22, 22, 35], texture: 55 },
-  { name: 'Black Forest Granite', image: '/granite_images/Black Forest Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [30, 28, 24], texture: 30 },
+  { name: 'Absolute Black Granite', image: '/granite_images/Absolute Black Granite.webp', price: 52, category: 'Black', material: 'Granite', rgb: [18, 18, 18], texture: 5 },
+  { name: 'Black Galaxy Granite', image: '/granite_images/Black Galaxy Granite.webp', price: 52, category: 'Black', material: 'Granite', rgb: [22, 22, 35], texture: 55 },
+  { name: 'Black Forest Granite', image: '/granite_images/Black Forest Granite.webp', price: 52, category: 'Black', material: 'Granite', rgb: [30, 28, 24], texture: 30 },
   { name: 'Black Pearl Granite', image: '/granite_images/Black Pearl Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [24, 28, 40], texture: 65 },
   { name: 'Ash Black Granite', image: '/granite_images/Ash Black Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [50, 50, 50], texture: 20 },
   { name: 'Coin Black Granite', image: '/granite_images/Coin Black Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [38, 36, 35], texture: 25 },
-  { name: 'Fusion Black Granite', image: '/granite_images/Fusion Black Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [42, 38, 32], texture: 40 },
-  { name: 'Impala Black Granite', image: '/granite_images/Impala Black Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [28, 28, 28], texture: 10 },
-  { name: 'Titanium Black Granite', image: '/granite_images/Titanium Black Granite.jpg', price: 52, category: 'Black', material: 'Granite', rgb: [20, 20, 22], texture: 15 },
+  { name: 'Fusion Black Granite', image: '/granite_images/Fusion Black Granite.webp', price: 52, category: 'Black', material: 'Granite', rgb: [42, 38, 32], texture: 40 },
+  { name: 'Impala Black Granite', image: '/granite_images/Impala Black Granite.webp', price: 52, category: 'Black', material: 'Granite', rgb: [28, 28, 28], texture: 10 },
+  { name: 'Titanium Black Granite', image: '/granite_images/Titanium Black Granite.webp', price: 52, category: 'Black', material: 'Granite', rgb: [20, 20, 22], texture: 15 },
 
   // White Granites
   { name: 'Classic White Granite', image: '/granite_images/Classic White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [222, 218, 212], texture: 45 },
   { name: 'Andromeda White Granite', image: '/granite_images/Andromeda White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [190, 185, 180], texture: 70 },
-  { name: 'Alaska White Granite', image: '/granite_images/Alaska White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [210, 205, 195], texture: 55 },
+  { name: 'Alaska White Granite', image: '/granite_images/Alaska White Granite.webp', price: 52, category: 'White', material: 'Granite', rgb: [210, 205, 195], texture: 55 },
   { name: 'Azul White Granite', image: '/granite_images/Azul White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [195, 200, 215], texture: 60 },
-  { name: 'Colonial White Granite', image: '/granite_images/Colonial White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [228, 222, 210], texture: 35 },
+  { name: 'Colonial White Granite', image: '/granite_images/Colonial White Granite.webp', price: 52, category: 'White', material: 'Granite', rgb: [228, 222, 210], texture: 35 },
   { name: 'Kashmir White Granite', image: '/granite_images/Kashmir White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [200, 192, 183], texture: 50 },
-  { name: 'Moon White Granite', image: '/granite_images/Moon White Granite.jpg', price: 52, category: 'White', material: 'Granite', rgb: [235, 230, 225], texture: 25 },
+  { name: 'Moon White Granite', image: '/granite_images/Moon White Granite.webp', price: 52, category: 'White', material: 'Granite', rgb: [235, 230, 225], texture: 25 },
 
   // Gold Granites
-  { name: 'Alaska Gold Granite', image: '/granite_images/Alaska Gold Granite.jpg', price: 52, category: 'Gold', material: 'Granite', rgb: [185, 155, 80], texture: 60 },
-  { name: 'Imperial Gold Granite', image: '/granite_images/Imperial Gold Granite.jpg', price: 52, category: 'Gold', material: 'Granite', rgb: [175, 145, 70], texture: 70 },
+  { name: 'Alaska Gold Granite', image: '/granite_images/Alaska Gold Granite.webp', price: 52, category: 'Gold', material: 'Granite', rgb: [185, 155, 80], texture: 60 },
+  { name: 'Imperial Gold Granite', image: '/granite_images/Imperial Gold Granite.webp', price: 52, category: 'Gold', material: 'Granite', rgb: [175, 145, 70], texture: 70 },
   { name: 'Ghibli Gold Granite', image: '/granite_images/Ghibli Gold Granite.jpg', price: 52, category: 'Gold', material: 'Granite', rgb: [195, 168, 90], texture: 55 },
-  { name: 'Desert Gold Granite', image: '/granite_images/Desert Gold Granite.jpg', price: 52, category: 'Gold', material: 'Granite', rgb: [205, 178, 100], texture: 45 },
+  { name: 'Desert Gold Granite', image: '/granite_images/Desert Gold Granite.webp', price: 52, category: 'Gold', material: 'Granite', rgb: [205, 178, 100], texture: 45 },
 
   // Blue Granites
   { name: 'Blue Dunes Granite', image: '/granite_images/Blue Dunes Granite.jpg', price: 52, category: 'Blue', material: 'Granite', rgb: [100, 118, 148], texture: 50 },
   { name: 'Blue Pearl Granite', image: '/granite_images/Blue Pearl Granite.jpg', price: 52, category: 'Blue', material: 'Granite', rgb: [58, 78, 140], texture: 65 },
-  { name: 'Flash Blue Granite', image: '/granite_images/Flash Blue Granite.jpg', price: 52, category: 'Blue', material: 'Granite', rgb: [48, 68, 128], texture: 75 },
+  { name: 'Flash Blue Granite', image: '/granite_images/Flash Blue Granite.webp', price: 52, category: 'Blue', material: 'Granite', rgb: [48, 68, 128], texture: 75 },
   { name: 'Amadeus Blue Granite', image: '/granite_images/Amadeus Blue Granite.jpg', price: 52, category: 'Blue', material: 'Granite', rgb: [82, 108, 155], texture: 55 },
 
   // Green Granites
   { name: 'Nosra Green Granite', image: '/granite_images/Nosra Green Granite.jpg', price: 52, category: 'Green', material: 'Granite', rgb: [58, 108, 68], texture: 50 },
-  { name: 'Desert Green Granite', image: '/granite_images/Desert Green Granite.jpg', price: 52, category: 'Green', material: 'Granite', rgb: [78, 118, 72], texture: 40 },
+  { name: 'Desert Green Granite', image: '/granite_images/Desert Green Granite.webp', price: 52, category: 'Green', material: 'Granite', rgb: [78, 118, 72], texture: 40 },
   { name: 'Hassan Green Granite', image: '/granite_images/Hassan Green Granite.jpg', price: 52, category: 'Green', material: 'Granite', rgb: [52, 98, 60], texture: 55 },
-  { name: 'Apple Green Granite', image: '/granite_images/Apple Green Granite.jpg', price: 52, category: 'Green', material: 'Granite', rgb: [102, 148, 88], texture: 35 },
+  { name: 'Apple Green Granite', image: '/granite_images/Apple Green Granite.webp', price: 52, category: 'Green', material: 'Granite', rgb: [102, 148, 88], texture: 35 },
 
   // Brown Granites
   { name: 'Tan Brown Granite', image: '/granite_images/Tan Brown Granite.jpg', price: 52, category: 'Brown', material: 'Granite', rgb: [148, 98, 68], texture: 65 },
-  { name: 'Coffee Brown Granite', image: '/granite_images/Coffee Brown Granite.jpg', price: 52, category: 'Brown', material: 'Granite', rgb: [98, 62, 42], texture: 45 },
-  { name: 'Desert Brown Granite', image: '/granite_images/Desert Brown Granite.jpg', price: 52, category: 'Brown', material: 'Granite', rgb: [162, 132, 95], texture: 40 },
+  { name: 'Coffee Brown Granite', image: '/granite_images/Coffee Brown Granite.webp', price: 52, category: 'Brown', material: 'Granite', rgb: [98, 62, 42], texture: 45 },
+  { name: 'Desert Brown Granite', image: '/granite_images/Desert Brown Granite.webp', price: 52, category: 'Brown', material: 'Granite', rgb: [162, 132, 95], texture: 40 },
 
   // Red Granites
-  { name: 'Jhansi Red Granite', image: '/granite_images/Jhansi Red Granite.jpg', price: 52, category: 'Red', material: 'Granite', rgb: [152, 48, 48], texture: 55 },
-  { name: 'Lakha Red Granite', image: '/granite_images/Lakha Red Granite.jpg', price: 52, category: 'Red', material: 'Granite', rgb: [172, 58, 55], texture: 60 },
+  { name: 'Jhansi Red Granite', image: '/granite_images/Jhansi Red Granite.webp', price: 52, category: 'Red', material: 'Granite', rgb: [152, 48, 48], texture: 55 },
+  { name: 'Lakha Red Granite', image: '/granite_images/Lakha Red Granite.webp', price: 52, category: 'Red', material: 'Granite', rgb: [172, 58, 55], texture: 60 },
   { name: 'New Imperiala Red Granite', image: '/granite_images/New Imperiala Red Granite.jpg', price: 52, category: 'Red', material: 'Granite', rgb: [138, 42, 42], texture: 50 },
 
   // --- INDIAN MARBLES ---
@@ -232,14 +232,14 @@ export const CSV_PRODUCTS = [
   { name: 'Raveena Sandstone',        image: '/paving_and_stones/Raveena Sandstone.jpg',   price: 48,  category: 'Multicolor', material: 'Sandstone', rgb: [160, 130, 140], texture: 35 },
 
   // --- ADDITIONAL GRANITES ---
-  { name: 'Vizag Blue Granite',       image: '/granite_images/Vizag Blue Granite.jpg', price: 58,  category: 'Blue',  material: 'Granite',    rgb: [65, 80, 130],   texture: 60 },
+  { name: 'Vizag Blue Granite',       image: '/granite_images/Vizag Blue Granite.webp', price: 58,  category: 'Blue',  material: 'Granite',    rgb: [65, 80, 130],   texture: 60 },
   { name: 'Madura Gold Granite',      image: '/granite_images/Madura Gold Granite.jpg',   price: 60,  category: 'Gold',  material: 'Granite',    rgb: [200, 170, 95],  texture: 65 },
   { name: 'Shiva Gold Granite',       image: '/granite_images/Shiva Gold Granite.jpg',   price: 55,  category: 'Gold',  material: 'Granite',    rgb: [195, 165, 110], texture: 50 },
   { name: 'Kashmir Gold Granite',     image: '/granite_images/Kashmir Gold Granite.jpg', price: 56, category: 'Gold',  material: 'Granite',    rgb: [190, 160, 100], texture: 45 },
   { name: 'Raw Silk Granite',         image: '/granite_images/Raw Silk Granite.jpg',   price: 52,  category: 'Cream', material: 'Granite',    rgb: [220, 205, 185], texture: 40 },
   { name: 'Paradiso Granite',         image: '/granite_images/Paradiso Granite.jpg', price: 54, category: 'Multicolor', material: 'Granite', rgb: [140, 110, 125], texture: 70 },
   { name: 'Ruby Red Granite',         image: '/granite_images/Ruby Red Granite.jpg', price: 65, category: 'Red',   material: 'Granite',    rgb: [150, 40,  45],  texture: 45 },
-  { name: 'Rosy Pink Granite',        image: '/granite_images/Rosy Pink Granite.jpg',   price: 48,  category: 'Pink',  material: 'Granite',    rgb: [185, 140, 145], texture: 35 },
+  { name: 'Rosy Pink Granite',        image: '/granite_images/Rosy Pink Granite.webp',   price: 48,  category: 'Pink',  material: 'Granite',    rgb: [185, 140, 145], texture: 35 },
 
   // --- OTHER MATERIALS ---
   { name: 'Calacatta Quartz',         image: '/quartz_images/Calacatta Quartz.jpg',    price: 70,  category: 'White', material: 'Quartz',      rgb: [238, 235, 230], texture: 15 },
@@ -286,7 +286,7 @@ export const CSV_PRODUCTS = [
   { name: 'Bianco Carrara', image: '/quartz_images/Bianco_Carrara.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Riviera', image: '/quartz_images/Riviera.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Glacier White', image: '/quartz_images/Glacier_White.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
-  { name: 'Carrara White', image: '/quartz_images/Carrara_White.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
+  { name: 'Carrara White', image: '/indian_marble_images/Carrara White.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Carrara Blanco', image: '/quartz_images/Carrara_Blanco.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Carrara Dark Night', image: '/quartz_images/Carrara_Dark_Night.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Carrara Cashmere', image: '/quartz_images/Carrara_Cashmere.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
@@ -332,7 +332,7 @@ export const Quartz_products = [
   { name: 'Bianco Carrara', image: '/quartz_images/Bianco_Carrara.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Riviera', image: '/quartz_images/Riviera.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Glacier White', image: '/quartz_images/Glacier_White.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
-  { name: 'Carrara White', image: '/quartz_images/Carrara_White.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
+  { name: 'Carrara White', image: '/indian_marble_images/Carrara White.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Carrara Blanco', image: '/quartz_images/Carrara_Blanco.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Carrara Dark Night', image: '/quartz_images/Carrara_Dark_Night.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Carrara Cashmere', image: '/quartz_images/Carrara_Cashmere.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
@@ -363,7 +363,7 @@ export const Onyx_products = [
   { name: 'Wooden Onyx', image: '/onyx_images/Wooden_Onyx.jpg', price: 120, category: 'Onyx', material: 'Onyx', rgb: [139, 69, 19], texture: 10 },
   { name: 'White Onyx Gemstone', image: '/onyx_images/White_Onyx_Gemstone.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 255, 255], texture: 10 },
   { name: 'Honey Onyx', image: '/onyx_images/Honey_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 204, 0], texture: 10 },
-  { name: 'Green Onyx', image: '/onyx_images/Green_Onyx.jpg', price: 120, category: 'Onyx', material: 'Onyx', rgb: [0, 128, 0], texture: 10 },
+  { name: 'Green Onyx', image: '/onyx_images/Green Onyx.jpg', price: 120, category: 'Onyx', material: 'Onyx', rgb: [0, 128, 0], texture: 10 },
   { name: 'Bubble Onyx', image: '/onyx_images/Bubble_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 255, 255], texture: 10 },
   { name: 'Cappuccino Onyx', image: '/onyx_images/Cappuccino_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [210, 180, 140], texture: 10 },
   { name: 'Velluto Onyx', image: '/onyx_images/Velluto_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [222, 184, 135], texture: 10 },

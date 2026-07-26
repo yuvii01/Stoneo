@@ -302,6 +302,7 @@ export default function Header() {
                 <Link to="/category/onyx" onClick={closeMenus} className="mega-menu-subheading-link">Onyx &rsaquo;</Link>
                 <Link to="/category/onyx?type=exotic" onClick={closeMenus}>Exotic Onyx</Link>
                 <Link to="/category/onyx?type=white" onClick={closeMenus}>White Onyx</Link>
+                <Link to="/category/onyx?type=solid" onClick={closeMenus}>Solid Color</Link>
               </div>
 
               {/* Column 3: Paving & Landscape */}
