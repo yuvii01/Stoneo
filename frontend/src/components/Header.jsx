@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import TextSearchModal from './TextSearchModal';
 import VisualSearchModal from './VisualSearchModal';
 import { useDemand } from '../context/DemandContext';
 import '../styles/header.css';
@@ -13,6 +14,8 @@ export default function Header() {
   const [isApplicationsOpen, setIsApplicationsOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isVisualSearchOpen, setIsVisualSearchOpen] = useState(false);
+  const [isTextSearchOpen, setIsTextSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const navRef = useRef(null);
   const buttonRef = useRef(null);
@@ -110,7 +113,19 @@ export default function Header() {
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-          <input type="text" className="search-bar-input" placeholder="Search items for your project" />
+          <input
+            type="text"
+            className="search-bar-input"
+            placeholder="Search items for your project"
+            style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && searchQuery.trim().length > 0) {
+                setIsTextSearchOpen(true);
+              }
+            }}
+          />
           <div className="camera-icon-container" onClick={() => setIsVisualSearchOpen(true)}>
             <svg className="camera-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -140,7 +155,20 @@ export default function Header() {
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" className="search-bar-input" placeholder="Search items for your project" />
+            <input
+              type="text"
+              className="search-bar-input"
+              placeholder="Search items for your project"
+              style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && searchQuery.trim().length > 0) {
+                  setIsTextSearchOpen(true);
+                  closeMenus();
+                }
+              }}
+            />
             <div className="camera-icon-container" onClick={(e) => { e.preventDefault(); setIsVisualSearchOpen(true); closeMenus(); }}>
               <svg className="camera-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
@@ -186,13 +214,15 @@ export default function Header() {
                 <h3 className="mega-menu-heading">
                   <Link to="/application/interior" onClick={closeMenus} style={{ textDecoration: 'none', color: 'inherit' }}>Interior &rsaquo;</Link>
                 </h3>
+                <Link to="/application/interior?type=home-decor" onClick={closeMenus}>Home Decor</Link>
                 <Link to="/application/interior?type=interior-flooring" onClick={closeMenus}>Interior Flooring</Link>
-                <Link to="/application/interior?type=wall-cladding" onClick={closeMenus}>Wall Cladding</Link>
+                <Link to="/application/interior?type=blowall-cladding" onClick={closeMenus}>Wall Cladding</Link>
                 <Link to="/application/interior?type=kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
                 <Link to="/application/interior?type=bathroom-vanity" onClick={closeMenus}>Bathroom & Vanity</Link>
                 <Link to="/application/interior?type=staircase" onClick={closeMenus}>Staircase</Link>
                 {/* <Link to="/application/interior?type=pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link> */}
                 <Link to="/application/interior?type=table-tops-furniture" onClick={closeMenus}>Table Tops & Furniture</Link>
+
               </div>
 
               <div className="mega-menu-column">
@@ -238,13 +268,14 @@ export default function Header() {
                 <Link to="/category/granite" onClick={closeMenus} className="mega-menu-subheading-link">Granite &rsaquo;</Link>
                 <Link to="/category/granite?type=south" onClick={closeMenus}>South India Granites</Link>
                 <Link to="/category/granite?type=north" onClick={closeMenus}>North India Granites</Link>
+                <Link to="/category/granite?type=alaska" onClick={closeMenus}>Alaska Granite</Link>
                 {/* <Link to="/category/granite?type=imported" onClick={closeMenus}>Imported Granites</Link> */}
                 {/* <Link to="/category/granite-tiles" onClick={closeMenus}>Granite Tiles</Link> */}
 
                 <Link to="/category/marble" onClick={closeMenus} className="mega-menu-subheading-link">Marble &rsaquo;</Link>
                 <Link to="/category/marble?type=imported" onClick={closeMenus}>Imported Marble</Link>
                 <Link to="/category/marble?type=indian" onClick={closeMenus}>Indian Marble</Link>
-                {/* <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link> */}
+                <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link>
 
 
                 <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Sandstones &rsaquo;</Link>
@@ -282,10 +313,12 @@ export default function Header() {
                 <Link to="/category/paving-landscape?type=cobbles-sandstone" onClick={closeMenus}>Sandstone Cobbles</Link>
                 {/* <Link to="/category/paving-landscape?type=cobbles-limestone" onClick={closeMenus}>Limestone Cobbles</Link> */}
 
-                <Link to="/category/paving-landscape?type=pavers" onClick={closeMenus} className="mega-menu-subheading-link">Brick & Travertine &rsaquo;</Link>
+                <Link to="/category/paving-landscape?type=pavers" onClick={closeMenus} className="mega-menu-subheading-link">Bricks and Pavers &rsaquo;</Link>
                 {/* <Link to="/category/paving-landscape?type=pavers-brick" onClick={closeMenus}>Paving Bricks</Link> */}
                 <Link to="/category/paving-landscape?type=pavers-sandstone" onClick={closeMenus}>Sandstone Pavers</Link>
                 <Link to="/category/paving-landscape?type=pavers-travertine" onClick={closeMenus}>Travertine Pavers</Link>
+                <Link to="/category/paving-landscape?type=pavers-granite" onClick={closeMenus}>Granite Pavers</Link>
+                <Link to="/category/paving-landscape?type=pavers-marble" onClick={closeMenus}>Marble Pavers</Link>
 
                 <Link to="/category/paving-landscape?type=stones" onClick={closeMenus} className="mega-menu-subheading-link">Stones & Others &rsaquo;</Link>
                 <Link to="/category/paving-landscape?type=stones-pebbles" onClick={closeMenus}>Landscaping Pebbles</Link>
@@ -311,7 +344,7 @@ export default function Header() {
           </Link> */}
 
           <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
-            {demands.length > 0 ? `Send Quote (${demands.length})` : 'Send Quote'}
+            {demands.length > 0 ? `Get Quote (${demands.length})` : 'Get Quote'}
           </Link>
         </nav>
       </div>
@@ -319,6 +352,11 @@ export default function Header() {
       <VisualSearchModal
         isOpen={isVisualSearchOpen}
         onClose={() => setIsVisualSearchOpen(false)}
+      />
+      <TextSearchModal
+        isOpen={isTextSearchOpen}
+        onClose={() => setIsTextSearchOpen(false)}
+        initialQuery={searchQuery}
       />
     </header>
   );

@@ -91,8 +91,12 @@ export default function PavingAndLandscape() {
       origins = ['Sandstone'];
     } else if (type === 'pavers-travertine') {
       origins = ['Travertino'];
+    } else if (type === 'pavers-granite') {
+      origins = ['Granite Pavers'];
+    } else if (type === 'pavers-marble') {
+      origins = ['Marble Pavers'];
     } else if (type === 'pavers') {
-      origins = ['Bricks', 'Sandstone', 'Travertino'];
+      origins = ['Bricks', 'Sandstone', 'Travertino', 'Granite Pavers', 'Marble Pavers'];
     } else if (type === 'stones-pebbles') {
       origins = ['landscaping pebbles'];
     } else if (type === 'stones-stepping') {
@@ -130,6 +134,8 @@ export default function PavingAndLandscape() {
         if (o === 'Bricks') return nameMatch.includes('brick');
         if (o === 'Sandstone') return nameMatch.includes('sandstone') && p.category === 'Pavers';
         if (o === 'Travertino') return nameMatch.includes('travertine');
+        if (o === 'Granite Pavers') return nameMatch.includes('granite') && p.category === 'Pavers';
+        if (o === 'Marble Pavers') return nameMatch.includes('marble') && p.category === 'Pavers';
         if (o === 'landscaping pebbles') return nameMatch.includes('pebble');
         if (o === 'Stepping stones') return nameMatch.includes('step') || nameMatch.includes('stepping');
         return false;
@@ -177,7 +183,19 @@ export default function PavingAndLandscape() {
       <div className="page products-page">
         <section className="paving-header page-header">
           <div className="container container-heading">
-            <h1>Our Paving & Landscape Collections</h1>
+            <h1>
+              {(() => {
+                const type = searchParams.get('type');
+                if (type === 'pavers-granite') return 'Granite Pavers Collections';
+                if (type === 'pavers-marble') return 'Marble Pavers Collections';
+                if (type === 'pavers-sandstone') return 'Sandstone Pavers Collections';
+                if (type === 'pavers-travertine') return 'Travertine Pavers Collections';
+                if (type === 'cobbles-granite') return 'Granite Cobbles Collections';
+                if (type === 'cobbles-sandstone') return 'Sandstone Cobbles Collections';
+                if (type === 'cobbles-limestone') return 'Limestone Cobbles Collections';
+                return 'Our Paving & Landscape Collections';
+              })()}
+            </h1>
             <p>Premium selection of cobbles, pavers, and landscaping stones.</p>
           </div>
         </section>
@@ -243,7 +261,7 @@ export default function PavingAndLandscape() {
 
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Pavers</h5>
                 <div className="filter-checkbox-group">
-                  {['Bricks', 'Sandstone', 'Travertino'].map(org => (
+                  {['Bricks', 'Sandstone', 'Travertino', 'Granite Pavers', 'Marble Pavers'].map(org => (
                     <label key={org} className="filter-checkbox-label">
                       <input
                         type="checkbox"

@@ -11,7 +11,8 @@ const INTERIOR_APPLICATIONS = [
   "Kitchen Countertops",
   "Bathroom & Vanity",
   "Staircase",
-  "Table Tops & Furniture"
+  "Table Tops & Furniture",
+  "Home Decor"
 ];
 
 const COLORS = ["White", "Black", "Grey", "Gold", "Brown", "Beige", "Multicolor"];
@@ -78,6 +79,7 @@ export default function Interior() {
   // Map URL params to filters
   useEffect(() => {
     const type = searchParams.get('type');
+    const filter = searchParams.get('filter');
     if (type) {
       const typeMap = {
         'interior-flooring': 'Interior Flooring',
@@ -85,12 +87,15 @@ export default function Interior() {
         'kitchen-countertops': 'Kitchen Countertops',
         'bathroom-vanity': 'Bathroom & Vanity',
         'staircase': 'Staircase',
-        'table-tops-furniture': 'Table Tops & Furniture'
+        'table-tops-furniture': 'Table Tops & Furniture',
+        'home-decor': 'Home Decor'
       };
       const mappedType = typeMap[type];
       if (mappedType) {
         setFilters(prev => ({ ...prev, applicationType: [mappedType] }));
       }
+    } else if (filter) {
+      setFilters(prev => ({ ...prev, applicationType: [filter] }));
     }
   }, [searchParams]);
 

@@ -1,298 +1,276 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/Blogs.css';
 
 export default function Blogs() {
-    const navigate = useNavigate();
-    const [blogs, setBlogs] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [selectedTags, setSelectedTags] = useState([]);
-    const [showAllTags, setShowAllTags] = useState(false);
+  const navigate = useNavigate();
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [showAllTags, setShowAllTags] = useState(false);
 
-    // Derived state for tags
-    const [allTags, setAllTags] = useState([]);
-    const [topTags, setTopTags] = useState([]);
-    const tagsContainerRef = useRef(null);
+  // Derived state for tags
+  const [allTags, setAllTags] = useState([]);
+  const [topTags, setTopTags] = useState([]);
+  const tagsContainerRef = useRef(null);
 
-    // Handle click outside to close tags dropdown
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (tagsContainerRef.current && !tagsContainerRef.current.contains(event.target)) {
-                setShowAllTags(false);
-            }
-        }
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    useEffect(() => {
-        fetchBlogs();
-    }, []);
-
-    const fetchBlogs = async () => {
-        try {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blogs`);
-            const fetchedBlogs = res.data;
-            setBlogs(fetchedBlogs);
-
-            // Extract and process tags
-            const tagCounts = {};
-            fetchedBlogs.forEach(blog => {
-                if (blog.tags && Array.isArray(blog.tags)) {
-                    blog.tags.forEach(tag => {
-                        tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-                    });
-                }
-            });
-
-            const sortedTags = Object.entries(tagCounts)
-                .sort((a, b) => b[1] - a[1])
-                .map(entry => entry[0]);
-
-            const DEFAULT_TAGS = ['granite', 'marble', 'tiles', 'cobbles', 'quartz'];
-
-            const uniqueAllTags = Array.from(new Set([...DEFAULT_TAGS, ...sortedTags]));
-
-            setAllTags(uniqueAllTags);
-            setTopTags(DEFAULT_TAGS);
-            setLoading(false);
-        } catch (error) {
-            console.error("Error fetching blogs:", error);
-            setLoading(false);
-        }
+  // Handle click outside to close tags dropdown
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (tagsContainerRef.current && !tagsContainerRef.current.contains(event.target)) {
+        setShowAllTags(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
 
-    // Filter blogs based on search query and selected tags
-    const filteredBlogs = blogs.filter(blog => {
-        const matchesSearch = blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesTag = selectedTags.length > 0 ? (blog.tags && selectedTags.some(t => blog.tags.includes(t))) : true;
-        return matchesSearch && matchesTag;
-    });
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
 
-    const toggleTag = (tag) => {
-        setSelectedTags(prev =>
-            prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-        );
-    };
+  const fetchBlogs = async () => {
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blogs`);
+      const fetchedBlogs = res.data;
+      setBlogs(fetchedBlogs);
 
-    return (
-        <div className="blogs-page-container" style={{ fontFamily: "'Jost', sans-serif", backgroundColor: "#fff", color: "#333", padding: "40px 20px" }}>
-            <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-                <div style={{ marginBottom: "60px" }}>
-                    <h1 style={{
-                        textAlign: "center",
-                        fontSize: "clamp(36px, 8vw, 56px)",
-                        fontWeight: 300,
-                        letterSpacing: "clamp(2px, 1vw, 4px)",
-                        paddingTop: "80px",
-                        margin: 0,
-                        textTransform: "uppercase",
-                        color: "#111",
-                        marginBottom: "30px"
-                    }}>
-                        Blogs
-                    </h1>
-                    <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
-                        <input
-                            type="text"
-                            placeholder="Search articles..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            style={{
-                                padding: "15px 25px",
-                                width: "100%",
-                                borderRadius: "30px",
-                                border: "1px solid #ddd",
-                                fontSize: "16px",
-                                marginBottom: "20px",
-                                outline: "none",
-                                boxShadow: "0 4px 6px rgba(0,0,0,0.05)"
-                            }}
-                        />
+      // Extract and process tags
+      const tagCounts = {};
+      fetchedBlogs.forEach(blog => {
+        if (blog.tags && Array.isArray(blog.tags)) {
+          blog.tags.forEach(tag => {
+            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+          });
+        }
+      });
 
-                        {allTags.length > 0 && (
-                            <div ref={tagsContainerRef} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "15px", position: "relative" }}>
-                                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "10px" }}>
-                                    <button
-                                        onClick={() => { setSelectedTags([]); setShowAllTags(false); }}
-                                        style={{
-                                            padding: "8px 16px",
-                                            borderRadius: "20px",
-                                            border: "none",
-                                            backgroundColor: selectedTags.length === 0 ? "#111" : "#f5f5f5",
-                                            color: selectedTags.length === 0 ? "#fff" : "#666",
-                                            cursor: "pointer",
-                                            fontSize: "14px",
-                                            transition: "all 0.2s"
-                                        }}
-                                    >
-                                        All
-                                    </button>
-                                    {(showAllTags ? allTags : topTags).map(tag => (
-                                        <button
-                                            key={tag}
-                                            onClick={() => { toggleTag(tag); setShowAllTags(false); }}
-                                            style={{
-                                                padding: "8px 16px",
-                                                borderRadius: "20px",
-                                                border: "none",
-                                                backgroundColor: selectedTags.includes(tag) ? "#111" : "#f5f5f5",
-                                                color: selectedTags.includes(tag) ? "#fff" : "#666",
-                                                cursor: "pointer",
-                                                fontSize: "14px",
-                                                transition: "all 0.2s"
-                                            }}
-                                        >
-                                            {tag}
-                                        </button>
-                                    ))}
-                                    {allTags.length > 5 && (
-                                        <button
-                                            onClick={() => setShowAllTags(!showAllTags)}
-                                            style={{
-                                                padding: "8px 16px",
-                                                borderRadius: "20px",
-                                                border: "1px solid #ddd",
-                                                backgroundColor: "transparent",
-                                                color: "#111",
-                                                cursor: "pointer",
-                                                fontSize: "14px",
-                                                transition: "all 0.2s"
-                                            }}
-                                        >
-                                            {showAllTags ? "Show Less" : "View All Tags"}
-                                        </button>
-                                    )}
-                                    {selectedTags.length > 0 && (
-                                        <button
-                                            onClick={() => { setSelectedTags([]); setShowAllTags(false); }}
-                                            style={{
-                                                padding: "8px 16px",
-                                                borderRadius: "20px",
-                                                border: "1px solid #ff4d4f",
-                                                backgroundColor: "#fff",
-                                                color: "#ff4d4f",
-                                                cursor: "pointer",
-                                                fontSize: "14px",
-                                                transition: "all 0.2s"
-                                            }}
-                                            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#ff4d4f"; e.currentTarget.style.color = "#fff"; }}
-                                            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "#fff"; e.currentTarget.style.color = "#ff4d4f"; }}
-                                        >
-                                            Clear All
-                                        </button>
-                                    )}
-                                </div>
-                                {showAllTags && (
-                                    <div style={{
-                                        position: "absolute",
-                                        top: "100%",
-                                        marginTop: "10px",
-                                        zIndex: 10,
-                                        width: "200px",
-                                        maxHeight: "190px", // Approximate height for 5 tags (30px tag + 8px gap)
-                                        overflowY: "auto",
-                                        padding: "10px",
-                                        backgroundColor: "#fff",
-                                        borderRadius: "8px",
-                                        border: "1px solid #eee",
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: "8px",
-                                        alignItems: "stretch",
-                                        boxShadow: "0 10px 25px rgba(0,0,0,0.1)"
-                                    }}>
-                                        {allTags.map(tag => (
-                                            <button
-                                                key={`all-${tag}`}
-                                                onClick={() => { toggleTag(tag); setShowAllTags(false); }}
-                                                style={{
-                                                    padding: "8px 12px",
-                                                    borderRadius: "6px",
-                                                    border: "1px solid #ddd",
-                                                    backgroundColor: selectedTags.includes(tag) ? "#111" : "#fff",
-                                                    color: selectedTags.includes(tag) ? "#fff" : "#666",
-                                                    cursor: "pointer",
-                                                    fontSize: "13px",
-                                                    textAlign: "left",
-                                                    transition: "background-color 0.2s"
-                                                }}
-                                            >
-                                                {tag}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
+      const sortedTags = Object.entries(tagCounts)
+        .sort((a, b) => b[1] - a[1])
+        .map(entry => entry[0]);
 
-                {loading ? (
-                    <div style={{ textAlign: "center", padding: "50px" }}>Loading blogs...</div>
-                ) : filteredBlogs.length === 0 ? (
-                    <div style={{ textAlign: "center", padding: "50px" }}>No blogs found. Check back later!</div>
-                ) : (
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", gap: "clamp(20px, 4vw, 40px)" }}>
-                        {filteredBlogs.map(post => (
-                            <div key={post.id || post._id} style={{
-                                display: "flex", flexDirection: "column", border: "1px solid #eee", backgroundColor: "#fff", transition: "box-shadow 0.3s ease", cursor: "pointer"
-                            }}
-                                onClick={() => navigate(`/blogs/${post.id || post._id}`)}
-                                onMouseEnter={(e) => e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.08)"}
-                                onMouseLeave={(e) => e.currentTarget.style.boxShadow = "none"}
-                            >
-                                <div style={{ height: "260px", overflow: "hidden" }}>
-                                    <img src={post.image} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
-                                        onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-                                        onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-                                    />
-                                </div>
-                                <div style={{ padding: "30px", flex: 1, display: "flex", flexDirection: "column" }}>
-                                    {post.tags && post.tags.length > 0 && (
-                                        <div style={{ display: "flex", gap: "5px", flexWrap: "wrap", marginBottom: "10px" }}>
-                                            {post.tags.map(tag => (
-                                                <span
-                                                    key={tag}
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        toggleTag(tag);
-                                                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                                                    }}
-                                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = selectedTags.includes(tag) ? "#333" : "#e0e0e0"}
-                                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = selectedTags.includes(tag) ? "#111" : "#f0f0f0"}
-                                                    style={{
-                                                        fontSize: "11px",
-                                                        backgroundColor: selectedTags.includes(tag) ? "#111" : "#f0f0f0",
-                                                        color: selectedTags.includes(tag) ? "#fff" : "#444",
-                                                        padding: "4px 10px",
-                                                        borderRadius: "12px",
-                                                        textTransform: "uppercase",
-                                                        letterSpacing: "1px",
-                                                        cursor: "pointer",
-                                                        transition: "background-color 0.2s"
-                                                    }}
-                                                >
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-                                    <h3 style={{ fontSize: "18px", fontWeight: 600, marginBottom: "16px", lineHeight: 1.4, color: "#222" }}>{post.title}</h3>
-                                    <p style={{ fontSize: "15px", color: "#666", lineHeight: 1.6, marginBottom: "30px", flex: 1 }}>{post.excerpt}</p>
-                                    <span style={{ fontSize: "14px", color: "#999", textDecoration: "none", alignSelf: "flex-start", transition: "color 0.2s" }}
-                                        onMouseEnter={(e) => e.currentTarget.style.color = "#222"}
-                                        onMouseLeave={(e) => e.currentTarget.style.color = "#999"}>Read More</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </div>
+      const DEFAULT_TAGS = ['granite', 'marble', 'tiles', 'cobbles', 'quartz'];
+      const uniqueAllTags = Array.from(new Set([...DEFAULT_TAGS, ...sortedTags]));
+
+      setAllTags(uniqueAllTags);
+      setTopTags(DEFAULT_TAGS);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching blogs:", error);
+      setLoading(false);
+    }
+  };
+
+  // Filter blogs based on search query and selected tags
+  const filteredBlogs = blogs.filter(blog => {
+    const matchesSearch =
+      blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (blog.excerpt && blog.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
+    const matchesTag =
+      selectedTags.length > 0
+        ? (blog.tags && selectedTags.some(t => blog.tags.includes(t)))
+        : true;
+    return matchesSearch && matchesTag;
+  });
+
+  const toggleTag = (tag) => {
+    setSelectedTags(prev =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
+  };
+
+  // Feature the first article in the filtered list as our lead story
+  const leadArticle = filteredBlogs.length > 0 ? filteredBlogs[0] : null;
+  const gridArticles = filteredBlogs.length > 1 ? filteredBlogs.slice(1) : [];
+
+  return (
+    <div className="luxury-blogs-page">
+      {/* ================= HERO HEADER ================= */}
+      <section className="luxury-blogs-hero">
+        <div className="editorial-badge-pill">
+          <span className="editorial-pulse-dot"></span>
+          Stoneo Architectural Journal • Insights & Quarry Chronicles
+        </div>
+        <h1>The Architectural Stone Journal</h1>
+        <p>
+          Discover masterclass design guides, quarry explorations, and expert natural stone curation from our Kishangarh atelier.
+        </p>
+      </section>
+
+      {/* ================= GLASSMORPHIC SEARCH & TAG CURATION ================= */}
+      <section className="blogs-curation-section">
+        <div className="blogs-curation-bar">
+          <div className="search-input-wrapper">
+            <span className="search-icon">🔍</span>
+            <input
+              type="text"
+              className="blog-search-input"
+              placeholder="Search architectural chronicles, finishes, or quarry insights..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                className="clear-search-btn"
+                onClick={() => setSearchQuery('')}
+                title="Clear search"
+              >
+                ×
+              </button>
+            )}
+          </div>
+
+          {allTags.length > 0 && (
+            <div ref={tagsContainerRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+              <div className="blogs-tags-row">
+                <button
+                  type="button"
+                  className={`tag-filter-chip ${selectedTags.length === 0 ? 'active' : ''}`}
+                  onClick={() => { setSelectedTags([]); setShowAllTags(false); }}
+                >
+                  All Chronicles
+                </button>
+                {(showAllTags ? allTags : topTags).map(tag => (
+                  <button
+                    key={tag}
+                    type="button"
+                    className={`tag-filter-chip ${selectedTags.includes(tag) ? 'active' : ''}`}
+                    onClick={() => { toggleTag(tag); setShowAllTags(false); }}
+                  >
+                    #{tag}
+                  </button>
+                ))}
+
+                {allTags.length > 5 && (
+                  <button
+                    type="button"
+                    className="tag-filter-chip"
+                    style={{ borderColor: 'rgba(212, 163, 115, 0.4)', color: '#d4a373' }}
+                    onClick={() => setShowAllTags(!showAllTags)}
+                  >
+                    {showAllTags ? '▲ Show Fewer' : `▼ +${allTags.length - topTags.length} More Tags`}
+                  </button>
+                )}
+
+                {selectedTags.length > 0 && (
+                  <button
+                    type="button"
+                    className="clear-tags-btn"
+                    onClick={() => { setSelectedTags([]); setShowAllTags(false); }}
+                  >
+                    ✕ Clear Tags
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ================= CONTENT STATE AREA ================= */}
+      {loading ? (
+        <div className="blogs-state-container">
+          <div className="blogs-loader-spinner"></div>
+          <h3>Loading Architectural Journal...</h3>
+          <p>Curating the latest stone design guides and atelier features.</p>
+        </div>
+      ) : filteredBlogs.length === 0 ? (
+        <div className="blogs-state-container">
+          <h3>No Chronicles Found</h3>
+          <p>We couldn't find any articles matching your search query or selected tags.</p>
+          <button
+            type="button"
+            className="reset-filters-btn"
+            onClick={() => { setSearchQuery(''); setSelectedTags([]); }}
+          >
+            Reset Search & Filters
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* ================= FEATURED LEAD ARTICLE (PANORAMIC) ================= */}
+          {leadArticle && (
+            <section className="featured-article-section">
+              <div
+                className="featured-article-card"
+                onClick={() => navigate(`/blogs/${leadArticle.id || leadArticle._id}`)}
+              >
+                <div className="featured-img-wrapper">
+                  <span className="lead-badge">✦ LEAD STORY</span>
+                  <img
+                    src={leadArticle.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'}
+                    alt={leadArticle.title}
+                  />
+                </div>
+                <div className="featured-content-col">
+                  <div className="article-meta-row">
+                    {leadArticle.tags && leadArticle.tags.length > 0 && (
+                      <span className="article-tag-pill">#{leadArticle.tags[0]}</span>
+                    )}
+                    <span className="article-read-time">● 4 Min Read • Atelier Editorial</span>
+                  </div>
+                  <h2 className="featured-title">{leadArticle.title}</h2>
+                  <p className="featured-excerpt">{leadArticle.excerpt}</p>
+                  <span className="read-chronicle-link">
+                    Read Full Chronicle →
+                  </span>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ================= EDITORIAL GRID ================= */}
+          {gridArticles.length > 0 && (
+            <section className="luxury-blogs-grid-section">
+              <div className="grid-section-header">
+                <h2 className="grid-section-title">More Atelier Chronicles</h2>
+                <span className="grid-count-badge">
+                  Showing {gridArticles.length} {gridArticles.length === 1 ? 'Article' : 'Articles'}
+                </span>
+              </div>
+
+              <div className="luxury-blogs-grid">
+                {gridArticles.map(post => (
+                  <div
+                    key={post.id || post._id}
+                    className="luxury-blog-card"
+                    onClick={() => navigate(`/blogs/${post.id || post._id}`)}
+                  >
+                    <div className="card-img-wrapper">
+                      <img
+                        src={post.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80'}
+                        alt={post.title}
+                      />
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="card-img-overlay">
+                          {post.tags.slice(0, 2).map(t => (
+                            <span key={t} className="overlay-tag">#{t}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="card-content">
+                      <h3 className="card-title">{post.title}</h3>
+                      <p className="card-excerpt">{post.excerpt}</p>
+
+                      <div className="card-footer">
+                        <span className="card-read-more">Read Chronicle →</span>
+                        <span className="card-date">● Architectural Journal</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </>
+      )}
+    </div>
+  );
 }

@@ -9,105 +9,105 @@ const MARBLE_TYPES = [];
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
-  { "name": "Statuario", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Statuario.jpg", "category": "White" },
-  { "name": "Statuario Venatino", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Statuarietto-Venatino.jpg", "category": "White" },
-  { "name": "Carrara White", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Carrara-Marble.jpg", "category": "White" },
-  { "name": "Calacatta White", "image": "https://petrosstone.com/wp-content/uploads/2022/01/8-2.png", "category": "White" },
-  { "name": "Carrara Bardiglio", "image": "https://petrosstone.com/wp-content/uploads/2022/04/15.png", "category": "Grey" },
-  { "name": "Bianco Beige", "image": "https://petrosstone.com/wp-content/uploads/2022/04/21.png", "category": "Beige" },
-  { "name": "Venatino", "image": "https://petrosstone.com/wp-content/uploads/2022/04/1-2.png", "category": "White" },
-  { "name": "Botticino Sicilia", "image": "https://petrosstone.com/wp-content/uploads/2022/04/18-1.png", "category": "Beige" },
-  { "name": "Armani Brown", "image": "https://petrosstone.com/wp-content/uploads/2022/04/27.png", "category": "Brown" },
-  { "name": "Black Portoro Waves", "image": "https://petrosstone.com/wp-content/uploads/2022/04/11.png", "category": "Black" },
-  { "name": "Crema Marfil", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Bianco-Marfil-Marble-Best-for-Flooring.jpg", "category": "Beige" },
-  { "name": "Dark Emperador", "image": "https://petrosstone.com/wp-content/uploads/2021/12/1-1.png", "category": "Brown" },
-  { "name": "Calacatta Gold", "image": "https://petrosstone.com/wp-content/uploads/2021/12/11.png", "category": "White" },
-  { "name": "Nero Portoro", "image": "https://petrosstone.com/wp-content/uploads/2021/12/1.png", "category": "Black" },
-  { "name": "Golden Portoro Waterfall", "image": "https://petrosstone.com/wp-content/uploads/2022/04/10-1.png", "category": "Black" },
-  { "name": "Black Marquina", "image": "https://petrosstone.com/wp-content/uploads/2022/04/7.png", "category": "Black" },
+  { "name": "Statuario", "image": "/indian_marble_images/Statuario.jpg", "category": "White" },
+  { "name": "Statuario Venatino", "image": "/indian_marble_images/Statuario Venatino.jpg", "category": "White" },
+  { "name": "Carrara White", "image": "/indian_marble_images/Carrara White.jpg", "category": "White" },
+  { "name": "Calacatta White", "image": "/indian_marble_images/Calacatta White.png", "category": "White" },
+  { "name": "Carrara Bardiglio", "image": "/indian_marble_images/Carrara Bardiglio.png", "category": "Grey" },
+  { "name": "Bianco Beige", "image": "/indian_marble_images/Bianco Beige.png", "category": "Beige" },
+  { "name": "Venatino", "image": "/indian_marble_images/Venatino.png", "category": "White" },
+  { "name": "Botticino Sicilia", "image": "/indian_marble_images/Botticino Sicilia.png", "category": "Beige" },
+  { "name": "Armani Brown", "image": "/indian_marble_images/Armani Brown.png", "category": "Brown" },
+  { "name": "Black Portoro Waves", "image": "/indian_marble_images/Black Portoro Waves.png", "category": "Black" },
+  { "name": "Crema Marfil", "image": "/indian_marble_images/Crema Marfil.jpg", "category": "Beige" },
+  { "name": "Dark Emperador", "image": "/indian_marble_images/Dark Emperador.png", "category": "Brown" },
+  { "name": "Calacatta Gold", "image": "/indian_marble_images/Calacatta Gold.png", "category": "White" },
+  { "name": "Nero Portoro", "image": "/indian_marble_images/Nero Portoro.png", "category": "Black" },
+  { "name": "Golden Portoro Waterfall", "image": "/indian_marble_images/Golden Portoro Waterfall.png", "category": "Black" },
+  { "name": "Black Marquina", "image": "/indian_marble_images/Black Marquina.png", "category": "Black" },
   { "name": "Perlato", "image": "https://petrosstone.com/wp-content/uploads/2022/04/Copy-of-Copyrights-%C2%A9-2021-Petros-Stone-LLP-All-Rights-Reserved.png", "category": "Beige" },
-  { "name": "Dyna", "image": "https://petrosstone.com/wp-content/uploads/2022/04/11-1.png", "category": "Beige" },
-  { "name": "Michel Angelo", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Michelangelo-Marble.jpg", "category": "White" },
-  { "name": "Perlato Royal", "image": "https://petrosstone.com/wp-content/uploads/2022/04/6-4.png", "category": "Beige" },
+  { "name": "Dyna", "image": "/indian_marble_images/Dyna.png", "category": "Beige" },
+  { "name": "Michel Angelo", "image": "/indian_marble_images/Michel Angelo.jpg", "category": "White" },
+  { "name": "Perlato Royal", "image": "/indian_marble_images/Perlato Royal.png", "category": "Beige" },
 
-  { "name": "Agaria white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Agaria-white-marble-300x229.png", "category": "White", "place": "India" },
-  { "name": "Albeta white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Albeta-white-marble-300x269.png", "category": "White", "place": "India" },
-  { "name": "Arna white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Arna-white-marble-300x283.png", "category": "White", "place": "India" },
-  { "name": "Dungari white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Dungari-white-marble-300x300.png", "category": "White", "place": "India" },
-  { "name": "Indian statuario marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Indian-statuario-marble-300x250.png", "category": "White", "place": "India" },
-  { "name": "Indian onyx marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/indian-onyx-marble-300x225.png", "category": "White", "place": "India" },
-  { "name": "Jhanjhar white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Jhanjhar-white-marble-300x291.png", "category": "White", "place": "India" },
-  { "name": "Morchana white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Morchana-white-marble.png", "category": "White", "place": "India" },
-  { "name": "Morwad white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Morwad-white-marble-300x231.png", "category": "White", "place": "India" },
-  { "name": "Rajnagar white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Rajnagar-white-marble-300x295.png", "category": "White", "place": "India" },
-  { "name": "Wonder white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Wonder-white-marble-254x300.png", "category": "White", "place": "India" },
-  { "name": "Pure White Marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Pure-White-Marble-300x243.png", "category": "White", "place": "India" },
-  { "name": "Banswara white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Banswara-white-marble-300x217.png", "category": "White", "place": "India" },
-  { "name": "Indian carrara marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Indian-carrara-marble-300x274.png", "category": "White", "place": "India" },
-  { "name": "Ambaji white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Ambaji-white-marble-300x252.png", "category": "White", "place": "India" },
-  { "name": "Dharmeta white marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Dharmeta-white-marble-300x300.png", "category": "White", "place": "India" },
-  { "name": "Ardosia black grey marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Ardosia-black-marble-300x264.png", "category": "Grey", "place": "India" },
-
-
+  { "name": "Agaria white marble", "image": "/indian_marble_images/Agaria white marble.png", "category": "White", "place": "India" },
+  { "name": "Albeta white marble", "image": "/indian_marble_images/Albeta white marble.png", "category": "White", "place": "India" },
+  { "name": "Arna white marble", "image": "/indian_marble_images/Arna white marble.png", "category": "White", "place": "India" },
+  { "name": "Dungari white marble", "image": "/indian_marble_images/Dungari white marble.png", "category": "White", "place": "India" },
+  { "name": "Indian statuario marble", "image": "/indian_marble_images/Indian statuario marble.png", "category": "White", "place": "India" },
+  { "name": "Indian onyx marble", "image": "/indian_marble_images/Indian onyx marble.png", "category": "White", "place": "India" },
+  { "name": "Jhanjhar white marble", "image": "/indian_marble_images/Jhanjhar white marble.png", "category": "White", "place": "India" },
+  { "name": "Morchana white marble", "image": "/indian_marble_images/Morchana white marble.png", "category": "White", "place": "India" },
+  { "name": "Morwad white marble", "image": "/indian_marble_images/Morwad white marble.png", "category": "White", "place": "India" },
+  { "name": "Rajnagar white marble", "image": "/indian_marble_images/Rajnagar white marble.png", "category": "White", "place": "India" },
+  { "name": "Wonder white marble", "image": "/indian_marble_images/Wonder white marble.png", "category": "White", "place": "India" },
+  { "name": "Pure White Marble", "image": "/indian_marble_images/Pure White Marble.png", "category": "White", "place": "India" },
+  { "name": "Banswara white marble", "image": "/indian_marble_images/Banswara white marble.png", "category": "White", "place": "India" },
+  { "name": "Indian carrara marble", "image": "/indian_marble_images/Indian carrara marble.png", "category": "White", "place": "India" },
+  { "name": "Ambaji white marble", "image": "/indian_marble_images/Ambaji white marble.png", "category": "White", "place": "India" },
+  { "name": "Dharmeta white marble", "image": "/indian_marble_images/Dharmeta white marble.png", "category": "White", "place": "India" },
+  { "name": "Ardosia black grey marble", "image": "/indian_marble_images/Ardosia black grey marble.png", "category": "Grey", "place": "India" },
 
 
 
-  { "name": "Travertine", "image": "https://petrosstone.com/wp-content/uploads/2022/04/2-2.png", "category": "Beige" },
-  { "name": "Arabescato", "image": "https://petrosstone.com/wp-content/uploads/2022/04/30.png", "category": "White" },
-  { "name": "Chianti Gray", "image": "https://petrosstone.com/wp-content/uploads/2022/04/12-1.png", "category": "Grey" },
-  { "name": "Champagne Brown", "image": "https://petrosstone.com/wp-content/uploads/2022/04/14-1.png", "category": "Brown" },
-  { "name": "Brown Emperado", "image": "https://petrosstone.com/wp-content/uploads/2022/04/13-1.png", "category": "Brown" },
-  { "name": "Bronzite", "image": "https://petrosstone.com/wp-content/uploads/2022/04/16.png", "category": "Brown" },
-  { "name": "Brescia Aurora", "image": "https://petrosstone.com/wp-content/uploads/2022/04/17-1.png", "category": "Beige" },
-  { "name": "Brescia Oniciata", "image": "https://petrosstone.com/wp-content/uploads/2022/04/15-2.png", "category": "Brown" },
-  { "name": "Botticino Fiorito", "image": "https://petrosstone.com/wp-content/uploads/2022/04/19-1.png", "category": "Beige" },
-  { "name": "Bianco Marfil", "image": "https://petrosstone.com/wp-content/uploads/2022/04/22.png", "category": "White" },
-  { "name": "Beige Serpeggian", "image": "https://petrosstone.com/wp-content/uploads/2022/04/23.png", "category": "Beige" },
-  { "name": "Baltic Sea Wave", "image": "https://petrosstone.com/wp-content/uploads/2022/04/24.png", "category": "Grey" },
-  { "name": "Baltic Pink", "image": "https://petrosstone.com/wp-content/uploads/2022/04/25.png", "category": "Pink" },
-  { "name": "Armani Grey", "image": "https://petrosstone.com/wp-content/uploads/2022/04/28.png", "category": "Grey" },
-  { "name": "Antique Beige", "image": "https://petrosstone.com/wp-content/uploads/2022/04/29.png", "category": "Beige" },
-  { "name": "Amazonite", "image": "https://petrosstone.com/wp-content/uploads/2022/04/31.png", "category": "Green" },
-  { "name": "Amazon White", "image": "https://petrosstone.com/wp-content/uploads/2022/04/32.png", "category": "White" },
-  { "name": "Myra Beige", "image": "https://petrosstone.com/wp-content/uploads/2022/04/7-2.png", "category": "Beige" },
-  { "name": "Pink Valencia", "image": "https://petrosstone.com/wp-content/uploads/2022/04/3-2.png", "category": "Pink" },
-  { "name": "Autumn Yellow", "image": "https://petrosstone.com/wp-content/uploads/2022/04/26.png", "category": "Yellow" },
-  { "name": "Black Forest", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Black-Lava-Marble-3.jpg", "category": "Black" },
-  { "name": "Palissandro", "image": "https://petrosstone.com/wp-content/uploads/2022/04/5-2.png", "category": "Grey" },
-  { "name": "Botanic Green", "image": "https://petrosstone.com/wp-content/uploads/2022/04/20-1.png", "category": "Green" },
-  { "name": "Calacatta Borghini", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Borghini-Marble.jpg", "category": "White" },
-  { "name": "Athens Beige", "image": "https://petrosstone.com/wp-content/uploads/2022/04/3-3.png", "category": "Beige" },
 
 
-  { "name": "Brown rainforest marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Brown-rainforest-marble-300x247.png", "category": "Brown", "place": "India" },
-  { "name": "Fire red marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Fire-red-marble-300x273.png", "category": "Red", "place": "India" },
-  { "name": "Golden rainforest marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Golden-rainforest-marble-300x278.png", "category": "Brown", "place": "India" },
-  { "name": "Oman red marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Oman-red-marble-300x287.png", "category": "Red", "place": "India" },
-  { "name": "Sawar marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Sawar-marble-300x287.png", "category": "Beige", "place": "India" },
-  { "name": "Pink katni marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Pink-katni-marble-300x283.png", "category": "Pink", "place": "India" },
-  { "name": "Pink marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Pink-marble-300x209.png", "category": "Pink", "place": "India" },
-  { "name": "Kota stone", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Kota-stone-300x224.png", "category": "Grey", "place": "India" },
-  { "name": "Fantasy brown marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Fantasy-brown-marble-300x231.png", "category": "Brown", "place": "India" },
-  { "name": "Chak dungri marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Chak-dungri-marble-300x228.png", "category": "White", "place": "India" },
-  { "name": "Wonder wood marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Wonder-wood-marble-300x300.png", "category": "Brown", "place": "India" },
-  { "name": "Rainbow marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Rainbow-marble-300x241.png", "category": "Beige", "place": "India" },
-  { "name": "Jaisalmer Yellow marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/jaisalmer-Yellow-marble-300x249.png", "category": "Yellow", "place": "India" },
-  { "name": "Teak sandstone", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Teak-sandstone-300x176.png", "category": "Brown", "place": "India" },
-  { "name": "Makrana pink marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Makrana-pink-marble-300x253.png", "category": "Pink", "place": "India" },
-  { "name": "Keshairya green marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Keshairya-green-marble-300x280.png", "category": "Green", "place": "India" },
-  { "name": "Tobacco black marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Tobacco-black-marble-300x238.png", "category": "Black", "place": "India" },
-  { "name": "Cheery red marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Cheery-red-marble-300x297.png", "category": "Red", "place": "India" },
-  { "name": "Katni Marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/katni-marble-283x300.png", "category": "Beige", "place": "India" },
-  { "name": "Brown Albeta Marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Brown-Albeta-Marble-300x280.png", "category": "Brown", "place": "India" },
-  { "name": "Bliss White Marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Bliss-White-Marble-290x300.png", "category": "White", "place": "India" },
-  { "name": "Pista White Marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/Pista-White-Marble-268x300.png", "category": "White", "place": "India" },
-  { "name": "Udaipur pink marble", "image": "https://www.bhandarimarblecompany.com/wp-content/uploads/2024/05/udaipur-pink-marble-300x300.png", "category": "Pink", "place": "India" },
+  { "name": "Travertine", "image": "/paving_and_stones/Travertine.png", "category": "Beige" },
+  { "name": "Arabescato", "image": "/indian_marble_images/Arabescato.png", "category": "White" },
+  { "name": "Chianti Gray", "image": "/indian_marble_images/Chianti Gray.png", "category": "Grey" },
+  { "name": "Champagne Brown", "image": "/indian_marble_images/Champagne Brown.png", "category": "Brown" },
+  { "name": "Brown Emperado", "image": "/indian_marble_images/Brown Emperado.png", "category": "Brown" },
+  { "name": "Bronzite", "image": "/indian_marble_images/Bronzite.png", "category": "Brown" },
+  { "name": "Brescia Aurora", "image": "/indian_marble_images/Brescia Aurora.png", "category": "Beige" },
+  { "name": "Brescia Oniciata", "image": "/indian_marble_images/Brescia Oniciata.png", "category": "Brown" },
+  { "name": "Botticino Fiorito", "image": "/indian_marble_images/Botticino Fiorito.png", "category": "Beige" },
+  { "name": "Bianco Marfil", "image": "/indian_marble_images/Bianco Marfil.png", "category": "White" },
+  { "name": "Beige Serpeggian", "image": "/indian_marble_images/Beige Serpeggian.png", "category": "Beige" },
+  { "name": "Baltic Sea Wave", "image": "/indian_marble_images/Baltic Sea Wave.png", "category": "Grey" },
+  { "name": "Baltic Pink", "image": "/indian_marble_images/Baltic Pink.png", "category": "Pink" },
+  { "name": "Armani Grey", "image": "/indian_marble_images/Armani Grey.png", "category": "Grey" },
+  { "name": "Antique Beige", "image": "/indian_marble_images/Antique Beige.png", "category": "Beige" },
+  { "name": "Amazonite", "image": "/indian_marble_images/Amazonite.png", "category": "Green" },
+  { "name": "Amazon White", "image": "/indian_marble_images/Amazon White.png", "category": "White" },
+  { "name": "Myra Beige", "image": "/indian_marble_images/Myra Beige.png", "category": "Beige" },
+  { "name": "Pink Valencia", "image": "/indian_marble_images/Pink Valencia.png", "category": "Pink" },
+  { "name": "Autumn Yellow", "image": "/indian_marble_images/Autumn Yellow.png", "category": "Yellow" },
+  { "name": "Black Forest", "image": "/indian_marble_images/Black Forest.jpg", "category": "Black" },
+  { "name": "Palissandro", "image": "/indian_marble_images/Palissandro.png", "category": "Grey" },
+  { "name": "Botanic Green", "image": "/indian_marble_images/Botanic Green.png", "category": "Green" },
+  { "name": "Calacatta Borghini", "image": "/indian_marble_images/Calacatta Borghini.jpg", "category": "White" },
+  { "name": "Athens Beige", "image": "/indian_marble_images/Athens Beige.png", "category": "Beige" },
 
-  { "name": "Golden Spider", "image": "https://petrosstone.com/wp-content/uploads/2022/04/2-3.png", "category": "Brown" },
-  { "name": "Equator White", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Equator-White-Marble.jpg", "category": "White" },
-  { "name": "Giallo Siena", "image": "https://petrosstone.com/wp-content/uploads/2022/04/1-3.png", "category": "Yellow" },
-  { "name": "Oro Calacatta", "image": "https://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg", "category": "White" },
-  { "name": "Grigio Carrara", "image": "https://petrosstone.com/wp-content/uploads/2022/04/8-1.png", "category": "Grey" },
+
+  { "name": "Brown rainforest marble", "image": "/indian_marble_images/Brown rainforest marble.png", "category": "Brown", "place": "India" },
+  { "name": "Fire red marble", "image": "/indian_marble_images/Fire red marble.png", "category": "Red", "place": "India" },
+  { "name": "Golden rainforest marble", "image": "/indian_marble_images/Golden rainforest marble.png", "category": "Brown", "place": "India" },
+  { "name": "Oman red marble", "image": "/indian_marble_images/Oman red marble.png", "category": "Red", "place": "India" },
+  { "name": "Sawar marble", "image": "/indian_marble_images/Sawar marble.png", "category": "Beige", "place": "India" },
+  { "name": "Pink katni marble", "image": "/indian_marble_images/Pink katni marble.png", "category": "Pink", "place": "India" },
+  { "name": "Pink marble", "image": "/indian_marble_images/Pink marble.png", "category": "Pink", "place": "India" },
+  { "name": "Kota stone", "image": "/indian_marble_images/Kota stone.png", "category": "Grey", "place": "India" },
+  { "name": "Fantasy brown marble", "image": "/indian_marble_images/Fantasy brown marble.png", "category": "Brown", "place": "India" },
+  { "name": "Chak dungri marble", "image": "/indian_marble_images/Chak dungri marble.png", "category": "White", "place": "India" },
+  { "name": "Wonder wood marble", "image": "/indian_marble_images/Wonder wood marble.png", "category": "Brown", "place": "India" },
+  { "name": "Rainbow marble", "image": "/indian_marble_images/Rainbow marble.png", "category": "Beige", "place": "India" },
+  { "name": "Jaisalmer Yellow marble", "image": "/indian_marble_images/Jaisalmer Yellow marble.png", "category": "Yellow", "place": "India" },
+  { "name": "Teak sandstone", "image": "/paving_and_stones/Teak sandstone.png", "category": "Brown", "place": "India" },
+  { "name": "Makrana pink marble", "image": "/indian_marble_images/Makrana pink marble.png", "category": "Pink", "place": "India" },
+  { "name": "Keshairya green marble", "image": "/indian_marble_images/Keshairya green marble.png", "category": "Green", "place": "India" },
+  { "name": "Tobacco black marble", "image": "/indian_marble_images/Tobacco black marble.png", "category": "Black", "place": "India" },
+  { "name": "Cheery red marble", "image": "/indian_marble_images/Cheery red marble.png", "category": "Red", "place": "India" },
+  { "name": "Katni Marble", "image": "/indian_marble_images/Katni Marble.png", "category": "Beige", "place": "India" },
+  { "name": "Brown Albeta Marble", "image": "/indian_marble_images/Brown Albeta Marble.png", "category": "Brown", "place": "India" },
+  { "name": "Bliss White Marble", "image": "/indian_marble_images/Bliss White Marble.png", "category": "White", "place": "India" },
+  { "name": "Pista White Marble", "image": "/indian_marble_images/Pista White Marble.png", "category": "White", "place": "India" },
+  { "name": "Udaipur pink marble", "image": "/indian_marble_images/Udaipur pink marble.png", "category": "Pink", "place": "India" },
+
+  { "name": "Golden Spider", "image": "/indian_marble_images/Golden Spider.png", "category": "Brown" },
+  { "name": "Equator White", "image": "/indian_marble_images/Equator White.jpg", "category": "White" },
+  { "name": "Giallo Siena", "image": "/indian_marble_images/Giallo Siena.png", "category": "Yellow" },
+  { "name": "Oro Calacatta", "image": "/indian_marble_images/Oro Calacatta.jpg", "category": "White" },
+  { "name": "Grigio Carrara", "image": "/indian_marble_images/Grigio Carrara.png", "category": "Grey" },
 
 ];
 
@@ -128,7 +128,9 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   const key = csvItem.name.toLowerCase().trim();
   const existing = marbleTypesMap[key];
 
-  const origin = ORIGIN_OPTIONS[index % ORIGIN_OPTIONS.length];
+  const origin = csvItem.name.toLowerCase().includes('statuario')
+    ? 'Italian'
+    : ORIGIN_OPTIONS[index % ORIGIN_OPTIONS.length];
   // Pseudo-random price between 50 and 250 based on index
   const price = 50 + ((index * 17) % 201);
 
@@ -202,6 +204,8 @@ export default function Marble() {
     });
   };
 
+  const typeParam = searchParams.get('type');
+
   // 3. Filtered List Logic
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
@@ -210,10 +214,11 @@ export default function Marble() {
       const matchesOrigin = filters.origin.length === 0 || filters.origin.includes(p.origin);
       const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
       const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesType;
     });
-  }, [categoryFilter, filters]);
+  }, [categoryFilter, filters, typeParam]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -249,8 +254,8 @@ export default function Marble() {
       <div className="page products-page">
         <section className="marble-header page-header">
           <div className="container container-heading">
-            <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Marble Collections</h1>
-            <p>Browse our premium selection of {categoryFilter.toLowerCase()} imported varieties</p>
+            <h1>Our {typeParam === 'statuario' ? 'Statuario' : categoryFilter !== 'All' ? categoryFilter : ''} Marble Collections</h1>
+            <p>Browse our premium selection of {typeParam === 'statuario' ? 'statuario' : categoryFilter.toLowerCase()} varieties</p>
           </div>
         </section>
 

@@ -9,148 +9,148 @@ import { useDemand } from '../../context/DemandContext';
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
 
-  { name: "Absolute Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Absolute-Black-Polished-Texture.webp", category: "Black" },
-  { name: "Black Galaxy Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Black-Galaxy-Granite-Swatch.webp", category: "Black" },
-  { name: "Black Marine Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Black-marine-granite.webp", category: "Black" },
-  { name: "Black Marcino Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2020/08/Black-Marcino-Swatch.webp", category: "Black" },
-  { name: "Blue Dunes Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Blue-dunes-granite.webp", category: "Blue" },
-  { name: "Colonial White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2017/07/Colonial-White-Swatch.webp", category: "White" },
-  { name: "Desert Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Desert-brown-granite.webp", category: "Brown" },
+  { name: "Absolute Black Granite", "image": "/granite_images/Absolute Black Granite.webp", category: "Black" },
+  { name: "Black Galaxy Granite", "image": "/granite_images/Black Galaxy Granite.webp", category: "Black" },
+  { name: "Black Marine Granite", "image": "/granite_images/Black Marine Granite.webp", category: "Black" },
+  { name: "Black Marcino Granite", "image": "/granite_images/Black Marcino Granite.webp", category: "Black" },
+  { name: "Blue Dunes Granite", image: "/granite_images/Blue Dunes Granite.jpg", category: "Blue" },
+  { name: "Colonial White Granite", "image": "/granite_images/Colonial White Granite.webp", category: "White" },
+  { name: "Desert Brown Granite", "image": "/granite_images/Desert Brown Granite.webp", category: "Brown" },
   { name: "Steel Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Steel-grey-granite.webp", category: "Grey" },
 
 
-  { name: "P White Granite (Lunar Pearl)", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/P-white-granite.webp", category: "White" },
-  { name: "Alaska White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2016/06/Alaska-White-Swatch.webp", category: "White" },
-  { name: "Black Forest Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2016/05/Black-Forest-Swatch.webp", category: "Black" },
-  { name: "Viscon White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Viscon-white-granite-1.webp", category: "White" },
-  { name: "Tan Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Tan-brown-granite.webp", category: "Brown" },
-  { name: "Colonial Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Colonial-Gold-Swatch.webp", category: "Gold" },
-  { name: "Kuppam Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2016/05/Kuppam-Green-Swatch.webp", category: "Green" },
-  { name: "Lavender Blue Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Lavendar-blue-granite.webp", category: "Blue" },
-  { name: "Coffee Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Coffee-brown-granite.webp", category: "Brown" },
-  { name: "Classic Paradiso Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2016/05/Classic-Paradiso-Swatch.webp", category: "Multicolor" },
-  { name: "Bash Paradiso Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bash-paradiso-granite.webp", category: "Multicolor" },
+  { name: "P White Granite (Lunar Pearl)", "image": "/granite_images/P White Granite (Lunar Pearl).webp", category: "White" },
+  { name: "Alaska White Granite", "image": "/granite_images/Alaska White Granite.webp", category: "White" },
+  { name: "Black Forest Granite", "image": "/granite_images/Black Forest Granite.webp", category: "Black" },
+  { name: "Viscon White Granite", "image": "/granite_images/Viscon White Granite.webp", category: "White" },
+  { name: "Tan Brown Granite", image: "/granite_images/Tan Brown Granite.jpg", category: "Brown" },
+  { name: "Colonial Gold Granite", "image": "/granite_images/Colonial Gold Granite.webp", category: "Gold" },
+  { name: "Kuppam Green Granite", "image": "/granite_images/Kuppam Green Granite.webp", category: "Green" },
+  { name: "Lavender Blue Granite", "image": "/granite_images/Lavender Blue Granite.webp", category: "Blue" },
+  { name: "Coffee Brown Granite", "image": "/granite_images/Coffee Brown Granite.webp", category: "Brown" },
+  { name: "Classic Paradiso Granite", "image": "/granite_images/Classic Paradiso Granite.webp", category: "Multicolor" },
+  { name: "Bash Paradiso Granite", "image": "/granite_images/Bash Paradiso Granite.webp", category: "Multicolor" },
   { name: "Red Multicolor Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Red-multicolor-granite.webp", category: "Red" },
   { name: "New Kashmir White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/New-kashmir-white-granite-1.webp", category: "White" },
-  { name: "Himalayan Blue Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Himalayan-blue-granite.webp", category: "Blue" },
-  { name: "Colombo Juparana Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Colombo-jubrana-granite.webp", category: "Multicolor" },
-  { name: "Crystal Yellow Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Crystal-yellow-granite.webp", category: "Yellow" },
-  { name: "Malwada Yellow Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Malwada-yellow-granite.webp", category: "Yellow" },
-  { name: "Astoria Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Astoria-granite.webp", category: "Multicolor" },
-  { name: "Bala Flower Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bala-flower-granite.webp", category: "Multicolor" },
-  { name: "Copper Silk Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Copper-silk-granite.webp", category: "Brown" },
-  { name: "Kotkasta Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Kotkasta-granite.webp", category: "Multicolor" },
-  { name: "Maliwada Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Maliwada-granite.webp", category: "Yellow" },
-  { name: "Monte Cristo Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Monte-cristo-granite.webp", category: "Multicolor" },
-  { name: "Onida Orange Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Onida-orange-granite.webp", category: "Orange" },
-  { name: "Royal Cream Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Royal-cream-granite.webp", category: "Cream" },
-  { name: "Rue Classic Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Rue-classic-granite.webp", category: "Multicolor" },
-  { name: "Tiger Skin Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Tiger-skin-granite.webp", category: "Brown" },
-  { name: "Bahama Ivory Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bahama-ivory-granite.webp", category: "Cream" },
-  { name: "Cats Eye Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Cats-eye-granite.webp", category: "Brown" },
-  { name: "Black Premium Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Black-premium-granite.webp", category: "Black" },
-  { name: "Colonial Cream Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Colonial-cream-granite.webp", category: "Cream" },
-  { name: "Ghiblee Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Ghiblee-granite.webp", category: "Multicolor" },
-  { name: "Indian Aurora Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Indian-aurora-granite.webp", category: "Multicolor" },
-  { name: "Ivory Fantasy Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Ivory-fantasy-granite.webp", category: "Cream" },
-  { name: "Millennium Cream Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Millenium-cream-granite-1.webp", category: "Cream" },
-  { name: "Rose Wood Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Rose-wood-granite.webp", category: "Brown" },
-  { name: "Sea Waves Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Sea-waves-granite-1.webp", category: "Grey" },
-  { name: "Mango Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Mango-granite.webp", category: "Yellow" },
+  { name: "Himalayan Blue Granite", "image": "/granite_images/Himalayan Blue Granite.webp", category: "Blue" },
+  { name: "Colombo Juparana Granite", "image": "/granite_images/Colombo Juparana Granite.webp", category: "Multicolor" },
+  { name: "Crystal Yellow Granite", "image": "/granite_images/Crystal Yellow Granite.webp", category: "Yellow" },
+  { name: "Malwada Yellow Granite", "image": "/granite_images/Malwada Yellow Granite.webp", category: "Yellow" },
+  { name: "Astoria Granite", "image": "/granite_images/Astoria Granite.webp", category: "Multicolor" },
+  { name: "Bala Flower Granite", "image": "/granite_images/Bala Flower Granite.webp", category: "Multicolor" },
+  { name: "Copper Silk Granite", "image": "/granite_images/Copper Silk Granite.webp", category: "Brown" },
+  { name: "Kotkasta Granite", "image": "/granite_images/Kotkasta Granite.webp", category: "Multicolor" },
+  { name: "Maliwada Granite", "image": "/granite_images/Maliwada Granite.webp", category: "Yellow" },
+  { name: "Monte Cristo Granite", "image": "/granite_images/Monte Cristo Granite.webp", category: "Multicolor" },
+  { name: "Onida Orange Granite", "image": "/granite_images/Onida Orange Granite.webp", category: "Orange" },
+  { name: "Royal Cream Granite", "image": "/granite_images/Royal Cream Granite.webp", category: "Cream" },
+  { name: "Rue Classic Granite", "image": "/granite_images/Rue Classic Granite.webp", category: "Multicolor" },
+  { name: "Tiger Skin Granite", "image": "/granite_images/Tiger Skin Granite.webp", category: "Brown" },
+  { name: "Bahama Ivory Granite", "image": "/granite_images/Bahama Ivory Granite.webp", category: "Cream" },
+  { name: "Cats Eye Granite", "image": "/granite_images/Cats Eye Granite.webp", category: "Brown" },
+  { name: "Black Premium Granite", "image": "/granite_images/Black Premium Granite.webp", category: "Black" },
+  { name: "Colonial Cream Granite", "image": "/granite_images/Colonial Cream Granite.webp", category: "Cream" },
+  { name: "Ghiblee Granite", "image": "/granite_images/Ghiblee Granite.webp", category: "Multicolor" },
+  { name: "Indian Aurora Granite", "image": "/granite_images/Indian Aurora Granite.webp", category: "Multicolor" },
+  { name: "Ivory Fantasy Granite", "image": "/granite_images/Ivory Fantasy Granite.webp", category: "Cream" },
+  { name: "Millennium Cream Granite", "image": "/granite_images/Millennium Cream Granite.webp", category: "Cream" },
+  { name: "Rose Wood Granite", "image": "/granite_images/Rose Wood Granite.webp", category: "Brown" },
+  { name: "Sea Waves Granite", "image": "/granite_images/Sea Waves Granite.webp", category: "Grey" },
+  { name: "Mango Granite", "image": "/granite_images/Mango Granite.webp", category: "Yellow" },
 
 
-  { name: "Lava Oro Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Lava-oro-granite.webp", category: "Gold" },
-  { name: "Donna Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Donna-grey-granite.webp", category: "Grey" },
-  { name: "Indian Copacabana Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Indian-Copacabana-Swatch.webp", category: "Multicolor" },
-  { name: "Alabaster White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Alabaster-white-granite.webp", category: "White" },
-  { name: "Alpinus White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Alpinus-white-granite.webp", category: "White" },
-  { name: "Bianco White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bianco-white-granite.webp", category: "White" },
-  { name: "Crystal White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Crystal-white-granite.webp", category: "White" },
-  { name: "French White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/French-white-granite.webp", category: "White" },
-  { name: "Imperial White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Imperial-white-granite.webp", category: "White" },
-  { name: "Indian Cappuccino White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Indian-cappucino-white-granite.webp", category: "White" },
-  { name: "Kuppam White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Kuppam-white-granite.webp", category: "White" },
-  { name: "Moon White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Moon-white-granite.webp", category: "White" },
-  { name: "River White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/River-white-granite.webp", category: "White" },
-  { name: "Thunder White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Thunder-white-granite-1.webp", category: "White" },
-  { name: "Titanium White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Titanium-white-granite.webp", category: "White" },
-  { name: "New Ivory White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/New-ivory-white-granite.webp", category: "White" },
-  { name: "S White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/S-white-granite.webp", category: "White" },
-  { name: "Sadarali Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Sadarali-grey-granite.webp", category: "Grey" },
-  { name: "Epic White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Epic-white-granite.webp", category: "White" },
-  { name: "Monalisa Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Monalisa-granite.webp", category: "Multicolor" },
-  { name: "Sunset Canyon Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Sunset-canyon-granite.webp", category: "Brown" },
-  { name: "Stream White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Stream-White-Swatch.webp", category: "White" },
-  { name: "Mariyam White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Mariyam-White-Granite-Swatch.webp", category: "White" },
-  { name: "Atlantic White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Atlantic-White-Swatch.webp", category: "White" },
-  { name: "Alaska Red Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Alaska-red-granite.webp", category: "Red" },
-  { name: "Bruno Red Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bruno-red-granite.webp", category: "Red" },
-  { name: "Jhansi Red Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Jhansi-red-granite.webp", category: "Red" },
-  { name: "Lakha Red Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Lakha-red-granite.webp", category: "Red" },
-  { name: "New Imperial Red Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/New-imperial-red-granite.webp", category: "Red" },
-  { name: "Wine Red Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Wine-red-granite.webp", category: "Red" },
-  { name: "Chima Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Chima-pink-granite.webp", category: "Pink" },
+  { name: "Lava Oro Granite", "image": "/granite_images/Lava Oro Granite.webp", category: "Gold" },
+  { name: "Donna Grey Granite", "image": "/granite_images/Donna Grey Granite.webp", category: "Grey" },
+  { name: "Indian Copacabana Granite", "image": "/granite_images/Indian Copacabana Granite.webp", category: "Multicolor" },
+  { name: "Alabaster White Granite", "image": "/granite_images/Alabaster White Granite.webp", category: "White" },
+  { name: "Alpinus White Granite", "image": "/granite_images/Alpinus White Granite.webp", category: "White" },
+  { name: "Bianco White Granite", "image": "/granite_images/Bianco White Granite.webp", category: "White" },
+  { name: "Crystal White Granite", "image": "/granite_images/Crystal White Granite.webp", category: "White" },
+  { name: "French White Granite", "image": "/granite_images/French White Granite.webp", category: "White" },
+  { name: "Imperial White Granite", "image": "/granite_images/Imperial White Granite.webp", category: "White" },
+  { name: "Indian Cappuccino White Granite", "image": "/granite_images/Indian Cappuccino White Granite.webp", category: "White" },
+  { name: "Kuppam White Granite", "image": "/granite_images/Kuppam White Granite.webp", category: "White" },
+  { name: "Moon White Granite", "image": "/granite_images/Moon White Granite.webp", category: "White" },
+  { name: "River White Granite", "image": "/granite_images/River White Granite.webp", category: "White" },
+  { name: "Thunder White Granite", "image": "/granite_images/Thunder White Granite.webp", category: "White" },
+  { name: "Titanium White Granite", "image": "/granite_images/Titanium White Granite.webp", category: "White" },
+  { name: "New Ivory White Granite", "image": "/granite_images/New Ivory White Granite.webp", category: "White" },
+  { name: "S White Granite", "image": "/granite_images/S White Granite.webp", category: "White" },
+  { name: "Sadarali Granite", "image": "/granite_images/Sadarali Granite.webp", category: "Grey" },
+  { name: "Epic White Granite", "image": "/granite_images/Epic White Granite.webp", category: "White" },
+  { name: "Monalisa Granite", "image": "/granite_images/Monalisa Granite.webp", category: "Multicolor" },
+  { name: "Sunset Canyon Granite", "image": "/granite_images/Sunset Canyon Granite.webp", category: "Brown" },
+  { name: "Stream White Granite", "image": "/granite_images/Stream White Granite.webp", category: "White" },
+  { name: "Mariyam White Granite", "image": "/granite_images/Mariyam White Granite.webp", category: "White" },
+  { name: "Atlantic White Granite", "image": "/granite_images/Atlantic White Granite.webp", category: "White" },
+  { name: "Alaska Red Granite", "image": "/granite_images/Alaska Red Granite.webp", category: "Red" },
+  { name: "Bruno Red Granite", "image": "/granite_images/Bruno Red Granite.webp", category: "Red" },
+  { name: "Jhansi Red Granite", "image": "/granite_images/Jhansi Red Granite.webp", category: "Red" },
+  { name: "Lakha Red Granite", "image": "/granite_images/Lakha Red Granite.webp", category: "Red" },
+  { name: "New Imperial Red Granite", "image": "/granite_images/New Imperial Red Granite.webp", category: "Red" },
+  { name: "Wine Red Granite", "image": "/granite_images/Wine Red Granite.webp", category: "Red" },
+  { name: "Chima Pink Granite", "image": "/granite_images/Chima Pink Granite.webp", category: "Pink" },
 
 
-  { name: "Rosy Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Rosy-pink-granite.webp", category: "Pink" },
-  { name: "Astoria Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Astoria-pink-granite.webp", category: "Pink" },
-  { name: "Ghiblee Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Ghiblee-pink-granite.webp", category: "Pink" },
-  { name: "Imperial Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Imperial-pink-granite.webp", category: "Pink" },
-  { name: "Romantic Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Romantic-pink-granite.webp", category: "Pink" },
-  { name: "Strawberry Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Strawberry-pink-granite.webp", category: "Pink" },
+  { name: "Rosy Pink Granite", "image": "/granite_images/Rosy Pink Granite.webp", category: "Pink" },
+  { name: "Astoria Pink Granite", "image": "/granite_images/Astoria Pink Granite.webp", category: "Pink" },
+  { name: "Ghiblee Pink Granite", "image": "/granite_images/Ghiblee Pink Granite.webp", category: "Pink" },
+  { name: "Imperial Pink Granite", "image": "/granite_images/Imperial Pink Granite.webp", category: "Pink" },
+  { name: "Romantic Pink Granite", "image": "/granite_images/Romantic Pink Granite.webp", category: "Pink" },
+  { name: "Strawberry Pink Granite", "image": "/granite_images/Strawberry Pink Granite.webp", category: "Pink" },
   { name: "Alaska Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Alaska-pink-granite.webp", category: "Pink" },
-  { name: "Narlai Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Narlai-grey-granite.webp", category: "Grey" },
-  { name: "Kuppam Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Kuppam-grey-granite.webp", category: "Grey" },
-  { name: "Apple Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Apple-green-granite-2.webp", category: "Green" },
-  { name: "Desert Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Desert-green-granite.webp", category: "Green" },
-  { name: "French Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/French-green-granite.webp", category: "Green" },
-  { name: "Green Pearl Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Green-pearl-granite.webp", category: "Green" },
-  { name: "Royal Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Royal-green-granite.webp", category: "Green" },
-  { name: "Hassan Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Hassan-green-granite.webp", category: "Green" },
-  { name: "Mungaria Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Mungaria-green-granite.webp", category: "Green" },
-  { name: "Olivia Green Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Olivia-Green-Swatch.webp", category: "Green" },
-  { name: "Alaska Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Alaska-gold-granite.webp", category: "Gold" },
-  { name: "Bianco Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bianco-gold-granite.webp", category: "Gold" },
-  { name: "Desert Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Desert-gold-granite.webp", category: "Gold" },
-  { name: "Magma Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Magma-gold-granite.webp", category: "Gold" },
-  { name: "Merry Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Merry-gold-granite.webp", category: "Gold" },
-  { name: "Titanium Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Titanium-gold-granite.webp", category: "Gold" },
-  { name: "Astoria Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Astoria-gold-granite.webp", category: "Gold" },
-  { name: "Fusion Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2022/09/Fusion-Gold-Swatch.webp", category: "Gold" },
-  { name: "Golden Oak Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Golden-oak-granite.webp", category: "Gold" },
-  { name: "Imperial Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Imperial-gold-granite.webp", category: "Gold" },
-  { name: "Ivory Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Ivory-gold-granite.webp", category: "Gold" },
-  { name: "Parada Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Parada-gold-granite-1.webp", category: "Gold" },
-  { name: "River Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/River-gold-granite.webp", category: "Gold" },
-  { name: "Shivakashi Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Shivakashi-gold-granite.webp", category: "Gold" },
-  { name: "Ivory Chiffon Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Ivory-chiffon-granite.webp", category: "Cream" },
-  { name: "Exotic Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Exotic-gold-granite.webp", category: "Gold" },
-  { name: "Armani Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Armani-gold-granite.webp", category: "Gold" },
-  { name: "Bhama Gold Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Bhama-Gold-Granite-Swatch.webp", category: "Gold" },
-  { name: "Z Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Z-brown-granite.webp", category: "Brown" },
-  { name: "Baltic Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Baltic-brown-granite.webp", category: "Brown" },
+  { name: "Narlai Grey Granite", "image": "/granite_images/Narlai Grey Granite.webp", category: "Grey" },
+  { name: "Kuppam Grey Granite", "image": "/granite_images/Kuppam Grey Granite.webp", category: "Grey" },
+  { name: "Apple Green Granite", "image": "/granite_images/Apple Green Granite.webp", category: "Green" },
+  { name: "Desert Green Granite", "image": "/granite_images/Desert Green Granite.webp", category: "Green" },
+  { name: "French Green Granite", "image": "/granite_images/French Green Granite.webp", category: "Green" },
+  { name: "Green Pearl Granite", "image": "/granite_images/Green Pearl Granite.webp", category: "Green" },
+  { name: "Royal Green Granite", "image": "/granite_images/Royal Green Granite.webp", category: "Green" },
+  { name: "Hassan Green Granite", image: "/granite_images/Hassan Green Granite.jpg", category: "Green" },
+  { name: "Mungaria Green Granite", "image": "/granite_images/Mungaria Green Granite.webp", category: "Green" },
+  { name: "Olivia Green Granite", "image": "/granite_images/Olivia Green Granite.webp", category: "Green" },
+  { name: "Alaska Gold Granite", "image": "/granite_images/Alaska Gold Granite.webp", category: "Gold" },
+  { name: "Bianco Gold Granite", "image": "/granite_images/Bianco Gold Granite.webp", category: "Gold" },
+  { name: "Desert Gold Granite", "image": "/granite_images/Desert Gold Granite.webp", category: "Gold" },
+  { name: "Magma Gold Granite", "image": "/granite_images/Magma Gold Granite.webp", category: "Gold" },
+  { name: "Merry Gold Granite", "image": "/granite_images/Merry Gold Granite.webp", category: "Gold" },
+  { name: "Titanium Gold Granite", "image": "/granite_images/Titanium Gold Granite.webp", category: "Gold" },
+  { name: "Astoria Gold Granite", "image": "/granite_images/Astoria Gold Granite.webp", category: "Gold" },
+  { name: "Fusion Gold Granite", "image": "/granite_images/Fusion Gold Granite.webp", category: "Gold" },
+  { name: "Golden Oak Granite", "image": "/granite_images/Golden Oak Granite.webp", category: "Gold" },
+  { name: "Imperial Gold Granite", "image": "/granite_images/Imperial Gold Granite.webp", category: "Gold" },
+  { name: "Ivory Gold Granite", "image": "/granite_images/Ivory Gold Granite.webp", category: "Gold" },
+  { name: "Parada Gold Granite", "image": "/granite_images/Parada Gold Granite.webp", category: "Gold" },
+  { name: "River Gold Granite", "image": "/granite_images/River Gold Granite.webp", category: "Gold" },
+  { name: "Shivakashi Gold Granite", "image": "/granite_images/Shivakashi Gold Granite.webp", category: "Gold" },
+  { name: "Ivory Chiffon Granite", "image": "/granite_images/Ivory Chiffon Granite.webp", category: "Cream" },
+  { name: "Exotic Gold Granite", "image": "/granite_images/Exotic Gold Granite.webp", category: "Gold" },
+  { name: "Armani Gold Granite", "image": "/granite_images/Armani Gold Granite.webp", category: "Gold" },
+  { name: "Bhama Gold Granite", "image": "/granite_images/Bhama Gold Granite.webp", category: "Gold" },
+  { name: "Z Brown Granite", "image": "/granite_images/Z Brown Granite.webp", category: "Brown" },
+  { name: "Baltic Brown Granite", "image": "/granite_images/Baltic Brown Granite.webp", category: "Brown" },
 
 
-  { name: "Ivory Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Ivory-brown-granite.webp", category: "Brown" },
-  { name: "Sapphire Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Sapphire-brown-granite.webp", category: "Brown" },
-  { name: "Sparkle Brown Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Sparkle-brown-granite.webp", category: "Brown" },
-  { name: "Imperial Blue Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Imperial-blue-granite.webp", category: "Blue" },
-  { name: "Koliwada Blue Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Koliwada-blue-granite.webp", category: "Blue" },
-  { name: "Flash Blue Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Flash-blue-granite.webp", category: "Blue" },
-  { name: "Indian Blue Pearl Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Indian-blue-pearl-granite.webp", category: "Blue" },
-  { name: "Vizag Blue Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Vizag-blue-granite.webp", category: "Blue" },
-  { name: "Blue Ocean Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Blue-ocean-granite.jpg", category: "Blue" },
-  { name: "Black Beauty Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Black-beauty-granite.webp", category: "Black" },
-  { name: "Black Marquina Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Black-marquina-granite.webp", category: "Black" },
-  { name: "Wave Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Wave-black-granite.webp", category: "Black" },
-  { name: "Zebra Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Zebra-black-granite.webp", category: "Black" },
-  { name: "Fusion Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Fusion-black-granite.webp", category: "Black" },
-  { name: "Impala Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Impala-black-granite.webp", category: "Black" },
-  { name: "Jet Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Jet-black-granite.webp", category: "Black" },
-  { name: "Nova Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Nova-black-granite-1.webp", category: "Black" },
-  { name: "Fish Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Fish-black-granite.webp", category: "Black" },
-  { name: "Titanium Black Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Titanium-black-granite.webp", category: "Black" },
-  { name: "Silver Waves Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Silver-Waves-Swatch-2.webp", category: "Grey" },
+  { name: "Ivory Brown Granite", "image": "/granite_images/Ivory Brown Granite.webp", category: "Brown" },
+  { name: "Sapphire Brown Granite", "image": "/granite_images/Sapphire Brown Granite.webp", category: "Brown" },
+  { name: "Sparkle Brown Granite", "image": "/granite_images/Sparkle Brown Granite.webp", category: "Brown" },
+  { name: "Imperial Blue Granite", "image": "/granite_images/Imperial Blue Granite.webp", category: "Blue" },
+  { name: "Koliwada Blue Granite", "image": "/granite_images/Koliwada Blue Granite.webp", category: "Blue" },
+  { name: "Flash Blue Granite", "image": "/granite_images/Flash Blue Granite.webp", category: "Blue" },
+  { name: "Indian Blue Pearl Granite", "image": "/granite_images/Indian Blue Pearl Granite.webp", category: "Blue" },
+  { name: "Vizag Blue Granite", "image": "/granite_images/Vizag Blue Granite.webp", category: "Blue" },
+  { name: "Blue Ocean Granite", "image": "/granite_images/Blue Ocean Granite.jpg", category: "Blue" },
+  { name: "Black Beauty Granite", "image": "/granite_images/Black Beauty Granite.webp", category: "Black" },
+  { name: "Black Marquina Granite", "image": "/granite_images/Black Marquina Granite.webp", category: "Black" },
+  { name: "Wave Black Granite", "image": "/granite_images/Wave Black Granite.webp", category: "Black" },
+  { name: "Zebra Black Granite", "image": "/granite_images/Zebra Black Granite.webp", category: "Black" },
+  { name: "Fusion Black Granite", "image": "/granite_images/Fusion Black Granite.webp", category: "Black" },
+  { name: "Impala Black Granite", "image": "/granite_images/Impala Black Granite.webp", category: "Black" },
+  { name: "Jet Black Granite", "image": "/granite_images/Jet Black Granite.webp", category: "Black" },
+  { name: "Nova Black Granite", "image": "/granite_images/Nova Black Granite.webp", category: "Black" },
+  { name: "Fish Black Granite", "image": "/granite_images/Fish Black Granite.webp", category: "Black" },
+  { name: "Titanium Black Granite", "image": "/granite_images/Titanium Black Granite.webp", category: "Black" },
+  { name: "Silver Waves Granite", "image": "/granite_images/Silver Waves Granite.webp", category: "Grey" },
 
 ];
 
@@ -163,7 +163,7 @@ const graniteTypesMap = Object.fromEntries(
 );
 
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leather", "Flamed", "Lapato", "Bush Hammered", "Antique", "Sandblasted"];
-const ORIGIN_OPTIONS = ["South India", "North India", "Imported"];
+const ORIGIN_OPTIONS = ["South India", "North India", "Imported", "Alaska"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 
 // Merge Data
@@ -171,7 +171,9 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   const key = csvItem.name.toLowerCase().trim();
   const existing = graniteTypesMap[key];
 
-  const origin = ORIGIN_OPTIONS[index % ORIGIN_OPTIONS.length];
+  const origin = csvItem.name.toLowerCase().includes('alaska')
+    ? 'Alaska'
+    : ORIGIN_OPTIONS[index % ORIGIN_OPTIONS.length];
   // Pseudo-random price between 50 and 250 based on index
   const price = 50 + ((index * 17) % 201);
 
@@ -231,6 +233,8 @@ export default function Granite() {
       setFilters(prev => ({ ...prev, origin: ['North India'] }));
     } else if (type === 'imported') {
       setFilters(prev => ({ ...prev, origin: ['Imported'] }));
+    } else if (type === 'alaska') {
+      setFilters(prev => ({ ...prev, origin: ['Alaska'] }));
     }
   }, [searchParams]);
 
@@ -245,6 +249,8 @@ export default function Granite() {
     });
   };
 
+  const typeParam = searchParams.get('type');
+
   // 3. Filtered List Logic
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
@@ -253,10 +259,11 @@ export default function Granite() {
       const matchesOrigin = filters.origin.length === 0 || filters.origin.includes(p.origin);
       const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
       const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesType = !typeParam || typeParam !== 'alaska' || p.name.toLowerCase().includes('alaska');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesType;
     });
-  }, [categoryFilter, filters]);
+  }, [categoryFilter, filters, typeParam]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -292,8 +299,8 @@ export default function Granite() {
       <div className="page products-page">
         <section className="granite-header page-header">
           <div className="container container-heading">
-            <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Granite Collections</h1>
-            <p>Browse our premium selection of {categoryFilter.toLowerCase()} imported varieties</p>
+            <h1>Our {typeParam === 'alaska' ? 'Alaska' : categoryFilter !== 'All' ? categoryFilter : ''} Granite Collections</h1>
+            <p>Browse our premium selection of {typeParam === 'alaska' ? 'alaska' : categoryFilter.toLowerCase()} varieties</p>
           </div>
         </section>
 
@@ -342,7 +349,7 @@ export default function Granite() {
               <div className="filter-section">
                 <h4>Origin</h4>
                 <div className="filter-checkbox-group">
-                  {['South India', 'North India', 'Imported'].map(org => (
+                  {['South India', 'North India', 'Imported', 'Alaska'].map(org => (
                     <label key={org} className="filter-checkbox-label">
                       <input
                         type="checkbox"
