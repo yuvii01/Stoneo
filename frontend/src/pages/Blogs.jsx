@@ -90,7 +90,12 @@ export default function Blogs() {
     return (
         <div className="luxury-blogs-page">
             {/* ================= HERO HEADER ================= */}
-            <section className="luxury-blogs-hero">
+            <section
+                className="luxury-blogs-hero"
+                style={{
+                    background: "linear-gradient(180deg, rgba(15, 16, 19, 0.75) 0%, rgba(15, 16, 19, 0.85) 100%), url('/indian_marble_images/Black Forest.jpg') center/cover no-repeat"
+                }}
+            >
                 <div className="editorial-badge-pill">
                     <span className="editorial-pulse-dot"></span>
                     Stoneo Architectural Journal • Insights & Quarry Chronicles
