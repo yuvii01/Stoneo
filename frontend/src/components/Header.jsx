@@ -119,7 +119,15 @@ export default function Header() {
             placeholder="Search items for your project"
             style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              const val = e.target.value;
+              setSearchQuery(val);
+              if (val.trim().length > 0) {
+                setIsTextSearchOpen(true);
+              } else {
+                setIsTextSearchOpen(false);
+              }
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && searchQuery.trim().length > 0) {
                 setIsTextSearchOpen(true);
@@ -161,7 +169,15 @@ export default function Header() {
               placeholder="Search items for your project"
               style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setSearchQuery(val);
+                if (val.trim().length > 0) {
+                  setIsTextSearchOpen(true);
+                } else {
+                  setIsTextSearchOpen(false);
+                }
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && searchQuery.trim().length > 0) {
                   setIsTextSearchOpen(true);
@@ -356,8 +372,17 @@ export default function Header() {
       />
       <TextSearchModal
         isOpen={isTextSearchOpen}
-        onClose={() => setIsTextSearchOpen(false)}
+        onClose={() => {
+          setIsTextSearchOpen(false);
+          setSearchQuery('');
+        }}
         initialQuery={searchQuery}
+        onQueryChange={(newQuery) => {
+          setSearchQuery(newQuery);
+          if (newQuery.trim().length === 0) {
+            setIsTextSearchOpen(false);
+          }
+        }}
       />
     </header>
   );

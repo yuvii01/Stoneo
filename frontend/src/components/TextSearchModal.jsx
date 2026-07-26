@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { CSV_PRODUCTS } from '../utils/constants';
 import '../styles/visual-search.css'; // Reusing visual search styles
 
-export default function TextSearchModal({ isOpen, onClose, initialQuery }) {
+export default function TextSearchModal({ isOpen, onClose, initialQuery, onQueryChange }) {
   const [query, setQuery] = useState(initialQuery || '');
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
 
-  // Sync initial query when modal opens
+  // Sync initial query when modal opens or query updates from Header
   useEffect(() => {
     if (isOpen) {
       setQuery(initialQuery || '');
       setCurrentPage(1);
-      setActiveCategory('All');
     }
   }, [isOpen, initialQuery]);
 
@@ -113,7 +112,9 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery }) {
                   style={{ color: '#333', fontSize: '18px', padding: '10px', outline: 'none', border: 'none', boxShadow: 'none' }}
                   value={query}
                   onChange={(e) => {
-                    setQuery(e.target.value);
+                    const val = e.target.value;
+                    setQuery(val);
+                    if (onQueryChange) onQueryChange(val);
                     setCurrentPage(1);
                   }}
                   placeholder="Search for granites, marbles, stones..." 
