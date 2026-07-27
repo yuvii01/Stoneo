@@ -188,23 +188,38 @@ const RoyalCollection = ({ showFilters = false }) => {
 
       {knowledge && !showFilters && (
         <section className="stone-knowledge-section" style={{ marginTop: '50px' }}>
+          {/* 1. Raw Material Importation & Geological Origins */}
           <div className="knowledge-block">
             <div className="knowledge-text">
-              <h2>Geological Origins & Formation</h2>
+              <h2>How {categoryName} is Imported &amp; Geological Origins</h2>
+              {knowledge.importation && (
+                <p style={{ marginBottom: '20px', color: '#e0c080', fontWeight: '400' }}>
+                  {knowledge.importation}
+                </p>
+              )}
               <p>{knowledge.origins}</p>
             </div>
-            <div className="knowledge-image">
-              <img src={knowledgeImages[0] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Origins'} alt="Geological Origins" />
+            <div className="knowledge-image" style={{ background: 'transparent', border: 'none', boxShadow: 'none' }}>
+              <div className="raw-material-grid">
+                {(knowledge.rawMaterialImages && knowledge.rawMaterialImages.length > 0 ? knowledge.rawMaterialImages : [
+                  { src: knowledgeImages[0] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Origins', label: 'Imported Slab Specimen' }
+                ]).map((raw, idx) => (
+                  <div key={idx} className="raw-material-card">
+                    <img src={raw.src} alt={raw.label || `${categoryName} Raw Material`} />
+                    <div className="raw-material-badge">{raw.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           
           <div className="knowledge-block reverse">
             <div className="knowledge-text">
-              <h2>Architectural Benefits & Properties</h2>
+              <h2>Architectural Benefits &amp; Properties</h2>
               <p>{knowledge.whyUsed}</p>
             </div>
             <div className="knowledge-image">
-              <img src={knowledgeImages[1] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Why+Used'} alt="Architectural Benefits" />
+              <img src={knowledgeImages[1] || knowledgeImages[0] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Why+Used'} alt="Architectural Benefits" />
             </div>
           </div>
 
@@ -214,7 +229,7 @@ const RoyalCollection = ({ showFilters = false }) => {
               <p>{knowledge.whereUsed}</p>
             </div>
             <div className="knowledge-image">
-              <img src={knowledgeImages[2] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Where+Used'} alt="Interior Design Applications" />
+              <img src={knowledgeImages[2] || knowledgeImages[0] || 'https://placehold.co/600x400/1a1a1a/d4af37?text=Where+Used'} alt="Interior Design Applications" />
             </div>
           </div>
         </section>

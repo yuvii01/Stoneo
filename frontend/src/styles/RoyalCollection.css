@@ -95,6 +95,50 @@
   transform: scale(1.05);
 }
 
+/* Raw Material Import Showcase in Knowledge Block */
+.raw-material-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+.raw-material-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  aspect-ratio: 4/3;
+}
+
+.raw-material-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.raw-material-card:hover img {
+  transform: scale(1.08);
+}
+
+.raw-material-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  color: #d4af37;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 20px 10px 8px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 @media (max-width: 992px) {
   .knowledge-block, .knowledge-block.reverse {
     flex-direction: column;
