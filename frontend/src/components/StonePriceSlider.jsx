@@ -23,7 +23,7 @@ export default function StonePriceSlider({ minPrice = 50, maxPrice = 300, curren
           border: '1px solid #e8dec8',
           boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
         }}>
-          Up to ₹{val} / sq. ft.
+          ₹{val} / sq. ft.
         </span>
       </div>
 

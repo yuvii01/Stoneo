@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Quartz_products } from '../../utils/constants';
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
+import StonePriceSlider from '../../components/StonePriceSlider';
 import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 
@@ -45,6 +46,9 @@ const ALL_PRODUCTS = Quartz_products.map((item, index) => {
     type,
     color,
     touch,
+    price: 60 + ((index * 13) % 180),
+    minPrice: Math.max(50, 60 + ((index * 13) % 180) - 40),
+    maxPrice: Math.min(300, 60 + ((index * 13) % 180) + 40),
     thickness: THICKNESS_RANGE,
     description: DEFAULT_DESCRIPTION,
     features: DEFAULT_FEATURES
@@ -52,6 +56,8 @@ const ALL_PRODUCTS = Quartz_products.map((item, index) => {
 });
 
 const EXTRACTED_COLORS = [...new Set(ALL_PRODUCTS.map(p => p.color))];
+const MIN_PRICE = 50;
+const MAX_PRICE = 300;
 
 export default function Quartz() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,7 +80,8 @@ export default function Quartz() {
     type: [],
     color: [],
     touch: [],
-    thickness: []
+    thickness: [],
+    maxPrice: 150
   });
 
   useEffect(() => {
@@ -90,7 +97,10 @@ export default function Quartz() {
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => {
-      const current = prev[filterType];
+      if (filterType === 'maxPrice') {
+        return { ...prev, maxPrice: value };
+      }
+      const current = prev[filterType] || [];
       if (current.includes(value)) {
         return { ...prev, [filterType]: current.filter(item => item !== value) };
       } else {
@@ -101,12 +111,14 @@ export default function Quartz() {
 
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
-      const matchesType = filters.type.length === 0 || filters.type.includes(p.type);
-      const matchesColor = filters.color.length === 0 || filters.color.includes(p.color);
-      const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
-      const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
+      const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
+      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
 
-      return matchesType && matchesColor && matchesTouch && matchesThickness;
+      return matchesType && matchesColor && matchesTouch && matchesThickness && matchesPrice;
     });
   }, [filters]);
 
@@ -204,6 +216,15 @@ export default function Quartz() {
                     </label>
                   ))}
                 </div>
+              </div>
+
+              <div className="filter-section">
+                <StonePriceSlider
+                  minPrice={MIN_PRICE}
+                  maxPrice={MAX_PRICE}
+                  currentMaxPrice={filters.maxPrice}
+                  onChange={(val) => handleFilterChange('maxPrice', val)}
+                />
               </div>
 
               <div className="filter-section">

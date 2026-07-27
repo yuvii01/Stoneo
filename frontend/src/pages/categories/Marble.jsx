@@ -151,13 +151,15 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
     features: existing ? existing.features : DEFAULT_FEATURES,
     origin,
     price,
+    minPrice: Math.max(50, price - 40),
+    maxPrice: Math.min(300, price + 40),
     touch,
     thickness: THICKNESS_RANGE
   };
 });
 
-const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price) || 50));
-const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price) || 250));
+const MIN_PRICE = 50;
+const MAX_PRICE = 300;
 
 export default function Marble() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -184,7 +186,7 @@ export default function Marble() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: MAX_PRICE
+    maxPrice: 150
   });
 
   useEffect(() => {
@@ -222,7 +224,8 @@ export default function Marble() {
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness && p.thickness.includes(th));
-      const matchesPrice = (Number(p.price) || 0) <= (filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE);
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
       const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
       return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesPrice && matchesType;
@@ -343,6 +346,15 @@ export default function Marble() {
               </div>
 
               <div className="filter-section">
+                <StonePriceSlider
+                  minPrice={MIN_PRICE}
+                  maxPrice={MAX_PRICE}
+                  currentMaxPrice={filters.maxPrice}
+                  onChange={(val) => handleFilterChange('maxPrice', val)}
+                />
+              </div>
+
+              <div className="filter-section">
                 <h4>Color</h4>
                 <div className="color-swatches">
                   {[
@@ -383,15 +395,6 @@ export default function Marble() {
                     </label>
                   ))}
                 </div>
-              </div>
-
-              <div className="filter-section">
-                <StonePriceSlider
-                  minPrice={MIN_PRICE}
-                  maxPrice={MAX_PRICE}
-                  currentMaxPrice={filters.maxPrice}
-                  onChange={(val) => handleFilterChange('maxPrice', val)}
-                />
               </div>
             </aside>
 

@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for
 
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
+import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 
@@ -75,10 +76,15 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
     features: existing ? existing.features : DEFAULT_FEATURES,
     type,
     price,
+    minPrice: Math.max(50, price - 40),
+    maxPrice: Math.min(300, price + 40),
     touch,
     thickness: THICKNESS_RANGE
   };
 });
+
+const MIN_PRICE = 50;
+const MAX_PRICE = 300;
 
 export default function Sandstone() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -104,7 +110,8 @@ export default function Sandstone() {
     type: [],
     color: [],
     touch: [],
-    thickness: []
+    thickness: [],
+    maxPrice: 150
   });
 
   useEffect(() => {
@@ -127,7 +134,10 @@ export default function Sandstone() {
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {
-      const current = prev[category];
+      if (category === 'maxPrice') {
+        return { ...prev, maxPrice: value };
+      }
+      const current = prev[category] || [];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
       } else {
@@ -140,12 +150,14 @@ export default function Sandstone() {
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
-      const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
-      const matchesType = filters.type.length === 0 || filters.type.includes(p.type);
-      const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
-      const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
+      const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
+      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
 
-      return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness;
+      return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness && matchesPrice;
     });
   }, [categoryFilter, filters]);
 
@@ -244,6 +256,15 @@ export default function Sandstone() {
                     </label>
                   ))}
                 </div>
+              </div>
+
+              <div className="filter-section">
+                <StonePriceSlider
+                  minPrice={MIN_PRICE}
+                  maxPrice={MAX_PRICE}
+                  currentMaxPrice={filters.maxPrice}
+                  onChange={(val) => handleFilterChange('maxPrice', val)}
+                />
               </div>
 
               <div className="filter-section">

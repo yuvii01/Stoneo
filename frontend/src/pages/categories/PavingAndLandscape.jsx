@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
+import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import PAVING_PRODUCTS from '../../utils/paving_landscape.json';
@@ -42,10 +43,14 @@ const ALL_PRODUCTS = PAVING_PRODUCTS.map((csvItem, index) => {
     features: ['Durable', 'Weather Resistant', 'Non-slip Surface', 'Easy Installation'],
     color: color,
     price: 30 + ((index * 13) % 150),
+    minPrice: Math.max(20, 30 + ((index * 13) % 150) - 25),
+    maxPrice: Math.min(200, 30 + ((index * 13) % 150) + 25),
     thickness: thickness
   };
 });
 
+const MIN_PRICE = 20;
+const MAX_PRICE = 200;
 
 export default function PavingAndLandscape() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -70,8 +75,8 @@ export default function PavingAndLandscape() {
     category: [],
     color: [],
     thickness: [],
-    origin: [],
-    touch: []
+    touch: [],
+    maxPrice: 100
   });
 
   useEffect(() => {
@@ -111,6 +116,9 @@ export default function PavingAndLandscape() {
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {
+      if (category === 'maxPrice') {
+        return { ...prev, maxPrice: value };
+      }
       const current = prev[category] || [];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
@@ -124,16 +132,16 @@ export default function PavingAndLandscape() {
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
-      const matchesType = filters.category.length === 0 || filters.category.includes(p.category);
+      const matchesType = (filters.category || []).length === 0 || (filters.category || []).includes(p.category);
 
-      const matchesOrigin = filters.origin.length === 0 || filters.origin.some(o => {
+      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(o => {
         const nameMatch = p.name.toLowerCase();
         if (o === 'Granite Cobbles') return nameMatch.includes('granite') && p.category === 'Cobbles';
         if (o === 'Sandstone Cobbles') return nameMatch.includes('sandstone') && p.category === 'Cobbles';
         if (o === 'Limestone Cobbles') return (nameMatch.includes('lime') || nameMatch.includes('kota') || nameMatch.includes('tandur') || nameMatch.includes('kadappa')) && p.category === 'Cobbles';
         if (o === 'Bricks') return nameMatch.includes('brick');
         if (o === 'Sandstone') return nameMatch.includes('sandstone') && p.category === 'Pavers';
-        if (o === 'Travertino') return nameMatch.includes('travertine');
+        if (o === 'Travertino') return nameMatch.includes('traver');
         if (o === 'Granite Pavers') return nameMatch.includes('granite') && p.category === 'Pavers';
         if (o === 'Marble Pavers') return nameMatch.includes('marble') && p.category === 'Pavers';
         if (o === 'landscaping pebbles') return nameMatch.includes('pebble');
@@ -141,11 +149,13 @@ export default function PavingAndLandscape() {
         return false;
       });
 
-      const matchesColor = filters.color.length === 0 || filters.color.includes(p.color);
-      const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.some(t => parseInt(t) === th));
-      const matchesTouch = filters.touch.length === 0 || (p.touch && filters.touch.some(tch => p.touch.includes(tch)));
+      const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
+      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.some(t => parseInt(t) === th));
+      const matchesTouch = (filters.touch || []).length === 0 || (p.touch && (filters.touch || []).some(tch => p.touch.includes(tch)));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const matchesPrice = (p.minPrice || (Number(p.price) - 30)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 30)) >= selectedPrice;
 
-      return matchesUrlCategory && matchesType && matchesOrigin && matchesColor && matchesThickness && matchesTouch;
+      return matchesUrlCategory && matchesType && matchesOrigin && matchesColor && matchesThickness && matchesTouch && matchesPrice;
     });
   }, [categoryFilter, filters]);
 

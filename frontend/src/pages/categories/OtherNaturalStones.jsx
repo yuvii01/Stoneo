@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
+import StonePriceSlider from '../../components/StonePriceSlider';
 import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { OTHER_NATURAL_STONES } from '../../utils/constants';
@@ -27,7 +28,9 @@ const ALL_PRODUCTS = OTHER_NATURAL_STONES.map((item, index) => {
     image: item.image,
     category: item.category || 'Grey',
     type: item.type || TYPE_OPTIONS[index % TYPE_OPTIONS.length],
-    price: item.price || 65,
+    price: 60 + ((index * 11) % 120),
+    minPrice: Math.max(40, 60 + ((index * 11) % 120) - 30),
+    maxPrice: Math.min(250, 60 + ((index * 11) % 120) + 30),
     touch,
     thickness: THICKNESS_RANGE,
     origin: 'India / Global Quarries',
@@ -35,6 +38,9 @@ const ALL_PRODUCTS = OTHER_NATURAL_STONES.map((item, index) => {
     features: DEFAULT_FEATURES
   };
 });
+
+const MIN_PRICE = 40;
+const MAX_PRICE = 250;
 
 export default function OtherNaturalStones() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,7 +65,8 @@ export default function OtherNaturalStones() {
     type: [],
     color: [],
     touch: [],
-    thickness: []
+    thickness: [],
+    maxPrice: 125
   });
 
   useEffect(() => {
@@ -94,7 +101,10 @@ export default function OtherNaturalStones() {
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {
-      const current = prev[category];
+      if (category === 'maxPrice') {
+        return { ...prev, maxPrice: value };
+      }
+      const current = prev[category] || [];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
       } else {
@@ -106,12 +116,14 @@ export default function OtherNaturalStones() {
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
-      const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
-      const matchesType = filters.type.length === 0 || filters.type.includes(p.type);
-      const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
-      const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
+      const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
+      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 125;
+      const matchesPrice = (p.minPrice || (Number(p.price) - 30)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 30)) >= selectedPrice;
 
-      return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness;
+      return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness && matchesPrice;
     });
   }, [categoryFilter, filters]);
 
@@ -219,6 +231,15 @@ export default function OtherNaturalStones() {
                     </label>
                   ))}
                 </div>
+              </div>
+
+              <div className="filter-section">
+                <StonePriceSlider
+                  minPrice={MIN_PRICE}
+                  maxPrice={MAX_PRICE}
+                  currentMaxPrice={filters.maxPrice}
+                  onChange={(val) => handleFilterChange('maxPrice', val)}
+                />
               </div>
 
               <div className="filter-section">
