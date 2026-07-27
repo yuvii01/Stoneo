@@ -41,6 +41,7 @@ import AdminProtectedRoute from './components/AdminProtectedRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminBlogs from './pages/admin/AdminBlogs';
 import AdminProducts from './pages/admin/AdminProducts';
+import AdminRoyalGemStones from './pages/admin/AdminRoyalGemStones';
 
 function AppContent() {
   const location = useLocation();
@@ -87,6 +88,7 @@ function AppContent() {
               <Route path="dashboard" element={<Navigate to="../blogs" replace />} />
               <Route path="blogs" element={<AdminBlogs />} />
               <Route path="products" element={<AdminProducts />} />
+              <Route path="royal-gem-stones" element={<AdminRoyalGemStones />} />
             </Route>
           </Route>
 

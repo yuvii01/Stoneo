@@ -59,11 +59,11 @@ export default function Quartz() {
   const { addDemand, removeDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 20);
+  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 15);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth <= 768 ? 8 : 20);
+      setItemsPerPage(window.innerWidth <= 768 ? 8 : 15);
     };
 
     window.addEventListener('resize', handleResize);

@@ -155,17 +155,20 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   };
 });
 
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price) || 50));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price) || 250));
+
 export default function Marble() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 20);
+  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 15);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth <= 768 ? 8 : 20);
+      setItemsPerPage(window.innerWidth <= 768 ? 8 : 15);
     };
 
     window.addEventListener('resize', handleResize);
@@ -179,7 +182,7 @@ export default function Marble() {
     origin: [],
     color: [],
     touch: [],
-    thickness: []
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -195,6 +198,9 @@ export default function Marble() {
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {
+      if (category === 'maxPrice') {
+        return { ...prev, maxPrice: value };
+      }
       const current = prev[category];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
@@ -213,10 +219,10 @@ export default function Marble() {
       const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
       const matchesOrigin = filters.origin.length === 0 || filters.origin.includes(p.origin);
       const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
-      const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesPrice = (Number(p.price) || 0) <= (filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE);
       const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
     });
   }, [categoryFilter, filters, typeParam]);
 
@@ -302,7 +308,7 @@ export default function Marble() {
               </div>
 
               <div className="filter-section">
-                <h4>Origin</h4>
+                <h4>Types</h4>
                 
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Imported</h5>
                 <div className="filter-checkbox-group" style={{ marginBottom: '15px' }}>
@@ -377,19 +383,12 @@ export default function Marble() {
               </div>
 
               <div className="filter-section">
-                <h4>Thickness</h4>
-                <div className="filter-checkbox-group">
-                  {[16, 18, 20, 22, 24, 26, 28, 30].map(th => (
-                    <label key={th} className="filter-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={filters.thickness.includes(th)}
-                        onChange={() => handleFilterChange('thickness', th)}
-                      />
-                      {th} mm
-                    </label>
-                  ))}
-                </div>
+                <StonePriceSlider
+                  minPrice={MIN_PRICE}
+                  maxPrice={MAX_PRICE}
+                  currentMaxPrice={filters.maxPrice}
+                  onChange={(val) => handleFilterChange('maxPrice', val)}
+                />
               </div>
             </aside>
 
@@ -428,16 +427,16 @@ export default function Marble() {
                     </div>
                   ))}
 
-                  {filters.thickness.map(th => (
-                    <div key={th} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {th}mm
-                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('thickness', th)}>×</span>
+                  {(filters.maxPrice !== undefined && filters.maxPrice < MAX_PRICE) && (
+                    <div style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      Up to ₹{filters.maxPrice}
+                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('maxPrice', MAX_PRICE)}>×</span>
                     </div>
-                  ))}
+                  )}
 
                   <button
                     onClick={() => {
-                      setFilters({ origin: [], color: [], touch: [], thickness: [] });
+                      setFilters({ origin: [], color: [], touch: [], maxPrice: MAX_PRICE });
                       setSearchParams({ category: 'All' });
                     }}
                     style={{ background: 'none', border: 'none', color: 'var(--color-primary, #b48e5d)', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}

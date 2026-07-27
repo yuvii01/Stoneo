@@ -324,7 +324,7 @@ export default function Home() {
               <p>
                 Explore thousands of premium natural stone slabs in person. Our architectural consultants are on hand for private tours and sample viewing.
               </p>
-              <div className="showroom-details-grid">
+              {/* <div className="showroom-details-grid">
                 <div className="showroom-detail-item">
                   <div className="detail-icon-circle">📍</div>
                   <div className="detail-text">
@@ -348,7 +348,7 @@ export default function Home() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="showroom-map-col">

@@ -62,6 +62,20 @@ export default function AdminDashboard() {
           >
             Products
           </NavLink>
+          <NavLink 
+            to="/admin/royal-gem-stones" 
+            onClick={() => setSidebarOpen(false)}
+            style={({ isActive }) => ({
+              padding: '12px 20px',
+              textDecoration: 'none',
+              color: isActive ? '#fff' : '#aaa',
+              backgroundColor: isActive ? '#333' : 'transparent',
+              borderLeft: isActive ? '4px solid white' : '4px solid transparent',
+              transition: 'all 0.2s'
+            })}
+          >
+            👑 Royal Gem Stones
+          </NavLink>
         </nav>
 
         <div style={{ padding: '20px' }}>

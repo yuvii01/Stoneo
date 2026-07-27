@@ -198,17 +198,20 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   };
 });
 
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price) || 50));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price) || 250));
+
 export default function Granite() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 20);
+  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 15);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth <= 768 ? 8 : 20);
+      setItemsPerPage(window.innerWidth <= 768 ? 8 : 15);
     };
 
     window.addEventListener('resize', handleResize);
@@ -222,7 +225,7 @@ export default function Granite() {
     origin: [],
     color: [],
     touch: [],
-    thickness: []
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -240,6 +243,9 @@ export default function Granite() {
 
   const handleFilterChange = (category, value) => {
     setFilters(prev => {
+      if (category === 'maxPrice') {
+        return { ...prev, maxPrice: value };
+      }
       const current = prev[category];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
@@ -258,10 +264,10 @@ export default function Granite() {
       const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
       const matchesOrigin = filters.origin.length === 0 || filters.origin.includes(p.origin);
       const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
-      const matchesThickness = filters.thickness.length === 0 || filters.thickness.some(th => p.thickness.includes(th));
+      const matchesPrice = (Number(p.price) || 0) <= (filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE);
       const matchesType = !typeParam || typeParam !== 'alaska' || p.name.toLowerCase().includes('alaska');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
     });
   }, [categoryFilter, filters, typeParam]);
 
@@ -347,7 +353,7 @@ export default function Granite() {
               </div>
 
               <div className="filter-section">
-                <h4>Origin</h4>
+                <h4>Types</h4>
                 <div className="filter-checkbox-group">
                   {['South India', 'North India', 'Imported', 'Alaska'].map(org => (
                     <label key={org} className="filter-checkbox-label">

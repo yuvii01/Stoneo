@@ -152,7 +152,7 @@ export default function GetQuote() {
             </div>
             <h1>Request Quotation</h1>
             <p>
-              Review your curated natural stone portfolio and connect directly with our senior architectural specialists for tailored pricing & sample dispatch.
+              Review your natural stone portfolio and connect directly with our specialists for pricing & sample dispatch.
             </p>
           </div>
         </section>
@@ -221,7 +221,7 @@ export default function GetQuote() {
                 <div className="featured-slab-card">
                   <img src={graniteImage} alt={displayTitle} className="slab-preview-img" />
                   <div className="slab-info-overlay">
-                    <h3>{displayTitle}</h3>
+                    {graniteName && <h3>{graniteName}</h3>}
                     <div className="slab-badges-row">
                       <span className="luxury-badge">✦ 100% Premium Grade</span>
                       <span className="luxury-badge">✦ Custom Cut & Polish</span>

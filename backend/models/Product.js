@@ -15,10 +15,36 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: CATEGORY_ENUM,
     default: 'Granite'
   },
+  categories: [{
+    type: String
+  }],
+  variety: {
+    type: mongoose.Schema.Types.Mixed,
+    default: ''
+  },
   colorCategory: {
+    type: String,
+    default: ''
+  },
+  origin: {
+    type: String,
+    default: ''
+  },
+  startingPrice: {
+    type: String,
+    default: ''
+  },
+  maximumPrice: {
+    type: String,
+    default: ''
+  },
+  estimatedPrice: {
+    type: String,
+    default: ''
+  },
+  price: {
     type: String,
     default: ''
   },
@@ -30,8 +56,7 @@ const productSchema = new mongoose.Schema({
     type: String
   }],
   finish: [{
-    type: String,
-    enum: FINISH_ENUM
+    type: String
   }],
   color: {
     type: String,
@@ -50,14 +75,30 @@ const productSchema = new mongoose.Schema({
     default: ''
   },
   images: [{
-    type: String // Base64 encoded images, max 3
+    type: String
   }],
   interior: [{
-    type: String // e.g., 'Flooring', 'Wall Cladding'
+    type: String
   }],
   exterior: [{
-    type: String // e.g., 'Elevation/Facade Cladding'
-  }]
+    type: String
+  }],
+  // Royal Gem Stone specific fields
+  isRoyalGemStone: {
+    type: Boolean,
+    default: false
+  },
+  gemstoneVariety: {
+    type: String,
+    default: ''
+  },
+  gemstoneApplications: [{
+    type: String
+  }],
+  isBacklit: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true });
 
 // Convert _id to id when sending to frontend
