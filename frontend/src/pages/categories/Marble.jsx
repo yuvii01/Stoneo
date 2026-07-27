@@ -315,7 +315,7 @@ export default function Marble() {
 
               <div className="filter-section">
                 <h4>Types</h4>
-                
+
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Imported</h5>
                 <div className="filter-checkbox-group" style={{ marginBottom: '15px' }}>
                   {['Italian', 'Spanish', 'Vietnamese', 'Turkish', 'Greece'].map(org => (

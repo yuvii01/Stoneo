@@ -16,18 +16,18 @@ export default function StonePriceSlider({ minPrice = 50, maxPrice = 300, curren
         <span style={{
           fontSize: '13px',
           fontWeight: '700',
-          color: '#8b6914',
-          backgroundColor: '#fffaf0',
+          color: '#000000',
+          backgroundColor: '#ffffff',
           padding: '4px 10px',
-          borderRadius: '16px',
-          border: '1px solid #e8dec8',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+          borderRadius: '4px',
+          border: '1px solid #000000',
+          boxShadow: 'none'
         }}>
           ₹{val} / sq. ft.
         </span>
       </div>
 
-      {/* Slider Track with Custom Stone Handle */}
+      {/* Slider Track with Custom Handle */}
       <div style={{ position: 'relative', height: '36px', display: 'flex', alignItems: 'center', margin: '8px 4px 4px 4px' }}>
         {/* Background Track Line */}
         <div style={{
@@ -39,30 +39,29 @@ export default function StonePriceSlider({ minPrice = 50, maxPrice = 300, curren
           borderRadius: '3px',
           overflow: 'hidden'
         }}>
-          {/* Active Golden Stone Progress Line */}
+          {/* Active Progress Line */}
           <div style={{
             width: `${percentage}%`,
             height: '100%',
-            background: 'linear-gradient(90deg, #6e5d4f, #d4af37)',
+            background: '#000000',
             borderRadius: '3px',
             transition: 'width 0.05s linear'
           }} />
         </div>
 
-        {/* Custom Natural Stone Handle (Visual Only) */}
+        {/* Custom Handle (Visual Only) */}
         <div
           style={{
             position: 'absolute',
             left: `calc(${percentage}% - 14px)`,
             width: '28px',
             height: '22px',
-            backgroundColor: '#4a4036',
-            backgroundImage: 'radial-gradient(circle at 35% 30%, #8c7d6b, #3b3228)',
+            backgroundColor: '#000000',
+            border: '2px solid #000000',
             borderRadius: '45% 55% 60% 40% / 55% 45% 50% 50%',
-            border: '2px solid #d4af37',
             boxShadow: isDragging || isHovered
-              ? '0 4px 12px rgba(212,175,55,0.45), inset 1px 1px 2px rgba(255,255,255,0.3)'
-              : '0 2px 6px rgba(0,0,0,0.35), inset 1px 1px 2px rgba(255,255,255,0.2)',
+              ? '0 4px 12px rgba(0,0,0,0.25)'
+              : '0 2px 6px rgba(0,0,0,0.15)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
