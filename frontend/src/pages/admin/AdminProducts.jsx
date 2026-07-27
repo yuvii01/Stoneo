@@ -87,6 +87,10 @@ const initialFormState = {
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [originFilter, setOriginFilter] = useState('All');
+    const [colorFilter, setColorFilter] = useState('All');
+    const [finishFilter, setFinishFilter] = useState('All');
     const [loading, setLoading] = useState(true);
 
     // Form state
@@ -303,12 +307,57 @@ export default function AdminProducts() {
         }
     };
 
-    const filteredProducts = products.filter(p => 
-        (p.name && p.name.toLowerCase().includes(searchQuery.toLowerCase())) || 
-        (p.color && p.color.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (p.category && p.category.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (p.variety && p.variety.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    const moveProductStep = async (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= products.length) return;
+        const updated = [...products];
+        const temp = updated[index];
+        updated[index] = updated[targetIndex];
+        updated[targetIndex] = temp;
+        setProducts(updated);
+        try {
+            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/reorder`, {
+                products: updated.map((p, idx) => ({ id: p.id || p._id, sortOrder: idx }))
+            });
+        } catch (error) {
+            console.error("Error saving reorder:", error);
+        }
+    };
+
+    const moveProductToTarget = async (productId, targetId) => {
+        if (!targetId || productId === targetId) return;
+        const currentIndex = products.findIndex(p => (p.id || p._id) === productId);
+        const targetIndex = products.findIndex(p => (p.id || p._id) === targetId);
+        if (currentIndex === -1 || targetIndex === -1) return;
+        const updated = [...products];
+        const [movedItem] = updated.splice(currentIndex, 1);
+        const newTargetIndex = updated.findIndex(p => (p.id || p._id) === targetId);
+        updated.splice(newTargetIndex, 0, movedItem);
+        setProducts(updated);
+        try {
+            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/reorder`, {
+                products: updated.map((p, idx) => ({ id: p.id || p._id, sortOrder: idx }))
+            });
+        } catch (error) {
+            console.error("Error saving reorder:", error);
+        }
+    };
+
+    const filteredProducts = products.filter(p => {
+        const matchesSearch = !searchQuery ||
+            (p.name && p.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (p.color && p.color.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (p.category && p.category.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (p.variety && p.variety.toLowerCase().includes(searchQuery.toLowerCase())) ||
+            (p.origin && p.origin.toLowerCase().includes(searchQuery.toLowerCase()));
+
+        const matchesCat = selectedCategory === 'All' || p.category === selectedCategory;
+        const matchesOrigin = originFilter === 'All' || (p.origin && p.origin.toLowerCase().includes(originFilter.toLowerCase()));
+        const matchesColor = colorFilter === 'All' || (p.color && p.color.toLowerCase().includes(colorFilter.toLowerCase())) || (p.colorCategory && p.colorCategory.toLowerCase().includes(colorFilter.toLowerCase()));
+        const matchesFinish = finishFilter === 'All' || (p.finish && Array.isArray(p.finish) && p.finish.some(f => f.toLowerCase().includes(finishFilter.toLowerCase())));
+
+        return matchesSearch && matchesCat && matchesOrigin && matchesColor && matchesFinish;
+    });
 
     return (
         <div style={{ maxWidth: '1050px', margin: '0 auto', padding: '10px 15px 60px' }}>
@@ -726,15 +775,73 @@ export default function AdminProducts() {
                 </div>
             )}
 
-            <div style={{ marginBottom: '30px' }}>
-                <input 
-                    type="text" 
-                    placeholder="Search products by name, variety, category, or color..." 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="admin-search-input"
-                    style={{ padding: '12px 16px', fontSize: '15px', borderRadius: '6px', border: '1px solid #ddd', width: '100%' }}
-                />
+            {/* Category Buttons & Filters */}
+            <div style={{ marginBottom: '25px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+                    {['All', 'Granite', 'Marble', 'Sandstone', 'Other Natural Stones', 'Quartz', 'Onyx', 'Paving and Landscape'].map(cat => (
+                        <button
+                            key={cat}
+                            onClick={() => setSelectedCategory(cat)}
+                            style={{
+                                padding: '9px 18px',
+                                borderRadius: '25px',
+                                border: 'none',
+                                background: selectedCategory === cat ? '#111' : '#f0f0f0',
+                                color: selectedCategory === cat ? '#fff' : '#333',
+                                fontWeight: '600',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
+                            }}
+                        >
+                            {cat === 'All' ? 'All Products' : cat}
+                        </button>
+                    ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center', backgroundColor: '#f9f9f9', padding: '15px', borderRadius: '10px', border: '1px solid #eaeaea' }}>
+                    <div style={{ flex: '1 1 280px' }}>
+                        <input
+                            type="text"
+                            placeholder="🔍 Search products by name, origin, color..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', width: '100%' }}
+                        />
+                    </div>
+                    <select
+                        value={originFilter}
+                        onChange={(e) => setOriginFilter(e.target.value)}
+                        style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', background: '#fff' }}
+                    >
+                        <option value="All">All Origins</option>
+                        <option value="India">India / Indian</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="South India">South India</option>
+                        <option value="Italy">Italy / Italian</option>
+                        <option value="Imported">Imported</option>
+                    </select>
+                    <select
+                        value={colorFilter}
+                        onChange={(e) => setColorFilter(e.target.value)}
+                        style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', background: '#fff' }}
+                    >
+                        <option value="All">All Colors</option>
+                        {['Black', 'White', 'Grey', 'Brown', 'Beige', 'Gold', 'Cream', 'Red', 'Green', 'Blue', 'Yellow', 'Multicolor'].map(col => (
+                            <option key={col} value={col}>{col}</option>
+                        ))}
+                    </select>
+                    <select
+                        value={finishFilter}
+                        onChange={(e) => setFinishFilter(e.target.value)}
+                        style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', background: '#fff' }}
+                    >
+                        <option value="All">All Finishes</option>
+                        {FINISH_ENUM.map(fin => (
+                            <option key={fin} value={fin}>{fin}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
             {loading ? (
@@ -745,7 +852,7 @@ export default function AdminProducts() {
                 </div>
             ) : (
                 <div className="admin-product-grid">
-                    {filteredProducts.map(product => (
+                    {filteredProducts.map((product, index) => (
                         <div
                             key={product.id || product._id}
                             style={{
@@ -794,9 +901,50 @@ export default function AdminProducts() {
                                     {(product.finish && product.finish.length > 0) && <div style={{ marginBottom: '4px' }}><strong>Finish:</strong> {product.finish.join(', ')}</div>}
                                     {(product.interior && product.interior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.interior.length} interior options</div>}
                                     {(product.exterior && product.exterior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.exterior.length} exterior options</div>}
-                                    </div>
+                                </div>
 
-                                    <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
+                                {/* Reorder Controls */}
+                                <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', alignItems: 'center', backgroundColor: '#f9f9f9', padding: '6px 10px', borderRadius: '6px', border: '1px solid #eaeaea' }}>
+                                    <button
+                                        onClick={() => moveProductStep(index, -1)}
+                                        disabled={index === 0}
+                                        title="Move Up"
+                                        style={{ padding: '4px 10px', border: '1px solid #ddd', borderRadius: '4px', background: '#fff', cursor: index === 0 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
+                                    >
+                                        ↑
+                                    </button>
+                                    <button
+                                        onClick={() => moveProductStep(index, 1)}
+                                        disabled={index === filteredProducts.length - 1}
+                                        title="Move Down"
+                                        style={{ padding: '4px 10px', border: '1px solid #ddd', borderRadius: '4px', background: '#fff', cursor: index === filteredProducts.length - 1 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
+                                    >
+                                        ↓
+                                    </button>
+                                    <select
+                                        onChange={(e) => {
+                                            if (e.target.value) {
+                                                moveProductToTarget(product.id || product._id, e.target.value);
+                                                e.target.value = "";
+                                            }
+                                        }}
+                                        defaultValue=""
+                                        style={{ flex: 1, padding: '5px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #ddd', background: '#fff', color: '#333' }}
+                                    >
+                                        <option value="">⇄ Move next to product...</option>
+                                        {products.map((p) => {
+                                            const pId = p.id || p._id;
+                                            if (pId === (product.id || product._id)) return null;
+                                            return (
+                                                <option key={pId} value={pId}>
+                                                    Before: {p.name} ({p.category || 'Granite'})
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </div>
+
+                                <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
                                         <button 
                                             onClick={() => handleEdit(product)}
                                             style={{ flex: 1, padding: '9px', backgroundColor: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}

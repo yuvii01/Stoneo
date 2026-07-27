@@ -320,9 +320,9 @@ export default function Home() {
         <section className="luxury-showroom-section">
           <div className="showroom-luxury-card">
             <div className="showroom-info-col">
-              <h2>Visit Our Kishangarh Experience Center</h2>
+              <h2>Visit Our Experience Center</h2>
               <p>
-                Explore thousands of premium natural stone slabs in person. Our architectural consultants are on hand for private tours and sample viewing.
+                Explore thousands of premium natural stone slabs in person. Our architectural consultants are there for private tours and sample viewing.
               </p>
               {/* <div className="showroom-details-grid">
                 <div className="showroom-detail-item">

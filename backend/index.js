@@ -110,10 +110,57 @@ app.get('/api/products', async (req, res) => {
         if (req.query.interior) filter.interior = req.query.interior;
         if (req.query.exterior) filter.exterior = req.query.exterior;
 
-        const products = await Product.find(filter).sort({ createdAt: -1 });
+        const products = await Product.find(filter).sort({ sortOrder: 1, createdAt: -1 });
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Error fetching products", error: error.message });
+    }
+});
+
+// PUT reorder products
+app.put('/api/products/reorder', async (req, res) => {
+    try {
+        const { products } = req.body;
+        if (Array.isArray(products)) {
+            for (const item of products) {
+                await Product.findByIdAndUpdate(item.id || item._id, { sortOrder: item.sortOrder });
+            }
+        }
+        res.json({ message: "Products reordered successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error reordering products", error: error.message });
+    }
+});
+
+// POST seed products
+app.post('/api/products/seed', async (req, res) => {
+    try {
+        const { products } = req.body;
+        let count = 0;
+        if (Array.isArray(products)) {
+            for (let i = 0; i < products.length; i++) {
+                const p = products[i];
+                const existing = await Product.findOne({ name: p.name });
+                if (!existing) {
+                    await Product.create({
+                        name: p.name,
+                        category: p.category || 'Granite',
+                        categories: [p.category || 'Granite'],
+                        variety: p.variety || '',
+                        colorCategory: p.colorCategory || p.color || '',
+                        origin: p.origin || 'India',
+                        price: String(p.price || 100),
+                        images: p.images || [p.image || ''],
+                        sortOrder: i,
+                        isRoyalGemStone: false
+                    });
+                    count++;
+                }
+            }
+        }
+        res.json({ message: `Seeded ${count} new products into database.` });
+    } catch (error) {
+        res.status(500).json({ message: "Error seeding products", error: error.message });
     }
 });
 
