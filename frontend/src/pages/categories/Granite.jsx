@@ -201,8 +201,8 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   };
 });
 
-const MIN_PRICE = 50;
-const MAX_PRICE = 300;
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 50)));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function Granite() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -229,15 +229,15 @@ export default function Granite() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 150
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
     const type = searchParams.get('type');
     if (type === 'south') {
-      setFilters(prev => ({ ...prev, origin: ['South India'] }));
+      setFilters(prev => ({ ...prev, origin: ['South India (Bangalore, Chennai)'] }));
     } else if (type === 'north') {
-      setFilters(prev => ({ ...prev, origin: ['North India'] }));
+      setFilters(prev => ({ ...prev, origin: ['North India (Rajasthan)'] }));
     } else if (type === 'imported') {
       setFilters(prev => ({ ...prev, origin: ['Imported'] }));
     } else if (type === 'alaska') {
@@ -269,7 +269,7 @@ export default function Granite() {
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness && p.thickness.includes(th));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
       const matchesType = !typeParam || typeParam !== 'alaska' || p.name.toLowerCase().includes('alaska');
 

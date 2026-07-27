@@ -186,7 +186,7 @@ export default function Marble() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 150
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -224,7 +224,7 @@ export default function Marble() {
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness && p.thickness.includes(th));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
       const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
