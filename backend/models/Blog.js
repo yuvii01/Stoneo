@@ -5,6 +5,14 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  category: {
+    type: String,
+    default: 'Architectural Journal'
+  },
+  readTime: {
+    type: String,
+    default: '5 Min Read'
+  },
   excerpt: {
     type: String,
     required: true
@@ -19,7 +27,7 @@ const blogSchema = new mongoose.Schema({
   },
   author: {
     type: String,
-    default: 'Stoneo India Team'
+    default: 'Stoneo Editorial'
   },
   date: {
     type: String,

@@ -295,9 +295,15 @@ export default function Header() {
                 <Link to="/category/marble?type=indian" onClick={closeMenus}>Indian Marble</Link>
                 <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link>
 
+                <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Sandstone &rsaquo;</Link>
+                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Kandla Grey</Link>
+
 
                 <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Other Natural Stones &rsaquo;</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Sand Stone</Link>
+                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Quarzite</Link>
+                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Limestone</Link>
+                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Slate Stone</Link>
+                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Basalt</Link>
                 {/* <Link to="/category/sandstone?type=agra_sandstone" onClick={closeMenus}>Agra Sandstone</Link>
                 <Link to="/category/sandstone?type=raj_green_sandstone" onClick={closeMenus}>Raj Green Sandstone</Link> */}
               </div>

@@ -150,7 +150,7 @@ export default function GetQuote() {
               <span className="quote-pulse-dot"></span>
               Quotation Desk • Instant WhatsApp Dispatch
             </div>
-            <h1>Request Your Stone Quotation</h1>
+            <h1>Request Quotation</h1>
             <p>
               Review your curated natural stone portfolio and connect directly with our senior architectural specialists for tailored pricing & sample dispatch.
             </p>

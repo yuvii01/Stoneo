@@ -13,8 +13,8 @@ export const resolveProductPreview = (url) => {
         param = cleanStr.split('/products/').pop();
     }
     param = decodeURIComponent(param.split('?')[0].split('#')[0]).trim();
-    
-    const found = CSV_PRODUCTS.find(p => 
+
+    const found = CSV_PRODUCTS.find(p =>
         p.name.toLowerCase() === param.toLowerCase() ||
         String(p.id) === String(param)
     );
@@ -24,7 +24,7 @@ export const resolveProductPreview = (url) => {
             image: found.image,
             url: `/products/${encodeURIComponent(found.name)}`
         };
-    }
+    } az
     // Fallback for custom product names
     const prettyName = param.charAt(0).toUpperCase() + param.slice(1);
     return {
@@ -38,19 +38,24 @@ export default function AdminBlogs() {
     const [blogs, setBlogs] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-    
-    // Form state
-    const [showForm, setShowForm] = useState(false);
-    const [editingId, setEditingId] = useState(null);
-    const [formData, setFormData] = useState({
+
+    const initialFormState = {
         title: '',
+        category: 'Architectural Journal',
+        readTime: '5 Min Read',
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        author: 'Stoneo Editorial',
         excerpt: '',
         content: '',
         image: '',
-        author: 'Stoneo Editorial',
         tags: '',
         featuredProducts: ['', '', '']
-    });
+    };
+
+    // Form state
+    const [showForm, setShowForm] = useState(false);
+    const [editingId, setEditingId] = useState(null);
+    const [formData, setFormData] = useState(initialFormState);
 
     const [dragActive, setDragActive] = useState(false);
 
@@ -134,6 +139,9 @@ export default function AdminBlogs() {
         }
         const payload = {
             ...formData,
+            category: formData.category || 'Architectural Journal',
+            readTime: formData.readTime || '5 Min Read',
+            date: formData.date || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
             author: formData.author || 'Stoneo Editorial',
             tags: formData.tags ? formData.tags.split(',').map(tag => tag.trim()).filter(Boolean) : [],
             featuredProducts: (formData.featuredProducts || [])
@@ -149,7 +157,7 @@ export default function AdminBlogs() {
             }
             setShowForm(false);
             setEditingId(null);
-            setFormData({ title: '', excerpt: '', content: '', image: '', author: 'Stoneo Editorial', tags: '', featuredProducts: ['', '', ''] });
+            setFormData(initialFormState);
             fetchBlogs();
         } catch (error) {
             console.error("Error saving blog:", error);
@@ -158,15 +166,18 @@ export default function AdminBlogs() {
     };
 
     const handleEdit = (blog) => {
-        setEditingId(blog.id);
+        setEditingId(blog.id || blog._id);
         const fp = Array.isArray(blog.featuredProducts) ? blog.featuredProducts : [];
         setFormData({
-            title: blog.title,
-            excerpt: blog.excerpt,
-            content: blog.content,
-            image: blog.image,
+            title: blog.title || '',
+            category: blog.category || 'Architectural Journal',
+            readTime: blog.readTime || '5 Min Read',
+            date: blog.date || new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+            excerpt: blog.excerpt || '',
+            content: blog.content || '',
+            image: blog.image || '',
             author: blog.author || 'Stoneo Editorial',
-            tags: blog.tags ? blog.tags.join(', ') : '',
+            tags: Array.isArray(blog.tags) ? blog.tags.join(', ') : (blog.tags || ''),
             featuredProducts: [fp[0] || '', fp[1] || '', fp[2] || '']
         });
         setShowForm(true);
@@ -185,7 +196,7 @@ export default function AdminBlogs() {
         }
     };
 
-    const filteredBlogs = blogs.filter(blog => 
+    const filteredBlogs = blogs.filter(blog =>
         blog.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -193,12 +204,15 @@ export default function AdminBlogs() {
         <div>
             <div className="admin-page-header">
                 <h1 className="admin-page-title">Manage Blogs</h1>
-                <button 
+                <button
                     onClick={() => {
-                        setShowForm(!showForm);
-                        if (!showForm) {
+                        const nextShow = !showForm;
+                        setShowForm(nextShow);
+                        if (!nextShow) {
                             setEditingId(null);
-                            setFormData({ title: '', excerpt: '', content: '', image: '', author: 'Stoneo Editorial', tags: '', featuredProducts: ['', '', ''] });
+                            setFormData(initialFormState);
+                        } else if (!editingId) {
+                            setFormData(initialFormState);
                         }
                     }}
                     style={{ padding: '10px 20px', backgroundColor: '#111', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
@@ -210,10 +224,119 @@ export default function AdminBlogs() {
             {showForm && (
                 <div className="admin-form-container">
                     <h2 style={{ marginBottom: "20px", fontSize: "20px" }}>{editingId ? "Edit Blog" : "Add a New Blog"}</h2>
-                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-                        <input type="text" name="title" value={formData.title} onChange={handleInputChange} placeholder="Blog Title" required style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
-                        <input type="text" name="author" value={formData.author} onChange={handleInputChange} placeholder="Author Name" required style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
-                        <input type="text" name="tags" value={formData.tags} onChange={handleInputChange} placeholder="Tags (comma separated, e.g. granite, interior, design)" style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
+                    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+                        {/* 1. Blog Title */}
+                        <div>
+                            <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                Blog Title *
+                            </label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleInputChange}
+                                placeholder="e.g. Why Kishangarh Remains the Epicenter of Natural Stone"
+                                required
+                                style={{ padding: "12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "15px" }}
+                            />
+                        </div>
+
+                        {/* 2. Metadata Grid: Category, Read Time, Author, Publication Date */}
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "15px" }}>
+                            <div>
+                                <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                    Name *
+                                </label>
+                                <input
+                                    type="text"
+                                    name="category"
+                                    list="category-suggestions"
+                                    value={formData.category}
+                                    onChange={handleInputChange}
+                                    placeholder="Select or type category..."
+                                    required
+                                    style={{ padding: "11px 12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px" }}
+                                />
+                                <datalist id="category-suggestions">
+                                    <option value="Architectural Journal" />
+                                    <option value="Marble Monographs" />
+                                    <option value="Granite Journal" />
+                                    <option value="Exotic Gemstones" />
+                                    <option value="Quarry Chronicles" />
+                                    <option value="Interior Architecture" />
+                                    <option value="Stone Care & Maintenance" />
+                                </datalist>
+                            </div>
+
+                            <div>
+                                <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                    Read Time *
+                                </label>
+                                <input
+                                    type="text"
+                                    name="readTime"
+                                    list="readtime-suggestions"
+                                    value={formData.readTime}
+                                    onChange={handleInputChange}
+                                    placeholder="e.g. 5 Min Read"
+                                    required
+                                    style={{ padding: "11px 12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px" }}
+                                />
+                                <datalist id="readtime-suggestions">
+                                    <option value="4 Min Read" />
+                                    <option value="5 Min Read" />
+                                    <option value="6 Min Read" />
+                                    <option value="7 Min Read" />
+                                    <option value="8 Min Read" />
+                                    <option value="10 Min Read" />
+                                </datalist>
+                            </div>
+
+                            <div>
+                                <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                    Author Name *
+                                </label>
+                                <input
+                                    type="text"
+                                    name="author"
+                                    value={formData.author}
+                                    onChange={handleInputChange}
+                                    placeholder="e.g. Stoneo Editorial"
+                                    required
+                                    style={{ padding: "11px 12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px" }}
+                                />
+                            </div>
+
+                            <div>
+                                <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                    Publication Date *
+                                </label>
+                                <input
+                                    type="text"
+                                    name="date"
+                                    value={formData.date}
+                                    onChange={handleInputChange}
+                                    placeholder="e.g. July 27, 2026"
+                                    required
+                                    style={{ padding: "11px 12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px" }}
+                                />
+                            </div>
+                        </div>
+
+                        {/* 3. Tags */}
+                        <div>
+                            <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                Tags (Comma-Separated)
+                            </label>
+                            <input
+                                type="text"
+                                name="tags"
+                                value={formData.tags}
+                                onChange={handleInputChange}
+                                placeholder="e.g. marble, blackforest, architecture, interiordesign"
+                                style={{ padding: "11px 12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px" }}
+                            />
+                        </div>
 
                         {/* FEATURED PRODUCTS SECTION (MAX 3) WITH LIVE UI PREVIEWS */}
                         <div style={{ margin: "10px 0", padding: "16px", backgroundColor: "#fbfaf7", border: "1px solid #e2dcd4", borderRadius: "8px" }}>
@@ -300,8 +423,35 @@ export default function AdminBlogs() {
                             <div style={{ textAlign: "center", margin: "10px 0", color: "#999", fontSize: "12px", fontWeight: "bold" }}>OR</div>
                             <input type="url" name="image" value={formData.image && !formData.image.startsWith('data:image') ? formData.image : ''} onChange={handleInputChange} placeholder="Paste Image URL" style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
                         </div>
-                        <textarea name="excerpt" value={formData.excerpt} onChange={handleInputChange} placeholder="Short Excerpt (shows on card)" required rows={2} style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
-                        <textarea name="content" value={formData.content} onChange={handleInputChange} placeholder="Full Content" required rows={6} style={{ padding: "10px", width: "100%", border: "1px solid #ddd", borderRadius: "4px" }} />
+                        <div>
+                            <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                Short Excerpt / Subtitle * (Displayed on blog cards & hero subtitle)
+                            </label>
+                            <textarea
+                                name="excerpt"
+                                value={formData.excerpt}
+                                onChange={handleInputChange}
+                                placeholder="A brief 1-2 sentence overview of the article..."
+                                required
+                                rows={2}
+                                style={{ padding: "12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px", fontFamily: "inherit" }}
+                            />
+                        </div>
+
+                        <div>
+                            <label style={{ display: "block", marginBottom: "6px", fontWeight: "600", color: "#111", fontSize: "14px" }}>
+                                Full Article Content * (Markdown & paragraph formatting supported)
+                            </label>
+                            <textarea
+                                name="content"
+                                value={formData.content}
+                                onChange={handleInputChange}
+                                placeholder="Write the complete monograph or article here..."
+                                required
+                                rows={8}
+                                style={{ padding: "12px", width: "100%", border: "1px solid #ccc", borderRadius: "6px", fontSize: "14px", fontFamily: "inherit" }}
+                            />
+                        </div>
                         <button type="submit" style={{ padding: "12px 20px", backgroundColor: "#111", color: "#fff", border: "none", cursor: "pointer", alignSelf: "flex-start", borderRadius: "4px" }}>
                             {editingId ? "Update Blog" : "Publish Blog"}
                         </button>
@@ -310,9 +460,9 @@ export default function AdminBlogs() {
             )}
 
             <div style={{ marginBottom: '30px' }}>
-                <input 
-                    type="text" 
-                    placeholder="Search blogs..." 
+                <input
+                    type="text"
+                    placeholder="Search blogs..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="admin-search-input"
@@ -329,12 +479,32 @@ export default function AdminBlogs() {
                         <div key={blog.id} className="admin-blog-card">
                             <img src={blog.image} alt={blog.title} className="admin-blog-image" />
                             <div className="admin-blog-content">
-                                <h3 style={{ margin: '0 0 8px 0', fontSize: '18px' }}>{blog.title}</h3>
-                                <p style={{ margin: '0', color: '#666', fontSize: '14px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                                    <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '0.05em', textTransform: 'uppercase', background: '#111', color: '#d4af37', padding: '3px 8px', borderRadius: '4px' }}>
+                                        {blog.category || 'Architectural Journal'}
+                                    </span>
+                                    <span style={{ fontSize: '12px', color: '#666', fontWeight: '500' }}>
+                                        ● {blog.readTime || '5 Min Read'}
+                                    </span>
+                                    <span style={{ fontSize: '12px', color: '#888' }}>
+                                        • By {blog.author || 'Stoneo Editorial'} ({blog.date || 'July 2026'})
+                                    </span>
+                                </div>
+                                <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#111' }}>{blog.title}</h3>
+                                <p style={{ margin: '0 0 10px 0', color: '#666', fontSize: '14px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                                     {blog.excerpt}
                                 </p>
+                                {blog.tags && blog.tags.length > 0 && (
+                                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '8px' }}>
+                                        {blog.tags.map((t, idx) => (
+                                            <span key={idx} style={{ fontSize: '12px', background: '#eef', color: '#335', padding: '2px 8px', borderRadius: '4px' }}>
+                                                #{t}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                                 {blog.featuredProducts && blog.featuredProducts.length > 0 && (
-                                    <div style={{ display: 'flex', gap: '8px', marginTop: '10px', flexWrap: 'wrap' }}>
+                                    <div style={{ display: 'flex', gap: '8px', marginTop: '6px', flexWrap: 'wrap' }}>
                                         {blog.featuredProducts.map((link, i) => {
                                             const preview = resolveProductPreview(link);
                                             return preview ? (
@@ -347,13 +517,13 @@ export default function AdminBlogs() {
                                 )}
                             </div>
                             <div className="admin-blog-actions">
-                                <button 
+                                <button
                                     onClick={() => handleEdit(blog)}
                                     style={{ padding: '8px 16px', background: '#f0f0f0', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
                                 >
                                     Edit
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => handleDelete(blog.id)}
                                     style={{ padding: '8px 16px', background: '#ffebee', color: '#d32f2f', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
                                 >
