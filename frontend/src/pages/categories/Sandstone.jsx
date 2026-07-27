@@ -83,8 +83,8 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   };
 });
 
-const MIN_PRICE = 50;
-const MAX_PRICE = 300;
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 50)));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function Sandstone() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -111,7 +111,7 @@ export default function Sandstone() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 150
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -154,7 +154,7 @@ export default function Sandstone() {
       const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness && matchesPrice;
