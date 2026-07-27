@@ -5,6 +5,7 @@ import SEOHead from '../../components/SEOHead';
 import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 const MARBLE_TYPES = [];
 
@@ -162,6 +163,7 @@ const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 50)));
 const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function Marble() {
+  const productsList = useDbProducts('Marble', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -178,7 +180,7 @@ export default function Marble() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // 2. Get category from URL (e.g. ?category=Black)
+  // 2. Get category from URL (e.g. ?category=White)
   const categoryFilter = searchParams.get('category') || 'All';
 
   const [filters, setFilters] = useState({
@@ -218,19 +220,18 @@ export default function Marble() {
 
   // 3. Filtered List Logic
   const filteredProducts = useMemo(() => {
-    return ALL_PRODUCTS.filter(p => {
-      const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
+    return productsList.filter(p => {
+      const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
-      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
-      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness && p.thickness.includes(th));
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
       const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesPrice && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
     });
-  }, [categoryFilter, filters, typeParam]);
+  }, [categoryFilter, filters, typeParam, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -401,7 +402,7 @@ export default function Marble() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.origin.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.thickness.length > 0 || filters.minPrice > 50 || filters.maxPrice < 250 || categoryFilter !== 'All') && (
+              {(filters.origin.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < MAX_PRICE || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -443,7 +444,8 @@ export default function Marble() {
                   <button
                     onClick={() => {
                       setFilters({ origin: [], color: [], touch: [], maxPrice: MAX_PRICE });
-                      setSearchParams({ category: 'All' });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
                     }}
                     style={{ background: 'none', border: 'none', color: 'var(--color-primary, #b48e5d)', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
                   >

@@ -6,6 +6,7 @@ import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import PAVING_PRODUCTS from '../../utils/paving_landscape.json';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 // 1. Updated Data with Category Column
 
@@ -53,6 +54,7 @@ const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 30)));
 const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function PavingAndLandscape() {
+  const productsList = useDbProducts('Paving & Landscape', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -73,65 +75,85 @@ export default function PavingAndLandscape() {
 
   const [filters, setFilters] = useState({
     category: [],
+    origin: [],
     color: [],
-    thickness: [],
     touch: [],
+    thickness: [],
     maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
-    const type = searchParams.get('type');
-    let origins = [];
-    if (type === 'cobbles-granite') {
-      origins = ['Granite Cobbles'];
-    } else if (type === 'cobbles-sandstone') {
-      origins = ['Sandstone Cobbles'];
-    } else if (type === 'cobbles-limestone') {
-      origins = ['Limestone Cobbles'];
-    } else if (type === 'cobbles') {
-      origins = ['Granite Cobbles', 'Sandstone Cobbles', 'Limestone Cobbles'];
-    } else if (type === 'pavers-brick') {
-      origins = ['Bricks'];
-    } else if (type === 'pavers-sandstone') {
-      origins = ['Sandstone'];
-    } else if (type === 'pavers-travertine') {
-      origins = ['Travertino'];
-    } else if (type === 'pavers-granite') {
-      origins = ['Granite Pavers'];
-    } else if (type === 'pavers-marble') {
-      origins = ['Marble Pavers'];
-    } else if (type === 'pavers') {
-      origins = ['Bricks', 'Sandstone', 'Travertino', 'Granite Pavers', 'Marble Pavers'];
-    } else if (type === 'stones-pebbles') {
-      origins = ['landscaping pebbles'];
-    } else if (type === 'stones-stepping') {
-      origins = ['Stepping stones'];
-    } else if (type === 'stones') {
-      origins = ['landscaping pebbles', 'Stepping stones'];
-    }
-    if (type) {
-      setFilters(prev => ({ ...prev, origin: origins }));
-    }
+    const typeParam = searchParams.get('type');
+    const categoryParam = searchParams.get('category');
+
+    setFilters(prev => {
+      let newOrigin = [];
+      let newCategory = [];
+
+      if (typeParam === 'cobbles-granite') {
+        newOrigin = ['Granite Cobbles'];
+        newCategory = ['Cobbles'];
+      } else if (typeParam === 'cobbles-sandstone') {
+        newOrigin = ['Sandstone Cobbles'];
+        newCategory = ['Cobbles'];
+      } else if (typeParam === 'cobbles-limestone') {
+        newOrigin = ['Limestone Cobbles'];
+        newCategory = ['Cobbles'];
+      } else if (typeParam === 'pavers-granite') {
+        newOrigin = ['Granite Pavers'];
+        newCategory = ['Pavers'];
+      } else if (typeParam === 'pavers-sandstone') {
+        newOrigin = ['Sandstone'];
+        newCategory = ['Pavers'];
+      } else if (typeParam === 'pavers-marble') {
+        newOrigin = ['Marble Pavers'];
+        newCategory = ['Pavers'];
+      } else if (typeParam === 'pavers-travertine') {
+        newOrigin = ['Travertino'];
+        newCategory = ['Pavers'];
+      } else if (typeParam === 'bricks') {
+        newOrigin = ['Bricks'];
+      } else if (typeParam === 'pebbles') {
+        newOrigin = ['landscaping pebbles'];
+      } else if (typeParam === 'stepping-stones') {
+        newOrigin = ['Stepping stones'];
+      }
+
+      if (categoryParam && categoryParam !== 'All') {
+        newCategory = [categoryParam];
+      }
+
+      if (
+        prev.origin.length === newOrigin.length &&
+        prev.origin.every((v, i) => v === newOrigin[i]) &&
+        prev.category.length === newCategory.length &&
+        prev.category.every((v, i) => v === newCategory[i])
+      ) {
+        return prev;
+      }
+
+      return { ...prev, origin: newOrigin, category: newCategory };
+    });
   }, [searchParams]);
 
-  const handleFilterChange = (category, value) => {
+  const handleFilterChange = (filterType, value) => {
     setFilters(prev => {
-      if (category === 'maxPrice') {
+      if (filterType === 'maxPrice') {
         return { ...prev, maxPrice: value };
       }
-      const current = prev[category] || [];
+      const current = prev[filterType] || [];
       if (current.includes(value)) {
-        return { ...prev, [category]: current.filter(item => item !== value) };
+        return { ...prev, [filterType]: current.filter(item => item !== value) };
       } else {
-        return { ...prev, [category]: [...current, value] };
+        return { ...prev, [filterType]: [...current, value] };
       }
     });
   };
 
   // 3. Filtered List Logic
   const filteredProducts = useMemo(() => {
-    return ALL_PRODUCTS.filter(p => {
-      const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
+    return productsList.filter(p => {
+      const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesType = (filters.category || []).length === 0 || (filters.category || []).includes(p.category);
 
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(o => {
@@ -157,7 +179,7 @@ export default function PavingAndLandscape() {
 
       return matchesUrlCategory && matchesType && matchesOrigin && matchesColor && matchesThickness && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters]);
+  }, [categoryFilter, filters, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -341,28 +363,12 @@ export default function PavingAndLandscape() {
                   ))}
                 </div>
               </div>
-
-              <div className="filter-section">
-                <h4>Thickness</h4>
-                <div className="filter-checkbox-group">
-                  {[16, 18, 20, 22, 24, 26, 28, 30].map(th => (
-                    <label key={th} className="filter-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={filters.thickness.includes(th)}
-                        onChange={() => handleFilterChange('thickness', th)}
-                      />
-                      {th} mm
-                    </label>
-                  ))}
-                </div>
-              </div>
             </aside>
 
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.category.length > 0 || filters.origin.length > 0 || filters.touch.length > 0 || filters.color.length > 0 || filters.thickness.length > 0 || categoryFilter !== 'All') && (
+              {(filters.category.length > 0 || filters.origin.length > 0 || filters.touch.length > 0 || filters.color.length > 0 || filters.maxPrice < MAX_PRICE || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -372,8 +378,6 @@ export default function PavingAndLandscape() {
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => setSearchParams({ category: 'All' })}>×</span>
                     </div>
                   )}
-
-
 
                   {filters.origin.map(org => (
                     <div key={org} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -396,17 +400,11 @@ export default function PavingAndLandscape() {
                     </div>
                   ))}
 
-                  {filters.thickness.map(th => (
-                    <div key={th} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {th}mm
-                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('thickness', th)}>×</span>
-                    </div>
-                  ))}
-
                   <button
                     onClick={() => {
-                      setFilters({ category: [], origin: [], color: [], touch: [], thickness: [] });
+                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: MAX_PRICE });
                       setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
                     }}
                     style={{ background: 'none', border: 'none', color: 'var(--color-primary, #b48e5d)', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
                   >

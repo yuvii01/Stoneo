@@ -6,6 +6,7 @@ import SEOHead from '../../components/SEOHead';
 import StonePriceSlider from '../../components/StonePriceSlider';
 import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 const DEFAULT_DESCRIPTION = 'Premium quality onyx, engineered for perfection.';
 const DEFAULT_FEATURES = ['Scratch resistant', 'Stain resistant', 'Easy to maintain', 'Durable'];
@@ -60,6 +61,7 @@ const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 150)));
 
 export default function Onyx() {
+  const productsList = useDbProducts('Onyx', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -110,17 +112,16 @@ export default function Onyx() {
   };
 
   const filteredProducts = useMemo(() => {
-    return ALL_PRODUCTS.filter(p => {
+    return productsList.filter(p => {
       const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
-      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
-      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
 
-      return matchesType && matchesColor && matchesTouch && matchesThickness && matchesPrice;
+      return matchesType && matchesColor && matchesTouch && matchesPrice;
     });
-  }, [filters]);
+  }, [filters, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -259,28 +260,12 @@ export default function Onyx() {
                   ))}
                 </div>
               </div>
-
-              <div className="filter-section">
-                <h4>Thickness</h4>
-                <div className="filter-checkbox-group">
-                  {THICKNESS_RANGE.map(th => (
-                    <label key={th} className="filter-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={filters.thickness.includes(th)}
-                        onChange={() => handleFilterChange('thickness', th)}
-                      />
-                      {th} mm
-                    </label>
-                  ))}
-                </div>
-              </div>
             </aside>
 
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.type.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.thickness.length > 0) && (
+              {(filters.type.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < MAX_PRICE) && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -305,16 +290,11 @@ export default function Onyx() {
                     </div>
                   ))}
 
-                  {filters.thickness.map(val => (
-                    <div key={val} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {val}mm
-                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('thickness', val)}>×</span>
-                    </div>
-                  ))}
-
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], thickness: [] });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: MAX_PRICE });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
                     }}
                     style={{ background: 'none', border: 'none', color: 'var(--color-primary, #b48e5d)', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
                   >

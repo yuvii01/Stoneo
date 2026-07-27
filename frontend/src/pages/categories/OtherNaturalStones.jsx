@@ -6,6 +6,7 @@ import StonePriceSlider from '../../components/StonePriceSlider';
 import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { OTHER_NATURAL_STONES } from '../../utils/constants';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 const DEFAULT_DESCRIPTION = 'Exquisite natural stone sourced from verified quarries, engineered for architectural excellence.';
 const DEFAULT_FEATURES = ['Authentic natural texture', 'Weather & frost resistant', 'High compressive strength', 'Low maintenance'];
@@ -43,6 +44,7 @@ const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 40)));
 const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function OtherNaturalStones() {
+  const productsList = useDbProducts('Other Natural Stones', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -70,23 +72,18 @@ export default function OtherNaturalStones() {
   });
 
   useEffect(() => {
-    const typeParam = searchParams.get('type');
-    const categoryParam = searchParams.get('category');
+    const type = searchParams.get('type');
+    const newType = [];
+    const newColor = [];
+
+    if (type === 'slate') newType.push('Slate Stone');
+    if (type === 'quartzite') newType.push('Quartzite');
+    if (type === 'limestone') newType.push('Limestone');
+    if (type === 'travertine') newType.push('Travertine');
+    if (type === 'grey') newColor.push('Grey');
+    if (type === 'beige') newColor.push('Beige');
 
     setFilters(prev => {
-      let newType = [];
-      if (typeParam === 'quartzite' || typeParam === 'quarzite') newType = ['Quartzite'];
-      else if (typeParam === 'limestone') newType = ['Limestone'];
-      else if (typeParam === 'slate_stone' || typeParam === 'slate') newType = ['Slate Stone'];
-      else if (typeParam === 'basalt') newType = ['Basalt'];
-      else if (typeParam === 'kota_stone' || typeParam === 'kota') newType = ['Kota Stone'];
-      else if (typeParam === 'travertine') newType = ['Travertine'];
-
-      let newColor = prev.color;
-      if (categoryParam && categoryParam !== 'All') {
-        newColor = [categoryParam];
-      }
-
       if (
         prev.type.length === newType.length &&
         prev.type.every((v, i) => v === newType[i]) &&
@@ -114,18 +111,17 @@ export default function OtherNaturalStones() {
   };
 
   const filteredProducts = useMemo(() => {
-    return ALL_PRODUCTS.filter(p => {
-      const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
+    return productsList.filter(p => {
+      const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
       const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
-      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
-      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 30)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 30)) >= selectedPrice;
 
-      return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness && matchesPrice;
+      return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters]);
+  }, [categoryFilter, filters, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -284,27 +280,11 @@ export default function OtherNaturalStones() {
                   ))}
                 </div>
               </div>
-
-              <div className="filter-section">
-                <h4>Thickness</h4>
-                <div className="filter-checkbox-group">
-                  {THICKNESS_RANGE.map(th => (
-                    <label key={th} className="filter-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={filters.thickness.includes(th)}
-                        onChange={() => handleFilterChange('thickness', th)}
-                      />
-                      {th} mm
-                    </label>
-                  ))}
-                </div>
-              </div>
             </aside>
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.type.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.thickness.length > 0 || categoryFilter !== 'All') && (
+              {(filters.type.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < MAX_PRICE || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -336,17 +316,11 @@ export default function OtherNaturalStones() {
                     </div>
                   ))}
 
-                  {filters.thickness.map(th => (
-                    <div key={th} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {th}mm
-                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('thickness', th)}>×</span>
-                    </div>
-                  ))}
-
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], thickness: [] });
-                      setSearchParams({ category: 'All' });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: MAX_PRICE });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
                     }}
                     style={{ background: 'none', border: 'none', color: '#b48e5d', fontSize: '12px', cursor: 'pointer', textDecoration: 'underline' }}
                   >
