@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { createPortal } from 'react-dom';
+import { CSV_PRODUCTS, COMPANY_INFO } from '../utils/constants';
+import '../styles/ProductDetail.css';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -8,14 +11,27 @@ export default function ProductDetail() {
     const navigate = useNavigate();
     const location = useLocation();
     
-    // Check if product was passed in navigation state
+    // 1. Resolve product from navigation state or CSV fallback immediately
     const passedProduct = location.state?.product;
-    
-    const [product, setProduct] = useState(passedProduct || null);
-    const [loading, setLoading] = useState(!passedProduct);
+    const fallbackProduct = CSV_PRODUCTS.find(p => 
+        p.name.toLowerCase() === decodeURIComponent(id || '').toLowerCase() || 
+        String(p.id) === String(id)
+    );
+
+    const [product, setProduct] = useState(passedProduct || fallbackProduct || null);
+    const [loading, setLoading] = useState(!passedProduct && !fallbackProduct);
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('specs');
+    const [sqFt, setSqFt] = useState(150);
+    const [copiedSpec, setCopiedSpec] = useState(false);
 
     useEffect(() => {
-        if (passedProduct) {
+        window.scrollTo(0, 0);
+    }, [id]);
+
+    useEffect(() => {
+        if (passedProduct || fallbackProduct) {
             setLoading(false);
             return;
         }
@@ -33,162 +49,490 @@ export default function ProductDetail() {
         };
 
         fetchProduct();
-    }, [id, passedProduct]);
+    }, [id, passedProduct, fallbackProduct]);
 
     if (loading) {
         return (
-            <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <h2>Loading...</h2>
+            <div className="pd-page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
+                <div style={{ textAlign: 'center' }}>
+                    <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', color: '#333' }}>Curating Stone Dossier...</h2>
+                    <p style={{ color: '#888', marginTop: '8px' }}>Retrieving live Kishangarh slab specifications</p>
+                </div>
             </div>
         );
     }
 
     if (!product) {
         return (
-            <div style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <h2>Product Not Found</h2>
+            <div className="pd-page-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
+                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', color: '#111' }}>Stone Dossier Not Found</h2>
+                <p style={{ color: '#666', marginTop: '8px' }}>The requested natural stone could not be located in our active catalogue.</p>
                 <button 
                     onClick={() => navigate(-1)} 
-                    style={{ marginTop: '20px', padding: '10px 20px', background: '#111', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    className="pd-back-btn"
+                    style={{ marginTop: '24px' }}
                 >
-                    Go Back
+                    ← Return to Collection
                 </button>
             </div>
         );
     }
 
+    // Prepare multi-angle display images
     const rawImages = product.images && product.images.length > 0 ? product.images : (product.image ? [product.image] : []);
-    let displayImages = [];
-    if (rawImages.length >= 3) {
-        displayImages = rawImages;
-    } else if (rawImages.length === 2) {
-        displayImages = [rawImages[0], rawImages[1], rawImages[0]];
-    } else if (rawImages.length === 1) {
-        displayImages = [rawImages[0], rawImages[0], rawImages[0]];
-    }
+    const displayImages = rawImages.length >= 4 
+        ? rawImages.slice(0, 4)
+        : [
+            rawImages[0] || '/granite_images/Absolute Black Granite.webp',
+            rawImages[1] || rawImages[0] || '/granite_images/Absolute Black Granite.webp',
+            rawImages[2] || rawImages[0] || '/granite_images/Absolute Black Granite.webp',
+            rawImages[3] || rawImages[0] || '/granite_images/Absolute Black Granite.webp'
+        ];
 
-    const specFinish = product.finish?.length > 0 ? product.finish : ['Polished', 'Honed', 'Leathered'];
-    const specInterior = product.interior?.length > 0 ? product.interior : ['Flooring', 'Countertops', 'Wall Cladding', 'Bathroom Vanity'];
-    const specExterior = product.exterior?.length > 0 ? product.exterior : ['Building Facades', 'Patios', 'Walkways'];
-    const specThickness = product.thickness || '18mm - 20mm';
-    const specSlipResistance = product.slipResistance || 'High (Textured) / Medium (Polished)';
+    const thumbLabels = [
+        'Main Slab Texture',
+        'High-Res Grain Close-Up',
+        'Installed Architectural View',
+        'Bookmatched Vein Feature'
+    ];
+
+    const specFinish = product.finish?.length > 0 ? product.finish : ['Polished', 'Honed', 'Leathered', 'Flamed (Exterior)'];
+    const specInterior = product.interior?.length > 0 ? product.interior : ['Flooring & Grand Lobbies', 'Kitchen Countertops & Islands', 'Feature Wall Cladding', 'Luxury Bathroom Vanities'];
+    const specExterior = product.exterior?.length > 0 ? product.exterior : ['Building Facades', 'Outdoor Patios & Decks', 'Architectural Columns'];
+    const specThickness = product.thickness || '18mm - 20mm Standard (Custom 30mm Available)';
+    const specSlipResistance = product.slipResistance || 'High (Textured Finish) / Medium-High (Polished)';
+
+    // Interactive Calculator
+    const numericSqFt = Math.max(10, Number(sqFt) || 0);
+    const estimatedSlabs = Math.ceil(numericSqFt / 45); // Standard ~45 sq ft per slab
+
+    // Similar Products
+    const similarProducts = CSV_PRODUCTS
+        .filter(p => (p.category === product.category || p.material === product.material) && p.name !== product.name)
+        .slice(0, 4);
+
+    const handleShare = () => {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(window.location.href);
+            setCopiedSpec(true);
+            setTimeout(() => setCopiedSpec(false), 2500);
+        }
+    };
+
+    const handleWhatsApp = () => {
+        const text = encodeURIComponent(
+            `Hello Kishangarh Atelier, I am interested in ${product.name} (~${numericSqFt} sq. ft. / ~${estimatedSlabs} slabs). Please share current lot pricing and availability.`
+        );
+        window.open(`https://wa.me/91${COMPANY_INFO.phone}?text=${text}`, '_blank');
+    };
+
+    const handleQuote = () => {
+        navigate(`/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(displayImages[0] || '')}&sqft=${numericSqFt}`);
+    };
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 20px 60px 20px', fontFamily: "'Jost', sans-serif" }}>
-            <button 
-                onClick={() => navigate(-1)} 
-                style={{ marginBottom: '20px', background: 'none', border: 'none', color: '#666', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px', fontSize: '15px' }}
-            >
-                ← Back
-            </button>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '40px', alignItems: 'start' }}>
+        <div className="pd-page-container">
+            <div className="pd-content-wrapper">
                 
-                {/* TOP-LEFT: Images */}
-                <div style={{ 
-                    display: 'grid', 
-                    gridTemplateColumns: displayImages.length >= 2 ? '1fr 1fr' : '1fr', 
-                    gridTemplateRows: displayImages.length >= 3 ? '1fr 1fr' : '1fr', 
-                    gap: '10px',
-                    height: '500px',
-                    width: '100%'
-                }}>
-                    {displayImages.length === 0 ? (
-                        <div style={{ backgroundColor: '#f5f5f5', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999', gridRow: '1 / -1', gridColumn: '1 / -1' }}>
-                            No Image Available
-                        </div>
-                    ) : (
-                        <>
-                            <div style={{ gridRow: '1 / span 2', gridColumn: '1' }}>
-                                <img src={displayImages[0]} alt={`${product.name} - View 1`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} />
-                            </div>
-                            <div style={{ gridRow: '1', gridColumn: '2' }}>
-                                <img src={displayImages[1]} alt={`${product.name} - View 2`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} />
-                            </div>
-                            <div style={{ gridRow: '2', gridColumn: '2' }}>
-                                <img src={displayImages[2]} alt={`${product.name} - View 3`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} />
-                            </div>
-                        </>
-                    )}
-                </div>
+                {/* ================= 1. TOP EDITORIAL BREADCRUMB & BAR ================= */}
+                <div className="pd-top-bar">
+                    <button 
+                        onClick={() => navigate(-1)} 
+                        className="pd-back-btn"
+                    >
+                        ← Return to Collection
+                    </button>
 
-                {/* RIGHT: Data */}
-                <div>
-                    <h1 style={{ fontSize: '36px', fontWeight: 400, margin: '0 0 20px 0', color: '#222' }}>{product.name}</h1>
-                    {product.category && (
-                        <div style={{ display: 'inline-block', padding: '6px 12px', backgroundColor: '#f0f0f0', borderRadius: '20px', fontSize: '14px', marginBottom: '20px', color: '#333' }}>
-                            {product.category}
-                        </div>
-                    )}
-                    
+                    <div className="pd-breadcrumb">
+                        <span>Kishangarh Atelier</span> /{' '}
+                        <span>Natural Slabs</span> /{' '}
+                        <span>{product.category || product.material || 'Granite'}</span> /{' '}
+                        <span className="pd-breadcrumb-current">{product.name}</span>
+                    </div>
 
-                    
-                    <p style={{ fontSize: '18px', color: '#555', lineHeight: '1.6', whiteSpace: 'pre-line' }}>
-                        {product.description || 'No description available for this product.'}
-                    </p>
-                    
-                    <div style={{ marginTop: '30px' }}>
+                    <div className="pd-top-actions">
+                        <button type="button" className="pd-action-icon-btn" onClick={handleShare}>
+                            {copiedSpec ? '✓ Link Copied!' : '🔗 Share Stone Dossier'}
+                        </button>
                         <button 
-                            onClick={() => navigate(`/get-quote?stone=${encodeURIComponent(product.name)}&image=${encodeURIComponent(displayImages[0] || '')}`)}
-                            style={{ padding: '14px 35px', background: '#111', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '16px', cursor: 'pointer', fontWeight: 500, width: '100%', maxWidth: '300px' }}
+                            type="button" 
+                            className="pd-action-icon-btn"
+                            onClick={() => window.print()}
                         >
-                            Request a Quote
+                            🖨️ Print Spec Sheet
                         </button>
                     </div>
                 </div>
-            </div>
 
-            {/* BOTTOM: Data */}
-            <div style={{ marginTop: '60px', borderTop: '1px solid #eee', paddingTop: '40px' }}>
-                <h2 style={{ fontSize: '24px', marginBottom: '30px', color: '#333' }}>Product Specifications</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '30px' }}>
+                {/* ================= 2. MAIN HERO SHOWCASE GRID ================= */}
+                <div className="pd-hero-grid">
                     
-                    {specFinish && specFinish.length > 0 && (
-                        <div>
-                            <h3 style={{ fontSize: '15px', color: '#888', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Available Finishes</h3>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                                {specFinish.map(f => (
-                                    <span key={f} style={{ padding: '6px 12px', backgroundColor: '#f9f9f9', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px', color: '#333' }}>
-                                        {f}
+                    {/* LEFT COLUMN: Interactive Gallery */}
+                    <div className="pd-gallery-section">
+                        <div 
+                            className="pd-main-image-wrapper"
+                            onClick={() => setLightboxOpen(true)}
+                            title="Click to zoom high-resolution slab texture"
+                        >
+                            <div className="pd-slab-badge-strip">
+                                <div className="pd-badge-pill gold">
+                                    ⭐ QUARRY GRADE: A+ EXCLUSIVE
+                                </div>
+                                <div className="pd-badge-pill">
+                                    100% NATURAL KISHANGARH ORIGIN
+                                </div>
+                            </div>
+
+                            <img 
+                                src={displayImages[activeImageIndex]} 
+                                alt={`${product.name} - ${thumbLabels[activeImageIndex]}`}
+                                className="pd-main-image"
+                            />
+
+                            <div className="pd-zoom-indicator">
+                                🔍 Click to Open Fullscreen Lightbox
+                            </div>
+                        </div>
+
+                        {/* Thumbnail Selector Strip */}
+                        <div className="pd-thumbnails-grid">
+                            {displayImages.map((imgUrl, idx) => (
+                                <div 
+                                    key={idx}
+                                    className={`pd-thumb-card ${activeImageIndex === idx ? 'active' : ''}`}
+                                    onClick={() => setActiveImageIndex(idx)}
+                                >
+                                    <img src={imgUrl} alt={`${product.name} View ${idx + 1}`} className="pd-thumb-img" />
+                                    <div className="pd-thumb-label">{thumbLabels[idx]}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* RIGHT COLUMN: Architectural Stone Dossier */}
+                    <div className="pd-dossier-section">
+                        <div className="pd-category-tag">
+                            ✦ NATURAL {product.category || product.material || 'STONE'} SLAB DOSSIER
+                        </div>
+
+                        <h1 className="pd-product-title">{product.name}</h1>
+
+                        <div className="pd-quick-specs-row">
+                            <div className="pd-quick-spec-pill">
+                                ✨ Finish: <strong>{specFinish[0]}</strong>
+                            </div>
+                            <div className="pd-quick-spec-pill">
+                                📏 Standard: <strong>18mm - 20mm</strong>
+                            </div>
+                            <div className="pd-quick-spec-pill">
+                                🛡️ Density: <strong>Commercial High</strong>
+                            </div>
+                            <div className="pd-quick-spec-pill">
+                                📍 Origin: <strong>Kishangarh, India</strong>
+                            </div>
+                        </div>
+
+                        <div className="pd-curator-note-box">
+                            <div className="pd-curator-title">
+                                <span>✦ ATELIER CURATOR'S NOTE</span>
+                            </div>
+                            <p className="pd-description-text">
+                                {product.description || `An exceptional natural ${product.category || 'stone'} sourced from premier quarries and masterfully cut at our Kishangarh atelier. Renowned for its distinctive mineral veining, structural durability, and timeless architectural resonance across residential and luxury hospitality spaces.`}
+                            </p>
+                        </div>
+
+                        {/* Interactive Slab & Project Area Calculator */}
+                        <div className="pd-calculator-box">
+                            <div className="pd-calc-header">
+                                <span className="pd-calc-title">
+                                    🧮 Project Area & Slab Estimator
+                                </span>
+                                <span className="pd-calc-tag">Instant Quote Calculation</span>
+                            </div>
+                            <div className="pd-calc-row">
+                                <div className="pd-calc-input-wrapper">
+                                    <input 
+                                        type="number" 
+                                        min="10" 
+                                        max="50000" 
+                                        value={sqFt} 
+                                        onChange={(e) => setSqFt(e.target.value)}
+                                        placeholder="Sq. Ft."
+                                    />
+                                    <span className="pd-calc-unit">sq. ft.</span>
+                                </div>
+                                <div className="pd-calc-result">
+                                    Estimated Requirement:{' '}
+                                    <strong>~{estimatedSlabs} standard slabs</strong>{' '}
+                                    <span style={{ fontSize: '12px', color: '#888' }}>(based on ~45 sq.ft./slab)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Action Button Stack */}
+                        <div className="pd-actions-stack">
+                            <button 
+                                type="button" 
+                                className="pd-btn-primary-quote"
+                                onClick={handleQuote}
+                            >
+                                <span>✦ Request Custom Quotation for {product.name}</span>
+                            </button>
+
+                            <div className="pd-btn-secondary-row">
+                                <button 
+                                    type="button" 
+                                    className="pd-btn-whatsapp"
+                                    onClick={handleWhatsApp}
+                                >
+                                    <span>💬 WhatsApp Quarry Advisor</span>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    className="pd-btn-sample"
+                                    onClick={() => navigate('/get-quote?sample=true&stone=' + encodeURIComponent(product.name))}
+                                >
+                                    <span>📦 Order Physical Sample Box</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="pd-assurance-strip">
+                            <div className="pd-assurance-item">
+                                <span>🛡️</span>
+                                <strong>100% Genuine Origin</strong>
+                            </div>
+                            <div className="pd-assurance-item">
+                                <span>📐</span>
+                                <strong>Precision Laser Cut</strong>
+                            </div>
+                            <div className="pd-assurance-item">
+                                <span>🚚</span>
+                                <strong>Pan-India Secure Transit</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ================= 3. TECHNICAL SPECIFICATIONS & APPLICATIONS TABS ================= */}
+                <div className="pd-tabs-section">
+                    <div className="pd-tabs-header">
+                        <button 
+                            type="button"
+                            className={`pd-tab-btn ${activeTab === 'specs' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('specs')}
+                        >
+                            Comprehensive Specifications
+                        </button>
+                        <button 
+                            type="button"
+                            className={`pd-tab-btn ${activeTab === 'applications' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('applications')}
+                        >
+                            Architectural Applications
+                        </button>
+                        <button 
+                            type="button"
+                            className={`pd-tab-btn ${activeTab === 'care' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('care')}
+                        >
+                            Atelier Care & Longevity Guide
+                        </button>
+                    </div>
+
+                    {/* Tab 1: Specs Grid */}
+                    {activeTab === 'specs' && (
+                        <div className="pd-specs-grid">
+                            <div className="pd-spec-card">
+                                <div className="pd-spec-icon">✨</div>
+                                <div className="pd-spec-content">
+                                    <h4>Available Surface Finishes</h4>
+                                    <p>Select from our atelier finish treatments</p>
+                                    <div className="pd-spec-chips-row">
+                                        {specFinish.map(f => (
+                                            <span key={f} className="pd-spec-chip">{f}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="pd-spec-card">
+                                <div className="pd-spec-icon">📐</div>
+                                <div className="pd-spec-content">
+                                    <h4>Standard Slab Thickness</h4>
+                                    <p>{specThickness}</p>
+                                    <span className="pd-spec-chip" style={{ marginTop: '8px', display: 'inline-block' }}>
+                                        Custom Architectural Cut on Request
                                     </span>
-                                ))}
+                                </div>
+                            </div>
+
+                            <div className="pd-spec-card">
+                                <div className="pd-spec-icon">🛡️</div>
+                                <div className="pd-spec-content">
+                                    <h4>Slip Resistance Rating</h4>
+                                    <p>{specSlipResistance}</p>
+                                    <span className="pd-spec-chip" style={{ marginTop: '8px', display: 'inline-block' }}>
+                                        Certified High Safety & Traction
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="pd-spec-card">
+                                <div className="pd-spec-icon">💎</div>
+                                <div className="pd-spec-content">
+                                    <h4>Density & Abrasion Resistance</h4>
+                                    <p>High structural integrity suitable for high-traffic public & commercial installations.</p>
+                                </div>
+                            </div>
+
+                            <div className="pd-spec-card">
+                                <div className="pd-spec-icon">💧</div>
+                                <div className="pd-spec-content">
+                                    <h4>Water Absorption & Sealing</h4>
+                                    <p>Low absorption rate (&lt; 0.2%). Recommended annual penetrating stone sealer for maximum stain defense.</p>
+                                </div>
+                            </div>
+
+                            <div className="pd-spec-card">
+                                <div className="pd-spec-icon">📍</div>
+                                <div className="pd-spec-content">
+                                    <h4>Quarry Lot Origin</h4>
+                                    <p>Selected and processed directly at our Kishangarh Stone Hub Atelier, Rajasthan.</p>
+                                </div>
                             </div>
                         </div>
                     )}
-                    
-                    {specInterior && specInterior.length > 0 && (
-                        <div>
-                            <h3 style={{ fontSize: '15px', color: '#888', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Interior Applications</h3>
-                            <ul style={{ margin: 0, paddingLeft: '20px', color: '#444', lineHeight: '1.6' }}>
-                                {specInterior.map(i => <li key={i} style={{ marginBottom: '6px' }}>{i}</li>)}
-                            </ul>
+
+                    {/* Tab 2: Applications Visual Cards */}
+                    {activeTab === 'applications' && (
+                        <div className="pd-applications-grid">
+                            <div className="pd-app-card">
+                                <div className="pd-app-icon-circle">🏛️</div>
+                                <h4>Flooring & Grand Lobbies</h4>
+                                <p>
+                                    Ideal for expansive residential living rooms, hotel foyers, and commercial reception areas where seamless veining creates an unforgettable first impression.
+                                </p>
+                            </div>
+
+                            <div className="pd-app-card">
+                                <div className="pd-app-icon-circle">🍽️</div>
+                                <h4>Kitchen Countertops & Islands</h4>
+                                <p>
+                                    Heat-resistant and highly resilient surface for luxury gourmet kitchens, dining tables, and breakfast bar islands.
+                                </p>
+                            </div>
+
+                            <div className="pd-app-card">
+                                <div className="pd-app-icon-circle">🖼️</div>
+                                <h4>Feature Wall Cladding</h4>
+                                <p>
+                                    Transforms interior walls, fireplace surrounds, and elevator banks into striking natural works of architectural art.
+                                </p>
+                            </div>
+
+                            <div className="pd-app-card">
+                                <div className="pd-app-icon-circle">🛁</div>
+                                <h4>Luxury Bathroom Vanities</h4>
+                                <p>
+                                    Elevates master suites, spa bathrooms, and powder rooms with moisture-resistant sophistication.
+                                </p>
+                            </div>
                         </div>
                     )}
 
-                    {specExterior && specExterior.length > 0 && (
-                        <div>
-                            <h3 style={{ fontSize: '15px', color: '#888', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Exterior Applications</h3>
-                            <ul style={{ margin: 0, paddingLeft: '20px', color: '#444', lineHeight: '1.6' }}>
-                                {specExterior.map(e => <li key={e} style={{ marginBottom: '6px' }}>{e}</li>)}
-                            </ul>
-                        </div>
-                    )}
-                    
-                    {specThickness && (
-                        <div>
-                            <h3 style={{ fontSize: '15px', color: '#888', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Thickness</h3>
-                            <p style={{ margin: 0, color: '#444', fontSize: '15px' }}>{specThickness}</p>
-                        </div>
-                    )}
-                    
-                    {specSlipResistance && (
-                        <div>
-                            <h3 style={{ fontSize: '15px', color: '#888', margin: '0 0 10px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Slip Resistance</h3>
-                            <p style={{ margin: 0, color: '#444', fontSize: '15px' }}>{specSlipResistance}</p>
+                    {/* Tab 3: Care Guide */}
+                    {activeTab === 'care' && (
+                        <div className="pd-care-grid">
+                            <div className="pd-care-step">
+                                <div className="pd-care-step-number">01</div>
+                                <h4>Initial Penetrating Sealant</h4>
+                                <p>
+                                    Apply a high-grade penetrating stone sealer upon installation to protect against oil, wine, and water penetration without altering the natural surface finish.
+                                </p>
+                            </div>
+
+                            <div className="pd-care-step">
+                                <div className="pd-care-step-number">02</div>
+                                <h4>pH-Neutral Daily Care</h4>
+                                <p>
+                                    Clean surfaces using warm water and a specialized pH-neutral stone cleaner. Avoid abrasive scouring pads, vinegar, or harsh bleach-based chemicals.
+                                </p>
+                            </div>
+
+                            <div className="pd-care-step">
+                                <div className="pd-care-step-number">03</div>
+                                <h4>Thermal & Mechanical Protection</h4>
+                                <p>
+                                    Use coasters under glassware and trivets under hot cookware to preserve surface luster and ensure a lifetime of pristine structural beauty.
+                                </p>
+                            </div>
                         </div>
                     )}
                 </div>
+
+                {/* ================= 4. SIMILAR ATELIER STONES CAROUSEL / GRID ================= */}
+                {similarProducts.length > 0 && (
+                    <div className="pd-similar-section">
+                        <div className="pd-section-title-row">
+                            <div>
+                                <h2>More From Our {product.category || 'Natural Stone'} Reserve</h2>
+                                <p>Explore complementary natural slabs curated from the same atelier selection</p>
+                            </div>
+                        </div>
+
+                        <div className="pd-similar-grid">
+                            {similarProducts.map((item, idx) => (
+                                <div 
+                                    key={idx}
+                                    className="pd-similar-card"
+                                    onClick={() => navigate(`/products/${encodeURIComponent(item.name)}`, { state: { product: item } })}
+                                >
+                                    <div className="pd-similar-img-wrapper">
+                                        <img 
+                                            src={item.image || item.images?.[0] || '/granite_images/Absolute Black Granite.webp'} 
+                                            alt={item.name} 
+                                            className="pd-similar-img"
+                                        />
+                                    </div>
+                                    <div className="pd-similar-info">
+                                        <span className="pd-similar-cat">{item.category || item.material || 'Stone'}</span>
+                                        <h4 className="pd-similar-name">{item.name}</h4>
+                                        <div className="pd-similar-link">
+                                            <span>Inspect Dossier →</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
+
+            {/* ================= 5. FULLSCREEN ZOOM LIGHTBOX MODAL ================= */}
+            {lightboxOpen && createPortal(
+                <div className="pd-lightbox-overlay" onClick={() => setLightboxOpen(false)}>
+                    <button 
+                        type="button"
+                        className="pd-lightbox-close"
+                        onClick={() => setLightboxOpen(false)}
+                        title="Close Fullscreen View"
+                    >
+                        ✕
+                    </button>
+                    <div className="pd-lightbox-content" onClick={(e) => e.stopPropagation()}>
+                        <img 
+                            src={displayImages[activeImageIndex]} 
+                            alt={`${product.name} Fullscreen Texture`}
+                            className="pd-lightbox-img"
+                        />
+                        <div className="pd-lightbox-caption">
+                            {product.name} — {thumbLabels[activeImageIndex]} • High-Resolution Kishangarh Slab Inspection
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
         </div>
     );
 }
