@@ -39,8 +39,8 @@ const ALL_PRODUCTS = OTHER_NATURAL_STONES.map((item, index) => {
   };
 });
 
-const MIN_PRICE = 40;
-const MAX_PRICE = 250;
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 40)));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function OtherNaturalStones() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -66,7 +66,7 @@ export default function OtherNaturalStones() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 125
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -120,7 +120,7 @@ export default function OtherNaturalStones() {
       const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 125;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 30)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 30)) >= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesThickness && matchesPrice;

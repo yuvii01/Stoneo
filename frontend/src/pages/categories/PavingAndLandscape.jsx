@@ -49,8 +49,8 @@ const ALL_PRODUCTS = PAVING_PRODUCTS.map((csvItem, index) => {
   };
 });
 
-const MIN_PRICE = 20;
-const MAX_PRICE = 200;
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 30)));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function PavingAndLandscape() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -76,7 +76,7 @@ export default function PavingAndLandscape() {
     color: [],
     thickness: [],
     touch: [],
-    maxPrice: 100
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -152,7 +152,7 @@ export default function PavingAndLandscape() {
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.some(t => parseInt(t) === th));
       const matchesTouch = (filters.touch || []).length === 0 || (p.touch && (filters.touch || []).some(tch => p.touch.includes(tch)));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 30)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 30)) >= selectedPrice;
 
       return matchesUrlCategory && matchesType && matchesOrigin && matchesColor && matchesThickness && matchesTouch && matchesPrice;
