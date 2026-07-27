@@ -158,8 +158,8 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   };
 });
 
-const MIN_PRICE = 50;
-const MAX_PRICE = 300;
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 50)));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function Marble() {
   const [searchParams, setSearchParams] = useSearchParams();
