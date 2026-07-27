@@ -57,11 +57,11 @@ export default function Exterior() {
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 15);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth <= 768 ? 8 : 15);
+      setItemsPerPage(12);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);

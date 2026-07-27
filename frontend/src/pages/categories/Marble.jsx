@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
+import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 
@@ -164,11 +165,11 @@ export default function Marble() {
   const { addDemand, removeDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 15);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth <= 768 ? 8 : 15);
+      setItemsPerPage(12);
     };
 
     window.addEventListener('resize', handleResize);
@@ -182,6 +183,7 @@ export default function Marble() {
     origin: [],
     color: [],
     touch: [],
+    thickness: [],
     maxPrice: MAX_PRICE
   });
 
@@ -201,7 +203,7 @@ export default function Marble() {
       if (category === 'maxPrice') {
         return { ...prev, maxPrice: value };
       }
-      const current = prev[category];
+      const current = prev[category] || [];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
       } else {
@@ -216,13 +218,14 @@ export default function Marble() {
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
-      const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
-      const matchesOrigin = filters.origin.length === 0 || filters.origin.includes(p.origin);
-      const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
+      const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
+      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
+      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness && p.thickness.includes(th));
       const matchesPrice = (Number(p.price) || 0) <= (filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE);
       const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesPrice && matchesType;
     });
   }, [categoryFilter, filters, typeParam]);
 

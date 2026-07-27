@@ -390,7 +390,7 @@ export default function Granite() {
                   ].map(c => (
                     <div
                       key={c.name}
-                      className={`color-swatch-wrapper ${filters.color.includes(c.name) ? 'active' : ''}`}
+                      className={`color-swatch-wrapper ${(filters.color || []).includes(c.name) ? 'active' : ''}`}
                       onClick={() => handleFilterChange('color', c.name)}
                     >
                       <div className="color-swatch" style={{ background: c.hex }}></div>
@@ -407,7 +407,7 @@ export default function Granite() {
                     <label key={tch} className="filter-checkbox-label">
                       <input
                         type="checkbox"
-                        checked={filters.touch.includes(tch)}
+                        checked={(filters.touch || []).includes(tch)}
                         onChange={() => handleFilterChange('touch', tch)}
                       />
                       {tch}
@@ -423,7 +423,7 @@ export default function Granite() {
                     <label key={th} className="filter-checkbox-label">
                       <input
                         type="checkbox"
-                        checked={filters.thickness.includes(th)}
+                        checked={(filters.thickness || []).includes(th)}
                         onChange={() => handleFilterChange('thickness', th)}
                       />
                       {th} mm
