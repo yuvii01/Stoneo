@@ -56,8 +56,8 @@ const ALL_PRODUCTS = Quartz_products.map((item, index) => {
 });
 
 const EXTRACTED_COLORS = [...new Set(ALL_PRODUCTS.map(p => p.color))];
-const MIN_PRICE = 50;
-const MAX_PRICE = 300;
+const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 50)));
+const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
 
 export default function Quartz() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -81,7 +81,7 @@ export default function Quartz() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 150
+    maxPrice: MAX_PRICE
   });
 
   useEffect(() => {
@@ -115,7 +115,7 @@ export default function Quartz() {
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.includes(th));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 150;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
       const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
 
       return matchesType && matchesColor && matchesTouch && matchesThickness && matchesPrice;
