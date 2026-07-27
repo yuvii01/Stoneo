@@ -11,11 +11,16 @@ export default function ProductDetail() {
     const navigate = useNavigate();
     const location = useLocation();
     
+    const decodedId = decodeURIComponent(id || '').trim();
     // 1. Resolve product from navigation state or CSV fallback immediately
     const passedProduct = location.state?.product;
-    const fallbackProduct = CSV_PRODUCTS.find(p => 
-        p.name.toLowerCase() === decodeURIComponent(id || '').toLowerCase() || 
-        String(p.id) === String(id)
+    const fallbackProduct = CSV_PRODUCTS.find((p, idx) => 
+        p && (
+            p.name.toLowerCase() === decodedId.toLowerCase() ||
+            (p.id !== undefined && String(p.id) === String(decodedId)) ||
+            String(idx + 1) === String(decodedId) ||
+            String(idx) === String(decodedId)
+        )
     );
 
     const [product, setProduct] = useState(passedProduct || fallbackProduct || null);
@@ -31,8 +36,13 @@ export default function ProductDetail() {
     }, [id]);
 
     useEffect(() => {
-        if (passedProduct || fallbackProduct) {
+        const target = passedProduct || fallbackProduct;
+        if (target) {
+            setProduct(target);
             setLoading(false);
+            if (decodedId !== target.name && !isNaN(decodedId)) {
+                navigate(`/products/${encodeURIComponent(target.name)}`, { replace: true, state: { product: target } });
+            }
             return;
         }
         const fetchProduct = async () => {
@@ -49,7 +59,7 @@ export default function ProductDetail() {
         };
 
         fetchProduct();
-    }, [id, passedProduct, fallbackProduct]);
+    }, [id, decodedId, passedProduct, fallbackProduct, navigate]);
 
     if (loading) {
         return (

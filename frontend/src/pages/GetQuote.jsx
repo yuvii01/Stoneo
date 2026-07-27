@@ -89,7 +89,7 @@ export default function GetQuote() {
   const sendWhatsAppMessage = (data) => {
     // Format the message for WhatsApp with executive markdown
     const whatsappMessage =
-      `*🌟 NEW ATELIER QUOTE REQUEST 🌟*\n\n` +
+      `*🌟 NEW QUOTE REQUEST 🌟*\n\n` +
       `*Client Name:* ${data.name}\n` +
       (data.phone ? `*Phone / WhatsApp:* ${data.phone}\n` : '') +
       (data.email ? `*Email:* ${data.email}\n` : '') +
@@ -365,7 +365,7 @@ export default function GetQuote() {
                 <div className="showroom-detail-item">
                   <div className="detail-icon-circle">📍</div>
                   <div className="detail-text">
-                    <h4>Atelier & Showroom Address</h4>
+                    <h4>Showroom Address</h4>
                     <p>{COMPANY_INFO.address}</p>
                   </div>
                 </div>

@@ -153,7 +153,7 @@ export default function TilePage() {
                         ) : (
                             <div className="products-grid">
                                 {filteredProducts.map(product => (
-                                    <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}>
+                                    <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}>
                                         <div className="product-image">
                                             {product.images && product.images.length > 0 ? (
                                                 <img src={product.images[0]} alt={product.name} />

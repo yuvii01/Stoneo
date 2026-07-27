@@ -256,7 +256,7 @@ export default function Home() {
             <p className="section-subtitle">Browse our collection of premium granite varieties</p>
             <div className="products-grid">
               {GRANITE_TYPES.slice(0, 6).map((product) => (
-                <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}>
+                <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}>
                   <div className="product-image">
                     <img src={product.image} alt={product.name} />
                   </div>

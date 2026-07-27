@@ -48,7 +48,7 @@ app.get('/api/blogs/:id', async (req, res) => {
 // POST a new blog
 app.post('/api/blogs', async (req, res) => {
     try {
-        const { title, excerpt, content, image, author, date, tags } = req.body;
+        const { title, excerpt, content, image, author, date, tags, featuredProducts } = req.body;
 
         const newBlog = new Blog({
             title,
@@ -57,7 +57,8 @@ app.post('/api/blogs', async (req, res) => {
             image,
             author,
             date,
-            tags
+            tags,
+            featuredProducts
         });
 
         const savedBlog = await newBlog.save();

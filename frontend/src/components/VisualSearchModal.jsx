@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { CSV_PRODUCTS } from '../utils/constants';
 import '../styles/visual-search.css';
 
 const CATEGORIES = ['All', 'Granite', 'Marble', 'Sandstone', 'Quartz', 'Tiles', 'Onyx', 'Terrazzo', 'Quartzite', 'Soapstone', 'Basalt', 'Slate', 'Travertine', 'Limestone'];
 
 // --- Perceptual color engine: CIE L*a*b* + texture variance ---
-
 // Convert sRGB to CIE L*a*b* (perceptually uniform — equal delta-E = equal perceived difference)
 function rgbToLab(r, g, b) {
   // Gamma-decode sRGB
@@ -151,6 +151,7 @@ function scoreColorMatch(colorName, h, s, l, variance) {
 }
 
 export default function VisualSearchModal({ isOpen, onClose }) {
+  const navigate = useNavigate();
   const [mode, setMode] = useState('upload'); // 'upload' | 'results'
   const [uploadedImage, setUploadedImage] = useState(null);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -413,7 +414,15 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                   .filter(p => activeCategory === 'All' || p.material === activeCategory)
                   .slice(0, 9)
                   .map((product, idx) => (
-                    <div key={idx} className="vs-product-card">
+                    <div 
+                      key={idx} 
+                      className="vs-product-card"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        onClose();
+                        navigate(`/products/${encodeURIComponent(product.name)}`, { state: { product } });
+                      }}
+                    >
                       <img src={product.image} alt={product.name} />
                       {product.matchScore !== undefined && (
                         <div className="vs-match-badge">{product.matchScore}% match</div>
@@ -421,7 +430,7 @@ export default function VisualSearchModal({ isOpen, onClose }) {
                       <div className="vs-product-info">
                         <span className="vs-product-cat">{product.material ? product.material.toUpperCase() : ''}</span>
                         <h4>{product.name}</h4>
-                        <button className="vs-add-btn">Add to Requirement</button>
+                        <button className="vs-add-btn">Inspect Dossier</button>
                       </div>
                     </div>
                   ))}

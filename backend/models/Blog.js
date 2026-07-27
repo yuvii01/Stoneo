@@ -28,6 +28,10 @@ const blogSchema = new mongoose.Schema({
   tags: [{
     type: String,
     trim: true
+  }],
+  featuredProducts: [{
+    type: String,
+    trim: true
   }]
 }, { timestamps: true });
 

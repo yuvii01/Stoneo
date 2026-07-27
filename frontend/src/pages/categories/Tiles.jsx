@@ -267,7 +267,7 @@ export default function Tiles() {
                 key={product.id}
                 className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
                 style={{ cursor: 'pointer' }}
-                onClick={() => navigate(`/products/${product.id || product._id}`, { state: { product } })}
+                onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}
               >
                 <div className="product-image">
                   <img src={product.image} alt={product.name} />

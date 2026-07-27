@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { CSV_PRODUCTS } from '../utils/constants';
 import '../styles/visual-search.css'; // Reusing visual search styles
 
 export default function TextSearchModal({ isOpen, onClose, initialQuery, onQueryChange }) {
+  const navigate = useNavigate();
   const [query, setQuery] = useState(initialQuery || '');
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
@@ -150,7 +152,15 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery, onQuery
               <>
                 <div className="vs-product-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
                   {currentProducts.map((product, idx) => (
-                    <div key={idx} className="vs-product-card">
+                    <div 
+                      key={idx} 
+                      className="vs-product-card"
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        onClose();
+                        navigate(`/products/${encodeURIComponent(product.name)}`, { state: { product } });
+                      }}
+                    >
                       <img src={product.image} alt={product.name} />
                       <div className="vs-match-badge">{product.matchScore}% match</div>
                       <div className="vs-product-info">

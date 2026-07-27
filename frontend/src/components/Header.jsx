@@ -230,14 +230,15 @@ export default function Header() {
                 <h3 className="mega-menu-heading">
                   <Link to="/application/interior" onClick={closeMenus} style={{ textDecoration: 'none', color: 'inherit' }}>Interior &rsaquo;</Link>
                 </h3>
-                <Link to="/application/interior?type=home-decor" onClick={closeMenus}>Home Decor</Link>
+
                 <Link to="/application/interior?type=interior-flooring" onClick={closeMenus}>Interior Flooring</Link>
                 <Link to="/application/interior?type=blowall-cladding" onClick={closeMenus}>Wall Cladding</Link>
                 <Link to="/application/interior?type=kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
                 <Link to="/application/interior?type=bathroom-vanity" onClick={closeMenus}>Bathroom & Vanity</Link>
                 <Link to="/application/interior?type=staircase" onClick={closeMenus}>Staircase</Link>
                 {/* <Link to="/application/interior?type=pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link> */}
-                <Link to="/application/interior?type=table-tops-furniture" onClick={closeMenus}>Table Tops & Furniture</Link>
+                <Link to="/application/interior?type=table-tops-furniture" onClick={closeMenus}>TableTop & Furniture</Link>
+                <Link to="/application/interior?type=home-decor" onClick={closeMenus}>Home Decor</Link>
 
               </div>
 
@@ -245,8 +246,9 @@ export default function Header() {
                 <h3 className="mega-menu-heading">
                   <Link to="/application/exterior" onClick={closeMenus} style={{ textDecoration: 'none', color: 'inherit' }}>Exterior &rsaquo;</Link>
                 </h3>
-                <Link to="/application/exterior?type=elevation-cladding" onClick={closeMenus}>Elevation Cladding</Link>
                 <Link to="/application/exterior?type=outdoor-flooring" onClick={closeMenus}>Outdoor Flooring & Paving</Link>
+                <Link to="/application/exterior?type=elevation-cladding" onClick={closeMenus}>Elevation Cladding</Link>
+
                 <Link to="/application/exterior?type=garden-landscaping" onClick={closeMenus}>Garden & Landscaping</Link>
                 <Link to="/application/exterior?type=driveways-pathways" onClick={closeMenus}>Driveways & Pathways</Link>
                 <Link to="/application/exterior?type=swimming-pool" onClick={closeMenus}>Swimming Pool Areas</Link>
@@ -294,8 +296,8 @@ export default function Header() {
                 <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link>
 
 
-                <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Sandstones &rsaquo;</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Kota Stone</Link>
+                <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Other Natural Stones &rsaquo;</Link>
+                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Sand Stone</Link>
                 {/* <Link to="/category/sandstone?type=agra_sandstone" onClick={closeMenus}>Agra Sandstone</Link>
                 <Link to="/category/sandstone?type=raj_green_sandstone" onClick={closeMenus}>Raj Green Sandstone</Link> */}
               </div>
@@ -332,10 +334,10 @@ export default function Header() {
 
                 <Link to="/category/paving-landscape?type=pavers" onClick={closeMenus} className="mega-menu-subheading-link">Bricks and Pavers &rsaquo;</Link>
                 {/* <Link to="/category/paving-landscape?type=pavers-brick" onClick={closeMenus}>Paving Bricks</Link> */}
-                <Link to="/category/paving-landscape?type=pavers-sandstone" onClick={closeMenus}>Sandstone Pavers</Link>
-                <Link to="/category/paving-landscape?type=pavers-travertine" onClick={closeMenus}>Travertine Pavers</Link>
-                <Link to="/category/paving-landscape?type=pavers-granite" onClick={closeMenus}>Granite Pavers</Link>
-                <Link to="/category/paving-landscape?type=pavers-marble" onClick={closeMenus}>Marble Pavers</Link>
+                <Link to="/category/paving-landscape?type=pavers-sandstone" onClick={closeMenus}>Sandstone </Link>
+                <Link to="/category/paving-landscape?type=pavers-granite" onClick={closeMenus}>Granite </Link>
+                <Link to="/category/paving-landscape?type=pavers-marble" onClick={closeMenus}>Marble </Link>
+                <Link to="/category/paving-landscape?type=pavers-travertine" onClick={closeMenus}>Other Natural Stones </Link>
 
                 <Link to="/category/paving-landscape?type=stones" onClick={closeMenus} className="mega-menu-subheading-link">Stones & Others &rsaquo;</Link>
                 <Link to="/category/paving-landscape?type=stones-pebbles" onClick={closeMenus}>Landscaping Pebbles</Link>

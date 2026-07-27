@@ -98,11 +98,11 @@ export default function Blogs() {
             >
                 <div className="editorial-badge-pill">
                     <span className="editorial-pulse-dot"></span>
-                    Stoneo Architectural Journal • Insights & Quarry Chronicles
+                    Stoneo Journal • Insightful Blogs
                 </div>
-                <h1>The Architectural Stone Journal</h1>
+                <h1>The Stoneo Journal</h1>
                 <p>
-                    Discover masterclass design guides, quarry explorations, and expert natural stone curation from our Kishangarh atelier.
+                    Discover masterclass design guides, quarry explorations, and expert natural stone curation from Stoneo.
                 </p>
             </section>
 
@@ -114,7 +114,7 @@ export default function Blogs() {
                         <input
                             type="text"
                             className="blog-search-input"
-                            placeholder="Search architectural chronicles, finishes, or quarry insights..."
+                            placeholder="Search architectural articles, finishes, or quarry insights..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
@@ -138,7 +138,7 @@ export default function Blogs() {
                                     className={`tag-filter-chip ${selectedTags.length === 0 ? 'active' : ''}`}
                                     onClick={() => { setSelectedTags([]); setShowAllTags(false); }}
                                 >
-                                    All Chronicles
+                                    All Blogs
                                 </button>
                                 {(showAllTags ? allTags : topTags).map(tag => (
                                     <button
@@ -186,7 +186,7 @@ export default function Blogs() {
                 </div>
             ) : filteredBlogs.length === 0 ? (
                 <div className="blogs-state-container">
-                    <h3>No Chronicles Found</h3>
+                    <h3>No Blogs Found</h3>
                     <p>We couldn't find any articles matching your search query or selected tags.</p>
                     <button
                         type="button"
