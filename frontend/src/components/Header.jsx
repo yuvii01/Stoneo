@@ -296,19 +296,18 @@ export default function Header() {
                 <Link to="/category/marble?type=statuario" onClick={closeMenus}>Statuario</Link>
 
                 <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Sandstone &rsaquo;</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Kandla Grey</Link>
+                <Link to="/category/sandstone?type=kandla_grey" onClick={closeMenus}>Kandla Grey</Link>
 
 
-                <Link to="/category/sandstone" onClick={closeMenus} className="mega-menu-subheading-link">Other Natural Stones &rsaquo;</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Quarzite</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Limestone</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Slate Stone</Link>
-                <Link to="/category/sandstone?type=kota_stone" onClick={closeMenus}>Basalt</Link>
+                <Link to="/category/other-natural-stones" onClick={closeMenus} className="mega-menu-subheading-link">Other Natural Stones &rsaquo;</Link>
+                <Link to="/category/other-natural-stones?type=quartzite" onClick={closeMenus}>Quarzite</Link>
+                <Link to="/category/other-natural-stones?type=limestone" onClick={closeMenus}>Limestone</Link>
+                <Link to="/category/other-natural-stones?type=slate_stone" onClick={closeMenus}>Slate Stone</Link>
+                <Link to="/category/other-natural-stones?type=basalt" onClick={closeMenus}>Basalt</Link>
                 {/* <Link to="/category/sandstone?type=agra_sandstone" onClick={closeMenus}>Agra Sandstone</Link>
                 <Link to="/category/sandstone?type=raj_green_sandstone" onClick={closeMenus}>Raj Green Sandstone</Link> */}
               </div>
 
-              {/* Column 2: Engineered Surfaces */}
               <div className="mega-menu-column">
                 <h3 className="mega-menu-heading">Engineered Surfaces</h3>
 

@@ -24,7 +24,7 @@ export const resolveProductPreview = (url) => {
             image: found.image,
             url: `/products/${encodeURIComponent(found.name)}`
         };
-    } az
+    }
     // Fallback for custom product names
     const prettyName = param.charAt(0).toUpperCase() + param.slice(1);
     return {

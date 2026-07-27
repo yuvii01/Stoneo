@@ -66,6 +66,11 @@
   background-size: cover;
 }
 
+.other-stones-header {
+  background-image: url('/granite_images/Fish%20Black%20Granite.webp');
+  background-size: cover;
+}
+
 .marble-header-indian {
   background-image: url('https://mawrbled.com/cdn/shop/files/REDITALIANMARBLE.jpg?v=1698314408&width=500');
   background-size: cover;

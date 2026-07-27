@@ -20,6 +20,7 @@ import Marble from './pages/categories/Marble';
 import Quartz from './pages/categories/Quartz';
 import Onyx from './pages/categories/Onyx';
 import PavingAndLandscape from './pages/categories/PavingAndLandscape';
+import OtherNaturalStones from './pages/categories/OtherNaturalStones';
 import Interior from './pages/applications/Interior';
 import Exterior from './pages/applications/Exterior';
 import TilePage from './pages/applications/TilePage';
@@ -58,6 +59,7 @@ function AppContent() {
           <Route path="/category/granite" element={<Granite />} />
           <Route path="/category/marble" element={<Marble />} />
           <Route path="/category/sandstone" element={<Sandstone />} />
+          <Route path="/category/other-natural-stones" element={<OtherNaturalStones />} />
           <Route path="/category/quartz" element={<Quartz />} />
           <Route path="/category/onyx" element={<Onyx />} />
           <Route path="/category/paving-landscape" element={<PavingAndLandscape />} />

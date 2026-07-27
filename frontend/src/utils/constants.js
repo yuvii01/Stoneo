@@ -351,7 +351,59 @@ export const Quartz_products = [
   { name: 'Victorian Brown', image: '/quartz_images/Victorian_Brown.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Manchester Brown', image: '/quartz_images/Manchester_Brown.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
   { name: 'Brentwood Grey', image: '/quartz_images/Brentwood_Grey.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
-  { name: 'Durham Grey', image: '/quartz_images/Durham_Grey.jpg', price: 60, category: 'Quartz', material: 'Quartz', rgb: [230, 230, 230], texture: 15 },
+  // Other Natural Stones
+  { name: 'Silver Grey Quartzite', image: '/indian_marble_images/silver-grey-color-tumbled-marble-pebbles-stones-low-price-round-rough-unpolished-landscaping-rocks.jpg', price: 65, category: 'Grey', material: 'Quartzite', rgb: [160, 160, 165], texture: 25 },
+  { name: 'Deoli Green Quartzite', image: '/paving_and_stones/Raj Green Paving Stones.jpg', price: 70, category: 'Green', material: 'Quartzite', rgb: [95, 115, 95], texture: 35 },
+  { name: 'Copper Slate Quartzite', image: '/paving_and_stones/Autumn Brown Paving Stone.jpg', price: 68, category: 'Brown', material: 'Quartzite', rgb: [155, 110, 80], texture: 40 },
+  { name: 'Himachal White Quartzite', image: '/indian_marble_images/white-marble-jumbo-size-tumbled-pebbles-multi-purpose-uses-outdoor-decor-pathway-pavement-stones.jpg', price: 75, category: 'White', material: 'Quartzite', rgb: [230, 230, 230], texture: 20 },
+  { name: 'Ocean Blue Quartzite', image: '/paving_and_stones/Kota Blue Limestone Paving Stone.jpg', price: 80, category: 'Blue', material: 'Quartzite', rgb: [100, 120, 140], texture: 30 },
+  { name: 'Golden Grey Quartzite', image: '/paving_and_stones/yellow-golden-touch-limestone-tumbled-fort-stone-indian-pebbles-poolside-decorative-material.jpg', price: 68, category: 'Yellow', material: 'Quartzite', rgb: [195, 175, 110], texture: 25 },
+  { name: 'Kota Blue Limestone', image: '/paving_and_stones/Kota Blue Limestone.jpg', price: 45, category: 'Blue', material: 'Limestone', rgb: [110, 130, 145], texture: 15 },
+  { name: 'Tandur Yellow Limestone', image: '/paving_and_stones/yellow-golden-touch-limestone-tumbled-fort-stone-indian-pebbles-poolside-decorative-material.jpg', price: 50, category: 'Yellow', material: 'Limestone', rgb: [210, 190, 130], texture: 20 },
+  { name: 'Kadapa Black Limestone', image: '/paving_and_stones/Kota Black Limestone Paving Stone.jpg', price: 55, category: 'Black', material: 'Limestone', rgb: [35, 38, 40], texture: 15 },
+  { name: 'Lime Peacock Limestone', image: '/paving_and_stones/Crema Limestone.jpg', price: 60, category: 'Multicolor', material: 'Limestone', rgb: [180, 175, 160], texture: 30 },
+  { name: 'Jaisalmer Yellow Limestone', image: '/indian_marble_images/jaisalmer-Yellow-marble-300x249.png', price: 65, category: 'Yellow', material: 'Limestone', rgb: [225, 195, 95], texture: 15 },
+  { name: 'Shahabad Grey Limestone', image: '/paving_and_stones/Kandla Grey Sandstone.jpg', price: 48, category: 'Grey', material: 'Limestone', rgb: [145, 150, 155], texture: 15 },
+  { name: 'Jack Black Slate', image: '/paving_and_stones/black-polished-tumbled-agate-ornamental-stones-garden-pavement-nursery-decorative-pebbles.jpg', price: 55, category: 'Black', material: 'Slate', rgb: [30, 32, 35], texture: 35 },
+  { name: 'Kund Multicolor Slate', image: '/paving_and_stones/rainbow-sandstone-dry-tumbled-unpolished-natural-pebbles-fountain-garden-home-decor-stone.jpg', price: 60, category: 'Multicolor', material: 'Slate', rgb: [165, 125, 95], texture: 45 },
+  { name: 'Silver Shine Slate', image: '/paving_and_stones/Kandla Grey Paving Stone.jpg', price: 58, category: 'Grey', material: 'Slate', rgb: [165, 170, 175], texture: 30 },
+  { name: 'Copper Slate', image: '/paving_and_stones/Autumn Brown Paving Stone.jpg', price: 55, category: 'Brown', material: 'Slate', rgb: [140, 95, 65], texture: 35 },
+  { name: 'Ocean Green Slate', image: '/paving_and_stones/Raj Green Paving Stones.jpg', price: 62, category: 'Green', material: 'Slate', rgb: [85, 110, 95], texture: 40 },
+  { name: 'Rustic Gold Slate', image: '/paving_and_stones/yellow-golden-touch-limestone-tumbled-fort-stone-indian-pebbles-poolside-decorative-material.jpg', price: 58, category: 'Yellow', material: 'Slate', rgb: [185, 160, 100], texture: 35 },
+  { name: 'Absolute Black Basalt', image: '/paving_and_stones/black-basalt-natural-pebbles-garden-home-nature-landscape-driveway-pathway-stones.jpg', price: 70, category: 'Black', material: 'Basalt', rgb: [25, 25, 28], texture: 10 },
+  { name: 'Grey Volcanic Basalt', image: '/paving_and_stones/lava-stone-natural-pond-landscaping-river-decorative-indoor-outdoor-garden-marine-products.jpg', price: 72, category: 'Grey', material: 'Basalt', rgb: [95, 100, 105], texture: 25 },
+  { name: 'Charcoal Basalt', image: '/paving_and_stones/black-polished-tumbled-agate-ornamental-stones-garden-pavement-nursery-decorative-pebbles.jpg', price: 68, category: 'Black', material: 'Basalt', rgb: [40, 42, 45], texture: 15 },
+  { name: 'Honed Black Basalt', image: '/paving_and_stones/black-basalt-natural-pebbles-garden-home-nature-landscape-driveway-pathway-stones.jpg', price: 75, category: 'Black', material: 'Basalt', rgb: [22, 22, 25], texture: 10 },
+  { name: 'Textured Outdoor Basalt', image: '/paving_and_stones/Kandla Grey Paving Stone.jpg', price: 68, category: 'Grey', material: 'Basalt', rgb: [130, 135, 140], texture: 30 },
+  { name: 'Kota Blue Stone', image: '/paving_and_stones/Kota Blue Limestone.jpg', price: 42, category: 'Blue', material: 'Limestone', rgb: [105, 125, 140], texture: 10 },
+  { name: 'Kota Brown Stone', image: '/paving_and_stones/Kota Brown Paving Stone.jpg', price: 42, category: 'Brown', material: 'Limestone', rgb: [145, 115, 90], texture: 10 },
+  { name: 'Kota Grey Polished', image: '/indian_marble_images/Kota stone.png', price: 46, category: 'Grey', material: 'Limestone', rgb: [140, 145, 150], texture: 10 },
+  { name: 'Kota Green Rough', image: '/paving_and_stones/Raj Green Paving Stones.jpg', price: 45, category: 'Green', material: 'Limestone', rgb: [95, 115, 100], texture: 20 },
+  { name: 'Roman Silver Travertine', image: '/paving_and_stones/Travertine.png', price: 85, category: 'Grey', material: 'Travertine', rgb: [175, 170, 165], texture: 30 },
+  { name: 'Classic Beige Travertine', image: '/paving_and_stones/Dholpur Beige Sandstone.jpg', price: 80, category: 'Beige', material: 'Travertine', rgb: [215, 205, 185], texture: 25 },
+  { name: 'Noce Walnut Travertine', image: '/paving_and_stones/Autumn Brown Sandstone.jpg', price: 82, category: 'Brown', material: 'Travertine', rgb: [155, 125, 95], texture: 30 },
+
+  // Royal Gem Stones
+  { name: 'Indian Blue Agate', image: '/gemstones/agate/indianblueagate.jpg', price: 280, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [70, 130, 180], texture: 80 },
+  { name: 'Black Agate Luxury Surface', image: '/gemstones/agate/blackagate.jpg', price: 290, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [25, 25, 30], texture: 75 },
+  { name: 'Mix Agate Gemstone', image: '/gemstones/agate/mixagate.jpg', price: 310, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [180, 140, 100], texture: 85 },
+  { name: 'Crystal Agate Slab', image: '/gemstones/agate/crystalagate.jpg', price: 320, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [230, 230, 235], texture: 70 },
+  { name: 'Moss Agate Surface', image: '/gemstones/agate/mossagate.jpg', price: 295, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [85, 115, 90], texture: 80 },
+  { name: 'Yellow Agate Gemstone', image: '/gemstones/agate/yellowagate.jpg', price: 285, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [235, 195, 75], texture: 75 },
+  { name: 'Rose Quartz Gemstone', image: '/gemstones/quartz/rosequartz.jpg', price: 350, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [245, 195, 205], texture: 65 },
+  { name: 'Smokey Quartz Slab', image: '/gemstones/quartz/smokeyquartz.jpg', price: 340, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [115, 95, 85], texture: 70 },
+  { name: 'Amethyst Luxury Gemstone', image: '/gemstones/quartz/amethyst.jpg', price: 420, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [155, 90, 180], texture: 85 },
+  { name: 'Golden Quartz Surface', image: '/gemstones/quartz/goldenquartz.jpg', price: 380, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [215, 175, 85], texture: 75 },
+  { name: 'Green Fluorite Slab', image: '/gemstones/quartz/greenfluorite.jpg', price: 360, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [85, 185, 145], texture: 80 },
+  { name: 'Tiger Eye Gemstone Slab', image: '/gemstones/gemstone/tigereye.jpg', price: 450, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [185, 125, 45], texture: 90 },
+  { name: 'Lapis Lazuli Luxury Slab', image: '/gemstones/gemstone/lapizlazuli.jpg', price: 480, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [35, 65, 155], texture: 85 },
+  { name: 'Malachite Flower Gemstone', image: '/gemstones/gemstone/malachiteflower.jpg', price: 520, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [25, 135, 85], texture: 95 },
+  { name: 'Labradorite Luxury Slab', image: '/gemstones/gemstone/labrodorite.jpg', price: 490, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [65, 85, 105], texture: 90 },
+  { name: 'Sodalite Blue Surface', image: '/gemstones/gemstone/sodaliteblue.jpg', price: 440, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [45, 75, 140], texture: 85 },
+  { name: 'Amazonite Gemstone Slab', image: '/gemstones/gemstone/amazonite.jpg', price: 460, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [95, 205, 175], texture: 80 },
+  { name: 'Golden Mother of Pearl', image: '/gemstones/shellstone/goldenmop.jpg', price: 550, category: 'Royal Gemstone', material: 'Shellstone', isRoyalGemStone: true, rgb: [235, 205, 145], texture: 70 },
+  { name: 'Petrified Wood Fossil Slab', image: '/gemstones/fossil/petrifiedwood.jpg', price: 480, category: 'Royal Gemstone', material: 'Fossil', isRoyalGemStone: true, rgb: [135, 95, 65], texture: 85 },
+  { name: 'Red Jasper Gemstone Surface', image: '/gemstones/jasper/redjasper.jpg', price: 410, category: 'Royal Gemstone', material: 'Jasper', isRoyalGemStone: true, rgb: [165, 55, 45], texture: 80 }
 ];
 
 export const Onyx_products = [
@@ -375,4 +427,78 @@ export const Onyx_products = [
   { name: 'White Onyx', image: '/onyx_images/White_Onyx.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [255, 255, 255], texture: 10 },
   { name: 'Dark Desert Rose', image: '/onyx_images/Dark_Desert_Rose.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [165, 42, 42], texture: 10 },
   { name: 'Light Desert Rose', image: '/onyx_images/Light_Desert_Rose.png', price: 120, category: 'Onyx', material: 'Onyx', rgb: [205, 92, 92], texture: 10 }
+];
+
+export const OTHER_NATURAL_STONES = [
+  // Quartzite
+  { name: 'Silver Grey Quartzite', image: '/indian_marble_images/silver-grey-color-tumbled-marble-pebbles-stones-low-price-round-rough-unpolished-landscaping-rocks.jpg', price: 65, category: 'Grey', type: 'Quartzite', material: 'Quartzite' },
+  { name: 'Deoli Green Quartzite', image: '/paving_and_stones/Raj Green Paving Stones.jpg', price: 70, category: 'Green', type: 'Quartzite', material: 'Quartzite' },
+  { name: 'Copper Slate Quartzite', image: '/paving_and_stones/Autumn Brown Paving Stone.jpg', price: 68, category: 'Brown', type: 'Quartzite', material: 'Quartzite' },
+  { name: 'Himachal White Quartzite', image: '/indian_marble_images/white-marble-jumbo-size-tumbled-pebbles-multi-purpose-uses-outdoor-decor-pathway-pavement-stones.jpg', price: 75, category: 'White', type: 'Quartzite', material: 'Quartzite' },
+  { name: 'Ocean Blue Quartzite', image: '/paving_and_stones/Kota Blue Limestone Paving Stone.jpg', price: 80, category: 'Blue', type: 'Quartzite', material: 'Quartzite' },
+  { name: 'Golden Grey Quartzite', image: '/paving_and_stones/yellow-golden-touch-limestone-tumbled-fort-stone-indian-pebbles-poolside-decorative-material.jpg', price: 68, category: 'Yellow', type: 'Quartzite', material: 'Quartzite' },
+
+  // Limestone
+  { name: 'Kota Blue Limestone', image: '/paving_and_stones/Kota Blue Limestone.jpg', price: 45, category: 'Blue', type: 'Limestone', material: 'Limestone' },
+  { name: 'Tandur Yellow Limestone', image: '/paving_and_stones/yellow-golden-touch-limestone-tumbled-fort-stone-indian-pebbles-poolside-decorative-material.jpg', price: 50, category: 'Yellow', type: 'Limestone', material: 'Limestone' },
+  { name: 'Kadapa Black Limestone', image: '/paving_and_stones/Kota Black Limestone Paving Stone.jpg', price: 55, category: 'Black', type: 'Limestone', material: 'Limestone' },
+  { name: 'Lime Peacock Limestone', image: '/paving_and_stones/Crema Limestone.jpg', price: 60, category: 'Multicolor', type: 'Limestone', material: 'Limestone' },
+  { name: 'Jaisalmer Yellow Limestone', image: '/indian_marble_images/jaisalmer-Yellow-marble-300x249.png', price: 65, category: 'Yellow', type: 'Limestone', material: 'Limestone' },
+  { name: 'Shahabad Grey Limestone', image: '/paving_and_stones/Kandla Grey Sandstone.jpg', price: 48, category: 'Grey', type: 'Limestone', material: 'Limestone' },
+
+  // Slate Stone
+  { name: 'Jack Black Slate', image: '/paving_and_stones/black-polished-tumbled-agate-ornamental-stones-garden-pavement-nursery-decorative-pebbles.jpg', price: 55, category: 'Black', type: 'Slate Stone', material: 'Slate' },
+  { name: 'Kund Multicolor Slate', image: '/paving_and_stones/rainbow-sandstone-dry-tumbled-unpolished-natural-pebbles-fountain-garden-home-decor-stone.jpg', price: 60, category: 'Multicolor', type: 'Slate Stone', material: 'Slate' },
+  { name: 'Silver Shine Slate', image: '/paving_and_stones/Kandla Grey Paving Stone.jpg', price: 58, category: 'Grey', type: 'Slate Stone', material: 'Slate' },
+  { name: 'Copper Slate', image: '/paving_and_stones/Autumn Brown Paving Stone.jpg', price: 55, category: 'Brown', type: 'Slate Stone', material: 'Slate' },
+  { name: 'Ocean Green Slate', image: '/paving_and_stones/Raj Green Paving Stones.jpg', price: 62, category: 'Green', type: 'Slate Stone', material: 'Slate' },
+  { name: 'Rustic Gold Slate', image: '/paving_and_stones/yellow-golden-touch-limestone-tumbled-fort-stone-indian-pebbles-poolside-decorative-material.jpg', price: 58, category: 'Yellow', type: 'Slate Stone', material: 'Slate' },
+
+  // Basalt
+  { name: 'Absolute Black Basalt', image: '/paving_and_stones/black-basalt-natural-pebbles-garden-home-nature-landscape-driveway-pathway-stones.jpg', price: 70, category: 'Black', type: 'Basalt', material: 'Basalt' },
+  { name: 'Grey Volcanic Basalt', image: '/paving_and_stones/lava-stone-natural-pond-landscaping-river-decorative-indoor-outdoor-garden-marine-products.jpg', price: 72, category: 'Grey', type: 'Basalt', material: 'Basalt' },
+  { name: 'Charcoal Basalt', image: '/paving_and_stones/black-polished-tumbled-agate-ornamental-stones-garden-pavement-nursery-decorative-pebbles.jpg', price: 68, category: 'Black', type: 'Basalt', material: 'Basalt' },
+  { name: 'Honed Black Basalt', image: '/paving_and_stones/black-basalt-natural-pebbles-garden-home-nature-landscape-driveway-pathway-stones.jpg', price: 75, category: 'Black', type: 'Basalt', material: 'Basalt' },
+  { name: 'Textured Outdoor Basalt', image: '/paving_and_stones/Kandla Grey Paving Stone.jpg', price: 68, category: 'Grey', type: 'Basalt', material: 'Basalt' },
+
+  // Kota Stone
+  { name: 'Kota Blue Stone', image: '/paving_and_stones/Kota Blue Limestone.jpg', price: 42, category: 'Blue', type: 'Kota Stone', material: 'Limestone' },
+  { name: 'Kota Brown Stone', image: '/paving_and_stones/Kota Brown Paving Stone.jpg', price: 42, category: 'Brown', type: 'Kota Stone', material: 'Limestone' },
+  { name: 'Kota Grey Polished', image: '/indian_marble_images/Kota stone.png', price: 46, category: 'Grey', type: 'Kota Stone', material: 'Limestone' },
+  { name: 'Kota Green Rough', image: '/paving_and_stones/Raj Green Paving Stones.jpg', price: 45, category: 'Green', type: 'Kota Stone', material: 'Limestone' },
+
+  // Travertine
+  { name: 'Roman Silver Travertine', image: '/paving_and_stones/Travertine.png', price: 85, category: 'Grey', type: 'Travertine', material: 'Travertine' },
+  { name: 'Classic Beige Travertine', image: '/paving_and_stones/Dholpur Beige Sandstone.jpg', price: 80, category: 'Beige', type: 'Travertine', material: 'Travertine' },
+  { name: 'Noce Walnut Travertine', image: '/paving_and_stones/Autumn Brown Sandstone.jpg', price: 82, category: 'Brown', type: 'Travertine', material: 'Travertine' }
+];
+
+export const ROYAL_GEM_STONE_PRODUCTS = [
+  // Agate
+  { name: 'Indian Blue Agate', image: '/gemstones/agate/indianblueagate.jpg', price: 280, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [70, 130, 180], texture: 80 },
+  { name: 'Black Agate Luxury Surface', image: '/gemstones/agate/blackagate.jpg', price: 290, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [25, 25, 30], texture: 75 },
+  { name: 'Mix Agate Gemstone', image: '/gemstones/agate/mixagate.jpg', price: 310, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [180, 140, 100], texture: 85 },
+  { name: 'Crystal Agate Slab', image: '/gemstones/agate/crystalagate.jpg', price: 320, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [230, 230, 235], texture: 70 },
+  { name: 'Moss Agate Surface', image: '/gemstones/agate/mossagate.jpg', price: 295, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [85, 115, 90], texture: 80 },
+  { name: 'Yellow Agate Gemstone', image: '/gemstones/agate/yellowagate.jpg', price: 285, category: 'Royal Gemstone', material: 'Agate', isRoyalGemStone: true, rgb: [235, 195, 75], texture: 75 },
+
+  // Quartz
+  { name: 'Rose Quartz Gemstone', image: '/gemstones/quartz/rosequartz.jpg', price: 350, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [245, 195, 205], texture: 65 },
+  { name: 'Smokey Quartz Slab', image: '/gemstones/quartz/smokeyquartz.jpg', price: 340, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [115, 95, 85], texture: 70 },
+  { name: 'Amethyst Luxury Gemstone', image: '/gemstones/quartz/amethyst.jpg', price: 420, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [155, 90, 180], texture: 85 },
+  { name: 'Golden Quartz Surface', image: '/gemstones/quartz/goldenquartz.jpg', price: 380, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [215, 175, 85], texture: 75 },
+  { name: 'Green Fluorite Slab', image: '/gemstones/quartz/greenfluorite.jpg', price: 360, category: 'Royal Gemstone', material: 'Quartz', isRoyalGemStone: true, rgb: [85, 185, 145], texture: 80 },
+
+  // Exotic Gemstones
+  { name: 'Tiger Eye Gemstone Slab', image: '/gemstones/gemstone/tigereye.jpg', price: 450, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [185, 125, 45], texture: 90 },
+  { name: 'Lapis Lazuli Luxury Slab', image: '/gemstones/gemstone/lapizlazuli.jpg', price: 480, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [35, 65, 155], texture: 85 },
+  { name: 'Malachite Flower Gemstone', image: '/gemstones/gemstone/malachiteflower.jpg', price: 520, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [25, 135, 85], texture: 95 },
+  { name: 'Labradorite Luxury Slab', image: '/gemstones/gemstone/labrodorite.jpg', price: 490, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [65, 85, 105], texture: 90 },
+  { name: 'Sodalite Blue Surface', image: '/gemstones/gemstone/sodaliteblue.jpg', price: 440, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [45, 75, 140], texture: 85 },
+  { name: 'Amazonite Gemstone Slab', image: '/gemstones/gemstone/amazonite.jpg', price: 460, category: 'Royal Gemstone', material: 'Gemstone', isRoyalGemStone: true, rgb: [95, 205, 175], texture: 80 },
+
+  // Shellstone & Fossil & Jasper
+  { name: 'Golden Mother of Pearl', image: '/gemstones/shellstone/goldenmop.jpg', price: 550, category: 'Royal Gemstone', material: 'Shellstone', isRoyalGemStone: true, rgb: [235, 205, 145], texture: 70 },
+  { name: 'Petrified Wood Fossil Slab', image: '/gemstones/fossil/petrifiedwood.jpg', price: 480, category: 'Royal Gemstone', material: 'Fossil', isRoyalGemStone: true, rgb: [135, 95, 65], texture: 85 },
+  { name: 'Red Jasper Gemstone Surface', image: '/gemstones/jasper/redjasper.jpg', price: 410, category: 'Royal Gemstone', material: 'Jasper', isRoyalGemStone: true, rgb: [165, 55, 45], texture: 80 }
 ];

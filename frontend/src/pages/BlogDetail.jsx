@@ -234,7 +234,7 @@ export default function BlogDetail() {
                     <div className="bd-meta-bar">
                         <div className="bd-meta-item">
                             <div className="bd-author-avatar">SE</div>
-                            <span>By <strong className="bd-meta-author">{post.author || 'Stoneo Editorial'}</strong></span>
+                            <span>By <strong className="bd-meta-author">{post.category || post.author || post.name || 'Stoneo Editorial'}</strong></span>
                         </div>
                         <span className="bd-meta-dot">•</span>
                         <div className="bd-meta-item">
@@ -336,7 +336,7 @@ export default function BlogDetail() {
                     <aside className="bd-sidebar">
 
                         {/* Table of Contents Box */}
-                        <div className="bd-sidebar-card">
+                        {/* <div className="bd-sidebar-card">
                             <h3 className="bd-sidebar-title">📑 In This Chronicle</h3>
                             <ul className="bd-toc-list">
                                 <li className="bd-toc-item" onClick={() => scrollToSection('GEOLOGICAL')}>
@@ -356,7 +356,7 @@ export default function BlogDetail() {
                                     <span>Atelier Care & Longevity</span>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         {/* Featured Slabs Spotlight Box (Max 3) */}
                         <div className="bd-sidebar-card" style={{ padding: "20px", background: "#111", border: "1px solid rgba(212, 175, 55, 0.35)" }}>

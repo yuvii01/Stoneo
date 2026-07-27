@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { CSV_PRODUCTS } from '../utils/constants';
+import { CSV_PRODUCTS, ROYAL_GEM_STONE_PRODUCTS } from '../utils/constants';
 import '../styles/visual-search.css'; // Reusing visual search styles
 
 export default function TextSearchModal({ isOpen, onClose, initialQuery, onQueryChange }) {
@@ -10,6 +10,14 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery, onQuery
   const [activeCategory, setActiveCategory] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
+
+  const isRoyalGem = (product) => {
+    return product && (
+      product.isRoyalGemStone ||
+      product.category === 'Royal Gemstone' ||
+      ['Agate', 'Quartz', 'Gemstone', 'Shellstone', 'Fossil', 'Jasper'].includes(product.material)
+    );
+  };
 
   // Sync initial query when modal opens or query updates from Header
   useEffect(() => {
@@ -126,6 +134,106 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery, onQuery
               </div>
             </div>
 
+            {/* Royal Gem Stones Premium Showcase Section Under Search Bar */}
+            <div style={{
+              margin: '0 0 30px 0',
+              padding: '20px',
+              backgroundColor: '#fffcf5',
+              border: '1px solid #e8dec8',
+              borderRadius: '10px',
+              boxShadow: '0 4px 18px rgba(212, 175, 55, 0.12)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '20px' }}>👑</span>
+                  <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#b48e5d', margin: 0, letterSpacing: '0.5px' }}>
+                    Royal Gem Stones Collection
+                  </h3>
+                  <span style={{
+                    fontSize: '11px',
+                    background: 'linear-gradient(135deg, #d4af37, #b89728)',
+                    color: '#fff',
+                    padding: '2px 8px',
+                    borderRadius: '12px',
+                    fontWeight: 'bold',
+                    letterSpacing: '0.5px'
+                  }}>
+                    PREMIUM MATERIAL
+                  </span>
+                </div>
+                <span style={{ fontSize: '12px', color: '#888', fontStyle: 'italic' }}>
+                  Exclusive Semi-Precious Slabs & Surfaces
+                </span>
+              </div>
+
+              <div className="vs-product-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: '14px' }}>
+                {(query.trim()
+                  ? ROYAL_GEM_STONE_PRODUCTS.filter(p =>
+                      p.name.toLowerCase().includes(query.toLowerCase()) ||
+                      (p.material && p.material.toLowerCase().includes(query.toLowerCase())) ||
+                      (p.category && p.category.toLowerCase().includes(query.toLowerCase()))
+                    )
+                  : ROYAL_GEM_STONE_PRODUCTS.slice(0, 6)
+                ).slice(0, 6).map((product, idx) => (
+                  <div
+                    key={`royal-${idx}`}
+                    className="vs-product-card"
+                    style={{
+                      cursor: 'pointer',
+                      border: '2px solid #d4af37',
+                      boxShadow: '0 4px 16px rgba(212, 175, 55, 0.32)',
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      position: 'relative',
+                      background: 'linear-gradient(to bottom, #ffffff, #fffdf8)',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onClick={() => {
+                      onClose();
+                      navigate(`/products/${encodeURIComponent(product.name)}`, { state: { product } });
+                    }}
+                  >
+                    <div style={{ position: 'relative' }}>
+                      <img src={product.image} alt={product.name} style={{ width: '100%', height: '140px', objectFit: 'cover' }} />
+                      <div style={{
+                        position: 'absolute',
+                        top: '8px',
+                        left: '8px',
+                        background: 'linear-gradient(135deg, #d4af37, #b89728)',
+                        color: '#fff',
+                        padding: '3px 8px',
+                        borderRadius: '4px',
+                        fontSize: '9px',
+                        fontWeight: '700',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                        zIndex: 5
+                      }}>
+                        ★ Royal Gem
+                      </div>
+                    </div>
+                    <div className="vs-product-info" style={{ padding: '10px' }}>
+                      <span className="vs-product-cat" style={{ color: '#b48e5d', fontWeight: '600', fontSize: '11px' }}>{product.material || 'Gemstone'}</span>
+                      <h4 style={{ fontSize: '13px', margin: '4px 0 8px 0', color: '#111' }}>{product.name}</h4>
+                      <button
+                        className="vs-add-btn"
+                        style={{
+                          background: 'linear-gradient(135deg, #d4af37, #b89728)',
+                          color: '#fff',
+                          border: 'none',
+                          fontWeight: '600',
+                          padding: '6px 0'
+                        }}
+                      >
+                        View Luxury Slab
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {matchedProducts.length > 0 && availableCategories.length > 1 && (
               <div className="vs-category-filters">
                 {availableCategories.map(cat => (
@@ -155,18 +263,54 @@ export default function TextSearchModal({ isOpen, onClose, initialQuery, onQuery
                     <div 
                       key={idx} 
                       className="vs-product-card"
-                      style={{ cursor: 'pointer' }}
+                      style={{
+                        cursor: 'pointer',
+                        border: isRoyalGem(product) ? '2px solid #d4af37' : undefined,
+                        boxShadow: isRoyalGem(product) ? '0 4px 16px rgba(212, 175, 55, 0.32)' : undefined,
+                        background: isRoyalGem(product) ? 'linear-gradient(to bottom, #ffffff, #fffdf8)' : undefined
+                      }}
                       onClick={() => {
                         onClose();
                         navigate(`/products/${encodeURIComponent(product.name)}`, { state: { product } });
                       }}
                     >
-                      <img src={product.image} alt={product.name} />
+                      <div style={{ position: 'relative' }}>
+                        <img src={product.image} alt={product.name} />
+                        {isRoyalGem(product) && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '8px',
+                            left: '8px',
+                            background: 'linear-gradient(135deg, #d4af37, #b89728)',
+                            color: '#fff',
+                            padding: '3px 8px',
+                            borderRadius: '4px',
+                            fontSize: '9px',
+                            fontWeight: '700',
+                            letterSpacing: '0.5px',
+                            textTransform: 'uppercase',
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+                            zIndex: 5
+                          }}>
+                            ★ Royal Gem
+                          </div>
+                        )}
+                      </div>
                       <div className="vs-match-badge">{product.matchScore}% match</div>
                       <div className="vs-product-info">
-                        <span className="vs-product-cat">{product.category || product.material || ''}</span>
+                        <span className="vs-product-cat" style={isRoyalGem(product) ? { color: '#b48e5d', fontWeight: '600' } : {}}>{product.category || product.material || ''}</span>
                         <h4>{product.name}</h4>
-                        <button className="vs-add-btn">View Details</button>
+                        <button
+                          className="vs-add-btn"
+                          style={isRoyalGem(product) ? {
+                            background: 'linear-gradient(135deg, #d4af37, #b89728)',
+                            color: '#fff',
+                            border: 'none',
+                            fontWeight: '600'
+                          } : {}}
+                        >
+                          View Details
+                        </button>
                       </div>
                     </div>
                   ))}

@@ -181,7 +181,7 @@ export default function Blogs() {
             {loading ? (
                 <div className="blogs-state-container">
                     <div className="blogs-loader-spinner"></div>
-                    <h3>Loading Architectural Journal...</h3>
+                    <h3>Loading Stoneo Journal...</h3>
                     <p>Curating the latest stone design guides and atelier features.</p>
                 </div>
             ) : filteredBlogs.length === 0 ? (
@@ -217,12 +217,12 @@ export default function Blogs() {
                                         {leadArticle.tags && leadArticle.tags.length > 0 && (
                                             <span className="article-tag-pill">#{leadArticle.tags[0]}</span>
                                         )}
-                                        <span className="article-read-time">● 4 Min Read • Stoneo Editorial</span>
+                                        <span className="article-read-time">● {leadArticle.readTime || '4 Min Read'} • {leadArticle.category || leadArticle.author || leadArticle.name || 'Stoneo Editorial'}</span>
                                     </div>
                                     <h2 className="featured-title">{leadArticle.title}</h2>
                                     <p className="featured-excerpt">{leadArticle.excerpt}</p>
                                     <span className="read-chronicle-link">
-                                        Read Full Chronicle →
+                                        Read Full Article →
                                     </span>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@ export default function Blogs() {
                     {gridArticles.length > 0 && (
                         <section className="luxury-blogs-grid-section">
                             <div className="grid-section-header">
-                                <h2 className="grid-section-title">More Chronicles</h2>
+                                <h2 className="grid-section-title">More Blogs</h2>
                                 <span className="grid-count-badge">
                                     Showing {gridArticles.length} {gridArticles.length === 1 ? 'Article' : 'Articles'}
                                 </span>
@@ -265,8 +265,8 @@ export default function Blogs() {
                                             <p className="card-excerpt">{post.excerpt}</p>
 
                                             <div className="card-footer">
-                                                <span className="card-read-more">Read Chronicle →</span>
-                                                <span className="card-date">● Architectural Journal</span>
+                                                <span className="card-read-more">Read Article →</span>
+                                                <span className="card-date">● {post.category || post.author || post.name || 'Stoneo Editorial'}</span>
                                             </div>
                                         </div>
                                     </div>
