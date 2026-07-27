@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const FINISH_OPTIONS = [
     'Polished', 'Honed', 'Leather', 'Flamed',
-    'Lapato', 'Bush Hammered', 'Antique', 'Sandblasted'
+    'Lapotra', 'Bush Hammered', 'Antique', 'Sandblasted'
 ];
 
 const APPLICATION_OPTIONS = [

@@ -164,6 +164,53 @@ app.post('/api/products/seed', async (req, res) => {
     }
 });
 
+// POST convert product images to database Base64 URLs
+app.post('/api/products/convert-images', async (req, res) => {
+    const fs = require('fs');
+    const path = require('path');
+    try {
+        const products = await Product.find({});
+        const publicDir = path.join(__dirname, '../frontend/public');
+        let updatedCount = 0;
+        for (const p of products) {
+            let modified = false;
+            const newImages = [];
+            for (const img of (p.images || [])) {
+                if (!img || img.startsWith('data:image/')) {
+                    newImages.push(img);
+                    continue;
+                }
+                if (img.startsWith('/')) {
+                    const localPath = path.join(publicDir, img);
+                    if (fs.existsSync(localPath)) {
+                        try {
+                            const buffer = fs.readFileSync(localPath);
+                            const ext = path.extname(localPath).toLowerCase().replace('.', '') || 'jpeg';
+                            const mimeType = ext === 'jpg' ? 'image/jpeg' : `image/${ext}`;
+                            newImages.push(`data:${mimeType};base64,${buffer.toString('base64')}`);
+                            modified = true;
+                        } catch (e) {
+                            newImages.push(img);
+                        }
+                    } else {
+                        newImages.push(img);
+                    }
+                } else {
+                    newImages.push(img);
+                }
+            }
+            if (modified) {
+                p.images = newImages;
+                await p.save();
+                updatedCount++;
+            }
+        }
+        res.json({ message: `Successfully converted images to database URLs for ${updatedCount} products.` });
+    } catch (error) {
+        res.status(500).json({ message: "Error converting images", error: error.message });
+    }
+});
+
 // GET single product by ID
 app.get('/api/products/:id', async (req, res) => {
     try {

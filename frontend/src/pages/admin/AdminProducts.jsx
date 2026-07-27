@@ -5,17 +5,17 @@ import './Admin.css';
 
 const FINISH_ENUM = [
     'Polished', 'Honed', 'Leather', 'Flamed',
-    'Lapato', 'Bush Hammered', 'Antique', 'Sandblasted',
+    'Lapotra', 'Bush Hammered', 'Antique', 'Sandblasted',
     'High Gloss', 'Resin Encapsulated'
 ];
 
 const INTERIOR_OPTIONS = [
-    'Flooring', 'Wall Cladding', 'Kitchen Countertops', 
+    'Flooring', 'Wall Cladding', 'Kitchen Countertops',
     'Bathroom & Vanity', 'Staircase', 'Pooja Room & Temples', 'Table Tops & Furniture'
 ];
 
 const EXTERIOR_OPTIONS = [
-    'Elevation/Facade Cladding', 'Outdoor Flooring & Paving', 
+    'Elevation/Facade Cladding', 'Outdoor Flooring & Paving',
     'Garden & Landscaping', 'Driveways & Pathways', 'Swimming Pool Areas'
 ];
 
@@ -202,9 +202,9 @@ export default function AdminProducts() {
             const sp = name === 'startingPrice' ? value : formData.startingPrice;
             const mp = name === 'maximumPrice' ? value : formData.maximumPrice;
             const formatted = sp && mp ? `₹${sp} - ₹${mp}` : (sp ? `₹${sp}` : (mp ? `₹${mp}` : ''));
-            setFormData(prev => ({ 
-                ...prev, 
-                [name]: value, 
+            setFormData(prev => ({
+                ...prev,
+                [name]: value,
                 price: formatted,
                 estimatedPrice: formatted
             }));
@@ -368,28 +368,56 @@ export default function AdminProducts() {
                         Create and manage Natural Stones and Engineered Surfaces
                     </p>
                 </div>
-                <button 
-                    onClick={() => {
-                        const nextState = !showForm;
-                        setShowForm(nextState);
-                        if (nextState) {
-                            setEditingId(null);
-                            setFormData(initialFormState);
-                        }
-                    }}
-                    style={{
-                        padding: '11px 22px',
-                        backgroundColor: showForm ? '#ff4444' : '#111',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontWeight: 'bold',
-                        fontSize: '15px'
-                    }}
-                >
-                    {showForm ? '✕ Cancel' : '+ Add New Product'}
-                </button>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <button
+                        onClick={async () => {
+                            try {
+                                setLoading(true);
+                                const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/products/convert-images`);
+                                await fetchProducts();
+                                alert(res.data.message || "All product image links converted to database image URLs!");
+                            } catch (err) {
+                                console.error(err);
+                                alert("Conversion failed.");
+                                fetchProducts();
+                            }
+                        }}
+                        style={{
+                            padding: '11px 16px',
+                            backgroundColor: '#2b6cb0',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '14px'
+                        }}
+                    >
+                        🔄 Convert Images to DB
+                    </button>
+                    <button
+                        onClick={() => {
+                            const nextState = !showForm;
+                            setShowForm(nextState);
+                            if (nextState) {
+                                setEditingId(null);
+                                setFormData(initialFormState);
+                            }
+                        }}
+                        style={{
+                            padding: '11px 22px',
+                            backgroundColor: showForm ? '#ff4444' : '#111',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            fontSize: '15px'
+                        }}
+                    >
+                        {showForm ? '✕ Cancel' : '+ Add New Product'}
+                    </button>
+                </div>
             </div>
 
             {showForm && (
@@ -406,7 +434,7 @@ export default function AdminProducts() {
                     </h2>
 
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                        
+
                         {/* 1. VARIETY & CATEGORY SECTION */}
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', backgroundColor: '#f9f9f9', padding: '16px', borderRadius: '8px', border: '1px solid #eaeaea' }}>
                             <div>
@@ -455,7 +483,7 @@ export default function AdminProducts() {
                                                 <input
                                                     type="checkbox"
                                                     checked={isSelected}
-                                                    onChange={() => {}} // Controlled via onClick
+                                                    onChange={() => { }} // Controlled via onClick
                                                     style={{ width: '14px', height: '14px', accentColor: '#111', cursor: 'pointer' }}
                                                 />
                                                 {varItem}
@@ -626,7 +654,7 @@ export default function AdminProducts() {
                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Finish Options</label>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                 {FINISH_ENUM.map(opt => (
-                                    <span 
+                                    <span
                                         key={opt}
                                         onClick={() => toggleMultiSelect('finish', opt)}
                                         style={{
@@ -653,7 +681,7 @@ export default function AdminProducts() {
                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Interior Applications</label>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                 {INTERIOR_OPTIONS.map(opt => (
-                                    <span 
+                                    <span
                                         key={opt}
                                         onClick={() => toggleMultiSelect('interior', opt)}
                                         style={{
@@ -678,7 +706,7 @@ export default function AdminProducts() {
                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Exterior Applications</label>
                             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                                 {EXTERIOR_OPTIONS.map(opt => (
-                                    <span 
+                                    <span
                                         key={opt}
                                         onClick={() => toggleMultiSelect('exterior', opt)}
                                         style={{
@@ -704,13 +732,13 @@ export default function AdminProducts() {
                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
                                 Product Images (Up to 3)
                             </label>
-                            
+
                             <div style={{ display: 'flex', gap: '15px', marginBottom: '15px', flexWrap: 'wrap' }}>
                                 {formData.images.map((img, idx) => (
                                     <div key={idx} style={{ position: 'relative', width: '130px', height: '130px', borderRadius: '8px', overflow: 'hidden', border: '2px solid #ddd' }}>
                                         <img src={img} alt={`Product ${idx}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             onClick={() => removeImage(idx)}
                                             style={{ position: 'absolute', top: '6px', right: '6px', background: 'rgba(255,0,0,0.85)', color: 'white', border: 'none', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '13px', fontWeight: 'bold' }}
                                         >
@@ -721,7 +749,7 @@ export default function AdminProducts() {
                             </div>
 
                             {formData.images.length < 3 && (
-                                <div 
+                                <div
                                     onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}
                                     style={{
                                         padding: "35px",
@@ -753,7 +781,7 @@ export default function AdminProducts() {
                                 style={{ padding: "12px", width: "100%", border: "1px solid #ddd", borderRadius: "6px", fontSize: '15px' }}
                             />
                         </div>
-                        
+
                         <button
                             type="submit"
                             style={{
@@ -945,24 +973,24 @@ export default function AdminProducts() {
                                 </div>
 
                                 <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
-                                        <button 
-                                            onClick={() => handleEdit(product)}
-                                            style={{ flex: 1, padding: '9px', backgroundColor: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button 
-                                            onClick={() => handleDelete(product.id || product._id)}
-                                            style={{ flex: 1, padding: '9px', backgroundColor: '#fff', border: '1px solid #ff4444', color: '#ff4444', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
-                                            onMouseEnter={(e) => { e.target.style.backgroundColor = '#ff4444'; e.target.style.color = '#fff'; }}
-                                            onMouseLeave={(e) => { e.target.style.backgroundColor = '#fff'; e.target.style.color = '#ff4444'; }}
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
+                                    <button
+                                        onClick={() => handleEdit(product)}
+                                        style={{ flex: 1, padding: '9px', backgroundColor: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(product.id || product._id)}
+                                        style={{ flex: 1, padding: '9px', backgroundColor: '#fff', border: '1px solid #ff4444', color: '#ff4444', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
+                                        onMouseEnter={(e) => { e.target.style.backgroundColor = '#ff4444'; e.target.style.color = '#fff'; }}
+                                        onMouseLeave={(e) => { e.target.style.backgroundColor = '#fff'; e.target.style.color = '#ff4444'; }}
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

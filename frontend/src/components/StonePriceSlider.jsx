@@ -12,7 +12,7 @@ export default function StonePriceSlider({ minPrice = 50, maxPrice = 300, curren
   return (
     <div style={{ marginBottom: '24px', padding: '4px 0' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-        <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold', color: '#111' }}>Price Filter</h4>
+        <h4 style={{ margin: 0, fontSize: '15px', fontWeight: 'bold', color: '#111' }}>Price </h4>
         <span style={{
           fontSize: '13px',
           fontWeight: '700',

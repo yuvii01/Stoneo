@@ -163,7 +163,7 @@ const graniteTypesMap = Object.fromEntries(
   GRANITE_TYPES.map((g) => [g.name.toLowerCase().trim(), g])
 );
 
-const TOUCH_OPTIONS = ["Polished", "Honed", "Leather", "Flamed", "Lapato", "Bush Hammered", "Antique", "Sandblasted"];
+const TOUCH_OPTIONS = ["Polished", "Leather", "Flamed", "Lapotra", "Antique"];
 const ORIGIN_OPTIONS = ["South India", "North India", "Imported", "Alaska"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 
@@ -416,7 +416,7 @@ export default function Granite() {
               <div className="filter-section">
                 <h4>Touch</h4>
                 <div className="filter-checkbox-group">
-                  {["Polished", "Honed", "Leather", "Flamed", "Lapato", "Bush Hammered", "Antique", "Sandblasted"].map(tch => (
+                  {["Polished", "Honed", "Leather", "Flamed", "Lapotra", "Bush Hammered", "Antique", "Sandblasted"].map(tch => (
                     <label key={tch} className="filter-checkbox-label">
                       <input
                         type="checkbox"

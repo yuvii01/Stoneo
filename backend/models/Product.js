@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const FINISH_ENUM = [
   'Polished', 'Honed', 'Leather', 'Flamed',
-  'Lapato', 'Bush Hammered', 'Antique', 'Sandblasted'
+  'Lapotra', 'Bush Hammered', 'Antique', 'Sandblasted'
 ];
 
 const CATEGORY_ENUM = ['Granite', 'Imported Marble', 'Indian Marble', 'Sandstone'];

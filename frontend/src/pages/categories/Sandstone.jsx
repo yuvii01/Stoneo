@@ -42,7 +42,7 @@ const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to 
 // Build Lookup Map
 const sandstoneTypesMap = {};
 
-const TOUCH_OPTIONS = ["Polished", "Honed", "Leather", "Flamed", "Lapato", "Bush Hammered", "Antique", "Sandblasted"];
+const TOUCH_OPTIONS = ["Polished", "Honed", "Leather", "Flamed", "Lapotra", "Bush Hammered", "Antique", "Sandblasted"];
 const TYPE_OPTIONS = ["Kota Stone", "Agra Sandstone", "Raj Green Sandstone", "Teakwood Sandstone", "Dholpur Sandstone"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 
@@ -296,7 +296,7 @@ export default function Sandstone() {
               <div className="filter-section">
                 <h4>Touch</h4>
                 <div className="filter-checkbox-group">
-                  {["Polished", "Honed", "Leather", "Flamed", "Lapato", "Bush Hammered", "Antique", "Sandblasted"].map(tch => (
+                  {["Polished", "Honed", "Leather", "Flamed", "Lapotra", "Bush Hammered", "Antique", "Sandblasted"].map(tch => (
                     <label key={tch} className="filter-checkbox-label">
                       <input
                         type="checkbox"

@@ -191,8 +191,8 @@ export default function Marble() {
 
   useEffect(() => {
     const type = searchParams.get('type');
-    if (type === 'imported') {
-      setFilters(prev => ({ ...prev, origin: ['Italian', 'Spanish', 'Vietnamese', 'Turkish', 'Greece'] }));
+    if (type === 'Country of Origin') {
+      setFilters(prev => ({ ...prev, origin: ['Italy', 'Spain', 'Vietnam', 'Turkey', 'Greece'] }));
     } else if (type === 'indian') {
       setFilters(prev => ({ ...prev, origin: ['Makrana white', 'Katni', 'Ambaji', 'Rajnagar', 'Udaipur green', 'Kishangarh', 'Jaisalmer Yellow'] }));
     } else if (type === 'statuario') {
