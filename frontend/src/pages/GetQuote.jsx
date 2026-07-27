@@ -361,48 +361,24 @@ export default function GetQuote() {
               <p>
                 Explore thousands of premium natural stone slabs in person. Our architectural consultants are on hand for private tours and sample viewing.
               </p>
-              <div className="showroom-details-grid">
-                <div className="showroom-detail-item">
-                  <div className="detail-icon-circle">📍</div>
-                  <div className="detail-text">
-                    <h4>Showroom Address</h4>
-                    <p>{COMPANY_INFO.address}</p>
-                  </div>
-                </div>
-                <div className="showroom-detail-item">
-                  <div className="detail-icon-circle">🕐</div>
-                  <div className="detail-text">
-                    <h4>Visiting Hours</h4>
-                    <p>{COMPANY_INFO.businessHours}</p>
-                  </div>
-                </div>
-                <div className="showroom-detail-item">
-                  <div className="detail-icon-circle">📞</div>
-                  <div className="detail-text">
-                    <h4>Direct Specialist Line</h4>
-                    <p>
-                      <a href={`tel:${COMPANY_INFO.phone}`}>+91 {COMPANY_INFO.phone}</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
+
             </div>
 
             <div className="showroom-map-col">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.4872!2d74.8455201!3d26.6497679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39695ef1819f25f_!2sB.G.+Stonex!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3567.89!2d74.8561584!3d26.6515181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396bf3f8a9d2a777%3A0x8d0b3b4755a1b485!2sAdhunik%20Granites!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin"
                 allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="B.G. Stonex Showroom Location"
+                title="Adhunik Granites Showroom Location"
               />
               <div className="map-hover-banner">
                 <div className="map-banner-text">
-                  <span className="map-banner-title">Kishangarh Stone Market</span>
-                  <span className="map-banner-address">Rajasthan, India • Marble & Granite Hub</span>
+                  <span className="map-banner-title">Adhunik Granites</span>
+                  <span className="map-banner-address">Makrana Rd, Kali Dungri, Kishangarh, Rajasthan 305801</span>
                 </div>
                 <a
-                  href="https://www.google.com/maps/dir//B.G.+Stonex,+JRXW%2BW6,+Khatoli,+Rajasthan+305801/"
+                  href="https://www.google.com/maps/dir//Adhunik+Granites,+Makrana+Rd,+Kali+Dungri,+Kishangarh,+Rajasthan+305801/@26.8743907,75.7549361,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x396bf3f8a9d2a777:0x8d0b3b4755a1b485!2m2!1d74.8561584!2d26.6515181?entry=ttu&g_ep=EgoyMDI2MDcyMi4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="open-maps-chip"

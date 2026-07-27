@@ -25,35 +25,28 @@ const STONE_CATEGORIES = [
 
 const STONE_VARIETIES_MAP = {
     'Granite': [
-        'North Indian Granite', 'South Indian Granite', 'Imported Granite', 'Alaska Granite', 
-        'Black Granite', 'White Granite', 'Red & Pink Granite', 'Yellow & Gold Granite', 'Brown Granite', 
-        'Green Granite', 'Blue Granite', 'Multicolor Granite', 'Grey Granite', 'Cream Granite', 'Orange Granite'
+        'North Indian Granite', 'South Indian Granite', 'Imported Granite', 'Alaska Granite'
     ],
     'Marble': [
-        'Indian Marble', 'Imported Marble', 'Statuario Marble', 'White Marble', 
-        'Green Marble', 'Pink Marble', 'Brown Marble', 'Italian Marble', 'Onyx Marble', 'Travertine Marble',
-        'Grey Marble', 'Beige Marble', 'Black Marble', 'Gold Marble'
+        'Makrana white', 'Katni', 'Ambaji', 'Rajnagar', 'Udaipur green', 'Kishangarh', 'Jaisalmer Yellow',
+        'Italian', 'Spanish', 'Vietnamese', 'Turkish', 'Greece'
     ],
     'Sandstone': [
-        'Kota Stone', 'Agra Red Sandstone', 'Raj Green Sandstone', 'Teakwood Sandstone', 'Dholpur Sandstone',
-        'Kandla Grey Sandstone', 'Autumn Brown Sandstone', 'Mint White Sandstone', 
-        'Yellow Sandstone', 'Rainbow Sandstone', 'Red Sandstone', 'Beige Sandstone', 'Pink Sandstone', 'Brown Sandstone', 'Black Sandstone', 'Green Sandstone', 'Grey Sandstone', 'Multicolor Sandstone'
+        'Kota Stone', 'Agra Sandstone', 'Raj Green Sandstone', 'Teakwood Sandstone', 'Dholpur Sandstone'
     ],
     'Other Natural Stones': [
-        'Quartzite', 'Limestone', 'Slate Stone', 'Basalt', 'Kota Stone', 'Travertine',
-        'Grey', 'Brown', 'Black', 'Yellow', 'Green', 'White', 'Beige', 'Multicolor'
+        'Quartzite', 'Limestone', 'Slate Stone', 'Basalt', 'Kota Stone', 'Travertine'
     ],
     'Quartz': [
-        'Calacatta', 'Sparkling', 'Solid Color', 'White', 'Black', 'Grey', 'Beige', 'Brown', 
-        'Red', 'Blue', 'Green', 'Yellow', 'Gold', 'Cream', 'Engineered Quartz', 'Quartzite'
+        'Calacatta', 'Sparkling', 'Solid Color'
     ],
     'Onyx': [
-        'Exotic', 'White Onyx', 'Solid Color', 'Green Onyx', 'Honey Onyx', 'Pink Onyx', 'Blue Onyx', 
-        'Multicolor Onyx', 'Yellow Onyx', 'Brown Onyx', 'Exotic Onyx', 'Backlit Onyx', 'White', 'Black', 'Grey', 'Beige'
+        'Exotic', 'White', 'Solid Color'
     ],
     'Paving and Landscape': [
-        'Cobble Stones', 'Paving Stones', 'Stepping Stones', 'Pebbles', 'Wall Cladding', 
-        'Kerbstones', 'Landscaping Rocks', 'Outdoor Pavers', 'Red', 'Brown', 'Black', 'Grey', 'Blue', 'Green', 'Ivory', 'Noce', 'White', 'Yellow', 'Mixed'
+        'Granite Cobbles', 'Sandstone Cobbles', 'Limestone Cobbles',
+        'Bricks', 'Sandstone', 'Travertino', 'Granite Pavers', 'Marble Pavers',
+        'landscaping pebbles', 'Stepping stones'
     ]
 };
 
@@ -65,27 +58,12 @@ const DEFAULT_STONE_COLORS = [
     { name: 'Beige', hex: '#d7ccc8' },
     { name: 'Gold', hex: '#d4af37' },
     { name: 'Cream', hex: '#fffdd0', border: '#ddd' },
-    { name: 'Red', hex: '#b71c1c' },
-    { name: 'Green', hex: '#2e7d32' },
-    { name: 'Blue', hex: '#1565c0' },
-    { name: 'Pink', hex: '#f48fb1' },
-    { name: 'Yellow', hex: '#fbc02d' },
+    { name: 'Red', hex: '#c0392b' },
+    { name: 'Green', hex: '#27ae60' },
+    { name: 'Blue', hex: '#2980b9' },
+    { name: 'Pink', hex: '#fd79a8' },
+    { name: 'Yellow', hex: '#f1c40f' },
     { name: 'Multicolor', hex: 'linear-gradient(135deg, #e53935, #43a047, #1e88e5)' }
-];
-
-const GEMSTONE_VARIETIES = [
-    'Agate', 'Amethyst', 'Jasper', 'Rose Quartz', 'Smoky Quartz', 'Clear Quartz',
-    'Tiger Eye', 'Labradorite', 'Sodalite', 'Malachite', 'Lapis Lazuli', 
-    'Petrified Wood', 'Shellstone', 'Fossil'
-];
-
-const GEMSTONE_APPLICATIONS = [
-    'Back Panel (Backlit / Feature Wall)',
-    'Wash Basin & Vanity Bowl',
-    'Table Top & Luxury Furniture',
-    'Bar Counter & Vanity Top',
-    'Luxury Wall Cladding',
-    'Medallion Inlay & Flooring'
 ];
 
 const initialFormState = {
@@ -103,13 +81,7 @@ const initialFormState = {
     description: '',
     interior: [],
     exterior: [],
-    images: [],
-    // Royal Gem Stone specific fields
-    isRoyalGemStone: false,
-    gemstoneVariety: 'Agate',
-    gemstoneApplications: ['Back Panel (Backlit / Feature Wall)', 'Wash Basin & Vanity Bowl', 'Table Top & Luxury Furniture'],
-    isBacklit: true,
-    thickness: '20mm'
+    images: []
 };
 
 export default function AdminProducts() {
@@ -120,7 +92,6 @@ export default function AdminProducts() {
     // Form state
     const [showForm, setShowForm] = useState(false);
     const [editingId, setEditingId] = useState(null);
-    const [activeTab, setActiveTab] = useState('standard'); // 'standard' | 'royal'
     const [formData, setFormData] = useState(initialFormState);
 
     const [customColors, setCustomColors] = useState([]);
@@ -263,30 +234,17 @@ export default function AdminProducts() {
             return;
         }
 
-        let payload = { ...formData };
-        if (activeTab === 'royal') {
-            payload = {
-                ...formData,
-                category: 'Royal Gemstone',
-                isRoyalGemStone: true,
-                variety: formData.gemstoneVariety,
-                interior: formData.gemstoneApplications,
-                applications: formData.gemstoneApplications,
-                finish: (formData.finish && formData.finish.length > 0) ? formData.finish : ['Polished', 'High Gloss']
-            };
-        } else {
-            payload = {
-                ...formData,
-                isRoyalGemStone: false,
-                variety: Array.isArray(formData.categories) ? formData.categories.join(', ') : (formData.variety || ''),
-                categories: formData.categories,
-                origin: formData.origin || '',
-                startingPrice: formData.startingPrice || '',
-                maximumPrice: formData.maximumPrice || '',
-                estimatedPrice: formData.estimatedPrice || formData.price || '',
-                price: formData.price || formData.estimatedPrice || ''
-            };
-        }
+        const payload = {
+            ...formData,
+            isRoyalGemStone: false,
+            variety: Array.isArray(formData.categories) ? formData.categories.join(', ') : (formData.variety || ''),
+            categories: formData.categories,
+            origin: formData.origin || '',
+            startingPrice: formData.startingPrice || '',
+            maximumPrice: formData.maximumPrice || '',
+            estimatedPrice: formData.estimatedPrice || formData.price || '',
+            price: formData.price || formData.estimatedPrice || ''
+        };
 
         try {
             if (editingId) {
@@ -307,9 +265,6 @@ export default function AdminProducts() {
     };
 
     const handleEdit = (product) => {
-        const isRoyal = product.category === 'Royal Gemstone' || product.isRoyalGemStone;
-        setActiveTab(isRoyal ? 'royal' : 'standard');
-
         const loadedCategories = Array.isArray(product.categories) && product.categories.length > 0
             ? product.categories
             : (product.variety ? (typeof product.variety === 'string' ? product.variety.split(', ').map(s => s.trim()) : (Array.isArray(product.variety) ? product.variety : [product.variety])) : [(STONE_VARIETIES_MAP[product.category] ? STONE_VARIETIES_MAP[product.category][0] : '')]);
@@ -322,19 +277,14 @@ export default function AdminProducts() {
             maximumPrice: product.maximumPrice || '',
             estimatedPrice: product.estimatedPrice || product.price || '',
             price: product.price || product.estimatedPrice || '',
-            category: isRoyal ? 'Royal Gemstone' : (product.category || 'Granite'),
+            category: product.category || 'Granite',
             categories: loadedCategories,
             variety: product.variety || loadedCategories.join(', '),
             finish: product.finish || ['Polished'],
             description: product.description || '',
             interior: product.interior || [],
             exterior: product.exterior || [],
-            images: product.images || (product.image ? [product.image] : []),
-            isRoyalGemStone: isRoyal,
-            gemstoneVariety: product.variety || product.gemstoneVariety || 'Agate',
-            gemstoneApplications: product.interior || product.applications || ['Back Panel (Backlit / Feature Wall)', 'Wash Basin & Vanity Bowl', 'Table Top & Luxury Furniture'],
-            isBacklit: product.isBacklit !== undefined ? product.isBacklit : true,
-            thickness: product.thickness || '20mm'
+            images: product.images || (product.image ? [product.image] : [])
         });
         setEditingId(product.id || product._id);
         setShowForm(true);
@@ -366,7 +316,7 @@ export default function AdminProducts() {
                 <div>
                     <h1 className="admin-page-title" style={{ margin: 0 }}>Manage Products</h1>
                     <p style={{ margin: '4px 0 0 0', color: '#666', fontSize: '14px' }}>
-                        Create and manage Natural Stones, Engineered Surfaces, and Exclusive Royal Gem Stones
+                        Create and manage Natural Stones and Engineered Surfaces
                     </p>
                 </div>
                 <button 
@@ -395,12 +345,12 @@ export default function AdminProducts() {
 
             {showForm && (
                 <div className="admin-form-container" style={{
-                    backgroundColor: activeTab === 'royal' ? '#fffcf5' : '#fff',
-                    border: activeTab === 'royal' ? '2px solid #d4af37' : '1px solid #ddd',
+                    backgroundColor: '#fff',
+                    border: '1px solid #ddd',
                     borderRadius: '10px',
                     padding: '25px',
                     marginBottom: '35px',
-                    boxShadow: activeTab === 'royal' ? '0 8px 25px rgba(212, 175, 55, 0.15)' : '0 4px 15px rgba(0,0,0,0.05)'
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.05)'
                 }}>
                     <h2 style={{ marginBottom: '20px', fontSize: '22px', color: '#111' }}>
                         {editingId ? 'Edit Product Details' : 'Create Natural or Engineered Stone Product'}
@@ -476,7 +426,7 @@ export default function AdminProducts() {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    placeholder={activeTab === 'royal' ? 'e.g. Royal Blue Agate Backlit Surface' : 'e.g. Black Forest Indian Marble'}
+                                    placeholder="e.g. Black Forest Indian Marble"
                                     required
                                     style={{ padding: "11px", width: "100%", border: "1px solid #ddd", borderRadius: "6px", fontSize: '15px' }}
                                 />
@@ -635,10 +585,10 @@ export default function AdminProducts() {
                                             borderRadius: '20px',
                                             fontSize: '13px',
                                             cursor: 'pointer',
-                                            backgroundColor: formData.finish.includes(opt) ? (activeTab === 'royal' ? '#d4af37' : '#111') : '#f0f0f0',
+                                            backgroundColor: formData.finish.includes(opt) ? '#111' : '#f0f0f0',
                                             color: formData.finish.includes(opt) ? '#fff' : '#333',
                                             border: '1px solid',
-                                            borderColor: formData.finish.includes(opt) ? (activeTab === 'royal' ? '#d4af37' : '#111') : '#ddd',
+                                            borderColor: formData.finish.includes(opt) ? '#111' : '#ddd',
                                             fontWeight: formData.finish.includes(opt) ? '600' : '400',
                                             transition: 'all 0.2s'
                                         }}
@@ -649,65 +599,61 @@ export default function AdminProducts() {
                             </div>
                         </div>
 
-                        {/* 4. STANDARD APPLICATIONS (ONLY FOR NATURAL & ENGINEERED STONES TAB) */}
-                        {activeTab === 'standard' && (
-                            <>
-                                <div>
-                                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Interior Applications</label>
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                                        {INTERIOR_OPTIONS.map(opt => (
-                                            <span 
-                                                key={opt}
-                                                onClick={() => toggleMultiSelect('interior', opt)}
-                                                style={{
-                                                    padding: '7px 14px',
-                                                    borderRadius: '20px',
-                                                    fontSize: '13px',
-                                                    cursor: 'pointer',
-                                                    backgroundColor: formData.interior.includes(opt) ? '#111' : '#f0f0f0',
-                                                    color: formData.interior.includes(opt) ? '#fff' : '#333',
-                                                    border: '1px solid',
-                                                    borderColor: formData.interior.includes(opt) ? '#111' : '#ddd',
-                                                    transition: 'all 0.2s'
-                                                }}
-                                            >
-                                                {opt}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
+                        {/* 4. STANDARD APPLICATIONS */}
+                        <div>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Interior Applications</label>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                                {INTERIOR_OPTIONS.map(opt => (
+                                    <span 
+                                        key={opt}
+                                        onClick={() => toggleMultiSelect('interior', opt)}
+                                        style={{
+                                            padding: '7px 14px',
+                                            borderRadius: '20px',
+                                            fontSize: '13px',
+                                            cursor: 'pointer',
+                                            backgroundColor: formData.interior.includes(opt) ? '#111' : '#f0f0f0',
+                                            color: formData.interior.includes(opt) ? '#fff' : '#333',
+                                            border: '1px solid',
+                                            borderColor: formData.interior.includes(opt) ? '#111' : '#ddd',
+                                            transition: 'all 0.2s'
+                                        }}
+                                    >
+                                        {opt}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
 
-                                <div>
-                                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Exterior Applications</label>
-                                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-                                        {EXTERIOR_OPTIONS.map(opt => (
-                                            <span 
-                                                key={opt}
-                                                onClick={() => toggleMultiSelect('exterior', opt)}
-                                                style={{
-                                                    padding: '7px 14px',
-                                                    borderRadius: '20px',
-                                                    fontSize: '13px',
-                                                    cursor: 'pointer',
-                                                    backgroundColor: formData.exterior.includes(opt) ? '#111' : '#f0f0f0',
-                                                    color: formData.exterior.includes(opt) ? '#fff' : '#333',
-                                                    border: '1px solid',
-                                                    borderColor: formData.exterior.includes(opt) ? '#111' : '#ddd',
-                                                    transition: 'all 0.2s'
-                                                }}
-                                            >
-                                                {opt}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            </>
-                        )}
+                        <div>
+                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Exterior Applications</label>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                                {EXTERIOR_OPTIONS.map(opt => (
+                                    <span 
+                                        key={opt}
+                                        onClick={() => toggleMultiSelect('exterior', opt)}
+                                        style={{
+                                            padding: '7px 14px',
+                                            borderRadius: '20px',
+                                            fontSize: '13px',
+                                            cursor: 'pointer',
+                                            backgroundColor: formData.exterior.includes(opt) ? '#111' : '#f0f0f0',
+                                            color: formData.exterior.includes(opt) ? '#fff' : '#333',
+                                            border: '1px solid',
+                                            borderColor: formData.exterior.includes(opt) ? '#111' : '#ddd',
+                                            transition: 'all 0.2s'
+                                        }}
+                                    >
+                                        {opt}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
 
                         {/* 5. IMAGE UPLOADS */}
                         <div>
                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-                                {activeTab === 'royal' ? 'Slab / Back Panel / Table Top Images (Up to 3)' : 'Product Images (Up to 3)'}
+                                Product Images (Up to 3)
                             </label>
                             
                             <div style={{ display: 'flex', gap: '15px', marginBottom: '15px', flexWrap: 'wrap' }}>
@@ -730,7 +676,7 @@ export default function AdminProducts() {
                                     onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}
                                     style={{
                                         padding: "35px",
-                                        border: `2px dashed ${dragActive ? (activeTab === 'royal' ? '#d4af37' : '#111') : '#ccc'}`,
+                                        border: `2px dashed ${dragActive ? '#111' : '#ccc'}`,
                                         borderRadius: "8px",
                                         textAlign: "center",
                                         backgroundColor: dragActive ? "#fefcf4" : "#fafafa",
@@ -763,7 +709,7 @@ export default function AdminProducts() {
                             type="submit"
                             style={{
                                 padding: "14px 28px",
-                                background: activeTab === 'royal' ? 'linear-gradient(135deg, #d4af37, #b89728)' : '#111',
+                                background: '#111',
                                 color: "#fff",
                                 border: "none",
                                 cursor: "pointer",
@@ -771,11 +717,10 @@ export default function AdminProducts() {
                                 borderRadius: "6px",
                                 fontSize: '16px',
                                 fontWeight: '700',
-                                boxShadow: activeTab === 'royal' ? '0 4px 15px rgba(212, 175, 55, 0.4)' : 'none',
                                 transition: 'all 0.2s'
                             }}
                         >
-                            {editingId ? "Update Product" : (activeTab === 'royal' ? "👑 Publish Luxury Gemstone Surface" : "Publish Product")}
+                            {editingId ? "Update Product" : "Publish Product"}
                         </button>
                     </form>
                 </div>
@@ -800,72 +745,55 @@ export default function AdminProducts() {
                 </div>
             ) : (
                 <div className="admin-product-grid">
-                    {filteredProducts.map(product => {
-                        const isRoyal = product.category === 'Royal Gemstone' || product.isRoyalGemStone;
-                        return (
-                            <div
-                                key={product.id || product._id}
-                                style={{
-                                    border: isRoyal ? '2px solid #d4af37' : '1px solid #eee',
-                                    borderRadius: '10px',
-                                    overflow: 'hidden',
-                                    backgroundColor: '#fff',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    boxShadow: isRoyal ? '0 4px 15px rgba(212, 175, 55, 0.18)' : '0 2px 8px rgba(0,0,0,0.05)'
-                                }}
-                            >
-                                <div style={{ height: '210px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
-                                    {product.images && product.images.length > 0 ? (
-                                        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    ) : product.image ? (
-                                        <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    ) : (
-                                        <span style={{ color: '#aaa' }}>No Image</span>
-                                    )}
+                    {filteredProducts.map(product => (
+                        <div
+                            key={product.id || product._id}
+                            style={{
+                                border: '1px solid #eee',
+                                borderRadius: '10px',
+                                overflow: 'hidden',
+                                backgroundColor: '#fff',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                            }}
+                        >
+                            <div style={{ height: '210px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
+                                {product.images && product.images.length > 0 ? (
+                                    <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                ) : product.image ? (
+                                    <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                ) : (
+                                    <span style={{ color: '#aaa' }}>No Image</span>
+                                )}
 
-                                    <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', gap: '6px' }}>
-                                        {isRoyal ? (
-                                            <span style={{ background: 'linear-gradient(135deg, #d4af37, #b89728)', color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
-                                                ★ ROYAL GEMSTONE
-                                            </span>
-                                        ) : (
-                                            <span style={{ backgroundColor: 'rgba(0,0,0,0.75)', color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
-                                                {product.category || 'Natural Stone'}
-                                            </span>
-                                        )}
-                                    </div>
+                                <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', gap: '6px' }}>
+                                    <span style={{ backgroundColor: 'rgba(0,0,0,0.75)', color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
+                                        {product.category || 'Natural Stone'}
+                                    </span>
                                 </div>
-                                <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                        <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#111' }}>{product.name}</h3>
-                                    </div>
+                            </div>
+                            <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                    <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#111' }}>{product.name}</h3>
+                                </div>
 
-                                    {product.variety && (
-                                        <div style={{ fontSize: '13px', color: '#b48e5d', fontWeight: '600', marginBottom: '8px' }}>
-                                            Variety: {product.variety}
+                                {product.variety && (
+                                    <div style={{ fontSize: '13px', color: '#b48e5d', fontWeight: '600', marginBottom: '8px' }}>
+                                        Variety: {product.variety}
+                                    </div>
+                                )}
+
+                                <div style={{ fontSize: '14px', color: '#666', marginBottom: '16px', flex: 1 }}>
+                                    {product.color && <div style={{ marginBottom: '4px' }}><strong>Color:</strong> {product.color}</div>}
+                                    {(product.startingPrice || product.maximumPrice || product.price) && (
+                                        <div style={{ marginBottom: '4px', color: '#111', fontWeight: '600' }}>
+                                            <strong>Price Range:</strong> {product.startingPrice && product.maximumPrice ? `₹${product.startingPrice} - ₹${product.maximumPrice}` : (product.price || product.startingPrice || product.maximumPrice)} / sq. ft.
                                         </div>
                                     )}
-
-                                    <div style={{ fontSize: '14px', color: '#666', marginBottom: '16px', flex: 1 }}>
-                                        {product.color && <div style={{ marginBottom: '4px' }}><strong>Color:</strong> {product.color}</div>}
-                                        {(product.startingPrice || product.maximumPrice || product.price) && (
-                                            <div style={{ marginBottom: '4px', color: '#111', fontWeight: '600' }}>
-                                                <strong>Price Range:</strong> {product.startingPrice && product.maximumPrice ? `₹${product.startingPrice} - ₹${product.maximumPrice}` : (product.price || product.startingPrice || product.maximumPrice)} / sq. ft.
-                                            </div>
-                                        )}
-                                        {(product.finish && product.finish.length > 0) && <div style={{ marginBottom: '4px' }}><strong>Finish:</strong> {product.finish.join(', ')}</div>}
-                                        
-                                        {isRoyal ? (
-                                            <div style={{ marginTop: '8px', padding: '8px', background: '#fffcf0', borderRadius: '6px', fontSize: '12px', color: '#7a5a2a', border: '1px solid #e8dec8' }}>
-                                                <strong>Luxury Applications:</strong> {(product.interior || product.applications || []).slice(0, 2).join(' • ')}
-                                            </div>
-                                        ) : (
-                                            <>
-                                                {(product.interior && product.interior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.interior.length} interior options</div>}
-                                                {(product.exterior && product.exterior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.exterior.length} exterior options</div>}
-                                            </>
-                                        )}
+                                    {(product.finish && product.finish.length > 0) && <div style={{ marginBottom: '4px' }}><strong>Finish:</strong> {product.finish.join(', ')}</div>}
+                                    {(product.interior && product.interior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.interior.length} interior options</div>}
+                                    {(product.exterior && product.exterior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.exterior.length} exterior options</div>}
                                     </div>
 
                                     <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
@@ -886,8 +814,7 @@ export default function AdminProducts() {
                                     </div>
                                 </div>
                             </div>
-                        );
-                    })}
+                        ))}
                 </div>
             )}
         </div>

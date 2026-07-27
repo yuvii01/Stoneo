@@ -478,9 +478,9 @@ export default function PavingAndLandscape() {
                     disabled={currentPage === 1}
                     style={{
                       padding: '10px 16px',
-                      backgroundColor: currentPage === 1 ? '#ccc' : '#a45040',
-                      color: 'white',
-                      border: 'none',
+                      backgroundColor: 'white',
+                      color: currentPage === 1 ? '#bbb' : '#000',
+                      border: currentPage === 1 ? '1px solid #ddd' : '1px solid #000',
                       borderRadius: '6px',
                       cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
                       fontSize: '14px',
@@ -500,12 +500,12 @@ export default function PavingAndLandscape() {
                           height: '40px',
                           padding: '8px 12px',
                           borderRadius: '6px',
-                          border: currentPage === page ? '2px solid #a45040' : '1px solid #ddd',
-                          backgroundColor: currentPage === page ? '#a45040' : 'white',
-                          color: currentPage === page ? 'white' : '#333',
+                          border: currentPage === page ? '2px solid #000' : '1px solid #ddd',
+                          backgroundColor: 'white',
+                          color: '#000',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          fontWeight: '600',
+                          fontWeight: currentPage === page ? '700' : '500',
                           transition: 'all 0.3s ease'
                         }}
                       >
@@ -519,9 +519,9 @@ export default function PavingAndLandscape() {
                     disabled={currentPage === totalPages}
                     style={{
                       padding: '10px 16px',
-                      backgroundColor: currentPage === totalPages ? '#ccc' : '#a45040',
-                      color: 'white',
-                      border: 'none',
+                      backgroundColor: 'white',
+                      color: currentPage === totalPages ? '#bbb' : '#000',
+                      border: currentPage === totalPages ? '1px solid #ddd' : '1px solid #000',
                       borderRadius: '6px',
                       cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
                       fontSize: '14px',

@@ -207,11 +207,11 @@ export default function Granite() {
   const { addDemand, removeDemand, demands } = useDemand();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth <= 768 ? 8 : 15);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth <= 768 ? 8 : 15);
+      setItemsPerPage(12);
     };
 
     window.addEventListener('resize', handleResize);
@@ -225,6 +225,7 @@ export default function Granite() {
     origin: [],
     color: [],
     touch: [],
+    thickness: [],
     maxPrice: MAX_PRICE
   });
 
@@ -246,7 +247,7 @@ export default function Granite() {
       if (category === 'maxPrice') {
         return { ...prev, maxPrice: value };
       }
-      const current = prev[category];
+      const current = prev[category] || [];
       if (current.includes(value)) {
         return { ...prev, [category]: current.filter(item => item !== value) };
       } else {
@@ -261,13 +262,14 @@ export default function Granite() {
   const filteredProducts = useMemo(() => {
     return ALL_PRODUCTS.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || p.category.toLowerCase() === categoryFilter.toLowerCase();
-      const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
-      const matchesOrigin = filters.origin.length === 0 || filters.origin.includes(p.origin);
-      const matchesTouch = filters.touch.length === 0 || filters.touch.some(t => p.touch.includes(t));
+      const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
+      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
+      const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch.includes(t));
+      const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness && p.thickness.includes(th));
       const matchesPrice = (Number(p.price) || 0) <= (filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE);
       const matchesType = !typeParam || typeParam !== 'alaska' || p.name.toLowerCase().includes('alaska');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesThickness && matchesPrice && matchesType;
     });
   }, [categoryFilter, filters, typeParam]);
 
@@ -558,9 +560,9 @@ export default function Granite() {
                     disabled={currentPage === 1}
                     style={{
                       padding: '10px 16px',
-                      backgroundColor: currentPage === 1 ? '#ccc' : '#a45040',
-                      color: 'white',
-                      border: 'none',
+                      backgroundColor: 'white',
+                      color: currentPage === 1 ? '#bbb' : '#000',
+                      border: currentPage === 1 ? '1px solid #ddd' : '1px solid #000',
                       borderRadius: '6px',
                       cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
                       fontSize: '14px',
@@ -580,12 +582,12 @@ export default function Granite() {
                           height: '40px',
                           padding: '8px 12px',
                           borderRadius: '6px',
-                          border: currentPage === page ? '2px solid #a45040' : '1px solid #ddd',
-                          backgroundColor: currentPage === page ? '#a45040' : 'white',
-                          color: currentPage === page ? 'white' : '#333',
+                          border: currentPage === page ? '2px solid #000' : '1px solid #ddd',
+                          backgroundColor: 'white',
+                          color: '#000',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          fontWeight: '600',
+                          fontWeight: currentPage === page ? '700' : '500',
                           transition: 'all 0.3s ease'
                         }}
                       >
@@ -599,9 +601,9 @@ export default function Granite() {
                     disabled={currentPage === totalPages}
                     style={{
                       padding: '10px 16px',
-                      backgroundColor: currentPage === totalPages ? '#ccc' : '#a45040',
-                      color: 'white',
-                      border: 'none',
+                      backgroundColor: 'white',
+                      color: currentPage === totalPages ? '#bbb' : '#000',
+                      border: currentPage === totalPages ? '1px solid #ddd' : '1px solid #000',
                       borderRadius: '6px',
                       cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
                       fontSize: '14px',

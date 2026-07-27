@@ -11,10 +11,7 @@ const GEMSTONE_VARIETIES = [
 const GEMSTONE_APPLICATIONS = [
     'Back Panel (Backlit / Feature Wall)',
     'Wash Basin & Vanity Bowl',
-    'Table Top & Luxury Furniture',
-    'Bar Counter & Vanity Top',
-    'Luxury Wall Cladding',
-    'Medallion Inlay & Flooring'
+    'Table Top & Luxury Furniture'
 ];
 
 const DEFAULT_STONE_COLORS = [

@@ -3,7 +3,7 @@ export const COMPANY_INFO = {
   name: 'Stoneo India', // 'Stoneo India',
   description: 'Premium Granite Supplier in Kishangarh, Rajasthan', // 'Premium Granite Supplier in Kishangarh, Rajasthan',
   tagline: 'Quality Granite for Every Project', // 'Quality Granite for Every Project',
-  address: '123 Demo Street, Demo City, 123456', // 'Kali Dungri, Khatoli, Kishangarh, Rajasthan 305801',
+  address: 'Makrana Rd, Kali Dungri, Kishangarh, Rajasthan 305801', // 'Kali Dungri, Khatoli, Kishangarh, Rajasthan 305801',
   phone: '1234567890', // '9256901351',
   email: 'demo@example.com', // 'infostoneo@gmail.com',
   businessHours: '9:00 AM - 5:00 PM', // '10:00 AM - 7:00 PM',
