@@ -8,6 +8,7 @@ import CountUpPkg from 'react-countup';
 const CountUp = CountUpPkg.default || CountUpPkg;
 import { COMPANY_INFO, GRANITE_TYPES, PROJECTS } from '../utils/constants';
 import { useDemand } from '../context/DemandContext';
+import { useDbProducts } from '../utils/useDbProducts';
 import '../styles/pages.css';
 import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema, getLocalBusinessSchema } from '../utils/seo';
@@ -19,6 +20,7 @@ import SandStoneCarousel from './corousal/SandStoneCorousal';
 import ReviewsCarousel from './corousal/ReviewsCorousal';
 
 export default function Home() {
+  const graniteProducts = useDbProducts('Granite', GRANITE_TYPES);
   const styles = {
     section: { backgroundColor: '#fdfbf8', padding: '50px 0', textAlign: 'center', overflow: 'hidden' },
   };
@@ -255,7 +257,7 @@ export default function Home() {
 
             <p className="section-subtitle">Browse our collection of premium granite varieties</p>
             <div className="products-grid">
-              {GRANITE_TYPES.slice(0, 6).map((product) => (
+              {graniteProducts.slice(0, 6).map((product) => (
                 <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}>
                   <div className="product-image">
                     <img src={product.image} alt={product.name} />

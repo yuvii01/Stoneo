@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
+import { CSV_PRODUCTS } from '../../utils/constants';
 import './Admin.css';
 
 const FINISH_ENUM = [
@@ -20,10 +21,13 @@ const EXTERIOR_OPTIONS = [
 ];
 
 const STONE_CATEGORIES = [
-    'Granite', 'Marble', 'Sandstone', 'Other Natural Stones', 'Quartz', 'Onyx', 'Paving and Landscape'
+    'Granite', 'Marble', 'Sandstone', 'Other Natural Stones', 'Quartz', 'Onyx', 'Paving and Landscape', 'Tiles'
 ];
 
 const STONE_VARIETIES_MAP = {
+    'Tiles': [
+        'Vitrified Tiles', 'Ceramic Tiles', 'Porcelain Tiles', 'Elevation Tiles', 'Floor Tiles', 'Wall Tiles'
+    ],
     'Granite': [
         'North Indian Granite', 'South Indian Granite', 'Imported Granite', 'Alaska Granite'
     ],
@@ -84,6 +88,12 @@ const initialFormState = {
     images: []
 };
 
+const getThumbnailSrc = (thumb) => {
+    if (!thumb) return null;
+    if (thumb.startsWith('http') || thumb.startsWith('data:')) return thumb;
+    return `${import.meta.env.VITE_BACKEND_URL}${thumb}`;
+};
+
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -104,6 +114,8 @@ export default function AdminProducts() {
     const [newColorHex, setNewColorHex] = useState('#d4af37');
 
     const [dragActive, setDragActive] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 15;
 
     useEffect(() => {
         fetchProducts();
@@ -111,8 +123,11 @@ export default function AdminProducts() {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
-            const standardProducts = (res.data || []).filter(p => !p.isRoyalGemStone && p.category !== 'Royal Gemstone');
+            setLoading(true);
+            // Use lightweight list endpoint (no images) - avoids MongoDB 32MB sort memory limit crash
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/list?isRoyalGemStone=false`);
+            const data = res.data || [];
+            const standardProducts = data.filter(p => !p.isRoyalGemStone && p.category !== 'Royal Gemstone');
             setProducts(standardProducts);
             setLoading(false);
         } catch (error) {
@@ -241,6 +256,8 @@ export default function AdminProducts() {
         const payload = {
             ...formData,
             isRoyalGemStone: false,
+            color: formData.color || '',
+            colorCategory: formData.color || formData.colorCategory || '',
             variety: Array.isArray(formData.categories) ? formData.categories.join(', ') : (formData.variety || ''),
             categories: formData.categories,
             origin: formData.origin || '',
@@ -268,31 +285,39 @@ export default function AdminProducts() {
         }
     };
 
-    const handleEdit = (product) => {
-        const loadedCategories = Array.isArray(product.categories) && product.categories.length > 0
-            ? product.categories
-            : (product.variety ? (typeof product.variety === 'string' ? product.variety.split(', ').map(s => s.trim()) : (Array.isArray(product.variety) ? product.variety : [product.variety])) : [(STONE_VARIETIES_MAP[product.category] ? STONE_VARIETIES_MAP[product.category][0] : '')]);
+    const handleEdit = async (product) => {
+        // Fetch the full product with images from DB
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/${product.id || product._id}`);
+            const fullProduct = res.data || product;
+            const loadedCategories = Array.isArray(fullProduct.categories) && fullProduct.categories.length > 0
+                ? fullProduct.categories
+                : (fullProduct.variety ? (typeof fullProduct.variety === 'string' ? fullProduct.variety.split(', ').map(s => s.trim()) : (Array.isArray(fullProduct.variety) ? fullProduct.variety : [fullProduct.variety])) : [(STONE_VARIETIES_MAP[fullProduct.category] ? STONE_VARIETIES_MAP[fullProduct.category][0] : '')]);
 
-        setFormData({
-            name: product.name || '',
-            color: product.color || '',
-            origin: product.origin || '',
-            startingPrice: product.startingPrice || '',
-            maximumPrice: product.maximumPrice || '',
-            estimatedPrice: product.estimatedPrice || product.price || '',
-            price: product.price || product.estimatedPrice || '',
-            category: product.category || 'Granite',
-            categories: loadedCategories,
-            variety: product.variety || loadedCategories.join(', '),
-            finish: product.finish || ['Polished'],
-            description: product.description || '',
-            interior: product.interior || [],
-            exterior: product.exterior || [],
-            images: product.images || (product.image ? [product.image] : [])
-        });
-        setEditingId(product.id || product._id);
-        setShowForm(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+            setFormData({
+                name: fullProduct.name || '',
+                color: fullProduct.color || '',
+                origin: fullProduct.origin || '',
+                startingPrice: fullProduct.startingPrice || '',
+                maximumPrice: fullProduct.maximumPrice || '',
+                estimatedPrice: fullProduct.estimatedPrice || fullProduct.price || '',
+                price: fullProduct.price || fullProduct.estimatedPrice || '',
+                category: fullProduct.category || 'Granite',
+                categories: loadedCategories,
+                variety: fullProduct.variety || loadedCategories.join(', '),
+                finish: fullProduct.finish || ['Polished'],
+                description: fullProduct.description || '',
+                interior: fullProduct.interior || [],
+                exterior: fullProduct.exterior || [],
+                images: fullProduct.images || (fullProduct.image ? [fullProduct.image] : [])
+            });
+            setEditingId(fullProduct.id || fullProduct._id);
+            setShowForm(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+            console.error('Error loading full product for edit:', err);
+            alert('Failed to load product details. Please try again.');
+        }
     };
 
     const handleDelete = async (id) => {
@@ -359,6 +384,15 @@ export default function AdminProducts() {
         return matchesSearch && matchesCat && matchesOrigin && matchesColor && matchesFinish;
     });
 
+    const totalPages = Math.max(1, Math.ceil(filteredProducts.length / ITEMS_PER_PAGE));
+    const safePage = Math.min(currentPage, totalPages);
+    const startIdx = (safePage - 1) * ITEMS_PER_PAGE;
+    const paginatedProducts = filteredProducts.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+
+    // Reset to page 1 whenever filters change
+    // (using refs would be complex; instead wrap setters)
+    const resetPage = () => setCurrentPage(1);
+
     return (
         <div style={{ maxWidth: '1050px', margin: '0 auto', padding: '10px 15px 60px' }}>
             <div className="admin-page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
@@ -369,32 +403,6 @@ export default function AdminProducts() {
                     </p>
                 </div>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <button
-                        onClick={async () => {
-                            try {
-                                setLoading(true);
-                                const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/products/convert-images`);
-                                await fetchProducts();
-                                alert(res.data.message || "All product image links converted to database image URLs!");
-                            } catch (err) {
-                                console.error(err);
-                                alert("Conversion failed.");
-                                fetchProducts();
-                            }
-                        }}
-                        style={{
-                            padding: '11px 16px',
-                            backgroundColor: '#2b6cb0',
-                            color: '#fff',
-                            border: 'none',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            fontSize: '14px'
-                        }}
-                    >
-                        🔄 Convert Images to DB
-                    </button>
                     <button
                         onClick={() => {
                             const nextState = !showForm;
@@ -809,7 +817,7 @@ export default function AdminProducts() {
                     {['All', 'Granite', 'Marble', 'Sandstone', 'Other Natural Stones', 'Quartz', 'Onyx', 'Paving and Landscape'].map(cat => (
                         <button
                             key={cat}
-                            onClick={() => setSelectedCategory(cat)}
+                            onClick={() => { setSelectedCategory(cat); resetPage(); }}
                             style={{
                                 padding: '9px 18px',
                                 borderRadius: '25px',
@@ -833,13 +841,13 @@ export default function AdminProducts() {
                             type="text"
                             placeholder="🔍 Search products by name, origin, color..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => { setSearchQuery(e.target.value); resetPage(); }}
                             style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', width: '100%' }}
                         />
                     </div>
                     <select
                         value={originFilter}
-                        onChange={(e) => setOriginFilter(e.target.value)}
+                        onChange={(e) => { setOriginFilter(e.target.value); resetPage(); }}
                         style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', background: '#fff' }}
                     >
                         <option value="All">All Origins</option>
@@ -851,7 +859,7 @@ export default function AdminProducts() {
                     </select>
                     <select
                         value={colorFilter}
-                        onChange={(e) => setColorFilter(e.target.value)}
+                        onChange={(e) => { setColorFilter(e.target.value); resetPage(); }}
                         style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', background: '#fff' }}
                     >
                         <option value="All">All Colors</option>
@@ -861,7 +869,7 @@ export default function AdminProducts() {
                     </select>
                     <select
                         value={finishFilter}
-                        onChange={(e) => setFinishFilter(e.target.value)}
+                        onChange={(e) => { setFinishFilter(e.target.value); resetPage(); }}
                         style={{ padding: '10px 14px', fontSize: '14px', borderRadius: '6px', border: '1px solid #ddd', background: '#fff' }}
                     >
                         <option value="All">All Finishes</option>
@@ -879,119 +887,187 @@ export default function AdminProducts() {
                     No products found. Add a new product above!
                 </div>
             ) : (
-                <div className="admin-product-grid">
-                    {filteredProducts.map((product, index) => (
-                        <div
-                            key={product.id || product._id}
-                            style={{
-                                border: '1px solid #eee',
-                                borderRadius: '10px',
-                                overflow: 'hidden',
-                                backgroundColor: '#fff',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-                            }}
-                        >
-                            <div style={{ height: '210px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
-                                {product.images && product.images.length > 0 ? (
-                                    <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                ) : product.image ? (
-                                    <img src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                ) : (
-                                    <span style={{ color: '#aaa' }}>No Image</span>
-                                )}
+                <>
+                    {/* Pagination info bar */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', padding: '10px 14px', backgroundColor: '#f9f9f9', borderRadius: '8px', border: '1px solid #eaeaea' }}>
+                        <span style={{ fontSize: '14px', color: '#555' }}>
+                            Showing <strong>{startIdx + 1}–{Math.min(startIdx + ITEMS_PER_PAGE, filteredProducts.length)}</strong> of <strong>{filteredProducts.length}</strong> products
+                        </span>
+                        <span style={{ fontSize: '13px', color: '#888' }}>Page {safePage} of {totalPages}</span>
+                    </div>
 
-                                <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', gap: '6px' }}>
-                                    <span style={{ backgroundColor: 'rgba(0,0,0,0.75)', color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
-                                        {product.category || 'Natural Stone'}
-                                    </span>
-                                </div>
-                            </div>
-                            <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                                    <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#111' }}>{product.name}</h3>
-                                </div>
+                    <div className="admin-product-grid">
+                        {paginatedProducts.map((product) => {
+                            const globalIndex = products.findIndex(p => (p.id || p._id) === (product.id || product._id));
+                            return (
+                                <div
+                                    key={product.id || product._id}
+                                    style={{
+                                        border: '1px solid #eee',
+                                        borderRadius: '10px',
+                                        overflow: 'hidden',
+                                        backgroundColor: '#fff',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                                    }}
+                                >
+                                    <div style={{ height: '210px', backgroundColor: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', position: 'relative' }}>
+                                        {product.thumbnail ? (
+                                            <img src={getThumbnailSrc(product.thumbnail)} alt={product.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        ) : (
+                                            <span style={{ color: '#aaa', fontSize: '13px' }}>No Image</span>
+                                        )}
 
-                                {product.variety && (
-                                    <div style={{ fontSize: '13px', color: '#b48e5d', fontWeight: '600', marginBottom: '8px' }}>
-                                        Variety: {product.variety}
-                                    </div>
-                                )}
-
-                                <div style={{ fontSize: '14px', color: '#666', marginBottom: '16px', flex: 1 }}>
-                                    {product.color && <div style={{ marginBottom: '4px' }}><strong>Color:</strong> {product.color}</div>}
-                                    {(product.startingPrice || product.maximumPrice || product.price) && (
-                                        <div style={{ marginBottom: '4px', color: '#111', fontWeight: '600' }}>
-                                            <strong>Price Range:</strong> {product.startingPrice && product.maximumPrice ? `₹${product.startingPrice} - ₹${product.maximumPrice}` : (product.price || product.startingPrice || product.maximumPrice)} / sq. ft.
+                                        <div style={{ position: 'absolute', top: '10px', left: '10px', display: 'flex', gap: '6px' }}>
+                                            <span style={{ backgroundColor: 'rgba(0,0,0,0.75)', color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
+                                                {product.category || 'Natural Stone'}
+                                            </span>
                                         </div>
-                                    )}
-                                    {(product.finish && product.finish.length > 0) && <div style={{ marginBottom: '4px' }}><strong>Finish:</strong> {product.finish.join(', ')}</div>}
-                                    {(product.interior && product.interior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.interior.length} interior options</div>}
-                                    {(product.exterior && product.exterior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.exterior.length} exterior options</div>}
-                                </div>
+                                    </div>
+                                    <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                                            <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', color: '#111' }}>{product.name}</h3>
+                                        </div>
 
-                                {/* Reorder Controls */}
-                                <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', alignItems: 'center', backgroundColor: '#f9f9f9', padding: '6px 10px', borderRadius: '6px', border: '1px solid #eaeaea' }}>
-                                    <button
-                                        onClick={() => moveProductStep(index, -1)}
-                                        disabled={index === 0}
-                                        title="Move Up"
-                                        style={{ padding: '4px 10px', border: '1px solid #ddd', borderRadius: '4px', background: '#fff', cursor: index === 0 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
-                                    >
-                                        ↑
-                                    </button>
-                                    <button
-                                        onClick={() => moveProductStep(index, 1)}
-                                        disabled={index === filteredProducts.length - 1}
-                                        title="Move Down"
-                                        style={{ padding: '4px 10px', border: '1px solid #ddd', borderRadius: '4px', background: '#fff', cursor: index === filteredProducts.length - 1 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
-                                    >
-                                        ↓
-                                    </button>
-                                    <select
-                                        onChange={(e) => {
-                                            if (e.target.value) {
-                                                moveProductToTarget(product.id || product._id, e.target.value);
-                                                e.target.value = "";
-                                            }
-                                        }}
-                                        defaultValue=""
-                                        style={{ flex: 1, padding: '5px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #ddd', background: '#fff', color: '#333' }}
-                                    >
-                                        <option value="">⇄ Move next to product...</option>
-                                        {products.map((p) => {
-                                            const pId = p.id || p._id;
-                                            if (pId === (product.id || product._id)) return null;
-                                            return (
-                                                <option key={pId} value={pId}>
-                                                    Before: {p.name} ({p.category || 'Granite'})
-                                                </option>
-                                            );
-                                        })}
-                                    </select>
-                                </div>
+                                        {product.variety && (
+                                            <div style={{ fontSize: '13px', color: '#b48e5d', fontWeight: '600', marginBottom: '8px' }}>
+                                                Variety: {product.variety}
+                                            </div>
+                                        )}
 
-                                <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
-                                    <button
-                                        onClick={() => handleEdit(product)}
-                                        style={{ flex: 1, padding: '9px', backgroundColor: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={() => handleDelete(product.id || product._id)}
-                                        style={{ flex: 1, padding: '9px', backgroundColor: '#fff', border: '1px solid #ff4444', color: '#ff4444', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
-                                        onMouseEnter={(e) => { e.target.style.backgroundColor = '#ff4444'; e.target.style.color = '#fff'; }}
-                                        onMouseLeave={(e) => { e.target.style.backgroundColor = '#fff'; e.target.style.color = '#ff4444'; }}
-                                    >
-                                        Delete
-                                    </button>
+                                        <div style={{ fontSize: '14px', color: '#666', marginBottom: '16px', flex: 1 }}>
+                                            {product.color && <div style={{ marginBottom: '4px' }}><strong>Color:</strong> {product.color}</div>}
+                                            {(product.startingPrice || product.maximumPrice || product.price) && (
+                                                <div style={{ marginBottom: '4px', color: '#111', fontWeight: '600' }}>
+                                                    <strong>Price Range:</strong> {product.startingPrice && product.maximumPrice ? `₹${product.startingPrice} - ₹${product.maximumPrice}` : (product.price || product.startingPrice || product.maximumPrice)} / sq. ft.
+                                                </div>
+                                            )}
+                                            {(product.finish && product.finish.length > 0) && <div style={{ marginBottom: '4px' }}><strong>Finish:</strong> {product.finish.join(', ')}</div>}
+                                            {(product.interior && product.interior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.interior.length} interior options</div>}
+                                            {(product.exterior && product.exterior.length > 0) && <div style={{ marginBottom: '4px', fontSize: '12px', color: '#888' }}>{product.exterior.length} exterior options</div>}
+                                        </div>
+
+                                        {/* Reorder Controls */}
+                                        <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', alignItems: 'center', backgroundColor: '#f9f9f9', padding: '6px 10px', borderRadius: '6px', border: '1px solid #eaeaea' }}>
+                                            <button
+                                                onClick={() => moveProductStep(globalIndex, -1)}
+                                                disabled={globalIndex === 0}
+                                                title="Move Up"
+                                                style={{ padding: '4px 10px', border: '1px solid #ddd', borderRadius: '4px', background: '#fff', cursor: globalIndex === 0 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
+                                            >
+                                                ↑
+                                            </button>
+                                            <button
+                                                onClick={() => moveProductStep(globalIndex, 1)}
+                                                disabled={globalIndex === products.length - 1}
+                                                title="Move Down"
+                                                style={{ padding: '4px 10px', border: '1px solid #ddd', borderRadius: '4px', background: '#fff', cursor: globalIndex === products.length - 1 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
+                                            >
+                                                ↓
+                                            </button>
+                                            <select
+                                                onChange={(e) => {
+                                                    if (e.target.value) {
+                                                        moveProductToTarget(product.id || product._id, e.target.value);
+                                                        e.target.value = "";
+                                                    }
+                                                }}
+                                                defaultValue=""
+                                                style={{ flex: 1, padding: '5px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #ddd', background: '#fff', color: '#333' }}
+                                            >
+                                                <option value="">⇄ Move next to product...</option>
+                                                {products.map((p) => {
+                                                    const pId = p.id || p._id;
+                                                    if (pId === (product.id || product._id)) return null;
+                                                    return (
+                                                        <option key={pId} value={pId}>
+                                                            Before: {p.name} ({p.category || 'Granite'})
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
+                                        </div>
+
+                                        <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>
+                                            <button
+                                                onClick={() => handleEdit(product)}
+                                                style={{ flex: 1, padding: '9px', backgroundColor: '#f0f0f0', border: '1px solid #ddd', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(product.id || product._id)}
+                                                style={{ flex: 1, padding: '9px', backgroundColor: '#fff', border: '1px solid #ff4444', color: '#ff4444', borderRadius: '6px', cursor: 'pointer', fontWeight: '600', transition: 'background 0.2s' }}
+                                                onMouseEnter={(e) => { e.target.style.backgroundColor = '#ff4444'; e.target.style.color = '#fff'; }}
+                                                onMouseLeave={(e) => { e.target.style.backgroundColor = '#fff'; e.target.style.color = '#ff4444'; }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Pagination controls */}
+                    {totalPages > 1 && (
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '32px', flexWrap: 'wrap' }}>
+                            <button
+                                onClick={() => { setCurrentPage(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                disabled={safePage === 1}
+                                style={{ padding: '8px 14px', borderRadius: '6px', border: '1px solid #ddd', background: safePage === 1 ? '#f5f5f5' : '#fff', cursor: safePage === 1 ? 'not-allowed' : 'pointer', fontWeight: '600', color: safePage === 1 ? '#aaa' : '#333' }}
+                            >«</button>
+                            <button
+                                onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                disabled={safePage === 1}
+                                style={{ padding: '8px 14px', borderRadius: '6px', border: '1px solid #ddd', background: safePage === 1 ? '#f5f5f5' : '#fff', cursor: safePage === 1 ? 'not-allowed' : 'pointer', fontWeight: '600', color: safePage === 1 ? '#aaa' : '#333' }}
+                            >‹ Prev</button>
+
+                            {/* Page number buttons — show up to 7 around current */}
+                            {Array.from({ length: totalPages }, (_, i) => i + 1)
+                                .filter(p => p === 1 || p === totalPages || Math.abs(p - safePage) <= 2)
+                                .reduce((acc, p, i, arr) => {
+                                    if (i > 0 && p - arr[i - 1] > 1) acc.push('...');
+                                    acc.push(p);
+                                    return acc;
+                                }, [])
+                                .map((item, i) =>
+                                    item === '...' ? (
+                                        <span key={`ellipsis-${i}`} style={{ padding: '8px 4px', color: '#aaa', fontWeight: '600' }}>…</span>
+                                    ) : (
+                                        <button
+                                            key={item}
+                                            onClick={() => { setCurrentPage(item); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                            style={{
+                                                padding: '8px 13px',
+                                                borderRadius: '6px',
+                                                border: item === safePage ? '2px solid #111' : '1px solid #ddd',
+                                                background: item === safePage ? '#111' : '#fff',
+                                                color: item === safePage ? '#fff' : '#333',
+                                                cursor: 'pointer',
+                                                fontWeight: '700',
+                                                minWidth: '38px'
+                                            }}
+                                        >{item}</button>
+                                    )
+                                )
+                            }
+
+                            <button
+                                onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                disabled={safePage === totalPages}
+                                style={{ padding: '8px 14px', borderRadius: '6px', border: '1px solid #ddd', background: safePage === totalPages ? '#f5f5f5' : '#fff', cursor: safePage === totalPages ? 'not-allowed' : 'pointer', fontWeight: '600', color: safePage === totalPages ? '#aaa' : '#333' }}
+                            >Next ›</button>
+                            <button
+                                onClick={() => { setCurrentPage(totalPages); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                                disabled={safePage === totalPages}
+                                style={{ padding: '8px 14px', borderRadius: '6px', border: '1px solid #ddd', background: safePage === totalPages ? '#f5f5f5' : '#fff', cursor: safePage === totalPages ? 'not-allowed' : 'pointer', fontWeight: '600', color: safePage === totalPages ? '#aaa' : '#333' }}
+                            >»</button>
                         </div>
-                    ))}
-                </div>
+                    )}
+                </>
             )}
         </div>
     );

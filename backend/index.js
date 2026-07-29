@@ -96,11 +96,109 @@ app.delete('/api/blogs/:id', async (req, res) => {
 
 // ===== PRODUCT CRUD ROUTES =====
 
-// GET all products (with optional query filters)
-app.get('/api/products', async (req, res) => {
+// Helper to sort products consistently by sortOrder in Node.js memory
+// without exceeding MongoDB Atlas free tier 32MB in-database sort memory limit.
+const sortProductsByOrder = (arr) => {
+    if (!Array.isArray(arr)) return arr;
+    return arr.sort((a, b) => {
+        const orderA = (a && typeof a.sortOrder === 'number' && !isNaN(a.sortOrder)) ? a.sortOrder : 0;
+        const orderB = (b && typeof b.sortOrder === 'number' && !isNaN(b.sortOrder)) ? b.sortOrder : 0;
+        if (orderA !== orderB) {
+            return orderA - orderB;
+        }
+        // Stable sort fallback if sortOrder is identical
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        if (timeA !== timeB) {
+            return timeB - timeA;
+        }
+        const idA = String(a._id || a.id || '');
+        const idB = String(b._id || b.id || '');
+        return idA.localeCompare(idB);
+    });
+};
+
+// GET all products (admin listing - lightweight without base64 images)
+app.get('/api/products/list', async (req, res) => {
     try {
         const filter = {};
         if (req.query.category) filter.category = req.query.category;
+        if (req.query.isRoyalGemStone !== undefined) {
+            filter.isRoyalGemStone = req.query.isRoyalGemStone === 'true';
+        }
+
+        // Exclude large base64 images, description, and features to keep payload ~170KB and query < 400ms
+        const products = await Product.find(filter, {
+            name: 1,
+            category: 1,
+            categories: 1,
+            variety: 1,
+            color: 1,
+            colorCategory: 1,
+            origin: 1,
+            price: 1,
+            startingPrice: 1,
+            maximumPrice: 1,
+            estimatedPrice: 1,
+            finish: 1,
+            interior: 1,
+            exterior: 1,
+            isRoyalGemStone: 1,
+            gemstoneVariety: 1,
+            sortOrder: 1,
+            createdAt: 1
+        }).lean();
+
+        sortProductsByOrder(products);
+
+        // Attach a lazy-load thumbnail URL endpoint so browser loads only visible card images on-demand
+        const productsWithThumbnail = products.map(p => ({
+            ...p,
+            id: p._id || p.id,
+            thumbnail: `/api/products/${p._id || p.id}/thumbnail`
+        }));
+
+        res.json(productsWithThumbnail);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching products", error: error.message });
+    }
+});
+
+// GET single product thumbnail image (lazy loading for admin cards)
+app.get('/api/products/:id/thumbnail', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id, { images: { $slice: 1 } }).lean();
+        if (!product || !product.images || product.images.length === 0) {
+            return res.status(404).send('No image');
+        }
+        const img = product.images[0];
+        if (!img) return res.status(404).send('No image');
+
+        // If it's a base64 string, decode and send as binary image with Cache-Control
+        const matches = img.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+        if (matches && matches.length === 3) {
+            const contentType = matches[1];
+            const buffer = Buffer.from(matches[2], 'base64');
+            res.setHeader('Content-Type', contentType);
+            res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
+            return res.send(buffer);
+        }
+
+        // If it's a regular URL or path, redirect to it
+        res.redirect(img);
+    } catch (error) {
+        res.status(500).send('Error loading thumbnail');
+    }
+});
+
+// GET all products (full data including images - used by frontend category pages)
+app.get('/api/products', async (req, res) => {
+    try {
+        const filter = {};
+        if (req.query.category && req.query.category !== 'All' && req.query.category !== 'all') filter.category = req.query.category;
+        if (req.query.isRoyalGemStone !== undefined) {
+            filter.isRoyalGemStone = req.query.isRoyalGemStone === 'true';
+        }
         if (req.query.finish) filter.finish = req.query.finish;
         if (req.query.color) filter.color = { $regex: req.query.color, $options: 'i' };
         if (req.query.thickness) filter.thickness = req.query.thickness;
@@ -110,7 +208,10 @@ app.get('/api/products', async (req, res) => {
         if (req.query.interior) filter.interior = req.query.interior;
         if (req.query.exterior) filter.exterior = req.query.exterior;
 
-        const products = await Product.find(filter).sort({ sortOrder: 1, createdAt: -1 });
+        // NOTE: No .sort() in MongoDB query — large base64 images cause MongoDB Atlas free tier to exceed 32MB sort memory limit
+        // Sort in Node.js heap memory by sortOrder so customer UI matches admin panel order exactly.
+        const products = await Product.find(filter).lean();
+        sortProductsByOrder(products);
         res.json(products);
     } catch (error) {
         res.status(500).json({ message: "Error fetching products", error: error.message });
@@ -138,21 +239,37 @@ app.post('/api/products/seed', async (req, res) => {
         const { products } = req.body;
         let count = 0;
         if (Array.isArray(products)) {
+            const validCategories = ['Granite', 'Marble', 'Sandstone', 'Quartz', 'Onyx', 'Paving and Landscape', 'Other Natural Stones', 'Royal Gemstone'];
             for (let i = 0; i < products.length; i++) {
                 const p = products[i];
                 const existing = await Product.findOne({ name: p.name });
                 if (!existing) {
+                    let stoneCategory = 'Granite';
+                    if (p.material) {
+                        if (validCategories.includes(p.material)) {
+                            stoneCategory = p.material;
+                        } else if (['Quartzite', 'Limestone', 'Slate', 'Basalt', 'Travertine', 'Soapstone', 'Terrazzo', 'Tiles', 'Slate Stone'].includes(p.material)) {
+                            stoneCategory = 'Other Natural Stones';
+                        }
+                    } else if (validCategories.includes(p.category)) {
+                        stoneCategory = p.category;
+                    }
+
+                    const stoneColor = p.color || (p.material ? p.category : p.colorCategory || 'White');
+                    const isRoyal = Boolean(p.isRoyalGemStone || stoneCategory === 'Royal Gemstone');
+
                     await Product.create({
                         name: p.name,
-                        category: p.category || 'Granite',
-                        categories: [p.category || 'Granite'],
-                        variety: p.variety || '',
-                        colorCategory: p.colorCategory || p.color || '',
+                        category: stoneCategory,
+                        categories: Array.isArray(p.categories) ? p.categories : [stoneCategory],
+                        variety: p.variety || p.material || stoneCategory,
+                        color: stoneColor,
+                        colorCategory: p.colorCategory || stoneColor || '',
                         origin: p.origin || 'India',
-                        price: String(p.price || 100),
-                        images: p.images || [p.image || ''],
+                        price: String(p.price || 50),
+                        images: Array.isArray(p.images) ? p.images : [p.image || ''],
                         sortOrder: i,
-                        isRoyalGemStone: false
+                        isRoyalGemStone: isRoyal
                     });
                     count++;
                 }

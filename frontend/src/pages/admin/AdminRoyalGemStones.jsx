@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { CSV_PRODUCTS } from '../../utils/constants';
 import './Admin.css';
 
 const GEMSTONE_VARIETIES = [
@@ -41,6 +42,12 @@ const initialFormState = {
     images: []
 };
 
+const getThumbnailSrc = (thumb) => {
+    if (!thumb) return null;
+    if (thumb.startsWith('http') || thumb.startsWith('data:')) return thumb;
+    return `${import.meta.env.VITE_BACKEND_URL}${thumb}`;
+};
+
 export default function AdminRoyalGemStones() {
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -64,8 +71,9 @@ export default function AdminRoyalGemStones() {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`);
-            // Only list Royal Gem Stone products
+            setLoading(true);
+            // Use lightweight list endpoint (no images) - avoids MongoDB 32MB sort memory limit crash
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/list?isRoyalGemStone=true`);
             const royalProducts = (res.data || []).filter(p => p.isRoyalGemStone || p.category === 'Royal Gemstone');
             setProducts(royalProducts);
             setLoading(false);
@@ -146,24 +154,32 @@ export default function AdminRoyalGemStones() {
         }
     };
 
-    const handleEdit = (product) => {
-        setFormData({
-            name: product.name || '',
-            color: product.color || '',
-            origin: product.origin || '',
-            startingPrice: product.startingPrice || '',
-            maximumPrice: product.maximumPrice || '',
-            estimatedPrice: product.estimatedPrice || product.price || '',
-            price: product.price || product.estimatedPrice || '',
-            gemstoneVariety: product.variety || product.gemstoneVariety || 'Agate',
-            gemstoneApplications: product.interior || product.applications || ['Back Panel (Backlit / Feature Wall)', 'Wash Basin & Vanity Bowl', 'Table Top & Luxury Furniture'],
-            isBacklit: product.isBacklit !== undefined ? product.isBacklit : true,
-            finish: product.finish || ['Polished', 'High Gloss'],
-            description: product.description || '',
-            images: product.images || (product.image ? [product.image] : [])
-        });
-        setEditingId(product.id || product._id);
-        setShowForm(true);
+    const handleEdit = async (product) => {
+        try {
+            // Fetch full product with images from DB
+            const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/${product.id || product._id}`);
+            const fullProduct = res.data || product;
+            setFormData({
+                name: fullProduct.name || '',
+                color: fullProduct.color || '',
+                origin: fullProduct.origin || '',
+                startingPrice: fullProduct.startingPrice || '',
+                maximumPrice: fullProduct.maximumPrice || '',
+                estimatedPrice: fullProduct.estimatedPrice || fullProduct.price || '',
+                price: fullProduct.price || fullProduct.estimatedPrice || '',
+                gemstoneVariety: fullProduct.variety || fullProduct.gemstoneVariety || 'Agate',
+                gemstoneApplications: fullProduct.interior || fullProduct.applications || ['Back Panel (Backlit / Feature Wall)', 'Wash Basin & Vanity Bowl', 'Table Top & Luxury Furniture'],
+                isBacklit: fullProduct.isBacklit !== undefined ? fullProduct.isBacklit : true,
+                finish: fullProduct.finish || ['Polished', 'High Gloss'],
+                description: fullProduct.description || '',
+                images: fullProduct.images || (fullProduct.image ? [fullProduct.image] : [])
+            });
+            setEditingId(fullProduct.id || fullProduct._id);
+            setShowForm(true);
+        } catch (err) {
+            console.error('Error loading full product for edit:', err);
+            alert('Failed to load product details. Please try again.');
+        }
     };
 
     const handleDelete = async (id) => {
@@ -174,6 +190,42 @@ export default function AdminRoyalGemStones() {
         } catch (error) {
             console.error("Error deleting product:", error);
             alert("Failed to delete product.");
+        }
+    };
+
+    const moveProductStep = async (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= products.length) return;
+        const updated = [...products];
+        const temp = updated[index];
+        updated[index] = updated[targetIndex];
+        updated[targetIndex] = temp;
+        setProducts(updated);
+        try {
+            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/reorder`, {
+                products: updated.map((p, idx) => ({ id: p.id || p._id, sortOrder: idx }))
+            });
+        } catch (error) {
+            console.error("Error saving reorder:", error);
+        }
+    };
+
+    const moveProductToTarget = async (productId, targetId) => {
+        if (!targetId || productId === targetId) return;
+        const currentIndex = products.findIndex(p => (p.id || p._id) === productId);
+        const targetIndex = products.findIndex(p => (p.id || p._id) === targetId);
+        if (currentIndex === -1 || targetIndex === -1) return;
+        const updated = [...products];
+        const [movedItem] = updated.splice(currentIndex, 1);
+        const newTargetIndex = updated.findIndex(p => (p.id || p._id) === targetId);
+        updated.splice(newTargetIndex, 0, movedItem);
+        setProducts(updated);
+        try {
+            await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/products/reorder`, {
+                products: updated.map((p, idx) => ({ id: p.id || p._id, sortOrder: idx }))
+            });
+        } catch (error) {
+            console.error("Error saving reorder:", error);
         }
     };
 
@@ -245,29 +297,31 @@ export default function AdminRoyalGemStones() {
                     <h1 style={{ margin: 0, fontSize: '28px', color: '#b48e5d' }}>👑 Royal Gem Stones</h1>
                     <p style={{ margin: '4px 0 0 0', color: '#666' }}>Manage luxury semi-precious agate, amethyst, and backlit gemstone surfaces</p>
                 </div>
-                {!showForm && (
-                    <button
-                        onClick={() => {
-                            setFormData(initialFormState);
-                            setEditingId(null);
-                            setShowForm(true);
-                        }}
-                        style={{
-                            padding: '12px 24px',
-                            backgroundColor: '#b48e5d',
-                            color: 'white',
-                            border: 'none',
-                            borderRadius: '6px',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                        }}
-                    >
-                        <span>+</span> Add New Royal Gem Stone
-                    </button>
-                )}
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    {!showForm && (
+                        <button
+                            onClick={() => {
+                                setFormData(initialFormState);
+                                setEditingId(null);
+                                setShowForm(true);
+                            }}
+                            style={{
+                                padding: '12px 24px',
+                                backgroundColor: '#b48e5d',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '6px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px'
+                            }}
+                        >
+                            <span>+</span> Add New Royal Gem Stone
+                        </button>
+                    )}
+                </div>
             </div>
 
             {showForm ? (
@@ -628,15 +682,16 @@ export default function AdminRoyalGemStones() {
                     </div>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                        {filteredProducts.map(product => {
+                        {filteredProducts.map((product) => {
+                            const globalIndex = products.findIndex(p => (p.id || p._id) === (product.id || product._id));
                             const isRoyal = true;
                             return (
                                 <div key={product.id || product._id} style={{ display: 'flex', backgroundColor: '#fff', border: '1px solid #e8dec8', borderRadius: '8px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
                                     <div style={{ width: '180px', height: '180px', backgroundColor: '#f5f5f5', flexShrink: 0, position: 'relative' }}>
-                                        {((product.images && product.images[0]) || product.image) ? (
-                                            <img src={(product.images && product.images[0]) || product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        {(product.thumbnail || product.image) ? (
+                                            <img src={getThumbnailSrc(product.thumbnail || product.image)} alt={product.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         ) : (
-                                            <span style={{ color: '#aaa' }}>No Image</span>
+                                            <span style={{ color: '#aaa', fontSize: '13px' }}>No Image</span>
                                         )}
                                         <div style={{ position: 'absolute', top: '10px', left: '10px' }}>
                                             <span style={{ background: 'linear-gradient(135deg, #d4af37, #b89728)', color: 'white', padding: '4px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
@@ -661,6 +716,46 @@ export default function AdminRoyalGemStones() {
                                             <div style={{ marginTop: '8px', padding: '8px', background: '#fffcf0', borderRadius: '6px', fontSize: '12px', color: '#7a5a2a', border: '1px solid #e8dec8' }}>
                                                 <strong>Luxury Applications:</strong> {(product.interior || product.applications || []).slice(0, 3).join(' • ')}
                                             </div>
+                                        </div>
+                                        {/* Reorder Controls */}
+                                        <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', alignItems: 'center', backgroundColor: '#fffcf0', padding: '6px 10px', borderRadius: '6px', border: '1px solid #e8dec8' }}>
+                                            <button
+                                                onClick={() => moveProductStep(globalIndex, -1)}
+                                                disabled={globalIndex === 0}
+                                                title="Move Up"
+                                                style={{ padding: '4px 10px', border: '1px solid #d4af37', borderRadius: '4px', background: '#fff', cursor: globalIndex === 0 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
+                                            >
+                                                ↑
+                                            </button>
+                                            <button
+                                                onClick={() => moveProductStep(globalIndex, 1)}
+                                                disabled={globalIndex === products.length - 1}
+                                                title="Move Down"
+                                                style={{ padding: '4px 10px', border: '1px solid #d4af37', borderRadius: '4px', background: '#fff', cursor: globalIndex === products.length - 1 ? 'not-allowed' : 'pointer', fontWeight: 'bold' }}
+                                            >
+                                                ↓
+                                            </button>
+                                            <select
+                                                onChange={(e) => {
+                                                    if (e.target.value) {
+                                                        moveProductToTarget(product.id || product._id, e.target.value);
+                                                        e.target.value = "";
+                                                    }
+                                                }}
+                                                defaultValue=""
+                                                style={{ flex: 1, padding: '5px 8px', fontSize: '12px', borderRadius: '4px', border: '1px solid #d4af37', background: '#fff', color: '#333' }}
+                                            >
+                                                <option value="">⇄ Move next to royal gemstone...</option>
+                                                {products.map((p) => {
+                                                    const pId = p.id || p._id;
+                                                    if (pId === (product.id || product._id)) return null;
+                                                    return (
+                                                        <option key={pId} value={pId}>
+                                                            Before: {p.name} ({p.variety || 'Agate'})
+                                                        </option>
+                                                    );
+                                                })}
+                                            </select>
                                         </div>
                                         <div style={{ display: 'flex', gap: '10px', borderTop: '1px solid #f0f0f0', paddingTop: '12px' }}>
                                             <button

@@ -7,163 +7,14 @@ import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { useDbProducts } from '../../utils/useDbProducts';
 
-const MARBLE_TYPES = [];
-
-// 1. Updated Data with Category Column
-const CSV_PRODUCTS = [
-  { "name": "Statuario", "image": "/indian_marble_images/Statuario.jpg", "category": "White" },
-  { "name": "Statuario Venatino", "image": "/indian_marble_images/Statuario Venatino.jpg", "category": "White" },
-  { "name": "Carrara White", "image": "/indian_marble_images/Carrara White.jpg", "category": "White" },
-  { "name": "Calacatta White", "image": "/indian_marble_images/Calacatta White.png", "category": "White" },
-  { "name": "Carrara Bardiglio", "image": "/indian_marble_images/Carrara Bardiglio.png", "category": "Grey" },
-  { "name": "Bianco Beige", "image": "/indian_marble_images/Bianco Beige.png", "category": "Beige" },
-  { "name": "Venatino", "image": "/indian_marble_images/Venatino.png", "category": "White" },
-  { "name": "Botticino Sicilia", "image": "/indian_marble_images/Botticino Sicilia.png", "category": "Beige" },
-  { "name": "Armani Brown", "image": "/indian_marble_images/Armani Brown.png", "category": "Brown" },
-  { "name": "Black Portoro Waves", "image": "/indian_marble_images/Black Portoro Waves.png", "category": "Black" },
-  { "name": "Crema Marfil", "image": "/indian_marble_images/Crema Marfil.jpg", "category": "Beige" },
-  { "name": "Dark Emperador", "image": "/indian_marble_images/Dark Emperador.png", "category": "Brown" },
-  { "name": "Calacatta Gold", "image": "/indian_marble_images/Calacatta Gold.png", "category": "White" },
-  { "name": "Nero Portoro", "image": "/indian_marble_images/Nero Portoro.png", "category": "Black" },
-  { "name": "Golden Portoro Waterfall", "image": "/indian_marble_images/Golden Portoro Waterfall.png", "category": "Black" },
-  { "name": "Black Marquina", "image": "/indian_marble_images/Black Marquina.png", "category": "Black" },
-  { "name": "Perlato", "image": "https://petrosstone.com/wp-content/uploads/2022/04/Copy-of-Copyrights-%C2%A9-2021-Petros-Stone-LLP-All-Rights-Reserved.png", "category": "Beige" },
-  { "name": "Dyna", "image": "/indian_marble_images/Dyna.png", "category": "Beige" },
-  { "name": "Michel Angelo", "image": "/indian_marble_images/Michel Angelo.jpg", "category": "White" },
-  { "name": "Perlato Royal", "image": "/indian_marble_images/Perlato Royal.png", "category": "Beige" },
-
-  { "name": "Agaria white marble", "image": "/indian_marble_images/Agaria White Marble.jpg", "category": "White", "place": "India" },
-  { "name": "Albeta white marble", "image": "/indian_marble_images/Albeta white marble.png", "category": "White", "place": "India" },
-  { "name": "Arna white marble", "image": "/indian_marble_images/Arna white marble.png", "category": "White", "place": "India" },
-  { "name": "Dungari white marble", "image": "/indian_marble_images/Dungari white marble.png", "category": "White", "place": "India" },
-  { "name": "Indian statuario marble", "image": "/indian_marble_images/Indian statuario marble.png", "category": "White", "place": "India" },
-  { "name": "Indian onyx marble", "image": "/indian_marble_images/Indian onyx marble.png", "category": "White", "place": "India" },
-  { "name": "Jhanjhar white marble", "image": "/indian_marble_images/Jhanjhar white marble.png", "category": "White", "place": "India" },
-  { "name": "Morchana white marble", "image": "/indian_marble_images/Morchana white marble.png", "category": "White", "place": "India" },
-  { "name": "Morwad white marble", "image": "/indian_marble_images/Morwad white marble.png", "category": "White", "place": "India" },
-  { "name": "Rajnagar white marble", "image": "/indian_marble_images/Rajnagar white marble.png", "category": "White", "place": "India" },
-  { "name": "Wonder white marble", "image": "/indian_marble_images/Wonder white marble.png", "category": "White", "place": "India" },
-  { "name": "Pure White Marble", "image": "/indian_marble_images/Pure White Marble.png", "category": "White", "place": "India" },
-  { "name": "Banswara white marble", "image": "/indian_marble_images/Banswara white marble.png", "category": "White", "place": "India" },
-  { "name": "Indian carrara marble", "image": "/indian_marble_images/Indian carrara marble.png", "category": "White", "place": "India" },
-  { "name": "Ambaji white marble", "image": "/indian_marble_images/Ambaji White Marble.jpg", "category": "White", "place": "India" },
-  { "name": "Dharmeta white marble", "image": "/indian_marble_images/Dharmeta white marble.png", "category": "White", "place": "India" },
-  { "name": "Ardosia black grey marble", "image": "/indian_marble_images/Ardosia black grey marble.png", "category": "Grey", "place": "India" },
-
-
-
-
-
-  { "name": "Travertine", "image": "/paving_and_stones/Travertine.png", "category": "Beige" },
-  { "name": "Arabescato", "image": "/indian_marble_images/Arabescato.png", "category": "White" },
-  { "name": "Chianti Gray", "image": "/indian_marble_images/Chianti Gray.png", "category": "Grey" },
-  { "name": "Champagne Brown", "image": "/indian_marble_images/Champagne Brown.png", "category": "Brown" },
-  { "name": "Brown Emperado", "image": "/indian_marble_images/Brown Emperado.png", "category": "Brown" },
-  { "name": "Bronzite", "image": "/indian_marble_images/Bronzite.png", "category": "Brown" },
-  { "name": "Brescia Aurora", "image": "/indian_marble_images/Brescia Aurora.png", "category": "Beige" },
-  { "name": "Brescia Oniciata", "image": "/indian_marble_images/Brescia Oniciata.png", "category": "Brown" },
-  { "name": "Botticino Fiorito", "image": "/indian_marble_images/Botticino Fiorito.png", "category": "Beige" },
-  { "name": "Bianco Marfil", "image": "/indian_marble_images/Bianco Marfil.png", "category": "White" },
-  { "name": "Beige Serpeggian", "image": "/indian_marble_images/Beige Serpeggian.png", "category": "Beige" },
-  { "name": "Baltic Sea Wave", "image": "/indian_marble_images/Baltic Sea Wave.png", "category": "Grey" },
-  { "name": "Baltic Pink", "image": "/indian_marble_images/Baltic Pink.png", "category": "Pink" },
-  { "name": "Armani Grey", "image": "/indian_marble_images/Armani Grey.png", "category": "Grey" },
-  { "name": "Antique Beige", "image": "/indian_marble_images/Antique Beige.png", "category": "Beige" },
-  { "name": "Amazonite", "image": "/indian_marble_images/Amazonite.png", "category": "Green" },
-  { "name": "Amazon White", "image": "/indian_marble_images/Amazon White.png", "category": "White" },
-  { "name": "Myra Beige", "image": "/indian_marble_images/Myra Beige.png", "category": "Beige" },
-  { "name": "Pink Valencia", "image": "/indian_marble_images/Pink Valencia.png", "category": "Pink" },
-  { "name": "Autumn Yellow", "image": "/indian_marble_images/Autumn Yellow.png", "category": "Yellow" },
-  { "name": "Black Forest", "image": "/indian_marble_images/Black Forest.jpg", "category": "Black" },
-  { "name": "Palissandro", "image": "/indian_marble_images/Palissandro.png", "category": "Grey" },
-  { "name": "Botanic Green", "image": "/indian_marble_images/Botanic Green.png", "category": "Green" },
-  { "name": "Calacatta Borghini", "image": "/indian_marble_images/Calacatta Borghini.jpg", "category": "White" },
-  { "name": "Athens Beige", "image": "/indian_marble_images/Athens Beige.png", "category": "Beige" },
-
-
-  { "name": "Brown rainforest marble", "image": "/indian_marble_images/Brown rainforest marble.png", "category": "Brown", "place": "India" },
-  { "name": "Fire red marble", "image": "/indian_marble_images/Fire red marble.png", "category": "Red", "place": "India" },
-  { "name": "Golden rainforest marble", "image": "/indian_marble_images/Golden rainforest marble.png", "category": "Brown", "place": "India" },
-  { "name": "Oman red marble", "image": "/indian_marble_images/Oman red marble.png", "category": "Red", "place": "India" },
-  { "name": "Sawar marble", "image": "/indian_marble_images/Sawar marble.png", "category": "Beige", "place": "India" },
-  { "name": "Pink katni marble", "image": "/indian_marble_images/Pink katni marble.png", "category": "Pink", "place": "India" },
-  { "name": "Pink marble", "image": "/indian_marble_images/Pink marble.png", "category": "Pink", "place": "India" },
-  { "name": "Kota stone", "image": "/indian_marble_images/Kota stone.png", "category": "Grey", "place": "India" },
-  { "name": "Fantasy brown marble", "image": "/indian_marble_images/Fantasy brown marble.png", "category": "Brown", "place": "India" },
-  { "name": "Chak dungri marble", "image": "/indian_marble_images/Chak dungri marble.png", "category": "White", "place": "India" },
-  { "name": "Wonder wood marble", "image": "/indian_marble_images/Wonder wood marble.png", "category": "Brown", "place": "India" },
-  { "name": "Rainbow marble", "image": "/indian_marble_images/Rainbow marble.png", "category": "Beige", "place": "India" },
-  { "name": "Jaisalmer Yellow marble", "image": "/indian_marble_images/Jaisalmer Yellow marble.png", "category": "Yellow", "place": "India" },
-  { "name": "Teak sandstone", "image": "/paving_and_stones/Teak sandstone.png", "category": "Brown", "place": "India" },
-  { "name": "Makrana pink marble", "image": "/indian_marble_images/Makrana pink marble.png", "category": "Pink", "place": "India" },
-  { "name": "Keshairya green marble", "image": "/indian_marble_images/Keshairya green marble.png", "category": "Green", "place": "India" },
-  { "name": "Tobacco black marble", "image": "/indian_marble_images/Tobacco black marble.png", "category": "Black", "place": "India" },
-  { "name": "Cheery red marble", "image": "/indian_marble_images/Cheery red marble.png", "category": "Red", "place": "India" },
-  { "name": "Katni Marble", "image": "/indian_marble_images/Katni Marble.jpg", "category": "Beige", "place": "India" },
-  { "name": "Brown Albeta Marble", "image": "/indian_marble_images/Brown Albeta Marble.png", "category": "Brown", "place": "India" },
-  { "name": "Bliss White Marble", "image": "/indian_marble_images/Bliss White Marble.png", "category": "White", "place": "India" },
-  { "name": "Pista White Marble", "image": "/indian_marble_images/Pista White Marble.png", "category": "White", "place": "India" },
-  { "name": "Udaipur pink marble", "image": "/indian_marble_images/Udaipur pink marble.png", "category": "Pink", "place": "India" },
-
-  { "name": "Golden Spider", "image": "/indian_marble_images/Golden Spider.png", "category": "Brown" },
-  { "name": "Equator White", "image": "/indian_marble_images/Equator White.jpg", "category": "White" },
-  { "name": "Giallo Siena", "image": "/indian_marble_images/Giallo Siena.png", "category": "Yellow" },
-  { "name": "Oro Calacatta", "image": "/indian_marble_images/Oro Calacatta.jpg", "category": "White" },
-  { "name": "Grigio Carrara", "image": "/indian_marble_images/Grigio Carrara.png", "category": "Grey" },
-
-];
-
-const DEFAULT_DESCRIPTION = 'Premium quality marble, sourced from verified quarries.';
-const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to maintain'];
-
-// Build Lookup Map
-const marbleTypesMap = Object.fromEntries(
-  MARBLE_TYPES.map((g) => [g.name.toLowerCase().trim(), g])
-);
-
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leathered", "Brushed", "Bush-Hammered", "Sandblasted"];
 const ORIGIN_OPTIONS = ["Makrana white", "Katni", "Ambaji", "Rajnagar", "Udaipur green", "Kishangarh", "Jaisalmer Yellow", "Italian", "Spanish", "Vietnamese", "Turkish", "Greece"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
-
-// Merge Data
-const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
-  const key = csvItem.name.toLowerCase().trim();
-  const existing = marbleTypesMap[key];
-
-  const origin = csvItem.name.toLowerCase().includes('statuario')
-    ? 'Italian'
-    : ORIGIN_OPTIONS[index % ORIGIN_OPTIONS.length];
-  // Pseudo-random price between 50 and 250 based on index
-  const price = 50 + ((index * 17) % 201);
-
-  // Assign 2 to 4 touch options
-  const numTouches = (index % 3) + 2;
-  const touch = [];
-  for (let i = 0; i < numTouches; i++) {
-    touch.push(TOUCH_OPTIONS[(index + i) % TOUCH_OPTIONS.length]);
-  }
-
-  return {
-    id: existing ? existing.id : `csv-${index}`,
-    name: csvItem.name,
-    image: csvItem.image,
-    category: csvItem.category || 'Luxury', // Fallback
-    description: existing ? existing.description : DEFAULT_DESCRIPTION,
-    features: existing ? existing.features : DEFAULT_FEATURES,
-    origin,
-    price,
-    minPrice: Math.max(50, price - 40),
-    maxPrice: Math.min(300, price + 40),
-    touch,
-    thickness: THICKNESS_RANGE
-  };
-});
-
-const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 50)));
-const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
+const MIN_PRICE = 50;
+const MAX_PRICE = 300;
 
 export default function Marble() {
-  const productsList = useDbProducts('Marble', ALL_PRODUCTS);
+  const productsList = useDbProducts('Marble');
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -245,7 +96,7 @@ export default function Marble() {
     }, 50);
   };
 
-  const [selectedProduct, setSelectedProduct] = useState(filteredProducts[0] || ALL_PRODUCTS[0]);
+  const [selectedProduct, setSelectedProduct] = useState(filteredProducts[0] || null);
 
   // Sync selected product when filter changes and reset page to 1
   useEffect(() => {

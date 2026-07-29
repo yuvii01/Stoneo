@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
 import { GRANITE_TYPES, CSV_PRODUCTS } from '../utils/constants';
+import { useDbProducts } from '../utils/useDbProducts';
 
 const DEFAULT_DESCRIPTION = 'Premium quality granite, sourced from verified quarries.';
 const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to maintain'];
@@ -26,6 +27,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 });
 
 export default function Products() {
+  const productsList = useDbProducts('All', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -34,9 +36,9 @@ export default function Products() {
 
   // 3. Filtered List Logic
   const filteredProducts = useMemo(() => {
-    if (categoryFilter === 'All') return ALL_PRODUCTS;
-    return ALL_PRODUCTS.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
-  }, [categoryFilter]);
+    if (categoryFilter === 'All') return productsList;
+    return productsList.filter(p => p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
+  }, [categoryFilter, productsList]);
 
   const [selectedProduct, setSelectedProduct] = useState(filteredProducts[0] || ALL_PRODUCTS[0]);
 

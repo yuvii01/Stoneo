@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for
 import { GRANITE_TYPES } from '../utils/constants';
 import '../styles/pages.css';
 import { useDemand } from '../context/DemandContext';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -211,6 +212,7 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
 
 
 export default function Tiles() {
+  const productsList = useDbProducts('Tiles', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, demands } = useDemand();
@@ -220,9 +222,9 @@ export default function Tiles() {
 
   // 3. Filtered List Logic
   const filteredProducts = useMemo(() => {
-    if (categoryFilter === 'All') return ALL_PRODUCTS;
-    return ALL_PRODUCTS.filter(p => p.category.toLowerCase() === categoryFilter.toLowerCase());
-  }, [categoryFilter]);
+    if (categoryFilter === 'All') return productsList;
+    return productsList.filter(p => p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
+  }, [categoryFilter, productsList]);
 
   const [selectedProduct, setSelectedProduct] = useState(filteredProducts[0] || ALL_PRODUCTS[0]);
 

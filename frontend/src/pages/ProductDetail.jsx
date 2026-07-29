@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { CSV_PRODUCTS, COMPANY_INFO } from '../utils/constants';
+import { useDbProducts } from '../utils/useDbProducts';
 import '../styles/ProductDetail.css';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
@@ -10,14 +11,16 @@ export default function ProductDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
+    const allDbProducts = useDbProducts('All', CSV_PRODUCTS);
     
     const decodedId = decodeURIComponent(id || '').trim();
-    // 1. Resolve product from navigation state or CSV fallback immediately
+    // 1. Resolve product from navigation state or DB/CSV fallback immediately
     const passedProduct = location.state?.product;
-    const fallbackProduct = CSV_PRODUCTS.find((p, idx) => 
+    const fallbackProduct = allDbProducts.find((p, idx) => 
         p && (
-            p.name.toLowerCase() === decodedId.toLowerCase() ||
+            (p.name && p.name.toLowerCase() === decodedId.toLowerCase()) ||
             (p.id !== undefined && String(p.id) === String(decodedId)) ||
+            (p._id !== undefined && String(p._id) === String(decodedId)) ||
             String(idx + 1) === String(decodedId) ||
             String(idx) === String(decodedId)
         )
@@ -117,8 +120,8 @@ export default function ProductDetail() {
     const estimatedSlabs = Math.ceil(numericSqFt / 45); // Standard ~45 sq ft per slab
 
     // Similar Products
-    const similarProducts = CSV_PRODUCTS
-        .filter(p => (p.category === product.category || p.material === product.material) && p.name !== product.name)
+    const similarProducts = allDbProducts
+        .filter(p => (p.category === product.category || p.material === product.material || p.stoneCategory === product.category) && p.name !== product.name)
         .slice(0, 4);
 
     const handleShare = () => {

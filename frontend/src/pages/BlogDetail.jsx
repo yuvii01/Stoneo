@@ -155,7 +155,7 @@ export default function BlogDetail() {
         return (
             <div className="bd-page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '75vh' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', color: '#111' }}>Curating Architectural Chronicle...</h2>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif", fontSize: '32px', color: '#111' }}>Curating Architectural Chronicle...</h2>
                     <p style={{ color: '#777', marginTop: '10px' }}>Retrieving monograph from Stoneo Editorial archives</p>
                 </div>
             </div>
@@ -166,7 +166,7 @@ export default function BlogDetail() {
         return (
             <div className="bd-page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '75vh' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', color: '#111' }}>Chronicle Not Found</h2>
+                    <h2 style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif", fontSize: '32px', color: '#111' }}>Chronicle Not Found</h2>
                     <p style={{ color: '#777', marginTop: '10px', marginBottom: '20px' }}>The requested architectural monograph could not be located in our active archives.</p>
                     <button type="button" className="bd-back-btn" onClick={() => navigate('/blogs')}>← Return to Chronicles</button>
                 </div>
@@ -360,7 +360,7 @@ export default function BlogDetail() {
 
                         {/* Featured Slabs Spotlight Box (Max 3) */}
                         <div className="bd-sidebar-card" style={{ padding: "20px", background: "#111", border: "1px solid rgba(212, 175, 55, 0.35)" }}>
-                            <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.1rem", color: "#d4af37", marginBottom: "14px", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "8px" }}>
+                            <h4 style={{ fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif", fontSize: "1.1rem", color: "#d4af37", marginBottom: "14px", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "8px" }}>
                                 ✦ Featured Slabs ({featuredLinks.length})
                             </h4>
                             <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>

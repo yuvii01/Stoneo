@@ -355,9 +355,9 @@ export default function Header() {
             Company
           </Link> */}
 
-          {/* <Link to="/admin" className="nav-link" onClick={closeMenus}>
-            Admin
-          </Link> */}
+          <Link to="/about" className="nav-link" onClick={closeMenus}>
+            About Us
+          </Link>
 
           <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
             {demands.length > 0 ? `Get Quote (${demands.length})` : 'Get Quote'}
