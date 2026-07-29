@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for URL filtering
 import { GRANITE_TYPES, CSV_PRODUCTS } from '../utils/constants';
 import { useDbProducts } from '../utils/useDbProducts';
+import ProductLoader from '../components/ProductLoader';
 
 const DEFAULT_DESCRIPTION = 'Premium quality granite, sourced from verified quarries.';
 const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to maintain'];
@@ -84,7 +85,14 @@ export default function Products() {
       <section className="products-section">
         <div className="container">
           <div className="products-grid">
-            {filteredProducts.map((product) => (
+            {productsList.loading ? (
+              <ProductLoader text="Loading products..." />
+            ) : filteredProducts.length === 0 ? (
+              <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
+                No products found matching the selected filters.
+              </div>
+            ) : (
+              filteredProducts.map((product) => (
               <div
                 key={product.id}
                 className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
@@ -113,7 +121,7 @@ export default function Products() {
                   <p>{product.description}</p>
                 </div>
               </div>
-            ))}
+            )))}
           </div>
         </div>
       </section>

@@ -14,12 +14,14 @@ const parsePrice = (val, fallback = 100) => {
 
 export function useDbProducts(categoryName) {
   const [dbProducts, setDbProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
+    setLoading(true);
     const url = (!categoryName || categoryName === 'All' || categoryName === 'all')
-      ? `${import.meta.env.VITE_BACKEND_URL}/api/products`
-      : `${import.meta.env.VITE_BACKEND_URL}/api/products?category=${encodeURIComponent(categoryName)}`;
+      ? `${import.meta.env.VITE_BACKEND_URL}/api/products/list`
+      : `${import.meta.env.VITE_BACKEND_URL}/api/products/list?category=${encodeURIComponent(categoryName)}`;
 
     axios.get(url)
       .then(res => {
@@ -37,17 +39,28 @@ export function useDbProducts(categoryName) {
             return idA.localeCompare(idB);
           });
 
+          const getImageUrl = (imgUrl) => {
+            if (!imgUrl) return '';
+            if (imgUrl.startsWith('http') || imgUrl.startsWith('data:')) return imgUrl;
+            return `${import.meta.env.VITE_BACKEND_URL}${imgUrl}`;
+          };
+
           const mapped = sortedData.map((p, idx) => {
             const parsedPrice = parsePrice(p.startingPrice || p.price || p.estimatedPrice, 100);
             const minP = p.startingPrice ? parsePrice(p.startingPrice, Math.max(50, parsedPrice - 40)) : Math.max(50, parsedPrice - 40);
             const maxP = p.maximumPrice ? parsePrice(p.maximumPrice, Math.min(500, parsedPrice + 40)) : Math.min(500, parsedPrice + 40);
 
+            const thumbUrl = p.thumbnail 
+              ? getImageUrl(p.thumbnail)
+              : ((p.images && p.images.length > 0) ? p.images[0] : (p.image || ''));
+
             return {
               id: p.id || p._id || `db-${idx}`,
               sortOrder: typeof p.sortOrder === 'number' && !isNaN(p.sortOrder) ? p.sortOrder : idx,
               name: p.name || 'Product',
-              image: (p.images && p.images.length > 0) ? p.images[0] : (p.image || ''),
-              images: p.images || (p.image ? [p.image] : []),
+              image: thumbUrl,
+              images: (p.images && p.images.length > 0) ? p.images : [thumbUrl],
+              thumbnail: thumbUrl,
               color: p.color || '',
               colorCategory: p.colorCategory || p.color || '',
               variety: p.variety || p.gemstoneVariety || '',
@@ -71,8 +84,10 @@ export function useDbProducts(categoryName) {
           });
           setDbProducts(mapped);
         }
+        setLoading(false);
       })
       .catch(e => {
+        if (isMounted) setLoading(false);
         console.error(`Failed to fetch database products for ${categoryName}:`, e);
       });
 
@@ -81,6 +96,8 @@ export function useDbProducts(categoryName) {
     };
   }, [categoryName]);
 
-  return dbProducts;
+  const result = [...dbProducts];
+  result.loading = loading;
+  return result;
 }
 

@@ -7,6 +7,7 @@ import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { useDbProducts } from '../../utils/useDbProducts';
+import ProductLoader from '../../components/ProductLoader';
 
 // 1. Updated Data with Category Column
 // const CSV_PRODUCTS = [
@@ -412,7 +413,9 @@ export default function Granite() {
               )}
 
               <div className="products-grid">
-                {paginatedProducts.length === 0 ? (
+                {productsList.loading ? (
+                  <ProductLoader text="Loading products..." />
+                ) : paginatedProducts.length === 0 ? (
                   <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
                     No products found matching the selected filters.
                   </div>

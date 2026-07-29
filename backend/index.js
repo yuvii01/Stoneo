@@ -118,36 +118,27 @@ const sortProductsByOrder = (arr) => {
     });
 };
 
-// GET all products (admin listing - lightweight without base64 images)
+// GET all products (admin & frontend listing - lightweight without base64 images)
 app.get('/api/products/list', async (req, res) => {
     try {
         const filter = {};
-        if (req.query.category) filter.category = req.query.category;
+        if (req.query.category && req.query.category !== 'All' && req.query.category !== 'all') {
+            filter.category = req.query.category;
+        }
         if (req.query.isRoyalGemStone !== undefined) {
             filter.isRoyalGemStone = req.query.isRoyalGemStone === 'true';
         }
+        if (req.query.finish) filter.finish = req.query.finish;
+        if (req.query.color) filter.color = { $regex: req.query.color, $options: 'i' };
+        if (req.query.thickness) filter.thickness = req.query.thickness;
+        if (req.query.slipResistance) filter.slipResistance = req.query.slipResistance;
+        if (req.query.priceRange) filter.priceRange = req.query.priceRange;
+        if (req.query.colorCategory) filter.colorCategory = req.query.colorCategory;
+        if (req.query.interior) filter.interior = req.query.interior;
+        if (req.query.exterior) filter.exterior = req.query.exterior;
 
-        // Exclude large base64 images, description, and features to keep payload ~170KB and query < 400ms
-        const products = await Product.find(filter, {
-            name: 1,
-            category: 1,
-            categories: 1,
-            variety: 1,
-            color: 1,
-            colorCategory: 1,
-            origin: 1,
-            price: 1,
-            startingPrice: 1,
-            maximumPrice: 1,
-            estimatedPrice: 1,
-            finish: 1,
-            interior: 1,
-            exterior: 1,
-            isRoyalGemStone: 1,
-            gemstoneVariety: 1,
-            sortOrder: 1,
-            createdAt: 1
-        }).lean();
+        // Exclude large base64 images array to keep payload ~170KB and query < 400ms, while keeping all metadata fields
+        const products = await Product.find(filter, { images: 0 }).lean();
 
         sortProductsByOrder(products);
 

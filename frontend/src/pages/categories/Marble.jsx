@@ -6,6 +6,7 @@ import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { useDbProducts } from '../../utils/useDbProducts';
+import ProductLoader from '../../components/ProductLoader';
 
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leathered", "Brushed", "Bush-Hammered", "Sandblasted"];
 const ORIGIN_OPTIONS = ["Makrana white", "Katni", "Ambaji", "Rajnagar", "Udaipur green", "Kishangarh", "Jaisalmer Yellow", "Italian", "Spanish", "Vietnamese", "Turkish", "Greece"];
@@ -306,7 +307,9 @@ export default function Marble() {
               )}
 
               <div className="products-grid">
-                {paginatedProducts.length === 0 ? (
+                {productsList.loading ? (
+                  <ProductLoader text="Loading products..." />
+                ) : paginatedProducts.length === 0 ? (
                   <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
                     No products found matching the selected filters.
                   </div>

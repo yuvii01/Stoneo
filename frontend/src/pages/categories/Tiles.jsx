@@ -4,6 +4,7 @@ import { GRANITE_TYPES } from '../utils/constants';
 import '../styles/pages.css';
 import { useDemand } from '../context/DemandContext';
 import { useDbProducts } from '../../utils/useDbProducts';
+import ProductLoader from '../../components/ProductLoader';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -264,7 +265,14 @@ export default function Tiles() {
       <section className="products-section">
         <div className="container">
           <div className="products-grid">
-            {filteredProducts.map((product) => (
+            {productsList.loading ? (
+              <ProductLoader text="Loading products..." />
+            ) : filteredProducts.length === 0 ? (
+              <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
+                No products found matching the selected filters.
+              </div>
+            ) : (
+              filteredProducts.map((product) => (
               <div 
                 key={product.id}
                 className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
@@ -302,7 +310,7 @@ export default function Tiles() {
                   </button>
                 </div>
               </div>
-            ))}
+            )))}
           </div>
         </div>
       </section>

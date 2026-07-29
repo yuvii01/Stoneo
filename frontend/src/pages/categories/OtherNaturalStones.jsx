@@ -7,6 +7,7 @@ import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { OTHER_NATURAL_STONES } from '../../utils/constants';
 import { useDbProducts } from '../../utils/useDbProducts';
+import ProductLoader from '../../components/ProductLoader';
 
 const DEFAULT_DESCRIPTION = 'Exquisite natural stone sourced from verified quarries, engineered for architectural excellence.';
 const DEFAULT_FEATURES = ['Authentic natural texture', 'Weather & frost resistant', 'High compressive strength', 'Low maintenance'];
@@ -330,7 +331,9 @@ export default function OtherNaturalStones() {
               )}
 
               <div className="products-grid">
-                {paginatedProducts.length === 0 ? (
+                {productsList.loading ? (
+                  <ProductLoader text="Loading products..." />
+                ) : paginatedProducts.length === 0 ? (
                   <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
                     No specialty stones found matching the selected filters.
                   </div>

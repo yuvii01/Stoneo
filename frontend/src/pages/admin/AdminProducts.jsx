@@ -966,7 +966,7 @@ export default function AdminProducts() {
                                             >
                                                 ↓
                                             </button>
-                                            <select
+                                            {/* <select
                                                 onChange={(e) => {
                                                     if (e.target.value) {
                                                         moveProductToTarget(product.id || product._id, e.target.value);
@@ -986,7 +986,7 @@ export default function AdminProducts() {
                                                         </option>
                                                     );
                                                 })}
-                                            </select>
+                                            </select> */}
                                         </div>
 
                                         <div style={{ display: 'flex', gap: '10px', marginTop: 'auto' }}>

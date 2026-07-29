@@ -46,14 +46,25 @@ export default function ProductDetail() {
             if (decodedId !== target.name && !isNaN(decodedId)) {
                 navigate(`/products/${encodeURIComponent(target.name)}`, { replace: true, state: { product: target } });
             }
-            return;
         }
+
         const fetchProduct = async () => {
             try {
-                const res = await fetch(`${BACKEND_URL}/api/products/${id}`);
-                if (!res.ok) throw new Error("Product not found");
+                const productId = target ? (target._id || target.id) : id;
+                if (!productId || String(productId).startsWith('db-') || String(productId).startsWith('csv-')) return;
+                const res = await fetch(`${BACKEND_URL}/api/products/${productId}`);
+                if (!res.ok) {
+                    if (!target) throw new Error("Product not found");
+                    return;
+                }
                 const data = await res.json();
-                setProduct(data);
+                setProduct(prev => ({
+                    ...data,
+                    ...prev,
+                    ...data,
+                    images: (data.images && data.images.length > 0) ? data.images : (prev?.images || []),
+                    image: data.image || (data.images && data.images[0]) || prev?.image || ''
+                }));
             } catch (err) {
                 console.error("Error fetching product:", err);
             } finally {

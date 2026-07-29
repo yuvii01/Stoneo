@@ -45,11 +45,17 @@ export default function TilePage() {
         color: ''
     });
 
+    const getThumbnailSrc = (thumb) => {
+        if (!thumb) return null;
+        if (thumb.startsWith('http') || thumb.startsWith('data:')) return thumb;
+        return `${BACKEND_URL}${thumb}`;
+    };
+
     const fetchProducts = async () => {
         try {
             setLoading(true);
             const queryParam = isInterior ? 'interior' : 'exterior';
-            const res = await fetch(`${BACKEND_URL}/api/products?${queryParam}=${encodeURIComponent(displayTitle)}`);
+            const res = await fetch(`${BACKEND_URL}/api/products/list?${queryParam}=${encodeURIComponent(displayTitle)}`);
             const data = await res.json();
             setProducts(data);
         } catch (err) {
@@ -155,8 +161,8 @@ export default function TilePage() {
                                 {filteredProducts.map(product => (
                                     <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}>
                                         <div className="product-image">
-                                            {product.images && product.images.length > 0 ? (
-                                                <img src={product.images[0]} alt={product.name} />
+                                            {(product.thumbnail || (product.images && product.images.length > 0)) ? (
+                                                <img src={getThumbnailSrc(product.thumbnail || product.images[0])} alt={product.name} />
                                             ) : (
                                                 <div style={{ width: '100%', height: '200px', backgroundColor: '#f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa', fontSize: '14px' }}>
                                                     No Image
