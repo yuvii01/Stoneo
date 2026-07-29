@@ -3,8 +3,12 @@
    Designed with 40+ years of Architectural & Stone UX Craft
    ========================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap');
+
 .about-page-wrapper {
-  font-family: var(--font-primary, 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  --font-primary: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-primary);
   color: #2b2927;
   background-color: #0e0d0c;
   overflow-x: hidden;

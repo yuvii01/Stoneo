@@ -18,6 +18,7 @@ import MarbleCarousel from './corousal/MarbleCorousal';
 import IndianMarbleCarousel from './corousal/IndianMarbleCorousal';
 import SandStoneCarousel from './corousal/SandStoneCorousal';
 import ReviewsCarousel from './corousal/ReviewsCorousal';
+import ProjectGallery from '../components/ProjectGallery';
 
 export default function Home() {
   const graniteProducts = useDbProducts('Granite', GRANITE_TYPES);
@@ -249,74 +250,7 @@ export default function Home() {
           <ReviewsCarousel />
         </section>
 
-        {/* Featured Products */}
-        <section className="featured-products">
-          <div style={styles.section} className="container">
-
-            <h2 style={{ fontSize: '40px', fontWeight: '300', marginBottom: '20px' }}>Popular Granite Types</h2>
-
-            <p className="section-subtitle">Browse our collection of premium granite varieties</p>
-            <div className="products-grid">
-              {graniteProducts.slice(0, 6).map((product) => (
-                <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}>
-                  <div className="product-image">
-                    <img src={product.image} alt={product.name} />
-                  </div>
-                  <div className="product-info">
-                    <h3>{product.name}</h3>
-                    <p className="product-description">{product.description}</p>
-                    <div className="product-features">
-                      {product.features.slice(0, 2).map((feature, idx) => (
-                        <span key={idx} className="feature-tag">✓ {feature}</span>
-                      ))}
-                    </div>
-                    <button
-                      className="get-quote-btn"
-                      style={{
-                        backgroundColor: demands.some(d => d.name === product.name) ? '#d9534f' : '',
-                        color: demands.some(d => d.name === product.name) ? '#fff' : ''
-                      }}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (demands.some(d => d.name === product.name)) {
-                          removeDemand(product.name);
-                        } else {
-                          addDemand(product);
-                        }
-                      }}
-                    >
-                      {demands.some(d => d.name === product.name) ? "Remove from Requirement" : "Add to Requirement"}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Recent Projects */}
-        {/* <section className="recent-projects">
-        <div className="container">
-          <h2>Recent Projects</h2>
-          <p className="section-subtitle">Showcasing our finest granite installations</p>
-          <div className="projects-grid">
-            {PROJECTS.slice(0, 4).map((project) => (
-              <div key={project.id} className="project-card">
-                <div className="project-image">
-                  <img src={project.image} alt={project.title} />
-                </div>
-                <div className="project-info">
-                  <h3>{project.title}</h3>
-                  <p className="project-location">📍 {project.location}</p>
-                  <p className="project-type">Granite: {project.graniteType}</p>
-                  <p className="project-area">Area: {project.area}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
+        <ProjectGallery />
 
         {/* Showroom Section */}
         <section className="luxury-showroom-section">

@@ -11,6 +11,7 @@ export default function Header() {
   const isRoyalPage = location.pathname.includes('/royal-gem-stones');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [isApplicationsOpen, setIsApplicationsOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isVisualSearchOpen, setIsVisualSearchOpen] = useState(false);
@@ -23,9 +24,15 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 100);
+
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+      setScrollProgress(progress);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -78,7 +85,23 @@ export default function Header() {
   const effectiveScrolled = isRoyalPage ? false : isScrolled;
 
   return (
-    <header className={`header ${effectiveScrolled ? 'scrolled' : ''} ${isRoyalPage ? 'royal-theme' : ''}`}>
+    <>
+      <div
+        className="page-scroll-progress-bar"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '3px',
+          width: `${scrollProgress}%`,
+          background: 'linear-gradient(90deg, #d4af37 0%, #f5e3a9 50%, #aa820a 100%)',
+          boxShadow: '0 0 10px rgba(212, 175, 55, 0.8)',
+          zIndex: 999999,
+          transition: 'width 0.08s ease-out',
+          pointerEvents: 'none'
+        }}
+      />
+      <header className={`header ${effectiveScrolled ? 'scrolled' : ''} ${isRoyalPage ? 'royal-theme' : ''}`}>
       <div className="header-container">
         <div className="logo-div">
           <Link to="/" className="logo" onClick={closeMenus}>
@@ -343,7 +366,17 @@ export default function Header() {
             </div>
           </div>
 
-          <Link to="/get-quote" className="nav-link cta-button" onClick={closeMenus}>
+          <Link
+            to="/#project-gallery"
+            className="nav-link"
+            onClick={() => {
+              closeMenus();
+              const el = document.getElementById('project-gallery');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
             Project Gallery
           </Link>
 
@@ -384,5 +417,6 @@ export default function Header() {
         }}
       />
     </header>
+    </>
   );
 }
