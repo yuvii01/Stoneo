@@ -98,7 +98,7 @@ export default function TilePage() {
     const selectStyle = {
         padding: '10px 14px', fontSize: '14px', border: '1px solid #ddd',
         borderRadius: '8px', backgroundColor: '#fff', cursor: 'pointer',
-        outline: 'none', minWidth: '150px', fontFamily: "'Jost', sans-serif"
+        outline: 'none', minWidth: '150px', fontFamily: "var(--font-body, 'Manrope', sans-serif)"
     };
 
     return (

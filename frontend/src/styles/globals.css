@@ -16,13 +16,17 @@
   --color-error: #e74c3c;         /* Red for errors */
 
   /* Typography */
-  --font-primary: 'Poppins', sans-serif;
-  --font-secondary: Georgia, serif;
+  --font-primary: 'Manrope', sans-serif;
+  --font-secondary: 'Cormorant Garamond', serif;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+  --heading: 'Cormorant Garamond', serif;
+  --mono: 'Manrope', monospace;
   --font-size-base: 16px;
   --font-size-small: 14px;
   --font-size-large: 18px;
-  --font-size-xl: 32px;
-  --font-size-2xl: 40px;
+  --font-size-xl: 52px;
+  --font-size-2xl: 68px;
 
   /* Spacing */
   --spacing-xs: 4px;
@@ -55,12 +59,12 @@ html {
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-body, 'Manrope', sans-serif);
   color: var(--color-text);
   background-color: var(--color-bg);
   font-size: var(--font-size-base);
-  line-height: 1.6;
-  font-weight: 100;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 /* Container */
@@ -76,31 +80,54 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-secondary);
+h1, h2, h3 {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-weight: 500;
   color: var(--color-primary-dark);
   margin-bottom: var(--spacing-md);
 }
 
+h4, h5, h6 {
+  font-family: var(--font-body, 'Manrope', sans-serif);
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  margin-bottom: var(--spacing-sm);
+}
+
 h1 {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(64px, 5vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   margin-bottom: var(--spacing-lg);
 }
 
 h2 {
-  font-size: var(--font-size-xl);
+  font-size: clamp(48px, 4vw, 56px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
   margin-bottom: var(--spacing-lg);
 }
 
 h3 {
-  font-size: var(--font-size-large);
+  font-size: clamp(34px, 3vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   margin-bottom: var(--spacing-md);
+}
+
+h4 {
+  font-size: 24px;
+  line-height: 1.35;
+  margin-bottom: var(--spacing-sm);
 }
 
 p {
   margin-bottom: var(--spacing-md);
   color: var(--color-text-light);
-  line-height: 1.8;
+  font-family: var(--font-body, 'Manrope', sans-serif);
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 /* ================= RESPONSIVE TYPOGRAPHY ================= */
@@ -109,11 +136,30 @@ p {
 @media (min-width: 1400px) {
   :root {
     --font-size-base: 18px;
-    --font-size-xl: 36px;
-    --font-size-2xl: 48px;
+    --font-size-xl: 56px;
+    --font-size-2xl: 72px;
     --spacing-lg: 28px;
     --spacing-xl: 36px;
     --spacing-2xl: 56px;
+  }
+  
+  h1 {
+    font-size: 72px;
+  }
+  
+  h2 {
+    font-size: 56px;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1024px) {
+  :root {
+    --font-size-xl: 38px;
+    --font-size-2xl: 48px;
+    --spacing-lg: 20px;
+    --spacing-xl: 28px;
+    --spacing-2xl: 40px;
   }
   
   h1 {
@@ -121,26 +167,7 @@ p {
   }
   
   h2 {
-    font-size: 36px;
-  }
-}
-
-/* Desktop */
-@media (max-width: 1024px) {
-  :root {
-    --font-size-xl: 28px;
-    --font-size-2xl: 36px;
-    --spacing-lg: 20px;
-    --spacing-xl: 28px;
-    --spacing-2xl: 40px;
-  }
-  
-  h1 {
-    font-size: 36px;
-  }
-  
-  h2 {
-    font-size: 28px;
+    font-size: 38px;
   }
 }
 
@@ -150,8 +177,8 @@ p {
     --font-size-base: 15px;
     --font-size-small: 13px;
     --font-size-large: 16px;
-    --font-size-xl: 24px;
-    --font-size-2xl: 28px;
+    --font-size-xl: 30px;
+    --font-size-2xl: 38px;
     --spacing-lg: 16px;
     --spacing-xl: 20px;
     --spacing-2xl: 32px;
@@ -163,15 +190,15 @@ p {
   }
   
   h1 {
-    font-size: 28px;
+    font-size: 38px;
   }
   
   h2 {
-    font-size: 22px;
+    font-size: 30px;
   }
   
   h3 {
-    font-size: 18px;
+    font-size: 24px;
   }
 }
 
@@ -181,8 +208,8 @@ p {
     --font-size-base: 14px;
     --font-size-small: 12px;
     --font-size-large: 15px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
+    --font-size-xl: 26px;
+    --font-size-2xl: 34px;
     --spacing-xs: 4px;
     --spacing-sm: 6px;
     --spacing-md: 12px;
@@ -197,16 +224,16 @@ p {
   }
   
   h1 {
-    font-size: 20px;
+    font-size: 34px;
     margin-bottom: var(--spacing-md);
   }
   
   h2 {
-    font-size: 18px;
+    font-size: 26px;
   }
   
   h3 {
-    font-size: 16px;
+    font-size: 22px;
   }
 }
 
@@ -228,11 +255,12 @@ a {
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-base);
   font-weight: 600;
+  letter-spacing: 0.02em;
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
   text-decoration: none;
-  font-family: var(--font-primary);
+  font-family: var(--font-body, 'Manrope', sans-serif);
 }
 
 .btn-primary {
@@ -344,13 +372,14 @@ img {
 }
 
 /* Responsive */
+/* Responsive */
 @media (max-width: 768px) {
   h1 {
-    font-size: 28px;
+    font-size: 38px;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 30px;
   }
 
   .container {
@@ -366,11 +395,11 @@ img {
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 24px;
+    font-size: 34px;
   }
 
   h2 {
-    font-size: 20px;
+    font-size: 26px;
   }
 
   .btn {

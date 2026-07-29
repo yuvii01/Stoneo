@@ -46,8 +46,9 @@
 }
 
 .granite-header {
-  background-image: url('https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Black-Galaxy-Granite-Swatch.webp');
+  background-image: linear-gradient(rgba(15, 16, 19, 0.6), rgba(15, 16, 19, 0.7)), url('/granite_images/Classic%20Paradiso%20Granite.webp');
   background-size: cover;
+  background-position: center;
 }
 
 
@@ -427,7 +428,7 @@
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--spacing-2xl);
   margin: var(--spacing-2xl) 0;
   transition: all 0.3s ease;
@@ -435,7 +436,7 @@
 
 @media (max-width: 1024px) {
   .products-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: var(--spacing-xl);
   }
 }
@@ -454,6 +455,9 @@
   box-shadow: var(--shadow-sm);
   transition: all 0.3s ease;
   cursor: pointer;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100%;
 }
 
 .product-card:hover {
@@ -507,6 +511,38 @@
 
 .product-info {
   padding: var(--spacing-lg);
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+}
+
+.product-info h3 {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: 19px !important;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0 0 8px 0;
+  color: #111111;
+}
+
+@media (max-width: 768px) {
+  .product-info h3 {
+    font-size: 17px !important;
+  }
+}
+
+.product-info p {
+  font-family: var(--font-body, 'Manrope', sans-serif);
+  font-size: 13px !important;
+  color: #666666;
+  line-height: 1.5;
+  margin: 0 0 14px 0;
+}
+
+.product-info > .get-quote-btn,
+.product-info > div:last-child {
+  margin-top: auto !important;
+  width: 100%;
 }
 
 .product-price {
@@ -2409,18 +2445,18 @@
 
 /* Get Quote Button on Product Cards */
 .get-quote-btn {
-  margin-inline: 30px;
-  width: 80%;
-  padding: var(--spacing-md);
-  margin-top: var(--spacing-md);
-  /* background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); */
-  /* color: var(--color-white); */
-  border: solid brown 2px;
+  margin: auto 0 0 0 !important;
+  width: 100% !important;
+  padding: 10px 14px;
+  border: solid #8b4513 1.5px;
   border-radius: var(--border-radius-md);
-  font-size: var(--font-size-base);
+  font-family: var(--font-body, 'Manrope', sans-serif);
+  font-size: 13px !important;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-align: center;
+  display: block;
 }
 
 .get-quote-btn:hover {
@@ -2565,7 +2601,7 @@
     background-color: var(--bg-light);
     padding: 60px 20px;
     text-align: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     overflow: hidden;
   }
 

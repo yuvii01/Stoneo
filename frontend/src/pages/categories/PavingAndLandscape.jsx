@@ -51,11 +51,16 @@ const ALL_PRODUCTS = PAVING_PRODUCTS.map((csvItem, index) => {
   };
 });
 
-const MIN_PRICE = Math.min(...ALL_PRODUCTS.map(p => Number(p.price || 30)));
-const MAX_PRICE = Math.max(...ALL_PRODUCTS.map(p => Number(p.price || 100)));
+const MIN_PRICE = 30;
+const MAX_PRICE = 100;
 
 export default function PavingAndLandscape() {
   const productsList = useDbProducts('Paving & Landscape', ALL_PRODUCTS);
+  const dynamicMaxPrice = useMemo(() => {
+    if (!productsList || productsList.length === 0) return 100;
+    const maxVal = Math.max(...productsList.map(p => Number(p.maxPrice || p.price || 100)));
+    return Math.max(100, Math.ceil(maxVal));
+  }, [productsList]);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -80,7 +85,7 @@ export default function PavingAndLandscape() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: MAX_PRICE
+    maxPrice: 100
   });
 
   useEffect(() => {
@@ -175,8 +180,8 @@ export default function PavingAndLandscape() {
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.some(t => parseInt(t) === th));
       const matchesTouch = (filters.touch || []).length === 0 || (p.touch && (filters.touch || []).some(tch => p.touch.includes(tch)));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
-      const matchesPrice = (p.minPrice || (Number(p.price) - 30)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 30)) >= selectedPrice;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
 
       return matchesUrlCategory && matchesType && matchesOrigin && matchesColor && matchesThickness && matchesTouch && matchesPrice;
     });
@@ -323,6 +328,15 @@ export default function PavingAndLandscape() {
               </div>
 
               <div className="filter-section">
+                <StonePriceSlider
+                  minPrice={MIN_PRICE}
+                  maxPrice={dynamicMaxPrice}
+                  currentMaxPrice={filters.maxPrice}
+                  onChange={(val) => handleFilterChange('maxPrice', val)}
+                />
+              </div>
+
+              <div className="filter-section">
                 <h4>Color</h4>
                 <div className="color-swatches">
                   {[
@@ -369,7 +383,7 @@ export default function PavingAndLandscape() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.category.length > 0 || filters.origin.length > 0 || filters.touch.length > 0 || filters.color.length > 0 || filters.maxPrice < MAX_PRICE || categoryFilter !== 'All') && (
+              {(filters.category.length > 0 || filters.origin.length > 0 || filters.touch.length > 0 || filters.color.length > 0 || filters.maxPrice < dynamicMaxPrice || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -401,9 +415,16 @@ export default function PavingAndLandscape() {
                     </div>
                   ))}
 
+                  {(filters.maxPrice !== undefined && filters.maxPrice < dynamicMaxPrice) && (
+                    <div style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      Up to ₹{filters.maxPrice}
+                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('maxPrice', dynamicMaxPrice)}>×</span>
+                    </div>
+                  )}
+
                   <button
                     onClick={() => {
-                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: MAX_PRICE });
+                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: 100 });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

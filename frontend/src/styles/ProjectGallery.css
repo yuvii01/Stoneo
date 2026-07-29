@@ -3,11 +3,11 @@
    Designed with 40+ years of Architectural UI/UX Expertise
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap');
+/* Fonts imported globally in index.html */
 
 .project-gallery-section {
   position: relative;
-  font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   background-color: #0e0d0c;
   background-image: 
     radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
@@ -64,9 +64,9 @@
 }
 
 .pg-title {
-  font-family: var(--font-secondary, Georgia, serif);
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: clamp(34px, 5vw, 52px);
-  font-weight: 700;
+  font-weight: 500;
   color: #ffffff;
   line-height: 1.18;
   margin-bottom: 18px;
@@ -80,7 +80,7 @@
 }
 
 .pg-subtitle {
-  font-family: var(--font-primary, 'Poppins', sans-serif);
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: clamp(16px, 1.8vw, 19px);
   color: #a8a29c;
   line-height: 1.75;
@@ -102,7 +102,7 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #b5b0aa;
-  font-family: var(--font-primary, 'Poppins', sans-serif);
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: 14px;
   font-weight: 500;
   padding: 10px 24px;
@@ -268,9 +268,9 @@
 }
 
 .pg-card-title {
-  font-family: var(--font-secondary, Georgia, serif);
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 500;
   color: #ffffff;
   line-height: 1.25;
   margin: 0;
@@ -413,9 +413,9 @@
 }
 
 .pg-modal-title {
-  font-family: var(--font-secondary, Georgia, serif);
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 500;
   color: #ffffff;
   margin-bottom: 8px;
 }

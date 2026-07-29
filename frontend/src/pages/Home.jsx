@@ -202,25 +202,25 @@ export default function Home() {
           </div>
         </section>
 
-        <section style={{ backgroundColor: "#ffffff", color: "#111", padding: "clamp(40px, 8vw, 80px) 20px", fontFamily: "'Jost', sans-serif" }}>
+        <section style={{ backgroundColor: "#ffffff", color: "#111", padding: "clamp(40px, 8vw, 80px) 20px", fontFamily: "var(--font-body, 'Manrope', sans-serif)" }}>
           <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "30px", textAlign: "center" }}>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+              <div style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 500, letterSpacing: "2px" }}>
                 <CountUp end={1000} duration={2.5} enableScrollSpy scrollSpyOnce />+
               </div>
               <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Projects</div>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+              <div style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 500, letterSpacing: "2px" }}>
                 <CountUp end={25} duration={2.5} enableScrollSpy scrollSpyOnce />+
               </div>
               <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Years in Industry</div>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <div style={{ fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 300, letterSpacing: "2px" }}>
+              <div style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 500, letterSpacing: "2px" }}>
                 <CountUp end={8} duration={2.5} enableScrollSpy scrollSpyOnce />
               </div>
               <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Countries we are available</div>

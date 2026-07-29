@@ -54,7 +54,7 @@ export default function House() {
                 borderBottom: '1px solid rgba(0,0,0,0.1)'
             }}>
                 <h1 style={{
-                    fontFamily: '"Playfair Display", "Georgia", serif',
+                    fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)",
                     fontSize: '2.5rem',
                     fontWeight: '300',
                     color: '#654321',
@@ -131,6 +131,7 @@ export default function House() {
 
                         {/* Text */}
                         <h2 style={{
+                            fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)",
                             fontSize: '1.8rem',
                             margin: 0,
                             fontWeight: 400,

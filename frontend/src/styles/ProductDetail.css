@@ -3,7 +3,7 @@
    Award-Winning Architectural Stone Dossier & Atelier Presentation
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap');
+/* Fonts imported globally in index.html */
 
 :root {
   --pd-bg-page: #ffffff;
@@ -30,7 +30,7 @@
 .pd-page-container {
   background-color: var(--pd-bg-page);
   color: var(--pd-text-primary);
-  font-family: 'Outfit', -apple-system, sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   min-height: 100vh;
   padding: 110px 20px 90px 20px;
   position: relative;
@@ -79,7 +79,7 @@
   background: var(--pd-bg-surface);
   border: 1px solid var(--pd-border);
   color: var(--pd-text-primary);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: 14px;
   font-weight: 500;
   padding: 10px 20px;
@@ -352,9 +352,9 @@
 }
 
 .pd-product-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(32px, 4vw, 44px);
-  font-weight: 700;
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 500;
   color: var(--pd-text-primary);
   margin: 0 0 16px 0;
   line-height: 1.15;
@@ -511,7 +511,7 @@
   width: 100%;
   background: linear-gradient(135deg, #18191d 0%, #292c33 100%);
   color: #ffffff;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: 16px;
   font-weight: 600;
   padding: 16px 28px;
@@ -548,7 +548,7 @@
   background: #ffffff;
   color: #128C7E;
   border: 1px solid #128C7E;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: 14px;
   font-weight: 600;
   padding: 12px 20px;
@@ -572,7 +572,7 @@
   background: var(--pd-bg-surface);
   color: var(--pd-text-primary);
   border: 1px solid var(--pd-border);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: 14px;
   font-weight: 600;
   padding: 12px 20px;
@@ -649,7 +649,7 @@
 .pd-tab-btn {
   background: transparent;
   border: none;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   font-size: 16px;
   font-weight: 600;
   color: var(--pd-text-secondary);
@@ -819,7 +819,7 @@
   position: absolute;
   top: 20px;
   right: 24px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: 38px;
   font-weight: 700;
   color: var(--pd-border);
@@ -858,9 +858,9 @@
 }
 
 .pd-section-title-row h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: clamp(26px, 3.5vw, 36px);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--pd-text-primary);
   margin: 0;
 }

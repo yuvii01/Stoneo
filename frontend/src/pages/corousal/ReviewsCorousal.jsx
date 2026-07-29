@@ -11,7 +11,7 @@ const originalItems = [
 
 /* ─── Styles ─────────────────────────────────────────────── */
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap');
+  /* Fonts imported globally in index.html */
 
   .rev-root {
     --bg-color: #fbfaf8;
@@ -20,7 +20,7 @@ const css = `
     --accent-gold: #c8a97e;
     --card-bg: #ffffff;
     
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     width: 100%;
     padding: 100px 0 120px;
     background: var(--bg-color);
@@ -69,7 +69,7 @@ const css = `
   }
   
   .rev-eyebrow {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.25em;
@@ -92,7 +92,7 @@ const css = `
   }
   
   .rev-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: clamp(36px, 6vw, 60px);
     font-weight: 600;
     color: var(--text-primary);
@@ -166,7 +166,7 @@ const css = `
     position: absolute;
     top: 15px;
     right: 35px;
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 140px;
     color: rgba(200,169,126,0.12);
     line-height: 1;
@@ -190,7 +190,7 @@ const css = `
   }
 
   .rev-text {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: clamp(19px, 2.2vw, 22px);
     line-height: 1.55;
     color: var(--text-primary);

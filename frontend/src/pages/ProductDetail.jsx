@@ -79,7 +79,7 @@ export default function ProductDetail() {
         return (
             <div className="pd-page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', color: '#333' }}>Curating Stone Dossier...</h2>
+                    <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '28px', color: '#333' }}>Curating Stone Dossier...</h2>
                     <p style={{ color: '#888', marginTop: '8px' }}>Retrieving live Kishangarh slab specifications</p>
                 </div>
             </div>
@@ -89,7 +89,7 @@ export default function ProductDetail() {
     if (!product) {
         return (
             <div className="pd-page-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '32px', color: '#111' }}>Stone Dossier Not Found</h2>
+                <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '32px', color: '#111' }}>Stone Dossier Not Found</h2>
                 <p style={{ color: '#666', marginTop: '8px' }}>The requested natural stone could not be located in our active catalogue.</p>
                 <button 
                     onClick={() => navigate(-1)} 

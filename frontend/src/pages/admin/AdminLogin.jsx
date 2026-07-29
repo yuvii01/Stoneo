@@ -33,10 +33,10 @@ export default function AdminLogin() {
       alignItems: 'center',
       height: '100vh',
       backgroundColor: '#f5f5f5',
-      fontFamily: "'Jost', sans-serif"
+      fontFamily: "var(--font-body, 'Manrope', sans-serif)"
     }}>
       <div className="admin-login-box">
-        <h2 style={{ textAlign: 'center', marginBottom: '24px', fontWeight: 300, fontSize: '32px' }}>Admin Login</h2>
+        <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", textAlign: 'center', marginBottom: '24px', fontWeight: 500, fontSize: '32px' }}>Admin Login</h2>
         {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
         <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>

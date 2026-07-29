@@ -153,7 +153,7 @@ export default function ProjectGallery() {
                   src={project.image}
                   alt={project.title}
                   onError={(e) => {
-                    e.target.src = 'https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Stone-texture-Banner.webp';
+                    e.target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
                   }}
                   loading="lazy"
                 />
@@ -201,7 +201,7 @@ export default function ProjectGallery() {
                 src={selectedProject.image}
                 alt={selectedProject.title}
                 onError={(e) => {
-                  e.target.src = 'https://www.regattagranitesindia.com/wp-content/uploads/2026/04/Stone-texture-Banner.webp';
+                  e.target.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
                 }}
               />
             </div>

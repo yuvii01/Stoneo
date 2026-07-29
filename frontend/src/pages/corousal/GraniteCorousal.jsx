@@ -20,7 +20,7 @@ const originalItems = [
 
 /* ─── Styles ─────────────────────────────────────────────── */
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Jost:wght@300;400;500&display=swap');
+  /* Fonts imported globally in index.html */
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -33,7 +33,7 @@ const css = `
     --badge-txt: #d4b400;
     --card-radius: 18px;
    
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     width: 100%;
     padding: 40px 0 48px;
     overflow: hidden;
@@ -47,7 +47,7 @@ const css = `
     padding: 0 16px;
   }
   .gc-eyebrow {
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.18em;
@@ -57,7 +57,7 @@ const css = `
     opacity: 0.7;
   }
   .gc-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: clamp(28px, 5vw, 52px);
     font-weight: 600;
     color: var(--text-dark);
@@ -119,7 +119,7 @@ const css = `
     width: 300px;
     font-size: 1.1rem;
     font-weight: 500;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     border: 1.5px solid var(--text-dark);
     border-radius: 50px;
     background: transparent;
@@ -157,7 +157,7 @@ const css = `
   .gc-label {
     text-align: center;
     margin-top: 20px;
-    font-family: 'Jost', sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.14em;

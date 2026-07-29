@@ -1,7 +1,7 @@
 /* ==========================================================================
    STONEO ARCHITECTURAL JOURNAL — AWARD-WINNING SINGLE BLOG SHOWCASE
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap');
+/* Fonts imported globally in index.html */
 
 /* Reading Progress Bar Fixed at Top */
 .bd-progress-bar-container {
@@ -27,7 +27,7 @@
     min-height: 100vh;
     background-color: #fcfbf9;
     color: #1c1d20;
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: 100px;
@@ -169,10 +169,10 @@
 }
 
 .bd-title {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.025em;
     font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 400;
+    font-weight: 500;
     line-height: 1.18;
     color: #111111;
     margin-bottom: 28px;
@@ -313,7 +313,7 @@
 
 /* Award-Winning Editorial Drop Cap */
 .bd-article-content > p:first-of-type::first-letter {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 4.8rem;
     line-height: 0.85;
     float: left;
@@ -328,10 +328,10 @@
 }
 
 .bd-article-content h2 {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.02em;
     font-size: 2.1rem;
-    font-weight: 400;
+    font-weight: 500;
     color: #111111;
     margin-top: 52px;
     margin-bottom: 22px;
@@ -340,10 +340,10 @@
 }
 
 .bd-article-content h3 {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.015em;
     font-size: 1.55rem;
-    font-weight: 400;
+    font-weight: 500;
     color: #222;
     margin-top: 36px;
     margin-bottom: 16px;
@@ -356,7 +356,7 @@
     background: #f6f4f0;
     border-left: 4px solid #d4af37;
     border-radius: 0 12px 12px 0;
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 1.45rem;
     font-style: italic;
     color: #1a1a1a;
@@ -367,7 +367,7 @@
 .bd-pull-quote-author {
     display: block;
     margin-top: 14px;
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-body, 'Manrope', sans-serif);
     font-style: normal;
     font-size: 0.88rem;
     font-weight: 600;
@@ -425,9 +425,10 @@
 }
 
 .bd-sidebar-title {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.015em;
     font-size: 1.25rem;
+    font-weight: 500;
     color: #111;
     margin-bottom: 18px;
     padding-bottom: 12px;
@@ -510,8 +511,9 @@
 }
 
 .bd-featured-slab-title {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 1.3rem;
+    font-weight: 500;
     margin-bottom: 8px;
     color: #fff;
 }
@@ -550,8 +552,9 @@
 }
 
 .bd-author-name {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 1.35rem;
+    font-weight: 500;
     color: #111;
     margin-bottom: 4px;
 }
@@ -583,9 +586,10 @@
 }
 
 .bd-reactions-title {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.015em;
     font-size: 1.5rem;
+    font-weight: 500;
     color: #111;
     margin-bottom: 8px;
 }
@@ -662,9 +666,10 @@
 }
 
 .bd-related-header h2 {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.02em;
     font-size: 2.2rem;
+    font-weight: 500;
     color: #111;
 }
 
@@ -732,8 +737,9 @@
 }
 
 .bd-related-title {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 1.35rem;
+    font-weight: 500;
     color: #111;
     margin-bottom: 12px;
     line-height: 1.35;
@@ -780,9 +786,10 @@
 }
 
 .bd-featured-showcase-header h2 {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     letter-spacing: -0.02em;
     font-size: 2rem;
+    font-weight: 500;
     color: #d4af37;
     margin-bottom: 8px;
 }
@@ -844,8 +851,9 @@
 }
 
 .bd-featured-slab-card-title {
-    font-family: 'Plus Jakarta Sans', 'Outfit', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
     font-size: 1.35rem;
+    font-weight: 500;
     color: #fff;
     margin-bottom: 12px;
 }

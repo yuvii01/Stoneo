@@ -35,7 +35,7 @@ export default function Projects() {
                       <strong>Location:</strong> {project.location}
                     </span>
                     <span className="meta-item">
-                      <strong>Granite:</strong> {project.graniteType}
+                      <strong>Granite:</strong> {project.graniteType || project.stoneUsed}
                     </span>
                     <span className="meta-item">
                       <strong>Area:</strong> {project.area}

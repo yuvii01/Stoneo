@@ -28,7 +28,7 @@ export default function ProductLoader({ text = "Loading products..." }) {
         }
       `}</style>
       <h3 style={{
-        fontFamily: "'Playfair Display', serif",
+        fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)",
         fontSize: '22px',
         color: '#222',
         fontWeight: 500,

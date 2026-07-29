@@ -240,7 +240,7 @@ export default function Tiles() {
     <div className="page products-page">
       <section className="page-header">
         <div className="container container-heading">
-          <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Granite Collections</h1>
+          <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Tiles Collections</h1>
           <p>Browse our premium selection of {categoryFilter.toLowerCase()} imported varieties</p>
         </div>
       </section>

@@ -1,7 +1,7 @@
 .royal-page {
   background-color: #050505;
   color: #fff;
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-body, 'Manrope', sans-serif);
   overflow-x: clip;
 }
 
@@ -32,7 +32,7 @@
 
 /* 2. Premium Light Sweep */
 .loader-fade-2 {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: 2rem;
   letter-spacing: 10px;
   text-transform: uppercase;
@@ -104,9 +104,10 @@
 }
 
 .royal-slide-content h2 {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: clamp(2rem, 5vw, 4rem);
   color: #fff;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 2px;
   margin-bottom: 30px;
   text-transform: uppercase;
@@ -185,10 +186,11 @@
 }
 
 .royal-section-title {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   text-align: center;
   font-size: 2.5rem;
   color: #d4af37;
-  font-weight: 300;
+  font-weight: 500;
   margin-bottom: 80px;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -251,9 +253,10 @@
 }
 
 .stone-info h3 {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
   font-size: 2.5rem;
   color: #fff;
-  font-weight: 300;
+  font-weight: 500;
   margin-bottom: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;

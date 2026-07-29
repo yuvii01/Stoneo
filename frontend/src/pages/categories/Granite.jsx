@@ -136,10 +136,15 @@ const TOUCH_OPTIONS = ["Polished", "Leather", "Flamed", "Lapotra", "Antique"];
 const ORIGIN_OPTIONS = ["South India", "North India", "Imported", "Alaska"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 const MIN_PRICE = 50;
-const MAX_PRICE = 300;
+const MAX_PRICE = 100;
 
 export default function Granite() {
   const productsList = useDbProducts('Granite');
+  const dynamicMaxPrice = useMemo(() => {
+    if (!productsList || productsList.length === 0) return 100;
+    const maxVal = Math.max(...productsList.map(p => Number(p.maxPrice || p.price || 100)));
+    return Math.max(100, Math.ceil(maxVal));
+  }, [productsList]);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, removeDemand, demands } = useDemand();
@@ -164,7 +169,7 @@ export default function Granite() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: MAX_PRICE
+    maxPrice: 100
   });
 
   useEffect(() => {
@@ -203,8 +208,8 @@ export default function Granite() {
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : MAX_PRICE;
-      const matchesPrice = (p.minPrice || (Number(p.price) - 50)) <= selectedPrice && (p.maxPrice || (Number(p.price) + 50)) >= selectedPrice;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
       const matchesType = !typeParam || typeParam !== 'alaska' || p.name.toLowerCase().includes('alaska');
 
       return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
@@ -311,7 +316,7 @@ export default function Granite() {
               <div className="filter-section">
                 <StonePriceSlider
                   minPrice={MIN_PRICE}
-                  maxPrice={MAX_PRICE}
+                  maxPrice={dynamicMaxPrice}
                   currentMaxPrice={filters.maxPrice}
                   onChange={(val) => handleFilterChange('maxPrice', val)}
                 />
@@ -399,9 +404,16 @@ export default function Granite() {
                     </div>
                   ))}
 
+                  {(filters.maxPrice !== undefined && filters.maxPrice < dynamicMaxPrice) && (
+                    <div style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      Up to ₹{filters.maxPrice}
+                      <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('maxPrice', dynamicMaxPrice)}>×</span>
+                    </div>
+                  )}
+
                   <button
                     onClick={() => {
-                      setFilters({ origin: [], color: [], touch: [], maxPrice: MAX_PRICE });
+                      setFilters({ origin: [], color: [], touch: [], maxPrice: 100 });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

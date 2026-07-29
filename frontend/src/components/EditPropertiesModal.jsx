@@ -166,7 +166,7 @@ export default function EditPropertiesModal({ isOpen, onClose, product, onSaved 
     const modalStyle = {
         backgroundColor: '#fff', borderRadius: '16px', width: '100%',
         maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto',
-        padding: '40px', fontFamily: "'Jost', sans-serif",
+        padding: '40px', fontFamily: "var(--font-body, 'Manrope', sans-serif)",
         boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
     };
 
@@ -190,7 +190,7 @@ export default function EditPropertiesModal({ isOpen, onClose, product, onSaved 
         <div style={overlayStyle} onClick={onClose}>
             <div style={modalStyle} onClick={e => e.stopPropagation()}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-                    <h2 style={{ margin: 0, fontSize: '24px', fontWeight: 400, color: '#111' }}>
+                    <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", margin: 0, fontSize: '26px', fontWeight: 500, color: '#111' }}>
                         {product && product.id ? 'Edit Product' : 'Add New Product'}
                     </h2>
                     <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '28px', cursor: 'pointer', color: '#999', lineHeight: 1 }}>×</button>

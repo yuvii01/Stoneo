@@ -250,19 +250,19 @@ export default function GetQuote() {
                   ● 15-Min Reply Avg.
                 </span> */}
               </div>
-              <p className="quote-form-subtitle">
+              {/* <p className="quote-form-subtitle">
                 Customize your project scope below. Hitting "Send via WhatsApp" will launch a pre-formatted inquiry with our senior desk.
-              </p>
+              </p> */}
 
               <form onSubmit={handleSubmit}>
-                {message && (
+                {/* {message && (
                   <div className={`quote-alert-box ${message.includes('opening') ? 'success' : 'error'}`}>
                     {message}
                   </div>
-                )}
+                )} */}
 
                 {/* Scope Chips */}
-                <span className="scope-chips-label">1. Select Project Scope (Optional)</span>
+                {/* <span className="scope-chips-label">1. Select Project Scope (Optional)</span>
                 <div className="scope-chips-row">
                   {PROJECT_SCOPES.map(scope => (
                     <button
@@ -274,9 +274,9 @@ export default function GetQuote() {
                       {scope}
                     </button>
                   ))}
-                </div>
+                </div> */}
 
-                {/* Area Chips */}
+                {/* Area Chips
                 <span className="scope-chips-label">2. Estimated Surface Area (Optional)</span>
                 <div className="scope-chips-row">
                   {AREA_OPTIONS.map(area => (
@@ -289,7 +289,7 @@ export default function GetQuote() {
                       {area}
                     </button>
                   ))}
-                </div>
+                </div> */}
 
                 {/* Inputs */}
                 <div className="luxury-form-group">
@@ -303,7 +303,7 @@ export default function GetQuote() {
                       className="luxury-input"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="e.g. Architect Vikram Sharma"
+                      placeholder="e.g. Yamya Agarwal"
                       required
                     />
                   </div>
