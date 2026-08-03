@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { COMPANY_INFO } from '../utils/constants';
 import '../styles/pages.css';
@@ -6,6 +6,7 @@ import '../styles/GetQuote.css';
 import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema } from '../utils/seo';
 import { useDemand } from '../context/DemandContext';
+import { useDbProducts } from '../utils/useDbProducts';
 
 const PROJECT_SCOPES = [
   "Residential Flooring",
@@ -22,6 +23,89 @@ const AREA_OPTIONS = [
   "5,000+ sq.ft (Commercial)"
 ];
 
+const RECOMMENDED_GRANITES = [
+  {
+    name: "Absolute Black Granite",
+    image: "/granite_images/Absolute Black Granite.webp",
+    category: "Black",
+    finish: "Polished",
+    price: 110,
+    features: ["Deep black uniformity", "High durability", "Scratch resistant"]
+  },
+  {
+    name: "Black Galaxy Granite",
+    image: "/granite_images/Black Galaxy Granite.webp",
+    category: "Black",
+    finish: "Polished",
+    price: 140,
+    features: ["Golden speckles", "Premium gloss", "Heat resistant"]
+  },
+  {
+    name: "Alaska White Granite",
+    image: "/granite_images/Alaska White Granite.webp",
+    category: "White",
+    finish: "Polished",
+    price: 135,
+    features: ["Exotic vein patterns", "Stain resistant", "Modern aesthetic"]
+  },
+  {
+    name: "Colonial Gold Granite",
+    image: "/granite_images/Colonial Gold Granite.webp",
+    category: "Gold",
+    finish: "Polished",
+    price: 125,
+    features: ["Warm golden tones", "Classic luxury", "Weather resistant"]
+  },
+  {
+    name: "Tan Brown Granite",
+    image: "/granite_images/Tan Brown Granite.jpg",
+    category: "Brown",
+    finish: "Polished",
+    price: 95,
+    features: ["Rich brown mineral crystals", "Low maintenance", "All-weather surface"]
+  },
+  {
+    name: "Kashmir White Granite",
+    image: "/granite_images/Kashmir White Granite.jpg",
+    category: "White",
+    finish: "Polished",
+    price: 105,
+    features: ["Subtle grey & garnet specks", "Architectural grade", "Stain resistant"]
+  },
+  {
+    name: "Black Forest Granite",
+    image: "/granite_images/Black Forest Granite.webp",
+    category: "Black",
+    finish: "Polished",
+    price: 130,
+    features: ["Striking white veins on black", "Exotic look", "Zero absorption"]
+  },
+  {
+    name: "Blue Dunes Granite",
+    image: "/granite_images/Blue Dunes Granite.jpg",
+    category: "Blue",
+    finish: "Polished",
+    price: 120,
+    features: ["Unique earth & blue dunes", "Designer favorite", "High density"]
+  },
+  {
+    name: "Viscon White Granite",
+    image: "/granite_images/Viscon White Granite.webp",
+    category: "White",
+    finish: "Polished",
+    price: 115,
+    features: ["Swirling grey & white waves", "Architectural grade", "Easy to clean"]
+  },
+  {
+    name: "Imperial Gold Granite",
+    image: "/granite_images/Imperial Gold Granite.webp",
+    category: "Gold",
+    finish: "Polished",
+    price: 135,
+    features: ["Rich golden veins", "Royal elegance", "High durability"]
+  }
+];
+
 export default function GetQuote() {
   const SEOHeadComponent = (
     <SEOHead
@@ -31,10 +115,41 @@ export default function GetQuote() {
   );
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { demands, clearDemands, removeDemand } = useDemand();
+  const { demands, addDemand, clearDemands, removeDemand } = useDemand();
 
   const graniteName = searchParams.get('stone') || '';
-  const graniteImage = searchParams.get('image') || 'http://petrosstone.com/wp-content/uploads/2021/06/Calacatta-Oro-Italian-Marble-for-Flooring.jpg';
+  const graniteImage = searchParams.get('image') || '/granite_images/Alaska White Granite.webp';
+
+  const dbGranites = useDbProducts('Granite', RECOMMENDED_GRANITES);
+  const granitePool = useMemo(() => {
+    if (dbGranites && Array.isArray(dbGranites) && dbGranites.length >= 3) {
+      return dbGranites;
+    }
+    return RECOMMENDED_GRANITES;
+  }, [dbGranites]);
+
+  const availableRecommended = useMemo(() => {
+    return granitePool.filter(g => {
+      const gName = (g.name || '').toLowerCase();
+      const isAlreadyInDemands = (demands || []).some(d => (d.name || '').toLowerCase() === gName);
+      const isCurrentStoneParam = graniteName && graniteName.toLowerCase() === gName;
+      return !isAlreadyInDemands && !isCurrentStoneParam;
+    });
+  }, [granitePool, demands, graniteName]);
+
+  const top3Recommended = useMemo(() => {
+    return availableRecommended.slice(0, 3);
+  }, [availableRecommended]);
+
+  const handleSelectRecommended = (stone) => {
+    addDemand({
+      name: stone.name,
+      image: stone.image || stone.thumbnail,
+      color: stone.color || stone.category || '',
+      finish: Array.isArray(stone.finish) ? stone.finish[0] : (stone.finish || 'Polished'),
+      features: stone.features || ['Premium Grade', 'Custom Cut']
+    });
+  };
   // Helper to format requirements string from current demands or URL params
   const formatRequirementsText = (currentDemands, stoneName) => {
     if (currentDemands && currentDemands.length > 0) {
@@ -165,7 +280,7 @@ export default function GetQuote() {
             <div className="luxury-panel-card">
               <div className="panel-header-bar">
                 <h2 className="panel-title">
-                  <span>🏛️</span>
+                  {/* <span>🏛️</span> */}
                   {displayTitle}
                 </h2>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -217,16 +332,105 @@ export default function GetQuote() {
                     </div>
                   ))}
                 </div>
-              ) : (
+              ) : graniteName ? (
                 <div className="featured-slab-card">
-                  <img src={graniteImage} alt={displayTitle} className="slab-preview-img" />
+                  <img src={graniteImage} alt={graniteName} className="slab-preview-img" />
                   <div className="slab-info-overlay">
-                    {graniteName && <h3>{graniteName}</h3>}
+                    <h3>{graniteName}</h3>
                     <div className="slab-badges-row">
                       <span className="luxury-badge">✦ 100% Premium Grade</span>
                       <span className="luxury-badge">✦ Custom Cut & Polish</span>
                       <span className="luxury-badge">✦ Direct Quarry Pricing</span>
                     </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="empty-portfolio-showcase">
+                  <div className="empty-showcase-header">
+                    {/* <span className="empty-showcase-icon">🏛️</span> */}
+                    <div>
+                      <h3 className="empty-showcase-title">Your Quotation Portfolio is Empty</h3>
+                      <span className="empty-showcase-subtitle">Atelier Stone Curation Desk</span>
+                    </div>
+                  </div>
+
+                  <p className="empty-showcase-desc">
+                    You haven’t added any stone samples yet. Select from our <strong>Recommended Top Granites</strong> below, browse our collections, or specify custom architectural requirements in the notes on the right.
+                  </p>
+
+                  {/* <div className="empty-showcase-steps">
+                    <div className="empty-step-card">
+                      <span className="empty-step-num">01</span>
+                      <div className="empty-step-content">
+                        <strong>Curate Samples</strong>
+                        <span>Add from recommendations below or browse our gallery.</span>
+                      </div>
+                    </div>
+
+                    <div className="empty-step-card">
+                      <span className="empty-step-num">02</span>
+                      <div className="empty-step-content">
+                        <strong>Specify Finishes</strong>
+                        <span>Note dimensions, edge profiles, or finishes in the form.</span>
+                      </div>
+                    </div>
+
+                    <div className="empty-step-card">
+                      <span className="empty-step-num">03</span>
+                      <div className="empty-step-content">
+                        <strong>15-Min Dispatch</strong>
+                        <span>Receive factory-direct pricing & lot photos via WhatsApp.</span>
+                      </div>
+                    </div>
+                  </div> */}
+
+                  <div className="empty-showcase-actions">
+                    <Link to="/category/granite" className="empty-action-btn primary">
+                      <span>✦</span> Browse Granite Collection
+                    </Link>
+                    <Link to="/category/marble" className="empty-action-btn outline">
+                      <span>✦</span> Explore Marble
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {/* ================= RECOMMENDED GRANITES SECTION ================= */}
+              {top3Recommended.length > 0 && (
+                <div className="recommended-granites-section">
+                  <div className="recommended-section-header">
+                    <h3 className="recommended-title">
+                      <span>✨</span> Recommended Top Granites
+                    </h3>
+                    <span className="recommended-subtitle">Click "+ Add to Portfolio" to select</span>
+                  </div>
+
+                  <div className="recommended-granites-grid">
+                    {top3Recommended.map((stone, idx) => (
+                      <div key={stone.id || stone.name || idx} className="recommended-stone-card">
+                        <div className="recommended-img-wrapper">
+                          <img src={stone.image || stone.thumbnail} alt={stone.name} />
+                          <span className="recommended-cat-badge">{stone.category || stone.color || 'Granite'}</span>
+                        </div>
+                        <div className="recommended-info">
+                          <h4 className="recommended-stone-name">{stone.name}</h4>
+                          <div className="recommended-stone-meta">
+                            <span>✦ {Array.isArray(stone.finish) ? stone.finish[0] : (stone.finish || 'Polished')}</span>
+                            {stone.price && <span className="recommended-price">₹{stone.price}/sq.ft</span>}
+                          </div>
+                          <button
+                            type="button"
+                            className="add-recommended-btn"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleSelectRecommended(stone);
+                            }}
+                          >
+                            + Add to Portfolio
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
