@@ -65,6 +65,17 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (isMenuOpen && window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   const closeMenus = () => {
     setIsMenuOpen(false);
     setIsApplicationsOpen(false);
@@ -77,6 +88,26 @@ export default function Header() {
       if (!next) {
         setIsApplicationsOpen(false);
         setIsProductsOpen(false);
+      }
+      return next;
+    });
+  };
+
+  const toggleApplications = () => {
+    setIsApplicationsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        setIsProductsOpen(false);
+      }
+      return next;
+    });
+  };
+
+  const toggleProducts = () => {
+    setIsProductsOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        setIsApplicationsOpen(false);
       }
       return next;
     });
@@ -115,16 +146,16 @@ export default function Header() {
               alt="Demo Logo"
               className="logo-img"
             /> */}
-              <span className="text-logo" style={{ color: effectiveScrolled ? '#000' : '#fff', fontSize: '22px', display: 'flex', alignItems: 'center', gap: '10px', paddingTop: "10px" }}>
+              <span className="text-logo" style={{ color: effectiveScrolled ? '#000' : '#fff' }}>
                 {effectiveScrolled ? (
                   <>
-                    <img src="/logos/logo_dark_transparent.png" alt="Logo Dark" style={{ height: '60px', objectFit: 'contain' }} />
-                    <img src="/logos/detail_dark_transparent.png" alt="Details Dark" style={{ height: '35px', objectFit: 'contain' }} />
+                    <img src="/logos/logo_dark_transparent.png" alt="Logo Dark" className="logo-main-img" />
+                    <img src="/logos/detail_dark_transparent.png" alt="Details Dark" className="logo-detail-img" />
                   </>
                 ) : (
                   <>
-                    <img src="/logos/logo_light_transparent.png" alt="Logo Light" style={{ height: '60px', objectFit: 'contain' }} />
-                    <img src="/logos/detail_light_transparent.png" alt="Details Light" style={{ height: '35px', objectFit: 'contain' }} />
+                    <img src="/logos/logo_light_transparent.png" alt="Logo Light" className="logo-main-img" />
+                    <img src="/logos/detail_light_transparent.png" alt="Details Light" className="logo-detail-img" />
                   </>
                 )}
               </span>
@@ -225,19 +256,33 @@ export default function Header() {
               onMouseLeave={() => window.innerWidth > 768 && setIsApplicationsOpen(false)}
             >
               <span
-                className="nav-link dropdown-toggle"
-                onClick={() => setIsApplicationsOpen(!isApplicationsOpen)}
+                className={`nav-link dropdown-toggle ${isApplicationsOpen ? 'active' : ''}`}
+                onClick={toggleApplications}
                 role="button"
                 aria-expanded={isApplicationsOpen}
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    setIsApplicationsOpen(!isApplicationsOpen);
+                    toggleApplications();
                   }
                 }}
               >
-                Applications ▾
+                <span>Applications</span>
+                <svg
+                  className={`dropdown-chevron ${isApplicationsOpen ? 'open' : ''}`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
               </span>
 
               <div className={`dropdown-menu mega-menu ${isApplicationsOpen ? 'show' : ''}`}>
@@ -277,22 +322,36 @@ export default function Header() {
               onMouseLeave={() => window.innerWidth > 768 && setIsProductsOpen(false)}
             >
               <span
-                className="nav-link dropdown-toggle"
-                onClick={() => setIsProductsOpen(!isProductsOpen)}
+                className={`nav-link dropdown-toggle ${isProductsOpen ? 'active' : ''}`}
+                onClick={toggleProducts}
                 role="button"
                 aria-expanded={isProductsOpen}
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    setIsProductsOpen(!isProductsOpen);
+                    toggleProducts();
                   }
                 }}
               >
-                Products ▾
+                <span>Products</span>
+                <svg
+                  className={`dropdown-chevron ${isProductsOpen ? 'open' : ''}`}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
               </span>
 
-              <div className={`dropdown-menu mega-menu ${isProductsOpen ? 'show' : ''}`} style={{ minWidth: '850px' }}>
+              <div className={`dropdown-menu mega-menu products-mega-menu ${isProductsOpen ? 'show' : ''}`}>
 
                 {/* Column 1: Natural Surfaces */}
                 <div className="mega-menu-column">
