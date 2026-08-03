@@ -10,7 +10,6 @@ export const COMPANY_INFO = {
   established: '2024', // '2008',
 };
 
-// Granite Types/Products
 export const GRANITE_TYPES = [
   {
     id: 1,

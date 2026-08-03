@@ -10,137 +10,164 @@ import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
 
-// 1. Updated Data with Category Column
-// const CSV_PRODUCTS = [
-
-//   { name: "Absolute Black Granite", "image": "/granite_images/Absolute Black Granite.webp", category: "Black" },
-//   { name: "Black Galaxy Granite", "image": "/granite_images/Black Galaxy Granite.webp", category: "Black" },
-//   { name: "Black Marine Granite", "image": "/granite_images/Black Marine Granite.webp", category: "Black" },
-//   { name: "Black Marcino Granite", "image": "/granite_images/Black Marcino Granite.webp", category: "Black" },
-//   { name: "Blue Dunes Granite", image: "/granite_images/Blue Dunes Granite.jpg", category: "Blue" },
-//   { name: "Colonial White Granite", "image": "/granite_images/Colonial White Granite.webp", category: "White" },
-//   { name: "Desert Brown Granite", "image": "/granite_images/Desert Brown Granite.webp", category: "Brown" },
-//   { name: "Steel Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Steel-grey-granite.webp", category: "Grey" },
-
-
-//   { name: "P White Granite (Lunar Pearl)", "image": "/granite_images/P White Granite (Lunar Pearl).webp", category: "White" },
-//   { name: "Alaska White Granite", "image": "/granite_images/Alaska White Granite.webp", category: "White" },
-//   { name: "Black Forest Granite", "image": "/granite_images/Black Forest Granite.webp", category: "Black" },
-//   { name: "Viscon White Granite", "image": "/granite_images/Viscon White Granite.webp", category: "White" },
-//   { name: "Tan Brown Granite", image: "/granite_images/Tan Brown Granite.jpg", category: "Brown" },
-//   { name: "Colonial Gold Granite", "image": "/granite_images/Colonial Gold Granite.webp", category: "Gold" },
-//   { name: "Kuppam Green Granite", "image": "/granite_images/Kuppam Green Granite.webp", category: "Green" },
-//   { name: "Lavender Blue Granite", "image": "/granite_images/Lavender Blue Granite.webp", category: "Blue" },
-//   { name: "Coffee Brown Granite", "image": "/granite_images/Coffee Brown Granite.webp", category: "Brown" },
-//   { name: "Classic Paradiso Granite", "image": "/granite_images/Classic Paradiso Granite.webp", category: "Multicolor" },
-//   { name: "Bash Paradiso Granite", "image": "/granite_images/Bash Paradiso Granite.webp", category: "Multicolor" },
-//   { name: "Red Multicolor Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Red-multicolor-granite.webp", category: "Red" },
-//   { name: "New Kashmir White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/New-kashmir-white-granite-1.webp", category: "White" },
-//   { name: "Himalayan Blue Granite", "image": "/granite_images/Himalayan Blue Granite.webp", category: "Blue" },
-//   { name: "Colombo Juparana Granite", "image": "/granite_images/Colombo Juparana Granite.webp", category: "Multicolor" },
-//   { name: "Crystal Yellow Granite", "image": "/granite_images/Crystal Yellow Granite.webp", category: "Yellow" },
-//   { name: "Malwada Yellow Granite", "image": "/granite_images/Malwada Yellow Granite.webp", category: "Yellow" },
-//   { name: "Astoria Granite", "image": "/granite_images/Astoria Granite.webp", category: "Multicolor" },
-//   { name: "Bala Flower Granite", "image": "/granite_images/Bala Flower Granite.webp", category: "Multicolor" },
-//   { name: "Copper Silk Granite", "image": "/granite_images/Copper Silk Granite.webp", category: "Brown" },
-//   { name: "Kotkasta Granite", "image": "/granite_images/Kotkasta Granite.webp", category: "Multicolor" },
-//   { name: "Maliwada Granite", "image": "/granite_images/Maliwada Granite.webp", category: "Yellow" },
-//   { name: "Monte Cristo Granite", "image": "/granite_images/Monte Cristo Granite.webp", category: "Multicolor" },
-//   { name: "Onida Orange Granite", "image": "/granite_images/Onida Orange Granite.webp", category: "Orange" },
-//   { name: "Royal Cream Granite", "image": "/granite_images/Royal Cream Granite.webp", category: "Cream" },
-//   { name: "Rue Classic Granite", "image": "/granite_images/Rue Classic Granite.webp", category: "Multicolor" },
-//   { name: "Tiger Skin Granite", "image": "/granite_images/Tiger Skin Granite.webp", category: "Brown" },
-//   { name: "Bahama Ivory Granite", "image": "/granite_images/Bahama Ivory Granite.webp", category: "Cream" },
-//   { name: "Cats Eye Granite", "image": "/granite_images/Cats Eye Granite.webp", category: "Brown" },
-//   { name: "Black Premium Granite", "image": "/granite_images/Black Premium Granite.webp", category: "Black" },
-//   { name: "Colonial Cream Granite", "image": "/granite_images/Colonial Cream Granite.webp", category: "Cream" },
-//   { name: "Ghiblee Granite", "image": "/granite_images/Ghiblee Granite.webp", category: "Multicolor" },
-//   { name: "Indian Aurora Granite", "image": "/granite_images/Indian Aurora Granite.webp", category: "Multicolor" },
-//   { name: "Ivory Fantasy Granite", "image": "/granite_images/Ivory Fantasy Granite.webp", category: "Cream" },
-//   { name: "Millennium Cream Granite", "image": "/granite_images/Millennium Cream Granite.webp", category: "Cream" },
-//   { name: "Rose Wood Granite", "image": "/granite_images/Rose Wood Granite.webp", category: "Brown" },
-//   { name: "Sea Waves Granite", "image": "/granite_images/Sea Waves Granite.webp", category: "Grey" },
-//   { name: "Mango Granite", "image": "/granite_images/Mango Granite.webp", category: "Yellow" },
-
-
-//   { name: "Lava Oro Granite", "image": "/granite_images/Lava Oro Granite.webp", category: "Gold" },
-//   { name: "Donna Grey Granite", "image": "/granite_images/Donna Grey Granite.webp", category: "Grey" },
-//   { name: "Indian Copacabana Granite", "image": "/granite_images/Indian Copacabana Granite.webp", category: "Multicolor" },
-//   { name: "Alabaster White Granite", "image": "/granite_images/Alabaster White Granite.webp", category: "White" },
-//   { name: "Alpinus White Granite", "image": "/granite_images/Alpinus White Granite.webp", category: "White" },
-//   { name: "Bianco White Granite", "image": "/granite_images/Bianco White Granite.webp", category: "White" },
-//   { name: "Crystal White Granite", "image": "/granite_images/Crystal White Granite.webp", category: "White" },
-//   { name: "French White Granite", "image": "/granite_images/French White Granite.webp", category: "White" },
-//   { name: "Imperial White Granite", "image": "/granite_images/Imperial White Granite.webp", category: "White" },
-//   { name: "Indian Cappuccino White Granite", "image": "/granite_images/Indian Cappuccino White Granite.webp", category: "White" },
-//   { name: "Kuppam White Granite", "image": "/granite_images/Kuppam White Granite.webp", category: "White" },
-//   { name: "Moon White Granite", "image": "/granite_images/Moon White Granite.webp", category: "White" },
-//   { name: "River White Granite", "image": "/granite_images/River White Granite.webp", category: "White" },
-//   { name: "Thunder White Granite", "image": "/granite_images/Thunder White Granite.webp", category: "White" },
-//   { name: "Titanium White Granite", "image": "/granite_images/Titanium White Granite.webp", category: "White" },
-//   { name: "New Ivory White Granite", "image": "/granite_images/New Ivory White Granite.webp", category: "White" },
-//   { name: "S White Granite", "image": "/granite_images/S White Granite.webp", category: "White" },
-//   { name: "Sadarali Granite", "image": "/granite_images/Sadarali Granite.webp", category: "Grey" },
-//   { name: "Epic White Granite", "image": "/granite_images/Epic White Granite.webp", category: "White" },
-//   { name: "Monalisa Granite", "image": "/granite_images/Monalisa Granite.webp", category: "Multicolor" },
-//   { name: "Sunset Canyon Granite", "image": "/granite_images/Sunset Canyon Granite.webp", category: "Brown" },
-//   { name: "Stream White Granite", "image": "/granite_images/Stream White Granite.webp", category: "White" },
-//   { name: "Mariyam White Granite", "image": "/granite_images/Mariyam White Granite.webp", category: "White" },
-//   { name: "Atlantic White Granite", "image": "/granite_images/Atlantic White Granite.webp", category: "White" },
-//   { name: "Alaska Red Granite", "image": "/granite_images/Alaska Red Granite.webp", category: "Red" },
-//   { name: "Bruno Red Granite", "image": "/granite_images/Bruno Red Granite.webp", category: "Red" },
-//   { name: "Jhansi Red Granite", "image": "/granite_images/Jhansi Red Granite.webp", category: "Red" },
-//   { name: "Lakha Red Granite", "image": "/granite_images/Lakha Red Granite.webp", category: "Red" },
-//   { name: "New Imperial Red Granite", "image": "/granite_images/New Imperial Red Granite.webp", category: "Red" },
-//   { name: "Wine Red Granite", "image": "/granite_images/Wine Red Granite.webp", category: "Red" },
-//   { name: "Chima Pink Granite", "image": "/granite_images/Chima Pink Granite.webp", category: "Pink" },
-
-
-//   { name: "Rosy Pink Granite", "image": "/granite_images/Rosy Pink Granite.webp", category: "Pink" },
-//   { name: "Astoria Pink Granite", "image": "/granite_images/Astoria Pink Granite.webp", category: "Pink" },
-//   { name: "Ghiblee Pink Granite", "image": "/granite_images/Ghiblee Pink Granite.webp", category: "Pink" },
-//   { name: "Imperial Pink Granite", "image": "/granite_images/Imperial Pink Granite.webp", category: "Pink" },
-//   { name: "Romantic Pink Granite", "image": "/granite_images/Romantic Pink Granite.webp", category: "Pink" },
-//   { name: "Strawberry Pink Granite", "image": "/granite_images/Strawberry Pink Granite.webp", category: "Pink" },
-//   { name: "Alaska Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Alaska-pink-granite.webp", category: "Pink" },
-//   { name: "Narlai Grey Granite", "image": "/granite_images/Narlai Grey Granite.webp", category: "Grey" },
-//   { name: "Kuppam Grey Granite", "image": "/granite_images/Kuppam Grey Granite.webp", category: "Grey" },
-//   { name: "Apple Green Granite", "image": "/granite_images/Apple Green Granite.webp", category: "Green" },
-//   { name: "Desert Green Granite", "image": "/granite_images/Desert Green Granite.webp", category: "Green" },
-//   { name: "French Green Granite", "image": "/granite_images/French Green Granite.webp", category: "Green" },
-//   { name: "Green Pearl Granite", "image": "/granite_images/Green Pearl Granite.webp", category: "Green" },
-//   { name: "Royal Green Granite", "image": "/granite_images/Royal Green Granite.webp", category: "Green" },
-//   { name: "Hassan Green Granite", image: "/granite_images/Hassan Green Granite.jpg", category: "Green" },
-//   { name: "Mungaria Green Granite", "image": "/granite_images/Mungaria Green Granite.webp", category: "Green" },
-//   { name: "Olivia Green Granite", "image": "/granite_images/Olivia Green Granite.webp", category: "Green" },
-//   { name: "Alaska Gold Granite", "image": "/granite_images/Alaska Gold Granite.webp", category: "Gold" },
-//   { name: "Bianco Gold Granite", "image": "/granite_images/Bianco Gold Granite.webp", category: "Gold" },
-//   { name: "Desert Gold Granite", "image": "/granite_images/Desert Gold Granite.webp", category: "Gold" },
-//   { name: "Magma Gold Granite", "image": "/granite_images/Magma Gold Granite.webp", category: "Gold" },
-//   { name: "Merry Gold Granite", "image": "/granite_images/Merry Gold Granite.webp", category: "Gold" },
-//   { name: "Titanium Gold Granite", "image": "/granite_images/Titanium Gold Granite.webp", category: "Gold" },
-//   { name: "Astoria Gold Granite", "image": "/granite_images/Astoria Gold Granite.webp", category: "Gold" },
-//   { name: "Fusion Gold Granite", "image": "/granite_images/Fusion Gold Granite.webp", category: "Gold" },
-//   { name: "Golden Oak Granite", "image": "/granite_images/Golden Oak Granite.webp", category: "Gold" },
-//   { name: "Imperial Gold Granite", "image": "/granite_images/Imperial Gold Granite.webp", category: "Gold" },
-//   { name: "Ivory Gold Granite", "image": "/granite_images/Ivory Gold Granite.webp", category: "Gold" },
-//   { name: "Parada Gold Granite", "image": "/granite_images/Parada Gold Granite.webp", category: "Gold" },
-//   { name: "River Gold Granite", "image": "/granite_images/River Gold Granite.webp", category: "Gold" },
-//   { name: "Shivakashi Gold Granite", "image": "/granite_images/Shivakashi Gold Granite.webp", category: "Gold" },
-//   { name: "Ivory Chiffon Granite", "image": "/granite_images/Ivory Chiffon Granite.webp", category: "Cream" },
-//   { name: "Exotic Gold Granite", "image": "/granite_images/Exotic Gold Granite.webp", category: "Gold" },
-//   { name: "Armani Gold Granite", "image": "/granite_images/Armani Gold Granite.webp", category: "Gold" },
-//   { name: "Bhama Gold Granite", "image": "/granite_images/Bhama Gold Granite.webp", category: "Gold" },
-//   { name: "Z Brown Granite", "image": "/granite_images/Z Brown Granite.webp", category: "Brown" },
-//   { name: "Baltic Brown Granite", "image": "/granite_images/Baltic Brown Granite.webp", category: "Brown" },
 const TOUCH_OPTIONS = ["Polished", "Leather", "Flamed", "Lapotra", "Antique"];
 const ORIGIN_OPTIONS = ["South India", "North India", "Imported", "Alaska"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 const MIN_PRICE = 50;
 const MAX_PRICE = 500;
 
+const CSV_PRODUCTS = [
+  { name: "Absolute Black Granite", image: "/granite_images/Absolute Black Granite.webp", category: "Black" },
+  { name: "Black Galaxy Granite", image: "/granite_images/Black Galaxy Granite.webp", category: "Black" },
+  { name: "Black Marine Granite", image: "/granite_images/Black Marine Granite.webp", category: "Black" },
+  { name: "Black Marcino Granite", image: "/granite_images/Black Marcino Granite.webp", category: "Black" },
+  { name: "Blue Dunes Granite", image: "/granite_images/Blue Dunes Granite.jpg", category: "Blue" },
+  { name: "Colonial White Granite", image: "/granite_images/Colonial White Granite.webp", category: "White" },
+  { name: "Desert Brown Granite", image: "/granite_images/Desert Brown Granite.webp", category: "Brown" },
+  { name: "Steel Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Steel-grey-granite.webp", category: "Grey" },
+  { name: "P White Granite (Lunar Pearl)", image: "/granite_images/P White Granite (Lunar Pearl).webp", category: "White" },
+  { name: "Alaska White Granite", image: "/granite_images/Alaska White Granite.webp", category: "White" },
+  { name: "Black Forest Granite", image: "/granite_images/Black Forest Granite.webp", category: "Black" },
+  { name: "Viscon White Granite", image: "/granite_images/Viscon White Granite.webp", category: "White" },
+  { name: "Tan Brown Granite", image: "/granite_images/Tan Brown Granite.jpg", category: "Brown" },
+  { name: "Colonial Gold Granite", image: "/granite_images/Colonial Gold Granite.webp", category: "Gold" },
+  { name: "Kuppam Green Granite", image: "/granite_images/Kuppam Green Granite.webp", category: "Green" },
+  { name: "Lavender Blue Granite", image: "/granite_images/Lavender Blue Granite.webp", category: "Blue" },
+  { name: "Coffee Brown Granite", image: "/granite_images/Coffee Brown Granite.webp", category: "Brown" },
+  { name: "Classic Paradiso Granite", image: "/granite_images/Classic Paradiso Granite.webp", category: "Multicolor" },
+  { name: "Bash Paradiso Granite", image: "/granite_images/Bash Paradiso Granite.webp", category: "Multicolor" },
+  { name: "Red Multicolor Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Red-multicolor-granite.webp", category: "Red" },
+  { name: "New Kashmir White Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/New-kashmir-white-granite-1.webp", category: "White" },
+  { name: "Himalayan Blue Granite", image: "/granite_images/Himalayan Blue Granite.webp", category: "Blue" },
+  { name: "Colombo Juparana Granite", image: "/granite_images/Colombo Juparana Granite.webp", category: "Multicolor" },
+  { name: "Crystal Yellow Granite", image: "/granite_images/Crystal Yellow Granite.webp", category: "Yellow" },
+  { name: "Malwada Yellow Granite", image: "/granite_images/Malwada Yellow Granite.webp", category: "Yellow" },
+  { name: "Astoria Granite", image: "/granite_images/Astoria Granite.webp", category: "Multicolor" },
+  { name: "Bala Flower Granite", image: "/granite_images/Bala Flower Granite.webp", category: "Multicolor" },
+  { name: "Copper Silk Granite", image: "/granite_images/Copper Silk Granite.webp", category: "Brown" },
+  { name: "Kotkasta Granite", image: "/granite_images/Kotkasta Granite.webp", category: "Multicolor" },
+  { name: "Maliwada Granite", image: "/granite_images/Maliwada Granite.webp", category: "Yellow" },
+  { name: "Monte Cristo Granite", image: "/granite_images/Monte Cristo Granite.webp", category: "Multicolor" },
+  { name: "Onida Orange Granite", image: "/granite_images/Onida Orange Granite.webp", category: "Orange" },
+  { name: "Royal Cream Granite", image: "/granite_images/Royal Cream Granite.webp", category: "Cream" },
+  { name: "Rue Classic Granite", image: "/granite_images/Rue Classic Granite.webp", category: "Multicolor" },
+  { name: "Tiger Skin Granite", image: "/granite_images/Tiger Skin Granite.webp", category: "Brown" },
+  { name: "Bahama Ivory Granite", image: "/granite_images/Bahama Ivory Granite.webp", category: "Cream" },
+  { name: "Cats Eye Granite", image: "/granite_images/Cats Eye Granite.webp", category: "Brown" },
+  { name: "Black Premium Granite", image: "/granite_images/Black Premium Granite.webp", category: "Black" },
+  { name: "Colonial Cream Granite", image: "/granite_images/Colonial Cream Granite.webp", category: "Cream" },
+  { name: "Ghiblee Granite", image: "/granite_images/Ghiblee Granite.webp", category: "Multicolor" },
+  { name: "Indian Aurora Granite", image: "/granite_images/Indian Aurora Granite.webp", category: "Multicolor" },
+  { name: "Ivory Fantasy Granite", image: "/granite_images/Ivory Fantasy Granite.webp", category: "Cream" },
+  { name: "Millennium Cream Granite", image: "/granite_images/Millennium Cream Granite.webp", category: "Cream" },
+  { name: "Rose Wood Granite", image: "/granite_images/Rose Wood Granite.webp", category: "Brown" },
+  { name: "Sea Waves Granite", image: "/granite_images/Sea Waves Granite.webp", category: "Grey" },
+  { name: "Mango Granite", image: "/granite_images/Mango Granite.webp", category: "Yellow" },
+  { name: "Lava Oro Granite", image: "/granite_images/Lava Oro Granite.webp", category: "Gold" },
+  { name: "Donna Grey Granite", image: "/granite_images/Donna Grey Granite.webp", category: "Grey" },
+  { name: "Indian Copacabana Granite", image: "/granite_images/Indian Copacabana Granite.webp", category: "Multicolor" },
+  { name: "Alabaster White Granite", image: "/granite_images/Alabaster White Granite.webp", category: "White" },
+  { name: "Alpinus White Granite", image: "/granite_images/Alpinus White Granite.webp", category: "White" },
+  { name: "Bianco White Granite", image: "/granite_images/Bianco White Granite.webp", category: "White" },
+  { name: "Crystal White Granite", image: "/granite_images/Crystal White Granite.webp", category: "White" },
+  { name: "French White Granite", image: "/granite_images/French White Granite.webp", category: "White" },
+  { name: "Imperial White Granite", image: "/granite_images/Imperial White Granite.webp", category: "White" },
+  { name: "Indian Cappuccino White Granite", image: "/granite_images/Indian Cappuccino White Granite.webp", category: "White" },
+  { name: "Kuppam White Granite", image: "/granite_images/Kuppam White Granite.webp", category: "White" },
+  { name: "Moon White Granite", image: "/granite_images/Moon White Granite.webp", category: "White" },
+  { name: "River White Granite", image: "/granite_images/River White Granite.webp", category: "White" },
+  { name: "Thunder White Granite", image: "/granite_images/Thunder White Granite.webp", category: "White" },
+  { name: "Titanium White Granite", image: "/granite_images/Titanium White Granite.webp", category: "White" },
+  { name: "New Ivory White Granite", image: "/granite_images/New Ivory White Granite.webp", category: "White" },
+  { name: "S White Granite", image: "/granite_images/S White Granite.webp", category: "White" },
+  { name: "Sadarali Granite", image: "/granite_images/Sadarali Granite.webp", category: "Grey" },
+  { name: "Epic White Granite", image: "/granite_images/Epic White Granite.webp", category: "White" },
+  { name: "Monalisa Granite", image: "/granite_images/Monalisa Granite.webp", category: "Multicolor" },
+  { name: "Sunset Canyon Granite", image: "/granite_images/Sunset Canyon Granite.webp", category: "Brown" },
+  { name: "Stream White Granite", image: "/granite_images/Stream White Granite.webp", category: "White" },
+  { name: "Mariyam White Granite", image: "/granite_images/Mariyam White Granite.webp", category: "White" },
+  { name: "Atlantic White Granite", image: "/granite_images/Atlantic White Granite.webp", category: "White" },
+  { name: "Alaska Red Granite", image: "/granite_images/Alaska Red Granite.webp", category: "Red" },
+  { name: "Bruno Red Granite", image: "/granite_images/Bruno Red Granite.webp", category: "Red" },
+  { name: "Jhansi Red Granite", image: "/granite_images/Jhansi Red Granite.webp", category: "Red" },
+  { name: "Lakha Red Granite", image: "/granite_images/Lakha Red Granite.webp", category: "Red" },
+  { name: "New Imperial Red Granite", image: "/granite_images/New Imperial Red Granite.webp", category: "Red" },
+  { name: "Wine Red Granite", image: "/granite_images/Wine Red Granite.webp", category: "Red" },
+  { name: "Chima Pink Granite", image: "/granite_images/Chima Pink Granite.webp", category: "Pink" },
+  { name: "Rosy Pink Granite", image: "/granite_images/Rosy Pink Granite.webp", category: "Pink" },
+  { name: "Astoria Pink Granite", image: "/granite_images/Astoria Pink Granite.webp", category: "Pink" },
+  { name: "Ghiblee Pink Granite", image: "/granite_images/Ghiblee Pink Granite.webp", category: "Pink" },
+  { name: "Imperial Pink Granite", image: "/granite_images/Imperial Pink Granite.webp", category: "Pink" },
+  { name: "Romantic Pink Granite", image: "/granite_images/Romantic Pink Granite.webp", category: "Pink" },
+  { name: "Strawberry Pink Granite", image: "/granite_images/Strawberry Pink Granite.webp", category: "Pink" },
+  { name: "Alaska Pink Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/03/Alaska-pink-granite.webp", category: "Pink" },
+  { name: "Narlai Grey Granite", image: "/granite_images/Narlai Grey Granite.webp", category: "Grey" },
+  { name: "Kuppam Grey Granite", image: "/granite_images/Kuppam Grey Granite.webp", category: "Grey" },
+  { name: "Apple Green Granite", image: "/granite_images/Apple Green Granite.webp", category: "Green" },
+  { name: "Desert Green Granite", image: "/granite_images/Desert Green Granite.webp", category: "Green" },
+  { name: "French Green Granite", image: "/granite_images/French Green Granite.webp", category: "Green" },
+  { name: "Green Pearl Granite", image: "/granite_images/Green Pearl Granite.webp", category: "Green" },
+  { name: "Royal Green Granite", image: "/granite_images/Royal Green Granite.webp", category: "Green" },
+  { name: "Hassan Green Granite", image: "/granite_images/Hassan Green Granite.jpg", category: "Green" },
+  { name: "Mungaria Green Granite", image: "/granite_images/Mungaria Green Granite.webp", category: "Green" },
+  { name: "Olivia Green Granite", image: "/granite_images/Olivia Green Granite.webp", category: "Green" },
+  { name: "Alaska Gold Granite", image: "/granite_images/Alaska Gold Granite.webp", category: "Gold" },
+  { name: "Bianco Gold Granite", image: "/granite_images/Bianco Gold Granite.webp", category: "Gold" },
+  { name: "Desert Gold Granite", image: "/granite_images/Desert Gold Granite.webp", category: "Gold" },
+  { name: "Magma Gold Granite", image: "/granite_images/Magma Gold Granite.webp", category: "Gold" },
+  { name: "Merry Gold Granite", image: "/granite_images/Merry Gold Granite.webp", category: "Gold" },
+  { name: "Titanium Gold Granite", image: "/granite_images/Titanium Gold Granite.webp", category: "Gold" },
+  { name: "Astoria Gold Granite", image: "/granite_images/Astoria Gold Granite.webp", category: "Gold" },
+  { name: "Fusion Gold Granite", image: "/granite_images/Fusion Gold Granite.webp", category: "Gold" },
+  { name: "Golden Oak Granite", image: "/granite_images/Golden Oak Granite.webp", category: "Gold" },
+  { name: "Imperial Gold Granite", image: "/granite_images/Imperial Gold Granite.webp", category: "Gold" },
+  { name: "Ivory Gold Granite", image: "/granite_images/Ivory Gold Granite.webp", category: "Gold" },
+  { name: "Parada Gold Granite", image: "/granite_images/Parada Gold Granite.webp", category: "Gold" },
+  { name: "River Gold Granite", image: "/granite_images/River Gold Granite.webp", category: "Gold" },
+  { name: "Shivakashi Gold Granite", image: "/granite_images/Shivakashi Gold Granite.webp", category: "Gold" },
+  { name: "Ivory Chiffon Granite", image: "/granite_images/Ivory Chiffon Granite.webp", category: "Cream" },
+  { name: "Exotic Gold Granite", image: "/granite_images/Exotic Gold Granite.webp", category: "Gold" },
+  { name: "Armani Gold Granite", image: "/granite_images/Armani Gold Granite.webp", category: "Gold" },
+  { name: "Bhama Gold Granite", image: "/granite_images/Bhama Gold Granite.webp", category: "Gold" },
+  { name: "Z Brown Granite", image: "/granite_images/Z Brown Granite.webp", category: "Brown" },
+  { name: "Baltic Brown Granite", image: "/granite_images/Baltic Brown Granite.webp", category: "Brown" }
+];
+
+const DEFAULT_DESCRIPTION = 'Premium quality granite, engineered for perfection and durability.';
+const DEFAULT_FEATURES = ['Scratch resistant', 'Stain resistant', 'Easy to maintain', 'Heat resistant'];
+
+const ALL_PRODUCTS = CSV_PRODUCTS.map((item, index) => {
+  const price = 50 + ((index * 13) % 451);
+  const numTouches = (index % 3) + 2;
+  const touch = [];
+  for (let i = 0; i < numTouches; i++) {
+    touch.push(TOUCH_OPTIONS[(index + i) % TOUCH_OPTIONS.length]);
+  }
+  let origin = 'South India';
+  const lowerName = item.name.toLowerCase();
+  if (lowerName.includes('alaska')) origin = 'Alaska';
+  else if (['p white', 'kashmir', 'rajasthan', 'rosy pink', 'chima pink', 'jhansi red', 'lakha red', 'new imperial', 'dholpur', 'mandana', 'modak', 'jodhpur', 'kota', 'tiger skin', 'royal cream', 'colonial cream', 'millennium cream'].some(w => lowerName.includes(w))) origin = 'North India';
+  else if (['pearl', 'blue pearl', 'black pearl', 'emerald pearl', 'volga blue', 'tan brown', 'baltic brown', 'black forest', 'alpinus', 'amadeus', 'andromeda', 'armani', 'astoria', 'bianco', 'blue dunes', 'blue ocean', 'copacabana', 'monte cristo', 'monalisa', 'fusion', 'magma', 'matrix', 'titanium', 'viscon', 'silver waves', 'labrador', 'imperial white', 'french white', 'atlantic white', 'crystal white', 'moon white'].some(w => lowerName.includes(w))) origin = 'Imported';
+
+  return {
+    id: `granite-${index}`,
+    name: item.name,
+    image: item.image,
+    category: item.category || 'Standard',
+    origin,
+    touch,
+    price,
+    minPrice: Math.max(50, price - 40),
+    maxPrice: Math.min(500, price + 40),
+    startingPrice: Math.max(50, price - 40),
+    thickness: THICKNESS_RANGE,
+    description: DEFAULT_DESCRIPTION,
+    features: DEFAULT_FEATURES
+  };
+});
+
 export default function Granite() {
-  const productsList = useDbProducts('Granite');
+  const productsList = useDbProducts('Granite', ALL_PRODUCTS);
   const dynamicMaxPrice = useMemo(() => {
     if (!productsList || productsList.length === 0) return 100;
     const maxVal = Math.max(...productsList.map(p => Number(p.maxPrice || p.price || 100)));
@@ -239,12 +266,13 @@ export default function Granite() {
         return p.origin === org;
       });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : (dynamicMaxPrice || 500);
       const productStartingPrice = Number(p.startingPrice || p.minPrice || p.price || 100);
       const matchesPrice = productStartingPrice <= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, productsList]);
+  }, [categoryFilter, filters, productsList, dynamicMaxPrice]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -402,7 +430,7 @@ export default function Granite() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.origin.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < MAX_PRICE || categoryFilter !== 'All') && (
+              {(filters.origin.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || (filters.maxPrice !== undefined && filters.maxPrice < dynamicMaxPrice) || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -443,7 +471,7 @@ export default function Granite() {
 
                   <button
                     onClick={() => {
-                      setFilters({ origin: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ origin: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -498,7 +526,7 @@ export default function Granite() {
                           Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
                         </div>
                         <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
-                          Origin: {product.origin} | Thickness: {product.thickness[0]}-{product.thickness[product.thickness.length - 1]}mm
+                          Origin: {product.origin || 'India'} | Thickness: {Array.isArray(product.thickness) && product.thickness.length > 0 ? `${product.thickness[0]}-${product.thickness[product.thickness.length - 1]}` : '18-20'}mm
                         </p>
                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                           <button

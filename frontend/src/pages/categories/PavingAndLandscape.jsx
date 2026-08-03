@@ -8,6 +8,7 @@ import { useDemand } from '../../context/DemandContext';
 import PAVING_PRODUCTS from '../../utils/paving_landscape.json';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 // 1. Updated Data with Category Column
 
@@ -191,12 +192,12 @@ export default function PavingAndLandscape() {
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.some(t => parseInt(t) === th));
       const matchesTouch = (filters.touch || []).length === 0 || (p.touch && (filters.touch || []).some(tch => p.touch.includes(tch)));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : (dynamicMaxPrice || 100);
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
 
       return matchesUrlCategory && matchesType && matchesOrigin && matchesColor && matchesThickness && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, productsList]);
+  }, [categoryFilter, filters, productsList, dynamicMaxPrice]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -435,7 +436,7 @@ export default function PavingAndLandscape() {
 
                   <button
                     onClick={() => {
-                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -487,7 +488,7 @@ export default function PavingAndLandscape() {
                       <div className="product-info">
                         <h3>{product.name}</h3>
                         <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
-                          Origin: {product.origin} | Thickness: {product.thickness[0]}-{product.thickness[product.thickness.length - 1]}mm
+                          Origin: {product.origin || 'India'} | Thickness: {Array.isArray(product.thickness) && product.thickness.length > 0 ? `${product.thickness[0]}-${product.thickness[product.thickness.length - 1]}` : '20-40'}mm
                         </p>
                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                           <button

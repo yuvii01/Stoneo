@@ -8,6 +8,7 @@ import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -172,12 +173,13 @@ export default function Sandstone() {
         return p.type === t;
       });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : (dynamicMaxPrice || 100);
       const productStartingPrice = Number(p.startingPrice || p.minPrice || p.price || 100);
       const matchesPrice = productStartingPrice <= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, productsList]);
+  }, [categoryFilter, filters, productsList, dynamicMaxPrice]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -372,7 +374,7 @@ export default function Sandstone() {
 
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -391,7 +393,7 @@ export default function Sandstone() {
                     title="No Sandstone Varieties Found"
                     description="We couldn't find any sandstone varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -427,7 +429,7 @@ export default function Sandstone() {
                           Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
                         </div>
                         <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
-                          Origin: {product.origin} | Thickness: {product.thickness[0]}-{product.thickness[product.thickness.length - 1]}mm
+                          Origin: {product.origin || 'India'} | Thickness: {Array.isArray(product.thickness) && product.thickness.length > 0 ? `${product.thickness[0]}-${product.thickness[product.thickness.length - 1]}` : '18-20'}mm
                         </p>
                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                           <button

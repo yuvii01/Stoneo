@@ -7,6 +7,7 @@ import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leathered", "Brushed", "Bush-Hammered", "Sandblasted"];
 const ORIGIN_OPTIONS = ["Makrana white", "Katni", "Ambaji", "Rajnagar", "Udaipur green", "Kishangarh", "Jaisalmer Yellow", "Italian", "Spanish", "Vietnamese", "Turkish", "Greece"];
@@ -14,8 +15,44 @@ const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 const MIN_PRICE = 50;
 const MAX_PRICE = 100;
 
+const MARBLE_PRODUCTS = [
+  { name: "Statuario White Marble", image: "/indian_marble_images/Statuario.jpg", category: "White", origin: "Italian" },
+  { name: "Makrana Pure White Marble", image: "/indian_marble_images/Makrana Pure White.jpg", category: "White", origin: "Makrana white" },
+  { name: "Carrara White Marble", image: "/indian_marble_images/Carrara White.jpg", category: "White", origin: "Italian" },
+  { name: "Calacatta Gold Marble", image: "/indian_marble_images/Calacatta Gold.jpg", category: "White", origin: "Italian" },
+  { name: "Katni Beige Marble", image: "/indian_marble_images/Katni Beige.jpg", category: "Beige", origin: "Katni" },
+  { name: "Ambaji White Marble", image: "/indian_marble_images/Ambaji White.jpg", category: "White", origin: "Ambaji" },
+  { name: "Rajnagar White Marble", image: "/indian_marble_images/Rajnagar White.jpg", category: "White", origin: "Rajnagar" },
+  { name: "Udaipur Green Marble", image: "/indian_marble_images/Udaipur Green.jpg", category: "Green", origin: "Udaipur green" },
+  { name: "Bottochino Italian Marble", image: "/indian_marble_images/Bottochino Italian.jpg", category: "Beige", origin: "Italian" },
+  { name: "Spanish Emperador Dark Marble", image: "/indian_marble_images/Emperador Dark.jpg", category: "Brown", origin: "Spanish" },
+  { name: "Vietnamese White Marble", image: "/indian_marble_images/Vietnamese White.jpg", category: "White", origin: "Vietnamese" },
+  { name: "Turkish Light Beige Marble", image: "/indian_marble_images/Turkish Beige.jpg", category: "Beige", origin: "Turkish" },
+  { name: "Volakas Greece Marble", image: "/indian_marble_images/Volakas.jpg", category: "White", origin: "Greece" },
+  { name: "Jaisalmer Yellow Marble", image: "/indian_marble_images/Jaisalmer Yellow.jpg", category: "Yellow", origin: "Jaisalmer Yellow" },
+  { name: "Black Forest Marble", image: "/indian_marble_images/Black Forest.jpg", category: "Black", origin: "Kishangarh" }
+];
+
+const ALL_PRODUCTS = MARBLE_PRODUCTS.map((item, index) => {
+  const price = 80 + ((index * 17) % 220);
+  return {
+    id: `marble-${index}`,
+    name: item.name,
+    image: item.image,
+    category: item.category,
+    origin: item.origin,
+    touch: ["Polished", "Honed"],
+    price,
+    minPrice: Math.max(50, price - 30),
+    maxPrice: Math.min(300, price + 30),
+    startingPrice: Math.max(50, price - 30),
+    thickness: THICKNESS_RANGE,
+    description: "Exquisite marble slab for luxury flooring, wall cladding, and countertops."
+  };
+});
+
 export default function Marble() {
-  const productsList = useDbProducts('Marble');
+  const productsList = useDbProducts('Marble', ALL_PRODUCTS);
   const dynamicMaxPrice = useMemo(() => {
     if (!productsList || productsList.length === 0) return 100;
     const maxVal = Math.max(...productsList.map(p => Number(p.maxPrice || p.price || 100)));
@@ -95,12 +132,13 @@ export default function Marble() {
         return p.origin === org;
       });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : (dynamicMaxPrice || 100);
       const productStartingPrice = Number(p.startingPrice || p.minPrice || p.price || 100);
       const matchesPrice = productStartingPrice <= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, productsList]);
+  }, [categoryFilter, filters, productsList, dynamicMaxPrice]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -312,7 +350,7 @@ export default function Marble() {
 
                   <button
                     onClick={() => {
-                      setFilters({ origin: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ origin: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -367,7 +405,7 @@ export default function Marble() {
                           Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
                         </div>
                         <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
-                          Origin: {product.origin} | Thickness: {product.thickness[0]}-{product.thickness[product.thickness.length - 1]}mm
+                          Origin: {product.origin || 'India'} | Thickness: {Array.isArray(product.thickness) && product.thickness.length > 0 ? `${product.thickness[0]}-${product.thickness[product.thickness.length - 1]}` : '18-20'}mm
                         </p>
                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                           <button

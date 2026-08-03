@@ -92,7 +92,7 @@
   padding: 140px 0 60px 0;
   text-align: center;
   background: linear-gradient(180deg, rgba(15, 16, 19, 0.75) 0%, rgba(15, 16, 19, 0.85) 100%),
-              url('https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Black-Galaxy-Granite-Swatch.webp') center/cover no-repeat;
+    url('https://www.regattagranitesindia.com/wp-content/uploads/2015/11/Black-Galaxy-Granite-Swatch.webp') center/cover no-repeat;
   border-bottom: 1px solid var(--quote-card-border);
   z-index: 1;
 }
@@ -125,9 +125,21 @@
 }
 
 @keyframes pulseGreen {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 14px #25d366; }
-  100% { transform: scale(0.95); opacity: 0.8; }
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    box-shadow: 0 0 14px #25d366;
+  }
+
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
 }
 
 .luxury-quote-hero h1 {
@@ -261,7 +273,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 520px;
+  max-height: 320px;
   overflow-y: auto;
   padding-right: 6px;
 }
@@ -269,10 +281,12 @@
 .portfolio-items-list::-webkit-scrollbar {
   width: 6px;
 }
+
 .portfolio-items-list::-webkit-scrollbar-track {
   background: #f8f6f2;
   border-radius: 4px;
 }
+
 .portfolio-items-list::-webkit-scrollbar-thumb {
   background: #dcd7ce;
   border-radius: 4px;
@@ -972,8 +986,15 @@
 }
 
 @keyframes slideInDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .quote-alert-box.success {

@@ -8,6 +8,7 @@ import { useDemand } from '../../context/DemandContext';
 import { OTHER_NATURAL_STONES } from '../../utils/constants';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 const DEFAULT_DESCRIPTION = 'Exquisite natural stone sourced from verified quarries, engineered for architectural excellence.';
 const DEFAULT_FEATURES = ['Authentic natural texture', 'Weather & frost resistant', 'High compressive strength', 'Low maintenance'];
@@ -131,12 +132,12 @@ export default function OtherNaturalStones() {
         return p.type === t;
       });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : (dynamicMaxPrice || 100);
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesType && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, productsList]);
+  }, [categoryFilter, filters, productsList, dynamicMaxPrice]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -340,7 +341,7 @@ export default function OtherNaturalStones() {
 
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -392,7 +393,7 @@ export default function OtherNaturalStones() {
                       <div className="product-info">
                         <h3>{product.name}</h3>
                         <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
-                          Type: {product.type} | Color: {product.category} | Thickness: {product.thickness[0]}-{product.thickness[product.thickness.length - 1]}mm
+                          Type: {product.type} | Color: {product.category} | Thickness: {Array.isArray(product.thickness) && product.thickness.length > 0 ? `${product.thickness[0]}-${product.thickness[product.thickness.length - 1]}` : '16-30'}mm
                         </p>
                         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                           <button

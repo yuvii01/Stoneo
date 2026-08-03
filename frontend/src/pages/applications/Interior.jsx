@@ -4,6 +4,7 @@ import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
 import { useDemand } from '../../context/DemandContext';
 import NoProductsFound from '../../components/NoProductsFound';
+import { getBreadcrumbSchema } from '../../utils/seo';
 
 const INTERIOR_APPLICATIONS = [
   "Interior Flooring",

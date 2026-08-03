@@ -8,6 +8,7 @@ import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 const DEFAULT_DESCRIPTION = 'Premium quality onyx, engineered for perfection.';
 const DEFAULT_FEATURES = ['Scratch resistant', 'Stain resistant', 'Easy to maintain', 'Durable'];
@@ -130,12 +131,12 @@ export default function Onyx() {
       });
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
+      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : (dynamicMaxPrice || 100);
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
 
       return matchesType && matchesColor && matchesTouch && matchesPrice;
     });
-  }, [filters, productsList]);
+  }, [filters, productsList, dynamicMaxPrice]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -322,7 +323,7 @@ export default function Onyx() {
 
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -341,7 +342,7 @@ export default function Onyx() {
                     title="No Onyx Varieties Found"
                     description="We couldn't find any onyx varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ variety: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
