@@ -223,7 +223,7 @@ const DEFAULT_BLOGS = [
         return (
             <div className="bd-page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '75vh' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '32px', color: '#111' }}>Curating Architectural Chronicle...</h2>
+                    <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '32px', color: '#111' }}>Loading Blog...</h2>
                     <p style={{ color: '#777', marginTop: '10px' }}>Retrieving monograph from Stoneo Editorial archives</p>
                 </div>
             </div>
@@ -347,7 +347,7 @@ const DEFAULT_BLOGS = [
                     {/* LEFT COLUMN: Article Content */}
                     <div className="bd-article-content">
 
-                        {/* Executive Curator Takeaway */}
+                        {/* Key Takeaway */}
                         <div className="bd-takeaway-box">
                             <div className="bd-takeaway-title">
                                 <span>✦ STONEO EDITORIAL TAKEAWAY</span>
@@ -421,7 +421,7 @@ const DEFAULT_BLOGS = [
                                 </li>
                                 <li className="bd-toc-item" onClick={() => scrollToSection('CARE')}>
                                     <span className="bd-toc-num">04.</span>
-                                    <span>Atelier Care & Longevity</span>
+                                    <span>Care & Longevity</span>
                                 </li>
                             </ul>
                         </div> */}
@@ -440,7 +440,7 @@ const DEFAULT_BLOGS = [
                                             key={idx}
                                             onClick={() => navigate(preview.url)}
                                             style={{ display: "flex", alignItems: "center", gap: "12px", background: "rgba(255,255,255,0.06)", padding: "10px", borderRadius: "8px", cursor: "pointer", border: "1px solid rgba(255,255,255,0.12)", transition: "all 0.25s ease" }}
-                                            title="Click to inspect stone dossier"
+                                            title="Click to view stone details"
                                         >
                                             <img src={preview.image} alt={preview.name} style={{ width: "48px", height: "48px", borderRadius: "6px", objectFit: "cover" }} />
                                             <div style={{ flex: 1, overflow: "hidden" }}>
@@ -448,7 +448,7 @@ const DEFAULT_BLOGS = [
                                                     {preview.name}
                                                 </div>
                                                 <span style={{ fontSize: "0.78rem", color: "#e0c080", fontWeight: "500" }}>
-                                                    Inspect Dossier →
+                                                    View Details →
                                                 </span>
                                             </div>
                                         </div>
@@ -457,7 +457,7 @@ const DEFAULT_BLOGS = [
                             </div>
                         </div>
 
-                        {/* Author Dossier Box */}
+                        {/* Author Profile Box */}
                         <div className="bd-sidebar-card bd-author-box">
                             <div className="bd-author-avatar-large">SE</div>
                             <h4 className="bd-author-name">Stoneo Editorial</h4>
@@ -498,7 +498,7 @@ const DEFAULT_BLOGS = [
                                             </span>
                                             <h3 className="bd-featured-slab-card-title">{preview.name}</h3>
                                             <span className="bd-featured-slab-card-btn">
-                                                Inspect Stone Dossier →
+                                                View Stone Details →
                                             </span>
                                         </div>
                                     </div>

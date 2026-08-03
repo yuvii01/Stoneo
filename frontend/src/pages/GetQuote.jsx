@@ -211,8 +211,8 @@ export default function GetQuote() {
       (selectedScope ? `*Project Scope:* ${selectedScope}\n` : '') +
       (selectedArea ? `*Estimated Area:* ${selectedArea}\n` : '') +
       (graniteName ? `*Featured Stone:* ${graniteName}\n` : '') +
-      `\n*Project Requirements / Curated Portfolio:*\n${data.requirements}\n\n` +
-      `_Sent via Stoneo Bespoke Architectural Desk_`;
+      `\n*Project Requirements / Selected Items:*\n${data.requirements}\n\n` +
+      `_Sent via Stoneo_`;
 
     const encodedMessage = encodeURIComponent(whatsappMessage);
 
@@ -276,7 +276,7 @@ export default function GetQuote() {
         <section className="luxury-quote-workspace">
           <div className="luxury-quote-grid">
 
-            {/* LEFT COLUMN: CURATED STONE PORTFOLIO */}
+            {/* LEFT COLUMN: SELECTED ITEMS */}
             <div className="luxury-panel-card">
               <div className="panel-header-bar">
                 <h2 className="panel-title">
@@ -350,7 +350,7 @@ export default function GetQuote() {
                     {/* <span className="empty-showcase-icon">🏛️</span> */}
                     <div>
                       <h3 className="empty-showcase-title">Your Quotation Portfolio is Empty</h3>
-                      <span className="empty-showcase-subtitle">Atelier Stone Curation Desk</span>
+                      <span className="empty-showcase-subtitle">Stone Selection</span>
                     </div>
                   </div>
 
@@ -440,7 +440,7 @@ export default function GetQuote() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: ATELIER QUOTE FORM */}
+            {/* RIGHT COLUMN: QUOTE FORM */}
             <div className="luxury-panel-card">
               <div className="panel-header-bar">
                 <h2 className="panel-title">
@@ -513,7 +513,7 @@ export default function GetQuote() {
 
 
                 <div className="luxury-form-group">
-                  <label htmlFor="requirements">Curated Demands & Project Notes *</label>
+                  <label htmlFor="requirements">Selected Items & Project Notes *</label>
                   <textarea
                     id="requirements"
                     name="requirements"

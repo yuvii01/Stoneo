@@ -79,7 +79,7 @@ export default function ProductDetail() {
         return (
             <div className="pd-page-container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '28px', color: '#333' }}>Curating Stone Dossier...</h2>
+                    <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '28px', color: '#333' }}>Loading Product Details...</h2>
                     <p style={{ color: '#888', marginTop: '8px' }}>Retrieving live Kishangarh slab specifications</p>
                 </div>
             </div>
@@ -89,7 +89,7 @@ export default function ProductDetail() {
     if (!product) {
         return (
             <div className="pd-page-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '70vh' }}>
-                <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '32px', color: '#111' }}>Stone Dossier Not Found</h2>
+                <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: '32px', color: '#111' }}>Product Not Found</h2>
                 <p style={{ color: '#666', marginTop: '8px' }}>The requested natural stone could not be located in our active catalogue.</p>
                 <button
                     onClick={() => navigate(-1)}
@@ -145,7 +145,7 @@ export default function ProductDetail() {
 
     const handleWhatsApp = () => {
         const text = encodeURIComponent(
-            `Hello Kishangarh Atelier, I am interested in ${product.name} (~${numericSqFt} sq. ft. / ~${estimatedSlabs} slabs). Please share current lot pricing and availability.`
+            `Hello, I am interested in ${product.name} (~${numericSqFt} sq. ft. / ~${estimatedSlabs} slabs). Please share current lot pricing and availability.`
         );
         window.open(`https://wa.me/91${COMPANY_INFO.phone}?text=${text}`, '_blank');
     };
@@ -161,14 +161,14 @@ export default function ProductDetail() {
                 <div className="pd-hero-banner-overlay"></div>
                 <div className="pd-hero-banner-content">
                     <div className="pd-breadcrumb-hero">
-                        <span>Kishangarh Atelier</span> /{' '}
+                        <span>Kishangarh Facility</span> /{' '}
                         <span>Natural Slabs</span> /{' '}
                         <span>{product.category || product.material || 'Granite'}</span> /{' '}
                         <span className="pd-breadcrumb-current-hero">{product.name}</span>
                     </div>
                     <h1 className="pd-hero-title">{product.name}</h1>
                     <div className="pd-hero-subtitle">
-                        NATURAL {product.category || product.material || 'STONE'} SLAB DOSSIER
+                        NATURAL {product.category || product.material || 'STONE'} SLAB DETAILS
                     </div>
                 </div>
             </div>
@@ -186,7 +186,7 @@ export default function ProductDetail() {
 
                     <div className="pd-top-actions" style={{ marginLeft: 'auto' }}>
                         <button type="button" className="pd-action-icon-btn" onClick={handleShare}>
-                            {copiedSpec ? 'Link Copied!' : 'Share Stone Dossier'}
+                            {copiedSpec ? 'Link Copied!' : 'Share Stone Details'}
                         </button>
                         <button
                             type="button"
@@ -246,7 +246,7 @@ export default function ProductDetail() {
                     {/* RIGHT COLUMN: Architectural Stone Dossier */}
                     <div className="pd-dossier-section">
                         <div className="pd-category-tag">
-                            NATURAL {product.category || product.material || 'STONE'} SLAB DOSSIER
+                            NATURAL {product.category || product.material || 'STONE'} SLAB DETAILS
                         </div>
 
                         <h1 className="pd-product-title">{product.name}</h1>
@@ -301,7 +301,7 @@ export default function ProductDetail() {
                                 <span>Note</span>
                             </div>
                             <p className="pd-description-text">
-                                {product.description || `An exceptional natural ${product.category || 'stone'} sourced from premier quarries and masterfully cut at our Kishangarh atelier. Renowned for its distinctive mineral veining, structural durability, and timeless architectural resonance across residential and luxury hospitality spaces.`}
+                                {product.description || `An exceptional natural ${product.category || 'stone'} sourced from premier quarries and masterfully cut at our Kishangarh facility. Renowned for its distinctive mineral veining, structural durability, and timeless appeal across residential and hospitality spaces.`}
                             </p>
                         </div>
 
@@ -341,8 +341,8 @@ export default function ProductDetail() {
                     <div className="pd-similar-section">
                         <div className="pd-section-title-row">
                             <div>
-                                <h2>More From Our {product.category || 'Natural Stone'} Reserve</h2>
-                                <p>Explore complementary natural slabs curated from the same atelier selection</p>
+                                <h2>More From Our {product.category || 'Natural Stone'} Collection</h2>
+                                <p>Explore complementary natural slabs selected from the same collection</p>
                             </div>
                         </div>
 
@@ -364,7 +364,7 @@ export default function ProductDetail() {
                                         <span className="pd-similar-cat">{item.category || item.material || 'Stone'}</span>
                                         <h4 className="pd-similar-name">{item.name}</h4>
                                         <div className="pd-similar-link">
-                                            <span>Inspect Dossier →</span>
+                                            <span>View Details →</span>
                                         </div>
                                     </div>
                                 </div>
