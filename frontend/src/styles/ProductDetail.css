@@ -32,7 +32,7 @@
   color: var(--pd-text-primary);
   font-family: var(--font-body, 'Manrope', sans-serif);
   min-height: 100vh;
-  padding: 110px 20px 90px 20px;
+  padding: 0 0 90px 0;
   position: relative;
   overflow-x: hidden;
 }
@@ -54,7 +54,109 @@
   max-width: 1320px;
   margin: 0 auto;
   position: relative;
+  z-index: 10;
+}
+
+.pd-content-overlap {
+  margin-top: -100px;
+  background: var(--pd-bg-page);
+  border-radius: var(--pd-radius-xl);
+  padding: 40px;
+  box-shadow: 0 -12px 40px rgba(0,0,0,0.12);
+}
+
+@media (max-width: 768px) {
+  .pd-content-overlap {
+    padding: 24px 16px;
+    margin-top: -60px;
+    border-radius: var(--pd-radius-lg);
+  }
+}
+
+/* ==========================================================================
+   HERO BANNER (BEHIND HEADER)
+   ========================================================================== */
+
+.pd-hero-banner {
+  position: relative;
+  width: 100%;
+  height: 75vh;
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 140px;
+}
+
+.pd-hero-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.85) 100%);
   z-index: 1;
+}
+
+.pd-hero-banner-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.pd-breadcrumb-hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.pd-breadcrumb-hero span {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pd-breadcrumb-current-hero {
+  color: var(--pd-gold) !important;
+}
+
+.pd-hero-title {
+  font-family: var(--font-heading, 'Cormorant Garamond', serif);
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  line-height: 1.1;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.pd-hero-subtitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pd-gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+@media (max-width: 768px) {
+  .pd-hero-banner {
+    height: 60vh;
+    padding-bottom: 100px;
+    background-attachment: scroll;
+  }
 }
 
 /* ==========================================================================

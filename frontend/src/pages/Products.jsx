@@ -140,7 +140,7 @@ export default function Products() {
           <h2>Granite Buying Guide</h2>
           <div className="guide-grid">
             <div className="guide-card">
-              <h3>🏠 For Home Projects</h3>
+              <h3>For Home Projects</h3>
               <p>Ideal granite types for kitchens, bathrooms, and living spaces. Durable and easy to maintain.</p>
               <ul>
                 <li>Indian Black Granite</li>
@@ -149,7 +149,7 @@ export default function Products() {
               </ul>
             </div>
             <div className="guide-card">
-              <h3>🏢 For Commercial Use</h3>
+              <h3>For Commercial Use</h3>
               <p>Heavy-duty granite suitable for high-traffic commercial areas and office buildings.</p>
               <ul>
                 <li>Multicolor Granite</li>
@@ -158,7 +158,7 @@ export default function Products() {
               </ul>
             </div>
             <div className="guide-card">
-              <h3>✨ Premium Selection</h3>
+              <h3>Premium Selection</h3>
               <p>Our finest collections for luxury projects and statement designs.</p>
               <ul>
                 <li>Pink Granite</li>
@@ -176,22 +176,18 @@ export default function Products() {
           <h2>Why Choose Our Granite?</h2>
           <div className="benefits-grid">
             <div className="benefit-item">
-              <div className="benefit-icon">💎</div>
               <h4>Premium Quality</h4>
               <p>Sourced directly from verified quarries</p>
             </div>
             <div className="benefit-item">
-              <div className="benefit-icon">🔧</div>
               <h4>Professional Installation</h4>
               <p>Expert installation with proper sealing</p>
             </div>
             <div className="benefit-item">
-              <div className="benefit-icon">⏱️</div>
               <h4>Quick Turnaround</h4>
               <p>Fast processing and delivery</p>
             </div>
             <div className="benefit-item">
-              <div className="benefit-icon">🛡️</div>
               <h4>Guaranteed Quality</h4>
               <p>1-year warranty on installation</p>
             </div>

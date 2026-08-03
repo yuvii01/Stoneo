@@ -80,25 +80,21 @@ export default function Projects() {
           <h2>Project Categories</h2>
           <div className="categories-grid">
             <div className="category-card">
-              <div className="category-icon">🏠</div>
               <h3>Residential</h3>
               <p>Villas, apartments, and residential complexes</p>
               <span className="category-count">150+ Projects</span>
             </div>
             <div className="category-card">
-              <div className="category-icon">🏢</div>
               <h3>Commercial</h3>
               <p>Offices, hotels, and commercial buildings</p>
               <span className="category-count">120+ Projects</span>
             </div>
             <div className="category-card">
-              <div className="category-icon">🏭</div>
               <h3>Industrial</h3>
               <p>Factories and industrial applications</p>
               <span className="category-count">85+ Projects</span>
             </div>
             <div className="category-card">
-              <div className="category-icon">🌳</div>
               <h3>Landscape</h3>
               <p>Outdoor and landscape designs</p>
               <span className="category-count">145+ Projects</span>
@@ -113,7 +109,7 @@ export default function Projects() {
           <h2>Client Testimonials</h2>
           <div className="testimonials-grid">
             <div className="testimonial-card">
-              <div className="stars">⭐⭐⭐⭐⭐</div>
+              <div className="stars">★★★★★</div>
               <p className="testimonial-text">
                 "Excellent quality and professionalism. Stoneo India delivered our project on time with outstanding attention to detail. Highly recommended!"
               </p>
@@ -123,7 +119,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="testimonial-card">
-              <div className="stars">⭐⭐⭐⭐⭐</div>
+              <div className="stars">★★★★★</div>
               <p className="testimonial-text">
                 "Working with Stoneo India was seamless. Their expertise in granite selection and installation guidance was invaluable for our commercial project."
               </p>
@@ -133,7 +129,7 @@ export default function Projects() {
               </div>
             </div>
             <div className="testimonial-card">
-              <div className="stars">⭐⭐⭐⭐⭐</div>
+              <div className="stars">★★★★★</div>
               <p className="testimonial-text">
                 "Best granite supplier we've worked with. Great quality, fair pricing, and their customer service is exceptional. Will definitely work with them again!"
               </p>

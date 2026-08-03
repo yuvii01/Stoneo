@@ -306,7 +306,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="open-maps-chip"
                 >
-                  <span>📍</span> Open Google Maps
+                  Open Google Maps
                 </a>
               </div>
             </div>

@@ -338,9 +338,9 @@ export default function GetQuote() {
                   <div className="slab-info-overlay">
                     <h3>{graniteName}</h3>
                     <div className="slab-badges-row">
-                      <span className="luxury-badge">✦ 100% Premium Grade</span>
-                      <span className="luxury-badge">✦ Custom Cut & Polish</span>
-                      <span className="luxury-badge">✦ Direct Quarry Pricing</span>
+                      <span className="luxury-badge">100% Premium Grade</span>
+                      <span className="luxury-badge">Custom Cut & Polish</span>
+                      <span className="luxury-badge">Direct Quarry Pricing</span>
                     </div>
                   </div>
                 </div>
@@ -386,10 +386,10 @@ export default function GetQuote() {
 
                   <div className="empty-showcase-actions">
                     <Link to="/category/granite" className="empty-action-btn primary">
-                      <span>✦</span> Browse Granite Collection
+                      Browse Granite Collection
                     </Link>
                     <Link to="/category/marble" className="empty-action-btn outline">
-                      <span>✦</span> Explore Marble
+                      Explore Marble
                     </Link>
                   </div>
                 </div>
@@ -400,7 +400,7 @@ export default function GetQuote() {
                 <div className="recommended-granites-section">
                   <div className="recommended-section-header">
                     <h3 className="recommended-title">
-                      <span>✨</span> Recommended Top Granites
+                      Recommended Top Granites
                     </h3>
                     <span className="recommended-subtitle">Click "+ Add to Portfolio" to select</span>
                   </div>
@@ -415,7 +415,7 @@ export default function GetQuote() {
                         <div className="recommended-info">
                           <h4 className="recommended-stone-name">{stone.name}</h4>
                           <div className="recommended-stone-meta">
-                            <span>✦ {Array.isArray(stone.finish) ? stone.finish[0] : (stone.finish || 'Polished')}</span>
+                            <span>{Array.isArray(stone.finish) ? stone.finish[0] : (stone.finish || 'Polished')}</span>
                             {stone.price && <span className="recommended-price">₹{stone.price}/sq.ft</span>}
                           </div>
                           <button
@@ -436,7 +436,7 @@ export default function GetQuote() {
               )}
 
               <div className="portfolio-note-box">
-                <strong>💎 Architectural Guarantee:</strong> Every stone sample in your portfolio is sourced from top-tier Indian & international quarries. Our specialists will provide exact lot photos, custom sizing, and logistics quotes within 15 minutes.
+                <strong>Architectural Guarantee:</strong> Every stone sample in your portfolio is sourced from top-tier Indian & international quarries. Our specialists will provide exact lot photos, custom sizing, and logistics quotes within 15 minutes.
               </div>
             </div>
 
@@ -444,7 +444,6 @@ export default function GetQuote() {
             <div className="luxury-panel-card">
               <div className="panel-header-bar">
                 <h2 className="panel-title">
-                  <span>📋</span>
                   Project Specifications
                 </h2>
                 {/* <span
@@ -499,7 +498,6 @@ export default function GetQuote() {
                 <div className="luxury-form-group">
                   <label htmlFor="name">Your Full Name *</label>
                   <div className="input-icon-wrapper">
-                    <span className="input-icon">👤</span>
                     <input
                       type="text"
                       id="name"
@@ -539,15 +537,12 @@ export default function GetQuote() {
 
                 <div className="quote-trust-bar">
                   <div className="trust-item">
-                    <span className="trust-item-icon">⚡</span>
                     <span>15-Min Response</span>
                   </div>
                   <div className="trust-item">
-                    <span className="trust-item-icon">💎</span>
                     <span>Factory Direct Pricing</span>
                   </div>
                   <div className="trust-item">
-                    <span className="trust-item-icon">🌍</span>
                     <span>Global Sample Dispatch</span>
                   </div>
                 </div>
@@ -587,7 +582,7 @@ export default function GetQuote() {
                   rel="noopener noreferrer"
                   className="open-maps-chip"
                 >
-                  <span>📍</span> Open Google Maps
+                  Open Google Maps
                 </a>
               </div>
             </div>
