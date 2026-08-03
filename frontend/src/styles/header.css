@@ -47,17 +47,22 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: 10px 0;
+  }
   .header-container {
-    padding-inline: 12px;
+    padding-inline: 16px;
     height: 60px;
   }
 }
 
 @media (max-width: 480px) {
+  .header {
+    padding: 8px 0;
+  }
   .header-container {
-    margin-top: 10px;
-    padding-inline: 10px;
-    height: 50px;
+    padding-inline: 12px;
+    height: 54px;
   }
 }
 
@@ -523,11 +528,6 @@
 
 /* ================= RESPONSIVE (MOBILE & TABLET <= 768px) ================= */
 @media (max-width: 768px) {
-  .header-container {
-    padding-inline: 16px;
-    height: 64px;
-  }
-
   .hamburger {
     height: 28px;
   }
@@ -590,8 +590,8 @@
   }
 
   .nav.active {
-    max-height: calc(100vh - 64px);
-    max-height: calc(100dvh - 64px);
+    max-height: calc(100vh - 60px);
+    max-height: calc(100dvh - 60px);
     padding: 10px 0 30px 0;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -850,11 +850,6 @@
 
 /* ================= SMALL PHONES (max-width: 480px) ================= */
 @media (max-width: 480px) {
-  .header-container {
-    padding-inline: 12px;
-    height: 56px;
-  }
-
   .hamburger {
     height: 26px;
   }

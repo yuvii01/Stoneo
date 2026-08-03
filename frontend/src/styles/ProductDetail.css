@@ -1034,3 +1034,29 @@
   letter-spacing: 0.5px;
   text-align: center;
 }
+
+/* ==========================================================================
+   RESPONSIVE OPTIMIZATIONS (TABLET & MOBILE)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .pd-main-image-wrapper {
+    height: 280px;
+  }
+  .pd-dossier-section {
+    padding: 20px 14px;
+  }
+  .pd-product-title {
+    font-size: 28px;
+  }
+  .pd-tabs-section {
+    padding: 20px 14px;
+  }
+  .pd-tab-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  .pd-similar-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

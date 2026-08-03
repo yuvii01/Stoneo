@@ -377,3 +377,27 @@
     height: 350px;
   }
 }
+
+@media (max-width: 480px) {
+  .collection-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .item-image-container {
+    height: 300px;
+  }
+
+  .collection-header {
+    padding: 20px 16px;
+  }
+
+  .stone-knowledge-section {
+    padding: 0 16px;
+    gap: 50px;
+  }
+
+  .knowledge-block {
+    gap: 24px;
+  }
+}

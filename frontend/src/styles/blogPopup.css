@@ -151,3 +151,16 @@
     font-size: 12px;
   }
 }
+
+@media (max-width: 480px) {
+  .blog-popup-overlay {
+    width: calc(100vw - 28px);
+    max-width: calc(100vw - 28px);
+    right: -100%;
+    top: auto;
+    bottom: 80px;
+  }
+  .blog-popup-overlay.show {
+    right: 14px;
+  }
+}

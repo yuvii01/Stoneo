@@ -114,16 +114,13 @@ a:focus:not(:focus-visible),
   }
 }
 
-/* Mobile-first approach for touch targets */
+/* Safe mobile touch target adjustments for buttons and interactive controls */
 @media (max-width: 480px) {
-
   button,
-  a {
-    min-height: 44px;
-    min-width: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .btn,
+  .get-quote-btn,
+  .filter-btn {
+    min-height: 42px;
   }
 
   input,
@@ -131,15 +128,16 @@ a:focus:not(:focus-visible),
   select {
     font-size: 16px;
     /* Prevents zoom on iOS */
-    padding: 10px;
+    padding: 10px 12px;
   }
 }
 
 /* Improve touch interaction on tablets */
 @media (min-width: 481px) and (max-width: 1024px) {
-
   button,
-  a {
+  .btn,
+  .get-quote-btn,
+  .filter-btn {
     min-height: 40px;
   }
 }

@@ -801,3 +801,47 @@
     height: 340px;
   }
 }
+
+@media (max-width: 480px) {
+  .about-hero-section {
+    padding: 85px 14px 40px;
+  }
+
+  .about-hero-title {
+    font-size: 32px;
+  }
+
+  .about-hero-stats-bar {
+    gap: 16px 20px;
+  }
+
+  .origin-image-container img {
+    height: 260px;
+  }
+
+  .origin-badge-float {
+    padding: 16px 20px;
+  }
+
+  .timeline-card-showcase,
+  .process-display-card,
+  .value-luxury-item {
+    padding: 20px 16px;
+  }
+
+  .process-tech-specs {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .about-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-btn-gold,
+  .cta-btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+}

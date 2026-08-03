@@ -824,3 +824,89 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(184, 133, 84, 0.3);
 }
+
+/* ==========================================================================
+   RESPONSIVE OPTIMIZATIONS (TABLET & MOBILE)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .luxury-quote-hero {
+    padding: 110px 16px 45px 16px;
+  }
+
+  .luxury-quote-hero h1 {
+    font-size: 36px;
+  }
+
+  .luxury-quote-grid {
+    gap: 20px;
+  }
+
+  .luxury-panel-card {
+    padding: 24px 18px;
+  }
+
+  .portfolio-items-list {
+    max-height: 400px;
+  }
+
+  .panel-title {
+    font-size: 22px;
+  }
+
+  .showroom-info-col h2 {
+    font-size: 28px;
+  }
+
+  .showroom-map-col iframe {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .luxury-quote-hero {
+    padding: 95px 14px 35px 14px;
+  }
+
+  .luxury-quote-hero h1 {
+    font-size: 30px;
+  }
+
+  .quote-badge-pill {
+    padding: 5px 14px;
+    font-size: 11.5px;
+  }
+
+  .luxury-panel-card {
+    padding: 20px 14px;
+  }
+
+  .portfolio-item-card {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .item-thumb-wrapper {
+    width: 65px;
+    height: 65px;
+  }
+
+  .item-name {
+    font-size: 16px;
+  }
+
+  .quote-trust-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .showroom-map-col iframe {
+    height: 250px;
+  }
+
+  .map-hover-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

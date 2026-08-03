@@ -548,3 +548,32 @@
     height: 260px;
   }
 }
+
+@media (max-width: 480px) {
+  .project-gallery-section {
+    padding: 60px 14px;
+  }
+
+  .pg-card:nth-child(n) {
+    min-height: 340px;
+  }
+
+  .pg-card-overlay {
+    padding: 24px 18px 18px;
+  }
+
+  .pg-modal-info-col {
+    padding: 20px 16px;
+  }
+
+  .pg-modal-cta-wrap {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .pg-modal-btn-primary,
+  .pg-modal-btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -873,3 +873,124 @@
 .bd-featured-slab-card:hover .bd-featured-slab-card-btn {
     color: #fff;
 }
+
+/* ================= 9. RESPONSIVE OPTIMIZATIONS (TABLET & MOBILE) ================= */
+@media (max-width: 768px) {
+    .bd-nav-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .bd-top-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .bd-hero-image-wrapper {
+        height: 360px;
+        margin-bottom: 32px;
+    }
+
+    .bd-article-grid {
+        gap: 36px;
+    }
+
+    .bd-sidebar {
+        position: static;
+        top: auto;
+    }
+
+    .bd-featured-slabs-showcase {
+        padding: 28px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bd-header-section {
+        margin-bottom: 24px;
+    }
+
+    .bd-title {
+        font-size: 28px;
+        margin-bottom: 18px;
+    }
+
+    .bd-meta-bar {
+        gap: 12px;
+        padding: 14px 0;
+        font-size: 0.85rem;
+    }
+
+    .bd-hero-image-wrapper {
+        height: 250px;
+        margin-bottom: 24px;
+        border-radius: 12px;
+    }
+
+    .bd-hero-badges {
+        top: 14px;
+        left: 14px;
+        gap: 8px;
+    }
+
+    .bd-hero-badge {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+    }
+
+    .bd-article-content {
+        font-size: 1.05rem;
+        line-height: 1.75;
+    }
+
+    .bd-article-content > p:first-of-type::first-letter {
+        font-size: 3.6rem;
+        margin-right: 10px;
+    }
+
+    .bd-pull-quote {
+        margin: 32px 0;
+        padding: 24px 20px;
+        font-size: 1.25rem;
+    }
+
+    .bd-takeaway-box {
+        padding: 22px 18px;
+        margin: 32px 0;
+    }
+
+    .bd-reactions-section {
+        margin-top: 40px;
+        padding: 24px 16px;
+    }
+
+    .bd-reaction-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .bd-reaction-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bd-related-section {
+        margin-top: 50px;
+        padding-top: 40px;
+    }
+
+    .bd-related-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .bd-featured-slabs-showcase {
+        margin-top: 40px;
+        padding: 24px 16px;
+    }
+
+    .bd-featured-showcase-header h2 {
+        font-size: 1.6rem;
+    }
+}
