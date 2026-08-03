@@ -82,10 +82,11 @@ export default function OtherNaturalStones() {
     const newType = [];
     const newColor = [];
 
-    if (type === 'slate') newType.push('Slate Stone');
+    if (type === 'slate' || type === 'slate_stone') newType.push('Slate Stone');
     if (type === 'quartzite') newType.push('Quartzite');
     if (type === 'limestone') newType.push('Limestone');
     if (type === 'travertine') newType.push('Travertine');
+    if (type === 'basalt') newType.push('Basalt');
     if (type === 'grey') newColor.push('Grey');
     if (type === 'beige') newColor.push('Beige');
 
@@ -120,7 +121,15 @@ export default function OtherNaturalStones() {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
-      const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
+      const matchesType = (filters.type || []).length === 0 || (filters.type || []).some(t => {
+        const pName = (p.name || '').toLowerCase();
+        if (t === 'Slate Stone') return pName.includes('slate') || p.type === 'Slate Stone';
+        if (t === 'Quartzite') return pName.includes('quartzite') || p.type === 'Quartzite';
+        if (t === 'Limestone') return pName.includes('limestone') || pName.includes('lime') || p.type === 'Limestone';
+        if (t === 'Basalt') return pName.includes('basalt') || p.type === 'Basalt';
+        if (t === 'Travertine') return pName.includes('travertine') || p.type === 'Travertine';
+        return p.type === t;
+      });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;

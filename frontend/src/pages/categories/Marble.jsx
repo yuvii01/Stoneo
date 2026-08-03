@@ -50,12 +50,14 @@ export default function Marble() {
 
   useEffect(() => {
     const type = searchParams.get('type');
-    if (type === 'Country of Origin') {
-      setFilters(prev => ({ ...prev, origin: ['Italy', 'Spain', 'Vietnam', 'Turkey', 'Greece'] }));
+    if (type === 'imported' || type === 'Country of Origin') {
+      setFilters(prev => ({ ...prev, origin: ['Italian', 'Spanish', 'Vietnamese', 'Turkish', 'Greece'] }));
     } else if (type === 'indian') {
       setFilters(prev => ({ ...prev, origin: ['Makrana white', 'Katni', 'Ambaji', 'Rajnagar', 'Udaipur green', 'Kishangarh', 'Jaisalmer Yellow'] }));
     } else if (type === 'statuario') {
-      setFilters(prev => ({ ...prev, origin: ['Italian'] }));
+      setFilters(prev => ({ ...prev, origin: ['Statuario'] }));
+    } else {
+      setFilters(prev => ({ ...prev, origin: [] }));
     }
   }, [searchParams]);
 
@@ -80,15 +82,25 @@ export default function Marble() {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
-      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
+      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(org => {
+        const pOrg = (p.origin || '').toLowerCase();
+        const pName = (p.name || '').toLowerCase();
+        if (org === 'Statuario') return pName.includes('statuario') || (p.description || '').toLowerCase().includes('statuario');
+        if (['Italian', 'Spanish', 'Vietnamese', 'Turkish', 'Greece', 'Imported'].includes(org)) {
+          return pOrg.includes('ital') || pOrg.includes('spain') || pOrg.includes('viet') || pOrg.includes('turk') || pOrg.includes('gree') || pOrg.includes('import') || (!pOrg.includes('indi') && pOrg !== '' && pOrg !== 'india') || pName.includes('statuario') || pName.includes('carrara') || pName.includes('bottochino');
+        }
+        if (['Makrana white', 'Katni', 'Ambaji', 'Rajnagar', 'Udaipur green', 'Kishangarh', 'Jaisalmer Yellow', 'Indian'].includes(org)) {
+          return pOrg.includes('indi') || pOrg.includes('rajasthan') || ['makrana', 'katni', 'ambaji', 'rajnagar', 'udaipur', 'kishangarh', 'jaisalmer', 'dungo', 'morwad', 'green marble'].some(w => pName.includes(w));
+        }
+        return p.origin === org;
+      });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
-      const matchesType = !typeParam || typeParam !== 'statuario' || p.name.toLowerCase().includes('statuario');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, typeParam, productsList]);
+  }, [categoryFilter, filters, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;

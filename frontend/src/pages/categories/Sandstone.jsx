@@ -45,7 +45,7 @@ const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to 
 const sandstoneTypesMap = {};
 
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leather", "Flamed", "Lapotra", "Bush Hammered", "Antique", "Sandblasted"];
-const TYPE_OPTIONS = ["Kota Stone", "Agra Sandstone", "Raj Green Sandstone", "Teakwood Sandstone", "Dholpur Sandstone"];
+const TYPE_OPTIONS = ["Kota Stone", "Agra Sandstone", "Raj Green Sandstone", "Teakwood Sandstone", "Dholpur Sandstone", "Kandla Grey"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 
 // Merge Data
@@ -54,7 +54,8 @@ const ALL_PRODUCTS = CSV_PRODUCTS.map((csvItem, index) => {
   const existing = sandstoneTypesMap[key];
 
   let type = TYPE_OPTIONS[index % TYPE_OPTIONS.length];
-  if (csvItem.name.toLowerCase().includes('kota')) type = 'Kota Stone';
+  if (csvItem.name.toLowerCase().includes('kandla')) type = 'Kandla Grey';
+  else if (csvItem.name.toLowerCase().includes('kota')) type = 'Kota Stone';
   else if (csvItem.name.toLowerCase().includes('agra')) type = 'Agra Sandstone';
   else if (csvItem.name.toLowerCase().includes('raj green')) type = 'Raj Green Sandstone';
   else if (csvItem.name.toLowerCase().includes('teak')) type = 'Teakwood Sandstone';
@@ -131,6 +132,7 @@ export default function Sandstone() {
       else if (type === 'raj_green_sandstone') newType = ['Raj Green Sandstone'];
       else if (type === 'teakwood_sandstone') newType = ['Teakwood Sandstone'];
       else if (type === 'dholpur_sandstone') newType = ['Dholpur Sandstone'];
+      else if (type === 'kandla_grey') newType = ['Kandla Grey'];
 
       // Prevent infinite loop by checking if state actually needs to change
       if (prev.type.length === newType.length && prev.type.every((v, i) => v === newType[i])) {
@@ -159,7 +161,16 @@ export default function Sandstone() {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
-      const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
+      const matchesType = (filters.type || []).length === 0 || (filters.type || []).some(t => {
+        const pName = (p.name || '').toLowerCase();
+        if (t === 'Kandla Grey') return pName.includes('kandla') || p.type === 'Kandla Grey';
+        if (t === 'Kota Stone') return pName.includes('kota') || p.type === 'Kota Stone';
+        if (t === 'Agra Sandstone') return pName.includes('agra') || p.type === 'Agra Sandstone';
+        if (t === 'Raj Green Sandstone') return pName.includes('raj green') || p.type === 'Raj Green Sandstone';
+        if (t === 'Teakwood Sandstone') return pName.includes('teak') || p.type === 'Teakwood Sandstone';
+        if (t === 'Dholpur Sandstone') return pName.includes('dholpur') || p.type === 'Dholpur Sandstone';
+        return p.type === t;
+      });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;

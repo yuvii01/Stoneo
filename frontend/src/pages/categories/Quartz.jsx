@@ -100,6 +100,8 @@ export default function Quartz() {
       setFilters(prev => ({ ...prev, type: ['Sparkling'] }));
     } else if (typeParam === 'solid') {
       setFilters(prev => ({ ...prev, type: ['Solid Color'] }));
+    } else {
+      setFilters(prev => ({ ...prev, type: [] }));
     }
   }, [searchParams]);
 
@@ -119,7 +121,13 @@ export default function Quartz() {
 
   const filteredProducts = useMemo(() => {
     return productsList.filter(p => {
-      const matchesType = (filters.type || []).length === 0 || (filters.type || []).includes(p.type);
+      const matchesType = (filters.type || []).length === 0 || (filters.type || []).some(t => {
+        const pName = (p.name || '').toLowerCase();
+        if (t === 'Calacatta') return pName.includes('calacatta') || p.type === 'Calacatta';
+        if (t === 'Sparkling') return pName.includes('sparkling') || p.type === 'Sparkling';
+        if (t === 'Solid Color') return (!pName.includes('calacatta') && !pName.includes('sparkling')) || p.type === 'Solid Color';
+        return p.type === t;
+      });
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;

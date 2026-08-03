@@ -292,7 +292,7 @@ export default function Header() {
                   </h3>
 
                   <Link to="/application/interior?type=interior-flooring" onClick={closeMenus}>Interior Flooring</Link>
-                  <Link to="/application/interior?type=blowall-cladding" onClick={closeMenus}>Wall Cladding</Link>
+                  <Link to="/application/interior?type=wall-cladding" onClick={closeMenus}>Wall Cladding</Link>
                   <Link to="/application/interior?type=kitchen-countertops" onClick={closeMenus}>Kitchen Countertops</Link>
                   <Link to="/application/interior?type=bathroom-vanity" onClick={closeMenus}>Bathroom & Vanity</Link>
                   <Link to="/application/interior?type=staircase" onClick={closeMenus}>Staircase</Link>

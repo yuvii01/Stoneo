@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import '../styles/About.css';
 import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema } from '../utils/seo';
-import CEOQuote from './CEOQuote';
 
 const TIMELINE_DATA = [
   {
@@ -132,7 +131,7 @@ export default function About() {
 
   return (
     <>
-      <SEOHead 
+      <SEOHead
         pageKey="about"
         structured={getOrganizationSchema()}
       />
@@ -149,7 +148,7 @@ export default function About() {
               Sculpting Earth’s <span>Timeless Masterpieces</span>
             </h1>
             <p className="about-hero-subtitle">
-              From the deep quarries of Kishangarh to architectural landmarks in over 60 countries, 
+              From the deep quarries of Kishangarh to architectural landmarks in over 60 countries,
               Stoneo India transforms 4 billion years of geological heritage into surfaces of unrivaled strength and opulence.
             </p>
 
@@ -196,9 +195,9 @@ export default function About() {
 
             <div className="origin-visual-block">
               <div className="origin-image-container">
-                <img 
-                  src="https://alliancegranimarmo.com/wp-content/uploads/2022/06/Infra-Page_Image-2-1-scaled.jpg" 
-                  alt="Stoneo India Quarry Heritage & Processing Facility" 
+                <img
+                  src="https://alliancegranimarmo.com/wp-content/uploads/2022/06/Infra-Page_Image-2-1-scaled.jpg"
+                  alt="Stoneo India Quarry Heritage & Processing Facility"
                 />
               </div>
               <div className="origin-badge-float">
@@ -210,7 +209,7 @@ export default function About() {
         </section>
 
         {/* --- INTERACTIVE TIMELINE / EVOLUTION --- */}
-        <section className="about-timeline-section">
+        {/* <section className="about-timeline-section">
           <div className="timeline-container">
             <div className="about-section-header">
               <span className="about-section-tag">Our Chronology</span>
@@ -249,9 +248,10 @@ export default function About() {
             </div>
           </div>
         </section>
+        */}
 
         {/* --- THE 4 PILLARS OF LUXURY --- */}
-        <section className="about-pillars-section">
+        {/* <section className="about-pillars-section">
           <div className="about-section-header">
             <span className="about-section-tag">Why Stoneo India</span>
             <h2 className="about-section-title">The Four Pillars of Stone Distinction</h2>
@@ -305,7 +305,7 @@ export default function About() {
               <span className="pillar-tag">Zero Transit Damage</span>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* --- INTERACTIVE CRAFTSMANSHIP PROCESS --- */}
         <section className="about-process-section">
@@ -355,13 +355,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* --- CEO QUOTE & LEADERSHIP --- */}
-        <section className="about-ceo-wrapper">
-          <div className="container">
-            <CEOQuote />
-          </div>
-        </section>
-
         {/* --- VALUES & SUSTAINABILITY --- */}
         <section className="about-values-section">
           <div className="about-section-header">
@@ -407,10 +400,10 @@ export default function About() {
               Connect with our stone specialists for bespoke slab curation, international shipping consultations, or wholesale project pricing.
             </p>
             <div className="about-cta-buttons">
-              <Link to="/contact" className="cta-btn-gold">
+              <Link to="/get-quote" className="cta-btn-gold">
                 Request a Consultation
               </Link>
-              <Link to="/royal-collection" className="cta-btn-outline">
+              <Link to="/royal-gem-stones" className="cta-btn-outline">
                 Explore Royal Gemstones
               </Link>
             </div>

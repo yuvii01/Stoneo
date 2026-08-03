@@ -96,6 +96,8 @@ export default function Interior() {
       }
     } else if (filter) {
       setFilters(prev => ({ ...prev, applicationType: [filter] }));
+    } else {
+      setFilters(prev => ({ ...prev, applicationType: [] }));
     }
   }, [searchParams]);
 

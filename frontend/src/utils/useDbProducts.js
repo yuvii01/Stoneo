@@ -12,8 +12,8 @@ const parsePrice = (val, fallback = 100) => {
   return fallback;
 };
 
-export function useDbProducts(categoryName) {
-  const [dbProducts, setDbProducts] = useState([]);
+export function useDbProducts(categoryName, fallbackData = []) {
+  const [dbProducts, setDbProducts] = useState(Array.isArray(fallbackData) ? fallbackData : []);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,6 +54,44 @@ export function useDbProducts(categoryName) {
               ? getImageUrl(p.thumbnail)
               : ((p.images && p.images.length > 0) ? p.images[0] : (p.image || ''));
 
+            let inferredType = p.type || p.variety || '';
+            const lowerName = (p.name || '').toLowerCase();
+            if (!inferredType) {
+              if (categoryName === 'Quartz') {
+                if (lowerName.includes('calacatta')) inferredType = 'Calacatta';
+                else if (lowerName.includes('sparkling')) inferredType = 'Sparkling';
+                else inferredType = 'Solid Color';
+              } else if (categoryName === 'Onyx') {
+                if (lowerName.includes('exotic')) inferredType = 'Exotic';
+                else if (lowerName.includes('white')) inferredType = 'White';
+                else inferredType = 'Solid Color';
+              } else if (categoryName === 'Sandstone') {
+                if (lowerName.includes('kota')) inferredType = 'Kota Stone';
+                else if (lowerName.includes('agra')) inferredType = 'Agra Sandstone';
+                else if (lowerName.includes('raj green')) inferredType = 'Raj Green Sandstone';
+                else if (lowerName.includes('teak')) inferredType = 'Teakwood Sandstone';
+                else if (lowerName.includes('dholpur')) inferredType = 'Dholpur Sandstone';
+                else if (lowerName.includes('kandla')) inferredType = 'Kandla Grey';
+                else inferredType = 'Agra Sandstone';
+              } else if (categoryName === 'Other Natural Stones') {
+                if (lowerName.includes('slate')) inferredType = 'Slate Stone';
+                else if (lowerName.includes('limestone')) inferredType = 'Limestone';
+                else if (lowerName.includes('basalt')) inferredType = 'Basalt';
+                else if (lowerName.includes('quartzite')) inferredType = 'Quartzite';
+                else if (lowerName.includes('travertine')) inferredType = 'Travertine';
+                else if (lowerName.includes('kota')) inferredType = 'Kota Stone';
+                else inferredType = 'Quartzite';
+              }
+            }
+
+            let inferredCategory = p.color || p.colorCategory || p.category || 'Standard';
+            if (categoryName === 'Paving & Landscape' || categoryName === 'Paving and Landscape') {
+              if (lowerName.includes('cobble')) inferredCategory = 'Cobbles';
+              else if (lowerName.includes('paver') || lowerName.includes('brick') || lowerName.includes('sandstone') || lowerName.includes('granite') || lowerName.includes('marble')) inferredCategory = 'Pavers';
+              else if (lowerName.includes('pebble') || lowerName.includes('step')) inferredCategory = 'Stones';
+              else inferredCategory = p.category || 'Pavers';
+            }
+
             return {
               id: p.id || p._id || `db-${idx}`,
               sortOrder: typeof p.sortOrder === 'number' && !isNaN(p.sortOrder) ? p.sortOrder : idx,
@@ -65,7 +103,8 @@ export function useDbProducts(categoryName) {
               colorCategory: p.colorCategory || p.color || '',
               variety: p.variety || p.gemstoneVariety || '',
               isRoyalGemStone: p.isRoyalGemStone || p.category === 'Royal Gemstone',
-              category: p.color || p.colorCategory || p.category || 'Standard',
+              category: inferredCategory,
+              type: inferredType,
               stoneCategory: p.category || categoryName || '',
               material: p.category || categoryName || '',
               price: parsedPrice,
@@ -83,11 +122,18 @@ export function useDbProducts(categoryName) {
             };
           });
           setDbProducts(mapped);
+        } else if (Array.isArray(fallbackData) && fallbackData.length > 0) {
+          setDbProducts(fallbackData);
         }
         setLoading(false);
       })
       .catch(e => {
-        if (isMounted) setLoading(false);
+        if (isMounted) {
+          if (Array.isArray(fallbackData) && fallbackData.length > 0) {
+            setDbProducts(fallbackData);
+          }
+          setLoading(false);
+        }
         console.error(`Failed to fetch database products for ${categoryName}:`, e);
       });
 

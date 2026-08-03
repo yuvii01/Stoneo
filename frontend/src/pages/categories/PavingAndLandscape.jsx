@@ -96,7 +96,9 @@ export default function PavingAndLandscape() {
       let newOrigin = [];
       let newCategory = [];
 
-      if (typeParam === 'cobbles-granite') {
+      if (typeParam === 'cobbles') {
+        newCategory = ['Cobbles'];
+      } else if (typeParam === 'cobbles-granite') {
         newOrigin = ['Granite Cobbles'];
         newCategory = ['Cobbles'];
       } else if (typeParam === 'cobbles-sandstone') {
@@ -105,6 +107,8 @@ export default function PavingAndLandscape() {
       } else if (typeParam === 'cobbles-limestone') {
         newOrigin = ['Limestone Cobbles'];
         newCategory = ['Cobbles'];
+      } else if (typeParam === 'pavers') {
+        newCategory = ['Pavers'];
       } else if (typeParam === 'pavers-granite') {
         newOrigin = ['Granite Pavers'];
         newCategory = ['Pavers'];
@@ -119,7 +123,9 @@ export default function PavingAndLandscape() {
         newCategory = ['Pavers'];
       } else if (typeParam === 'bricks') {
         newOrigin = ['Bricks'];
-      } else if (typeParam === 'pebbles') {
+      } else if (typeParam === 'stones') {
+        newCategory = ['Stones'];
+      } else if (typeParam === 'pebbles' || typeParam === 'stones-pebbles') {
         newOrigin = ['landscaping pebbles'];
       } else if (typeParam === 'stepping-stones') {
         newOrigin = ['Stepping stones'];
@@ -160,7 +166,12 @@ export default function PavingAndLandscape() {
   const filteredProducts = useMemo(() => {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
-      const matchesType = (filters.category || []).length === 0 || (filters.category || []).includes(p.category);
+      const matchesType = (filters.category || []).length === 0 || (filters.category || []).some(cat => {
+        if (cat === 'Cobbles') return p.category === 'Cobbles' || (p.name || '').toLowerCase().includes('cobble');
+        if (cat === 'Pavers') return p.category === 'Pavers' || (p.name || '').toLowerCase().includes('paver') || (p.name || '').toLowerCase().includes('brick');
+        if (cat === 'Stones') return p.category === 'Stones' || (p.name || '').toLowerCase().includes('pebble') || (p.name || '').toLowerCase().includes('step');
+        return p.category === cat;
+      });
 
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(o => {
         const nameMatch = p.name.toLowerCase();

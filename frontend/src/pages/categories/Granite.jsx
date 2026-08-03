@@ -175,13 +175,15 @@ export default function Granite() {
   useEffect(() => {
     const type = searchParams.get('type');
     if (type === 'south') {
-      setFilters(prev => ({ ...prev, origin: ['South India (Bangalore, Chennai)'] }));
+      setFilters(prev => ({ ...prev, origin: ['South India'] }));
     } else if (type === 'north') {
-      setFilters(prev => ({ ...prev, origin: ['North India (Rajasthan)'] }));
+      setFilters(prev => ({ ...prev, origin: ['North India'] }));
     } else if (type === 'imported') {
       setFilters(prev => ({ ...prev, origin: ['Imported'] }));
     } else if (type === 'alaska') {
       setFilters(prev => ({ ...prev, origin: ['Alaska'] }));
+    } else {
+      setFilters(prev => ({ ...prev, origin: [] }));
     }
   }, [searchParams]);
 
@@ -206,15 +208,31 @@ export default function Granite() {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
-      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).includes(p.origin);
+      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(org => {
+        const pOrg = (p.origin || '').toLowerCase();
+        const pName = (p.name || '').toLowerCase();
+        if (org === 'Alaska') return pName.includes('alaska') || pOrg.includes('alaska');
+        if (org === 'Imported') return pOrg.includes('import') || (!pOrg.includes('india') && pOrg !== '' && pOrg !== 'india');
+        if (org === 'North India') {
+          return pOrg.includes('north') ||
+            pOrg.includes('rajasthan') ||
+            ['p white', 'alpinus', 'kashmir', 'rajasthan', 'rosy pink', 'chima pink', 'jhansi red', 'lakha red', 'new imperial'].some(w => pName.includes(w));
+        }
+        if (org === 'South India') {
+          return pOrg.includes('south') ||
+            pOrg.includes('bangalore') ||
+            pOrg.includes('chennai') ||
+            (pOrg.includes('india') && !pName.includes('alaska') && !['p white', 'alpinus', 'kashmir', 'rajasthan', 'rosy pink', 'chima pink', 'jhansi red', 'lakha red', 'new imperial'].some(w => pName.includes(w)));
+        }
+        return p.origin === org;
+      });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
       const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
       const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
-      const matchesType = !typeParam || typeParam !== 'alaska' || p.name.toLowerCase().includes('alaska');
 
-      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice && matchesType;
+      return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice;
     });
-  }, [categoryFilter, filters, typeParam, productsList]);
+  }, [categoryFilter, filters, productsList]);
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;

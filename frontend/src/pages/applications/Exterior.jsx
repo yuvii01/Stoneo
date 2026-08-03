@@ -88,6 +88,8 @@ export default function Exterior() {
       if (mappedType) {
         setFilters(prev => ({ ...prev, applicationType: [mappedType] }));
       }
+    } else {
+      setFilters(prev => ({ ...prev, applicationType: [] }));
     }
   }, [searchParams]);
 
