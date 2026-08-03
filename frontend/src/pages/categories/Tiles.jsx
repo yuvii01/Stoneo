@@ -5,6 +5,7 @@ import '../styles/pages.css';
 import { useDemand } from '../context/DemandContext';
 import { useDbProducts } from '../../utils/useDbProducts';
 import ProductLoader from '../../components/ProductLoader';
+import NoProductsFound from '../../components/NoProductsFound';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -268,9 +269,13 @@ export default function Tiles() {
             {productsList.loading ? (
               <ProductLoader text="Loading products..." />
             ) : filteredProducts.length === 0 ? (
-              <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                No products found matching the selected filters.
-              </div>
+              <NoProductsFound
+                title="No Tiles Found"
+                description="We couldn't find any tiles matching your selected category. Try selecting 'All' or another category."
+                onReset={() => {
+                  setSearchParams({});
+                }}
+              />
             ) : (
               filteredProducts.map((product) => (
               <div 

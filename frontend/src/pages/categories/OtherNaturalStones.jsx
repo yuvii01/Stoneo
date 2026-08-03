@@ -6,8 +6,8 @@ import StonePriceSlider from '../../components/StonePriceSlider';
 import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import { OTHER_NATURAL_STONES } from '../../utils/constants';
-import { useDbProducts } from '../../utils/useDbProducts';
 import ProductLoader from '../../components/ProductLoader';
+import NoProductsFound from '../../components/NoProductsFound';
 
 const DEFAULT_DESCRIPTION = 'Exquisite natural stone sourced from verified quarries, engineered for architectural excellence.';
 const DEFAULT_FEATURES = ['Authentic natural texture', 'Weather & frost resistant', 'High compressive strength', 'Low maintenance'];
@@ -355,9 +355,15 @@ export default function OtherNaturalStones() {
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
-                  <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                    No specialty stones found matching the selected filters.
-                  </div>
+                  <NoProductsFound
+                    title="No Natural Stones Found"
+                    description="We couldn't find any natural stone varieties matching your selected filters. Try clearing a filter or resetting all selections."
+                    onReset={() => {
+                      setFilters({ type: [], color: [], touch: [], maxPrice: 100 });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
+                    }}
+                  />
                 ) : (
                   paginatedProducts.map((product) => (
                     <div
@@ -481,14 +487,16 @@ export default function OtherNaturalStones() {
                 </div>
               )}
 
-              <div style={{
-                textAlign: 'center',
-                padding: '15px',
-                fontSize: '14px',
-                color: '#666'
-              }}>
-                Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
-              </div>
+              {filteredProducts.length > 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '15px',
+                  fontSize: '14px',
+                  color: '#666'
+                }}>
+                  Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+                </div>
+              )}
             </div>
           </div>
         </section>

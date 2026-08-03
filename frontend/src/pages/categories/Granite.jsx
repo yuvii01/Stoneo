@@ -6,8 +6,9 @@ import SEOHead from '../../components/SEOHead';
 import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
-import { useDbProducts } from '../../utils/useDbProducts';
 import ProductLoader from '../../components/ProductLoader';
+import NoProductsFound from '../../components/NoProductsFound';
+import { useDbProducts } from '../../utils/useDbProducts';
 
 // 1. Updated Data with Category Column
 // const CSV_PRODUCTS = [
@@ -136,7 +137,7 @@ const TOUCH_OPTIONS = ["Polished", "Leather", "Flamed", "Lapotra", "Antique"];
 const ORIGIN_OPTIONS = ["South India", "North India", "Imported", "Alaska"];
 const THICKNESS_RANGE = [16, 18, 20, 22, 24, 26, 28, 30];
 const MIN_PRICE = 50;
-const MAX_PRICE = 100;
+const MAX_PRICE = 500;
 
 export default function Granite() {
   const productsList = useDbProducts('Granite');
@@ -169,7 +170,7 @@ export default function Granite() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 100
+    maxPrice: 500
   });
 
   useEffect(() => {
@@ -211,24 +212,35 @@ export default function Granite() {
       const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(org => {
         const pOrg = (p.origin || '').toLowerCase();
         const pName = (p.name || '').toLowerCase();
-        if (org === 'Alaska') return pName.includes('alaska') || pOrg.includes('alaska');
-        if (org === 'Imported') return pOrg.includes('import') || (!pOrg.includes('india') && pOrg !== '' && pOrg !== 'india');
+        if (org === 'Alaska') {
+          return pName.includes('alaska') || pOrg.includes('alaska');
+        }
+        if (org === 'Imported') {
+          return pOrg.includes('import') ||
+            pOrg.includes('brazil') ||
+            pOrg.includes('norway') ||
+            pOrg.includes('finland') ||
+            pName.includes('alaska') ||
+            ['pearl', 'blue pearl', 'black pearl', 'emerald pearl', 'volga blue', 'tan brown', 'baltic brown', 'black forest', 'alpinus', 'amadeus', 'andromeda', 'armani', 'astoria', 'bianco', 'blue dunes', 'blue ocean', 'copacabana', 'monte cristo', 'monalisa', 'fusion', 'magma', 'matrix', 'titanium', 'viscon', 'silver waves', 'labrador', 'imperial white', 'french white', 'atlantic white', 'crystal white', 'moon white'].some(w => pName.includes(w)) ||
+            (!pOrg.includes('india') && pOrg !== '' && pOrg !== 'india');
+        }
         if (org === 'North India') {
           return pOrg.includes('north') ||
             pOrg.includes('rajasthan') ||
-            ['p white', 'alpinus', 'kashmir', 'rajasthan', 'rosy pink', 'chima pink', 'jhansi red', 'lakha red', 'new imperial'].some(w => pName.includes(w));
+            ['p white', 'kashmir', 'rajasthan', 'rosy pink', 'chima pink', 'jhansi red', 'lakha red', 'new imperial', 'dholpur', 'mandana', 'modak', 'jodhpur', 'kota', 'tiger skin', 'royal cream', 'colonial cream', 'millennium cream'].some(w => pName.includes(w));
         }
         if (org === 'South India') {
           return pOrg.includes('south') ||
             pOrg.includes('bangalore') ||
             pOrg.includes('chennai') ||
-            (pOrg.includes('india') && !pName.includes('alaska') && !['p white', 'alpinus', 'kashmir', 'rajasthan', 'rosy pink', 'chima pink', 'jhansi red', 'lakha red', 'new imperial'].some(w => pName.includes(w)));
+            ['black galaxy', 'absolute black', 'black premium', 'sadarali', 'steel grey', 'tan brown', 'paradiso', 'multi red', 'hassan green', 'kuppam', 'viscon', 'river white', 'ghiblee', 'indian aurora', 'ivory fantasy', 'sea waves', 'mango', 'rose wood', 'cats eye', 'bahama ivory'].some(w => pName.includes(w)) ||
+            (pOrg.includes('india') && !pName.includes('alaska'));
         }
         return p.origin === org;
       });
       const matchesTouch = (filters.touch || []).length === 0 || (filters.touch || []).some(t => p.touch && p.touch.includes(t));
-      const selectedPrice = filters.maxPrice !== undefined ? filters.maxPrice : 100;
-      const matchesPrice = (p.minPrice || p.price || 100) <= selectedPrice;
+      const productStartingPrice = Number(p.startingPrice || p.minPrice || p.price || 100);
+      const matchesPrice = productStartingPrice <= selectedPrice;
 
       return matchesUrlCategory && matchesColor && matchesOrigin && matchesTouch && matchesPrice;
     });
@@ -446,9 +458,15 @@ export default function Granite() {
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
-                  <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                    No products found matching the selected filters.
-                  </div>
+                  <NoProductsFound
+                    title="No Granite Varieties Found"
+                    description="We couldn't find any granite varieties matching your selected filters. Try clearing a filter or resetting all selections."
+                    onReset={() => {
+                      setFilters({ origin: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
+                    }}
+                  />
                 ) : (
                   paginatedProducts.map((product) => (
                     <div
@@ -476,6 +494,9 @@ export default function Granite() {
                       </div>
                       <div className="product-info">
                         <h3>{product.name}</h3>
+                        <div className="product-price" style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-primary, #b48e5d)', margin: '4px 0 8px 0' }}>
+                          Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
+                        </div>
                         <p style={{ fontSize: '12px', color: '#666', marginBottom: '8px' }}>
                           Origin: {product.origin} | Thickness: {product.thickness[0]}-{product.thickness[product.thickness.length - 1]}mm
                         </p>
@@ -572,14 +593,16 @@ export default function Granite() {
                 </div>
               )}
 
-              <div style={{
-                textAlign: 'center',
-                padding: '15px',
-                fontSize: '14px',
-                color: '#666'
-              }}>
-                Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
-              </div>
+              {filteredProducts.length > 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '15px',
+                  fontSize: '14px',
+                  color: '#666'
+                }}>
+                  Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+                </div>
+              )}
             </div>
           </div>
         </section>

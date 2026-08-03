@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
-import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
+import NoProductsFound from '../../components/NoProductsFound';
 
 const EXTERIOR_APPLICATIONS = [
   "Elevation Cladding",
@@ -288,9 +288,14 @@ export default function Exterior() {
 
               <div className="products-grid">
                 {paginatedProducts.length === 0 ? (
-                  <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                    No products found matching the selected filters.
-                  </div>
+                  <NoProductsFound
+                    title="No Exterior Stones Found"
+                    description="We couldn't find any exterior stones matching your selected filters. Try clearing a filter or resetting all selections."
+                    onReset={() => {
+                      setFilters({ applicationType: [], color: [], material: [] });
+                      setSearchParams({});
+                    }}
+                  />
                 ) : (
                   paginatedProducts.map((product) => (
                     <div
@@ -413,14 +418,16 @@ export default function Exterior() {
                 </div>
               )}
 
-              <div style={{
-                textAlign: 'center',
-                padding: '15px',
-                fontSize: '14px',
-                color: '#666'
-              }}>
-                Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
-              </div>
+              {filteredProducts.length > 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '15px',
+                  fontSize: '14px',
+                  color: '#666'
+                }}>
+                  Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+                </div>
+              )}
             </div>
           </div>
         </section>

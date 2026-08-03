@@ -75,7 +75,6 @@ const initialFormState = {
     color: '',
     origin: '',
     startingPrice: '',
-    maximumPrice: '',
     estimatedPrice: '',
     price: '',
     category: 'Granite',
@@ -213,15 +212,12 @@ export default function AdminProducts() {
         } else if (name === 'category') {
             const firstVariety = (STONE_VARIETIES_MAP[value] && STONE_VARIETIES_MAP[value][0]) || value;
             setFormData(prev => ({ ...prev, category: value, categories: [firstVariety], variety: firstVariety }));
-        } else if (name === 'startingPrice' || name === 'maximumPrice') {
-            const sp = name === 'startingPrice' ? value : formData.startingPrice;
-            const mp = name === 'maximumPrice' ? value : formData.maximumPrice;
-            const formatted = sp && mp ? `₹${sp} - ₹${mp}` : (sp ? `₹${sp}` : (mp ? `₹${mp}` : ''));
+        } else if (name === 'startingPrice') {
             setFormData(prev => ({
                 ...prev,
-                [name]: value,
-                price: formatted,
-                estimatedPrice: formatted
+                startingPrice: value,
+                price: value,
+                estimatedPrice: value
             }));
         } else if (name === 'estimatedPrice' || name === 'price') {
             setFormData(prev => ({ ...prev, estimatedPrice: value, price: value }));
@@ -262,9 +258,8 @@ export default function AdminProducts() {
             categories: formData.categories,
             origin: formData.origin || '',
             startingPrice: formData.startingPrice || '',
-            maximumPrice: formData.maximumPrice || '',
-            estimatedPrice: formData.estimatedPrice || formData.price || '',
-            price: formData.price || formData.estimatedPrice || ''
+            estimatedPrice: formData.startingPrice || formData.estimatedPrice || formData.price || '',
+            price: formData.startingPrice || formData.price || formData.estimatedPrice || ''
         };
 
         try {
@@ -298,10 +293,9 @@ export default function AdminProducts() {
                 name: fullProduct.name || '',
                 color: fullProduct.color || '',
                 origin: fullProduct.origin || '',
-                startingPrice: fullProduct.startingPrice || '',
-                maximumPrice: fullProduct.maximumPrice || '',
-                estimatedPrice: fullProduct.estimatedPrice || fullProduct.price || '',
-                price: fullProduct.price || fullProduct.estimatedPrice || '',
+                startingPrice: fullProduct.startingPrice || fullProduct.price || fullProduct.minPrice || '',
+                estimatedPrice: fullProduct.startingPrice || fullProduct.estimatedPrice || fullProduct.price || '',
+                price: fullProduct.startingPrice || fullProduct.price || fullProduct.estimatedPrice || '',
                 category: fullProduct.category || 'Granite',
                 categories: loadedCategories,
                 variety: fullProduct.variety || loadedCategories.join(', '),
@@ -528,24 +522,14 @@ export default function AdminProducts() {
                                 />
                             </div>
                             <div>
-                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Starting Price (₹ / sq. ft.)</label>
+                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Starting Price (₹ / sq. ft.) *</label>
                                 <input
                                     type="number"
                                     name="startingPrice"
                                     value={formData.startingPrice}
                                     onChange={handleInputChange}
                                     placeholder="e.g. 150"
-                                    style={{ padding: "11px", width: "100%", border: "1px solid #ddd", borderRadius: "6px", fontSize: '15px' }}
-                                />
-                            </div>
-                            <div>
-                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Maximum Price (₹ / sq. ft.)</label>
-                                <input
-                                    type="number"
-                                    name="maximumPrice"
-                                    value={formData.maximumPrice}
-                                    onChange={handleInputChange}
-                                    placeholder="e.g. 350"
+                                    required
                                     style={{ padding: "11px", width: "100%", border: "1px solid #ddd", borderRadius: "6px", fontSize: '15px' }}
                                 />
                             </div>
@@ -938,9 +922,9 @@ export default function AdminProducts() {
 
                                         <div style={{ fontSize: '14px', color: '#666', marginBottom: '16px', flex: 1 }}>
                                             {product.color && <div style={{ marginBottom: '4px' }}><strong>Color:</strong> {product.color}</div>}
-                                            {(product.startingPrice || product.maximumPrice || product.price) && (
+                                            {(product.startingPrice || product.price || product.minPrice) && (
                                                 <div style={{ marginBottom: '4px', color: '#111', fontWeight: '600' }}>
-                                                    <strong>Price Range:</strong> {product.startingPrice && product.maximumPrice ? `₹${product.startingPrice} - ₹${product.maximumPrice}` : (product.price || product.startingPrice || product.maximumPrice)} / sq. ft.
+                                                    <strong>Starting Price:</strong> Starts from ₹{product.startingPrice || product.price || product.minPrice || '100'} / sq. ft.
                                                 </div>
                                             )}
                                             {(product.finish && product.finish.length > 0) && <div style={{ marginBottom: '4px' }}><strong>Finish:</strong> {product.finish.join(', ')}</div>}

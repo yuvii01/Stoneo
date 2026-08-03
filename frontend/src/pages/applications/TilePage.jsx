@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useDemand } from '../../context/DemandContext';
+import NoProductsFound from '../../components/NoProductsFound';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -150,12 +151,11 @@ export default function TilePage() {
                                 Loading products...
                             </div>
                         ) : filteredProducts.length === 0 ? (
-                            <div style={{ textAlign: 'center', padding: '80px 20px' }}>
-                                <p style={{ fontSize: '18px', color: '#999', marginBottom: '20px' }}>
-                                    No products found for this application yet.
-                                </p>
-
-                            </div>
+                            <NoProductsFound
+                                title="No Products Found"
+                                description={`We couldn't find any products for ${displayTitle} matching your filters. Try clearing a filter or checking back soon.`}
+                                onReset={clearFilters}
+                            />
                         ) : (
                             <div className="products-grid">
                                 {filteredProducts.map(product => (

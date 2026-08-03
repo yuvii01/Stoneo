@@ -455,6 +455,29 @@
   }
 }
 
+/* Empty State inside Products Grid - full width across all columns */
+.products-grid > .no-products-found,
+.products-grid > div[style*="textAlign: center"],
+.products-grid > div[style*="text-align: center"] {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 60px 20px !important;
+  text-align: center !important;
+  background: #fdfcf9 !important;
+  border: 1px dashed #e2ddd5 !important;
+  border-radius: 12px !important;
+  color: #727885 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  margin: 20px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+}
+
 .product-card {
   background: var(--color-white);
   border-radius: var(--border-radius-lg);

@@ -241,6 +241,23 @@ export default function ProductDetail() {
 
                         <h1 className="pd-product-title">{product.name}</h1>
 
+                        <div className="pd-starting-price-badge" style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            background: 'linear-gradient(135deg, #fdfaf4, #f8f3e9)',
+                            border: '1px solid #e8dec8',
+                            padding: '8px 16px',
+                            borderRadius: '20px',
+                            marginBottom: '16px',
+                            color: '#222'
+                        }}>
+                            <span style={{ fontSize: '13px', color: '#776952', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Starting Price:</span>
+                            <span style={{ fontSize: '18px', fontWeight: '800', color: 'var(--color-primary, #b48e5d)' }}>
+                                Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
+                            </span>
+                        </div>
+
                         <div className="pd-quick-specs-row">
                             <div className="pd-quick-spec-pill">
                                 ✨ Finish: <strong>{specFinish[0]}</strong>

@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for
 import { GRANITE_TYPES, CSV_PRODUCTS } from '../utils/constants';
 import { useDbProducts } from '../utils/useDbProducts';
 import ProductLoader from '../components/ProductLoader';
+import NoProductsFound from '../components/NoProductsFound';
 
 const DEFAULT_DESCRIPTION = 'Premium quality granite, sourced from verified quarries.';
 const DEFAULT_FEATURES = ['Natural stone finish', 'Scratch resistant', 'Easy to maintain'];
@@ -88,9 +89,13 @@ export default function Products() {
             {productsList.loading ? (
               <ProductLoader text="Loading products..." />
             ) : filteredProducts.length === 0 ? (
-              <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                No products found matching the selected filters.
-              </div>
+              <NoProductsFound
+                title="No Products Found"
+                description="We couldn't find any products matching your selected category. Try selecting 'All' or another category."
+                onReset={() => {
+                  setSearchParams({});
+                }}
+              />
             ) : (
               filteredProducts.map((product) => (
               <div
@@ -118,6 +123,9 @@ export default function Products() {
                 </div>
                 <div className="product-info">
                   <h3>{product.name}</h3>
+                  <div className="product-price" style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-primary, #b48e5d)', margin: '4px 0 8px 0' }}>
+                    Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
+                  </div>
                   <p>{product.description}</p>
                 </div>
               </div>

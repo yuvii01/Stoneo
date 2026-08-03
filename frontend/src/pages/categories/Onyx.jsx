@@ -6,8 +6,8 @@ import SEOHead from '../../components/SEOHead';
 import StonePriceSlider from '../../components/StonePriceSlider';
 import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
-import { useDbProducts } from '../../utils/useDbProducts';
 import ProductLoader from '../../components/ProductLoader';
+import NoProductsFound from '../../components/NoProductsFound';
 
 const DEFAULT_DESCRIPTION = 'Premium quality onyx, engineered for perfection.';
 const DEFAULT_FEATURES = ['Scratch resistant', 'Stain resistant', 'Easy to maintain', 'Durable'];
@@ -337,9 +337,15 @@ export default function Onyx() {
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
-                  <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                    No products found matching the selected filters.
-                  </div>
+                  <NoProductsFound
+                    title="No Onyx Varieties Found"
+                    description="We couldn't find any onyx varieties matching your selected filters. Try clearing a filter or resetting all selections."
+                    onReset={() => {
+                      setFilters({ variety: [], color: [], touch: [], maxPrice: 100 });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
+                    }}
+                  />
                 ) : (
                   paginatedProducts.map((product) => (
                     <div
@@ -461,14 +467,16 @@ export default function Onyx() {
                 </div>
               )}
 
-              <div style={{
-                textAlign: 'center',
-                padding: '15px',
-                fontSize: '14px',
-                color: '#666'
-              }}>
-                Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
-              </div>
+              {filteredProducts.length > 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '15px',
+                  fontSize: '14px',
+                  color: '#666'
+                }}>
+                  Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+                </div>
+              )}
             </div>
           </div>
         </section>

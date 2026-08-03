@@ -6,8 +6,8 @@ import StonePriceSlider from '../../components/StonePriceSlider';
 import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import PAVING_PRODUCTS from '../../utils/paving_landscape.json';
-import { useDbProducts } from '../../utils/useDbProducts';
 import ProductLoader from '../../components/ProductLoader';
+import NoProductsFound from '../../components/NoProductsFound';
 
 // 1. Updated Data with Category Column
 
@@ -450,9 +450,15 @@ export default function PavingAndLandscape() {
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
-                  <div style={{ textAlign: 'center', width: '100%', padding: '50px 0', color: '#777' }}>
-                    No products found matching the selected filters.
-                  </div>
+                  <NoProductsFound
+                    title="No Paving Stones Found"
+                    description="We couldn't find any paving & landscaping stones matching your selected filters. Try clearing a filter or resetting all selections."
+                    onReset={() => {
+                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: 100 });
+                      setSearchParams({});
+                      navigate(window.location.pathname, { replace: true });
+                    }}
+                  />
                 ) : (
                   paginatedProducts.map((product) => (
                     <div
@@ -576,14 +582,16 @@ export default function PavingAndLandscape() {
                 </div>
               )}
 
-              <div style={{
-                textAlign: 'center',
-                padding: '15px',
-                fontSize: '14px',
-                color: '#666'
-              }}>
-                Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
-              </div>
+              {filteredProducts.length > 0 && (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '15px',
+                  fontSize: '14px',
+                  color: '#666'
+                }}>
+                  Page {currentPage} of {totalPages} • Showing {startIndex + 1}-{Math.min(endIndex, filteredProducts.length)} of {filteredProducts.length} products
+                </div>
+              )}
             </div>
           </div>
         </section>
