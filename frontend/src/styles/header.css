@@ -36,7 +36,7 @@
   font-size: 17px;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 85px;
   transition: all 0.3s ease;
 }
 
@@ -50,9 +50,10 @@
   .header {
     padding: 10px 0;
   }
+
   .header-container {
     padding-inline: 16px;
-    height: 60px;
+    height: 72px;
   }
 }
 
@@ -60,9 +61,10 @@
   .header {
     padding: 8px 0;
   }
+
   .header-container {
     padding-inline: 12px;
-    height: 54px;
+    height: 64px;
   }
 }
 
@@ -128,6 +130,7 @@
   align-items: center;
   flex-shrink: 0;
 }
+
 @media (max-width: 768px) {
   .logo-div {
     height: auto;
@@ -548,11 +551,11 @@
   }
 
   .logo-main-img {
-    height: 44px;
+    height: 56px;
   }
 
   .logo-detail-img {
-    height: 24px;
+    height: 32px;
   }
 
   .text-logo {

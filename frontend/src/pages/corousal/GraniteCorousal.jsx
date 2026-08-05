@@ -3,19 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 
 const originalItems = [
-  { id: "s1",  name: "Black",      color: "#1a1a1a", url: "/home_prod/black.png" },
-  { id: "s2",  name: "White",      color: "#d6d6d6", url: "/home_prod/white.png" },
-  { id: "s3",  name: "Gold",       color: "#c9a84c", url: "/home_prod/gold.png" },
-  { id: "s4",  name: "Blue",       color: "#2a5fa5", url: "/home_prod/blue.png" },
-  { id: "s5",  name: "Brown",      color: "#7b4f2e", url: "/home_prod/brown.png" },
-  { id: "s6",  name: "Red",        color: "#b52a2a", url: "/home_prod/red.png" },
-  { id: "s7",  name: "Multicolor", color: "#9b59b6", url: "https://www.regattagranitesindia.com/wp-content/uploads/2016/05/Classic-Paradiso-Swatch.webp" },
-  { id: "s8",  name: "Yellow",     color: "#d4b400", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Malwada-yellow-granite.webp" },
-  { id: "s9",  name: "Pink",       color: "#d4607a", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Strawberry-pink-granite.webp" },
-  { id: "s10", name: "Grey",       color: "#7a7a7a", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Steel-grey-granite.webp" },
-  { id: "s11", name: "Green",      color: "#2e7d32", url: "/home_prod/green.png" },
-  { id: "s12", name: "Orange",     color: "#e07b2a", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Onida-orange-granite.webp" },
-  { id: "s13", name: "Cream",      color: "#c8a97e", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bahama-ivory-granite.webp" },
+  { id: "s1", name: "Black", color: "#1a1a1a", url: "/home_prod/black.png" },
+  { id: "s2", name: "White", color: "#d6d6d6", url: "/home_prod/white.png" },
+  { id: "s3", name: "Gold", color: "#c9a84c", url: "/home_prod/gold.png" },
+  { id: "s4", name: "Blue", color: "#2a5fa5", url: "/home_prod/blue.png" },
+  { id: "s5", name: "Brown", color: "#7b4f2e", url: "/home_prod/brown.png" },
+  { id: "s6", name: "Red", color: "#b52a2a", url: "/home_prod/red.png" },
+  { id: "s7", name: "Multicolor", color: "#9b59b6", url: "/granite_images/Ruby Red Granite.jpg" },
+  { id: "s8", name: "Yellow", color: "#d4b400", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Malwada-yellow-granite.webp" },
+  { id: "s9", name: "Pink", color: "#d4607a", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Strawberry-pink-granite.webp" },
+  { id: "s10", name: "Grey", color: "#7a7a7a", url: "/granite_images/Donna Grey Granite.webp" },
+  { id: "s11", name: "Green", color: "#2e7d32", url: "/home_prod/green.png" },
+  { id: "s12", name: "Orange", color: "#e07b2a", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Onida-orange-granite.webp" },
+  { id: "s13", name: "Cream", color: "#c8a97e", url: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Bahama-ivory-granite.webp" },
 ];
 
 /* ─── Styles ─────────────────────────────────────────────── */
@@ -247,18 +247,18 @@ const css = `
     opacity: 1;
   }
 
-    /* Mobile: tighter dots */
+      /* Mobile: tighter dots */
   @media (max-width: 480px) {
     .gc-root { padding: 24px 0 32px !important; }
     .gc-title { font-size: 2.2rem !important; margin: 6px 0 !important; }
     .gc-header { margin-bottom: 20px !important; }
     .gc-label { margin-top: 12px !important; }
     .marble-view-all-btn { margin-top: 24px !important; padding: 12px 24px !important; font-size: 1rem !important; }
-    .gc-dot { width: 14px !important; height: 14px !important; border-radius: 50% !important; flex-shrink: 0 !important; }
+    .gc-dot { width: 14px !important; height: 14px !important; border-radius: 50% !important; flex-shrink: 0 !important; padding: 0 !important; margin: 0 !important; box-sizing: border-box !important; min-width: 14px !important; min-height: 14px !important; }
     .gc-dot.gc-dot-active { outline: 1.5px solid var(--text-dark) !important; outline-offset: 1.5px !important; transform: scale(1.3) !important; }
-    .gc-dots { gap: 8px; max-width: 100%; justify-content: flex-start; padding: 6px 0; overflow-x: auto; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+    .gc-dots { gap: 8px; max-width: 100%; justify-content: flex-start; align-items: center !important; padding: 6px 0; overflow-x: auto; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
     .gc-dots::-webkit-scrollbar { display: none; }
-    .gc-nav  { gap: 8px; padding: 0 4px; width: 100%; overflow: hidden; margin-top: 16px !important; }
+    .gc-nav  { gap: 8px; padding: 0 4px; width: 100%; overflow: hidden; margin-top: 16px !important; align-items: center !important; }
   }
 `;
 
@@ -411,55 +411,55 @@ export default function GraniteCarousel() {
   }, [scheduleResume]);
 
   /* ── Touch handlers ── */
-// ADD this ref near your other refs
-const dragOffset = useRef(0);
-const [, forceRender] = useState(0); // for drag visual feedback
+  // ADD this ref near your other refs
+  const dragOffset = useRef(0);
+  const [, forceRender] = useState(0); // for drag visual feedback
 
-const onTouchStart = useCallback((e) => {
-  pausedRef.current = true;
-  clearTimeout(resumeTimerRef.current);
-  touchStartX.current = e.touches[0].clientX;
-  touchStartY.current = e.touches[0].clientY;
-  isDragging.current = true;
-  dragOffset.current = 0;
-}, []);
-
-const onTouchMove = useCallback((e) => {
-  if (!isDragging.current) return;
-  const dx = e.touches[0].clientX - touchStartX.current;
-  const dy = e.touches[0].clientY - touchStartY.current;
-
-  if (Math.abs(dy) > Math.abs(dx) + 5) {
-    isDragging.current = false;
+  const onTouchStart = useCallback((e) => {
+    pausedRef.current = true;
+    clearTimeout(resumeTimerRef.current);
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+    isDragging.current = true;
     dragOffset.current = 0;
+  }, []);
+
+  const onTouchMove = useCallback((e) => {
+    if (!isDragging.current) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    const dy = e.touches[0].clientY - touchStartY.current;
+
+    if (Math.abs(dy) > Math.abs(dx) + 5) {
+      isDragging.current = false;
+      dragOffset.current = 0;
+      forceRender(n => n + 1);
+      return;
+    }
+
+    e.preventDefault();
+    dragOffset.current = dx;
     forceRender(n => n + 1);
-    return;
-  }
+  }, []);
 
-  e.preventDefault();
-  dragOffset.current = dx;
-  forceRender(n => n + 1);
-}, []);
+  const onTouchEnd = useCallback((e) => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
 
-const onTouchEnd = useCallback((e) => {
-  if (!isDragging.current) return;
-  isDragging.current = false;
+    const dx = dragOffset.current;
+    dragOffset.current = 0;
 
-  const dx = dragOffset.current;
-  dragOffset.current = 0;
+    const threshold = CARD_W * 0.18;
+    if (dx < -threshold) goTo(virtualIdxRef.current + 1);
+    else if (dx > threshold) goTo(virtualIdxRef.current - 1);
+    else goTo(virtualIdxRef.current);
 
-  const threshold = CARD_W * 0.18;
-  if (dx < -threshold) goTo(virtualIdxRef.current + 1);
-  else if (dx > threshold) goTo(virtualIdxRef.current - 1);
-  else goTo(virtualIdxRef.current);
-
-  scheduleResume();
-}, [CARD_W, goTo, scheduleResume]);
+    scheduleResume();
+  }, [CARD_W, goTo, scheduleResume]);
 
 
   /* ── Track translate ── */
-const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset.current;
-const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2 + GAP / 2}px))`;
+  const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset.current;
+  const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2 + GAP / 2}px))`;
 
   /* ── Per-card style ── */
   const cardStyle = (clonedIdx) => {
@@ -542,7 +542,7 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
         <div className="gc-nav">
           <button className="gc-arrow" onClick={prev} aria-label="Previous">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
 
@@ -569,13 +569,13 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
 
           <button className="gc-arrow" onClick={next} aria-label="Next">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
         </div>
 
 
-         <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             className="marble-view-all-btn"
             onClick={() => navigate("/category/granite")}
