@@ -13,7 +13,7 @@ const parsePrice = (val, fallback = 100) => {
 };
 
 export function useDbProducts(categoryName, fallbackData = []) {
-  const [dbProducts, setDbProducts] = useState(Array.isArray(fallbackData) ? fallbackData : []);
+  const [dbProducts, setDbProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -122,16 +122,14 @@ export function useDbProducts(categoryName, fallbackData = []) {
             };
           });
           setDbProducts(mapped);
-        } else if (Array.isArray(fallbackData) && fallbackData.length > 0) {
-          setDbProducts(fallbackData);
+        } else {
+          setDbProducts([]);
         }
         setLoading(false);
       })
       .catch(e => {
         if (isMounted) {
-          if (Array.isArray(fallbackData) && fallbackData.length > 0) {
-            setDbProducts(fallbackData);
-          }
+          setDbProducts([]);
           setLoading(false);
         }
         console.error(`Failed to fetch database products for ${categoryName}:`, e);
