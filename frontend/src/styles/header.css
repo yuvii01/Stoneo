@@ -104,6 +104,11 @@
   flex-shrink: 0;
 }
 
+.header:not(.scrolled) .logo-main-img,
+.header:not(.scrolled) .logo-detail-img {
+  filter: brightness(1.6) contrast(1.2) drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
+}
+
 .text-logo {
   display: flex;
   align-items: center;
@@ -868,16 +873,16 @@
   }
 
   .logo-main-img {
-    height: 38px;
+    height: 50px;
   }
 
   .logo-detail-img {
-    height: 20px;
+    height: 30px;
   }
 
   .text-logo {
     gap: 5px;
-    padding-top: 4px;
+    padding-top: 5px;
   }
 
   .nav-link {
