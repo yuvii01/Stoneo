@@ -239,29 +239,18 @@ const css = `
     opacity: 1;
   }
 
-  /* Mobile: tighter dots */
+    /* Mobile: tighter dots */
   @media (max-width: 480px) {
-    .gc-dot { width: 22px; height: 22px; }
-    .gc-dots { gap: 6px; max-width: 100%; justify-content: flex-start; }
-    .gc-nav  { gap: 6px; padding: 0 4px; width: 100%; overflow: hidden; }
-  }
-    .gc-dots {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 7px;
-    flex: 1;
-    max-width: 320px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    padding: 10px 0;
-  }
-  .gc-dots::-webkit-scrollbar {
-    display: none;
-  }
-    .gc-nav  { gap: 6px; padding: 0 6px; }
+    .gc-root { padding: 24px 0 32px !important; }
+    .gc-title { font-size: 2.2rem !important; margin: 6px 0 !important; }
+    .gc-header { margin-bottom: 20px !important; }
+    .gc-label { margin-top: 12px !important; }
+    .marble-view-all-btn { margin-top: 24px !important; padding: 12px 24px !important; font-size: 1rem !important; }
+    .gc-dot { width: 14px !important; height: 14px !important; border-radius: 50% !important; flex-shrink: 0 !important; }
+    .gc-dot.gc-dot-active { outline: 1.5px solid var(--text-dark) !important; outline-offset: 1.5px !important; transform: scale(1.3) !important; }
+    .gc-dots { gap: 8px; max-width: 100%; justify-content: flex-start; padding: 6px 0; overflow-x: auto; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+    .gc-dots::-webkit-scrollbar { display: none; }
+    .gc-nav  { gap: 8px; padding: 0 4px; width: 100%; overflow: hidden; margin-top: 16px !important; }
   }
 `;
 
@@ -333,7 +322,7 @@ export default function SandStoneCarousel() {
   // ── Layout constants ──
   const vw = typeof window !== "undefined" ? window.innerWidth : 375;
   const CARD_W = isMobile ? Math.min(vw * 0.72, 280) : 260;
-  const CARD_H = isMobile ? CARD_W * 1.18 : 360;
+  const CARD_H = isMobile ? CARD_W * 1.02 : 360;
   const SIDE_SCALE = isMobile ? 0.78 : 0.75;
   const SIDE_OPACITY = isMobile ? 0.65 : 0.60;
   const GAP = isMobile ? 14 : 20;
