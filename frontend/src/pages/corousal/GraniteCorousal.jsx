@@ -211,11 +211,18 @@ const css = `
   .gc-dots {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 7px;
-    flex-wrap: wrap;
     flex: 1;
     max-width: 320px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 10px 0;
+  }
+  .gc-dots::-webkit-scrollbar {
+    display: none;
   }
 
   .gc-dot {
@@ -242,8 +249,26 @@ const css = `
 
   /* Mobile: tighter dots */
   @media (max-width: 480px) {
-    .gc-dot { width: 18px; height: 18px; }
-    .gc-dots { gap: 5px; max-width: 240px; }
+    .gc-dot { width: 22px; height: 22px; }
+    .gc-dots { gap: 6px; max-width: 100%; justify-content: flex-start; }
+    .gc-nav  { gap: 6px; padding: 0 4px; width: 100%; overflow: hidden; }
+  }
+    .gc-dots {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 7px;
+    flex: 1;
+    max-width: 320px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 10px 0;
+  }
+  .gc-dots::-webkit-scrollbar {
+    display: none;
+  }
     .gc-nav  { gap: 6px; padding: 0 6px; }
   }
 `;

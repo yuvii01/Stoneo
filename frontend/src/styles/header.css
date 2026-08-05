@@ -91,6 +91,7 @@
   width: auto;
   object-fit: contain;
   transition: height 0.3s ease;
+  flex-shrink: 0;
 }
 
 .logo-detail-img {
@@ -98,6 +99,7 @@
   width: auto;
   object-fit: contain;
   transition: height 0.3s ease;
+  flex-shrink: 0;
 }
 
 .text-logo {
@@ -120,8 +122,16 @@
 }
 
 .logo-div {
-  overflow: hidden !important;
+  overflow: visible !important;
   height: 90px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .logo-div {
+    height: auto;
+  }
 }
 
 .logo:hover {
