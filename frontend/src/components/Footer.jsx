@@ -110,7 +110,6 @@ export default function Footer() {
               {/* <img src="https://via.placeholder.com/150x50?text=Demo+Logo" alt="Demo Logo" className="footer-logo-img" /> */}
               <span className="text-logo" style={{ color: '#fff', fontSize: '32px', display: 'flex', alignItems: 'center', gap: '15px' }}>
                 <img src="/logos/logo_light_transparent.png" alt="Logo Light" style={{ height: '80px', objectFit: 'contain' }} />
-                <img src="/logos/detail_light_transparent.png" alt="Details Light" style={{ height: '45px', objectFit: 'contain' }} />
               </span>
             </div>
             <p className="footer-tagline">{COMPANY_INFO.tagline}</p>
