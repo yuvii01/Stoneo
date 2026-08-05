@@ -9,6 +9,8 @@ import PAVING_PRODUCTS from '../../utils/paving_landscape.json';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 // 1. Updated Data with Category Column
 
@@ -233,20 +235,24 @@ export default function PavingAndLandscape() {
       <div className="page products-page">
         <section className="paving-header page-header">
           <div className="container container-heading">
-            <h1>
-              {(() => {
-                const type = searchParams.get('type');
-                if (type === 'pavers-granite') return 'Granite Pavers Collections';
-                if (type === 'pavers-marble') return 'Marble Pavers Collections';
-                if (type === 'pavers-sandstone') return 'Sandstone Pavers Collections';
-                if (type === 'pavers-travertine') return 'Travertine Pavers Collections';
-                if (type === 'cobbles-granite') return 'Granite Cobbles Collections';
-                if (type === 'cobbles-sandstone') return 'Sandstone Cobbles Collections';
-                if (type === 'cobbles-limestone') return 'Limestone Cobbles Collections';
-                return 'Our Paving & Landscape Collections';
-              })()}
-            </h1>
-            <p>Premium selection of cobbles, pavers, and landscaping stones.</p>
+            <FadeUp>
+              <h1>
+                {(() => {
+                  const type = searchParams.get('type');
+                  if (type === 'pavers-granite') return 'Granite Pavers Collection';
+                  if (type === 'pavers-marble') return 'Marble Pavers Collection';
+                  if (type === 'pavers-sandstone') return 'Sandstone Pavers Collection';
+                  if (type === 'pavers-travertine') return 'Travertine Pavers Collection';
+                  if (type === 'cobbles-granite') return 'Granite Cobbles Collection';
+                  if (type === 'cobbles-sandstone') return 'Sandstone Cobbles Collection';
+                  if (type === 'cobbles-limestone') return 'Limestone Cobbles Collection';
+                  return 'Our Paving & Landscape Collection';
+                })()}
+              </h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Premium selection of cobbles, pavers, and landscaping stones.</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -447,7 +453,7 @@ export default function PavingAndLandscape() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
@@ -510,7 +516,7 @@ export default function PavingAndLandscape() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {/* Pagination Controls */}
               {filteredProducts.length > itemsPerPage && (

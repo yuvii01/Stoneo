@@ -9,6 +9,8 @@ import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const DEFAULT_DESCRIPTION = 'Premium quality onyx, engineered for perfection.';
 const DEFAULT_FEATURES = ['Scratch resistant', 'Stain resistant', 'Easy to maintain', 'Durable'];
@@ -171,8 +173,12 @@ export default function Onyx() {
       <div className="page products-page">
         <section className="onyx-header page-header">
           <div className="container container-heading">
-            <h1>Our Onyx Collections</h1>
-            <p>Browse our premium selection of engineered onyx varieties</p>
+            <FadeUp>
+              <h1>Our Onyx Collection</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Browse our premium selection of engineered onyx varieties</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -334,7 +340,7 @@ export default function Onyx() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
@@ -395,7 +401,7 @@ export default function Onyx() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {/* Pagination Controls */}
               {filteredProducts.length > itemsPerPage && (

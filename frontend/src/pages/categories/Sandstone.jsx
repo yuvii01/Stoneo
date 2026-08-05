@@ -9,6 +9,8 @@ import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -215,8 +217,12 @@ export default function Sandstone() {
       <div className="page products-page">
         <section className="sandstone-header page-header">
           <div className="container container-heading">
-            <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Sandstone Collections</h1>
-            <p>Browse our premium selection of {categoryFilter.toLowerCase()} sandstone varieties</p>
+            <FadeUp>
+              <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Sandstone Collection</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Browse our premium selection of {categoryFilter.toLowerCase()} sandstone varieties</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -385,7 +391,7 @@ export default function Sandstone() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
@@ -451,7 +457,7 @@ export default function Sandstone() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {/* Pagination Controls */}
               {filteredProducts.length > itemsPerPage && (

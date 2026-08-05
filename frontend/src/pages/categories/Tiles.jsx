@@ -6,6 +6,8 @@ import { useDemand } from '../context/DemandContext';
 import { useDbProducts } from '../../utils/useDbProducts';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 // 1. Updated Data with Category Column
 const CSV_PRODUCTS = [
@@ -18,7 +20,7 @@ const CSV_PRODUCTS = [
   { name: "Colonial White Granite", image: "/granite_images/Colonial White Granite.webp", category: "White" },
   { name: "Desert Brown Granite", image: "/granite_images/Desert Brown Granite.webp", category: "Brown" },
   { name: "Steel Grey Granite", image: "https://www.regattagranitesindia.com/wp-content/uploads/2026/02/Steel-grey-granite.webp", category: "Grey" },
-  
+
   { name: "P White Granite (Lunar Pearl)", image: "/granite_images/P White Granite (Lunar Pearl).webp", category: "White" },
   { name: "Alaska White Granite", image: "/granite_images/Alaska White Granite.webp", category: "White" },
   { name: "Black Forest Granite", image: "/granite_images/Black Forest Granite.webp", category: "Black" },
@@ -147,7 +149,7 @@ const CSV_PRODUCTS = [
   { name: "Silver Waves Granite", image: "/granite_images/Silver Waves Granite.webp", category: "Grey" },
 
 
-  
+
   { name: 'Black Forest Granite', image: '/granite_images/Black Forest Granite.webp', price: 52, category: 'Black' },
   { name: 'Black Pearl Granite', image: '/granite_images/Black Pearl Granite.jpg', price: 52, category: 'Black' },
   { name: 'Ash Black Granite', image: '/granite_images/Ash Black Granite.jpg', price: 52, category: 'Black' },
@@ -187,7 +189,7 @@ const CSV_PRODUCTS = [
   { name: 'Lakha Red Granite', image: '/granite_images/Lakha Red Granite.webp', price: 52, category: 'Red' },
   { name: 'New Imperiala Red Granite', image: '/granite_images/New Imperiala Red Granite.jpg', category: 'Red' },
 
-  
+
 ];
 
 const DEFAULT_DESCRIPTION = 'Premium quality granite, sourced from verified quarries.';
@@ -218,7 +220,7 @@ export default function Tiles() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { addDemand, demands } = useDemand();
-  
+
   // 2. Get category from URL (e.g. ?category=Black)
   const categoryFilter = searchParams.get('category') || 'All';
 
@@ -241,8 +243,12 @@ export default function Tiles() {
     <div className="page products-page">
       <section className="page-header">
         <div className="container container-heading">
-          <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Tiles Collections</h1>
-          <p>Browse our premium selection of {categoryFilter.toLowerCase()} imported varieties</p>
+          <FadeUp>
+            <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Tiles Collection</h1>
+          </FadeUp>
+          <FadeUp delay={0.2}>
+            <p>Browse our premium selection of {categoryFilter.toLowerCase()} imported varieties</p>
+          </FadeUp>
         </div>
       </section>
 
@@ -250,8 +256,8 @@ export default function Tiles() {
       <section className="filter-bar">
         <div className="filter-buttons-wrapper">
           <div className="filter-buttons-container">
-            {['All', 'Black', 'White', 'Blue', 'Gold', 'Green', 'Brown', 'Red', 'Yellow' , 'Multicolor', 'Cream', 'Grey', 'Pink', 'Orange'].map(cat => (
-              <button 
+            {['All', 'Black', 'White', 'Blue', 'Gold', 'Green', 'Brown', 'Red', 'Yellow', 'Multicolor', 'Cream', 'Grey', 'Pink', 'Orange'].map(cat => (
+              <button
                 key={cat}
                 className={`filter-btn ${categoryFilter === cat ? 'active' : ''}`}
                 onClick={() => setSearchParams({ category: cat })}
@@ -265,7 +271,7 @@ export default function Tiles() {
 
       <section className="products-section">
         <div className="container">
-          <div className="products-grid">
+          <StaggerGroup className="products-grid" itemSelector=".product-card">
             {productsList.loading ? (
               <ProductLoader text="Loading products..." />
             ) : filteredProducts.length === 0 ? (
@@ -278,45 +284,45 @@ export default function Tiles() {
               />
             ) : (
               filteredProducts.map((product) => (
-              <div 
-                key={product.id}
-                className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
-                style={{ cursor: 'pointer' }}
-                onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}
-              >
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
+                <div
+                  key={product.id}
+                  className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}
+                >
+                  <div className="product-image">
+                    <img src={product.image} alt={product.name} />
 
-                  <div className="category-tag" style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '10px',
-                    background: 'rgba(0,0,0,0.7)',
-                    color: 'white',
-                    padding: '4px 10px',
-                    fontSize: '10px',
-                    borderRadius: '4px',
-                    textTransform: 'uppercase'
-                  }}>
-                    {product.category}
+                    <div className="category-tag" style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px',
+                      background: 'rgba(0,0,0,0.7)',
+                      color: 'white',
+                      padding: '4px 10px',
+                      fontSize: '10px',
+                      borderRadius: '4px',
+                      textTransform: 'uppercase'
+                    }}>
+                      {product.category}
+                    </div>
+                  </div>
+                  <div className="product-info">
+                    <h3>{product.name}</h3>
+                    <p>{product.description}</p>
+                    <button
+                      className="get-quote-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addDemand(product);
+                      }}
+                    >
+                      {demands.some(d => d.name === product.name) ? "Remove from Requirement" : "Add to Requirement"}
+                    </button>
                   </div>
                 </div>
-                <div className="product-info">
-                  <h3>{product.name}</h3>
-                  <p>{product.description}</p>
-                  <button 
-                    className="get-quote-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      addDemand(product);
-                    }}
-                  >
-                    {demands.some(d => d.name === product.name) ? "Remove from Requirement" : "Add to Requirement"}
-                  </button>
-                </div>
-              </div>
-            )))}
-          </div>
+              )))}
+          </StaggerGroup>
         </div>
       </section>
 
@@ -345,7 +351,7 @@ export default function Tiles() {
             </div>
             <div className="guide-card">
               <h3>✨ Premium Selection</h3>
-              <p>Our finest collections for luxury projects and statement designs.</p>
+              <p>Our finest Collection for luxury projects and statement designs.</p>
               <ul>
                 <li>Pink Granite</li>
                 <li>Multicolor Granite</li>

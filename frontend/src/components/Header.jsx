@@ -298,7 +298,7 @@ export default function Header() {
                   <Link to="/application/interior?type=staircase" onClick={closeMenus}>Staircase</Link>
                   {/* <Link to="/application/interior?type=pooja-room-temples" onClick={closeMenus}>Pooja Room & Temples</Link> */}
                   <Link to="/application/interior?type=table-tops-furniture" onClick={closeMenus}>TableTop & Furniture</Link>
-                  <Link to="/application/interior?type=home-decor" onClick={closeMenus}>Home Decor</Link>
+                  <Link to="/home-decor" onClick={closeMenus}>Home Decor</Link>
 
                 </div>
 

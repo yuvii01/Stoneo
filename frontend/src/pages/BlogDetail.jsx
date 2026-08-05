@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CSV_PRODUCTS } from '../utils/constants';
 import '../styles/BlogDetail.css';
+import FadeUp from '../components/animations/FadeUp';
+import StaggerGroup from '../components/animations/StaggerGroup';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -292,35 +294,41 @@ const DEFAULT_BLOGS = [
 
                 {/* ================= 2. EDITORIAL HEADER & TITLE ================= */}
                 <div className="bd-header-section">
-                    <div className="bd-category-pill">
-                        <span className="bd-pulse-dot"></span>
-                        ✦ STONEO ARCHITECTURAL MONOGRAPH • STONEO EDITORIAL
-                    </div>
+                    <FadeUp>
+                        <div className="bd-category-pill">
+                            <span className="bd-pulse-dot"></span>
+                            ✦ STONEO ARCHITECTURAL MONOGRAPH • STONEO EDITORIAL
+                        </div>
+                    </FadeUp>
 
-                    <h1 className="bd-title">{post.title}</h1>
+                    <FadeUp delay={0.1}>
+                        <h1 className="bd-title">{post.title}</h1>
+                    </FadeUp>
 
-                    <div className="bd-meta-bar">
-                        <div className="bd-meta-item">
-                            <div className="bd-author-avatar">SE</div>
-                            <span>By <strong className="bd-meta-author">{post.category || post.author || post.name || 'Stoneo Editorial'}</strong></span>
+                    <FadeUp delay={0.2}>
+                        <div className="bd-meta-bar">
+                            <div className="bd-meta-item">
+                                <div className="bd-author-avatar">SE</div>
+                                <span>By <strong className="bd-meta-author">{post.category || post.author || post.name || 'Stoneo Editorial'}</strong></span>
+                            </div>
+                            <span className="bd-meta-dot">•</span>
+                            <div className="bd-meta-item">
+                                <span>{post.date || 'July 2026'}</span>
+                            </div>
+                            <span className="bd-meta-dot">•</span>
+                            <div className="bd-read-time-pill">
+                                ● {post.readTime || '6 Min Read'}
+                            </div>
+                            {post.tags && post.tags.length > 0 && (
+                                <>
+                                    <span className="bd-meta-dot">•</span>
+                                    <div className="bd-meta-item" style={{ color: '#b88554', fontWeight: 600 }}>
+                                        #{post.tags[0].toUpperCase()}
+                                    </div>
+                                </>
+                            )}
                         </div>
-                        <span className="bd-meta-dot">•</span>
-                        <div className="bd-meta-item">
-                            <span>{post.date || 'July 2026'}</span>
-                        </div>
-                        <span className="bd-meta-dot">•</span>
-                        <div className="bd-read-time-pill">
-                            ● {post.readTime || '6 Min Read'}
-                        </div>
-                        {post.tags && post.tags.length > 0 && (
-                            <>
-                                <span className="bd-meta-dot">•</span>
-                                <div className="bd-meta-item" style={{ color: '#b88554', fontWeight: 600 }}>
-                                    #{post.tags[0].toUpperCase()}
-                                </div>
-                            </>
-                        )}
-                    </div>
+                    </FadeUp>
                 </div>
 
                 {/* ================= 3. CINEMATIC HERO IMAGE ================= */}
@@ -562,7 +570,7 @@ const DEFAULT_BLOGS = [
                     </div>
 
                     {relatedChronicles.length > 0 ? (
-                        <div className="bd-related-grid">
+                        <StaggerGroup className="bd-related-grid" itemSelector=".bd-related-card">
                             {relatedChronicles.map(item => (
                                 <div
                                     key={item.id || item._id}
@@ -593,7 +601,7 @@ const DEFAULT_BLOGS = [
                                     </div>
                                 </div>
                             ))}
-                        </div>
+                        </StaggerGroup>
                     ) : (
                         <div style={{ padding: '40px 0', textAlign: 'center', color: '#777', fontStyle: 'italic' }}>
                             No additional chronicles published yet.

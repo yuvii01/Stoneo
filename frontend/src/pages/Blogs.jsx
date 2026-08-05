@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Blogs.css';
+import FadeUp from '../components/animations/FadeUp';
+import StaggerGroup from '../components/animations/StaggerGroup';
 
 const DEFAULT_BLOGS = [
     {
@@ -160,14 +162,20 @@ export default function Blogs() {
                     background: "linear-gradient(180deg, rgba(15, 16, 19, 0.75) 0%, rgba(15, 16, 19, 0.85) 100%), url('/indian_marble_images/Black Forest.jpg') center/cover no-repeat"
                 }}
             >
-                <div className="editorial-badge-pill">
-                    <span className="editorial-pulse-dot"></span>
-                    Stoneo Journal • Insightful Blogs
-                </div>
-                <h1>The Stoneo Journal</h1>
-                <p>
-                    Discover masterclass design guides, quarry explorations, and expert natural stone curation from Stoneo.
-                </p>
+                <FadeUp>
+                    <div className="editorial-badge-pill">
+                        <span className="editorial-pulse-dot"></span>
+                        Stoneo Journal • Insightful Blogs
+                    </div>
+                </FadeUp>
+                <FadeUp delay={0.1}>
+                    <h1>The Stoneo Journal</h1>
+                </FadeUp>
+                <FadeUp delay={0.2}>
+                    <p>
+                        Discover masterclass design guides, quarry explorations, and expert natural stone curation from Stoneo.
+                    </p>
+                </FadeUp>
             </section>
 
             {/* ================= GLASSMORPHIC SEARCH & TAG CURATION ================= */}
@@ -265,10 +273,11 @@ export default function Blogs() {
                     {/* ================= FEATURED LEAD ARTICLE (PANORAMIC) ================= */}
                     {leadArticle && (
                         <section className="featured-article-section">
-                            <div
-                                className="featured-article-card"
-                                onClick={() => navigate(`/blogs/${leadArticle.id || leadArticle._id}`)}
-                            >
+                            <FadeUp>
+                                <div
+                                    className="featured-article-card"
+                                    onClick={() => navigate(`/blogs/${leadArticle.id || leadArticle._id}`)}
+                                >
                                 <div className="featured-img-wrapper">
                                     <span className="lead-badge">✦ LEAD STORY</span>
                                     <img
@@ -289,7 +298,8 @@ export default function Blogs() {
                                         Read Full Article →
                                     </span>
                                 </div>
-                            </div>
+                                </div>
+                            </FadeUp>
                         </section>
                     )}
 
@@ -303,7 +313,7 @@ export default function Blogs() {
                                 </span>
                             </div>
 
-                            <div className="luxury-blogs-grid">
+                            <StaggerGroup className="luxury-blogs-grid" itemSelector=".luxury-blog-card">
                                 {gridArticles.map(post => (
                                     <div
                                         key={post.id || post._id}
@@ -335,7 +345,7 @@ export default function Blogs() {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            </StaggerGroup>
                         </section>
                     )}
                 </>

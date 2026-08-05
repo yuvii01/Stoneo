@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import '../styles/About.css';
 import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema } from '../utils/seo';
+import FadeUp from '../components/animations/FadeUp';
+import StaggerGroup from '../components/animations/StaggerGroup';
 
 const TIMELINE_DATA = [
   {
@@ -141,18 +143,24 @@ export default function About() {
         <section className="about-hero-section">
           <div className="about-hero-glow"></div>
           <div className="about-hero-content">
-            <div className="about-hero-badge">
-              <span>✦</span> India’s Premium Stone Heritage Since 2008
-            </div>
-            <h1 className="about-hero-title">
-              Sculpting Earth’s <span>Timeless Masterpieces</span>
-            </h1>
-            <p className="about-hero-subtitle">
-              From the deep quarries of Kishangarh to architectural landmarks in over 60 countries,
-              Stoneo India transforms 4 billion years of geological heritage into surfaces of unrivaled strength and opulence.
-            </p>
+            <FadeUp>
+              <div className="about-hero-badge">
+                <span>✦</span> India’s Premium Stone Heritage Since 2008
+              </div>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h1 className="about-hero-title">
+                Sculpting Earth’s <span>Timeless Masterpieces</span>
+              </h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p className="about-hero-subtitle">
+                From the deep quarries of Kishangarh to architectural landmarks in over 60 countries,
+                Stoneo India transforms 4 billion years of geological heritage into surfaces of unrivaled strength and opulence.
+              </p>
+            </FadeUp>
 
-            <div className="about-hero-stats-bar">
+            <StaggerGroup className="about-hero-stats-bar" itemSelector=".hero-stat-box">
               <div className="hero-stat-box">
                 <span className="hero-stat-number">16+</span>
                 <span className="hero-stat-label">Years of Mastery</span>
@@ -169,7 +177,7 @@ export default function About() {
                 <span className="hero-stat-number">25,000</span>
                 <span className="hero-stat-label">Sq.M Monthly Capacity</span>
               </div>
-            </div>
+            </StaggerGroup>
           </div>
         </section>
 
@@ -177,9 +185,14 @@ export default function About() {
         <section className="about-origin-section">
           <div className="origin-grid">
             <div className="origin-text-block">
-              <span className="about-section-tag">Our Roots & Heritage</span>
-              <h3>Born in Kishangarh: The Stone Capital of India</h3>
-              <p>
+              <FadeUp>
+                <span className="about-section-tag">Our Roots & Heritage</span>
+              </FadeUp>
+              <FadeUp delay={0.1}>
+                <h3>Born in Kishangarh: The Stone Capital of India</h3>
+              </FadeUp>
+              <FadeUp delay={0.2}>
+                <p>
                 Founded in 2008 in Kishangarh, Rajasthan—globally renowned as Asia's largest marble and granite hub—Stoneo India was born out of a passion for authentic natural stone. We recognized early that while India possessed some of the planet's richest stone reserves, architects and developers demanded a supplier who could combine this natural wealth with uncompromising engineering precision.
               </p>
               <p>
@@ -191,9 +204,11 @@ export default function About() {
                   "We don't merely supply stone; we curate permanent geological art that defines the soul of luxury spaces for generations to come."
                 </p>
               </div>
+              </FadeUp>
             </div>
 
-            <div className="origin-visual-block">
+            <FadeUp delay={0.3}>
+              <div className="origin-visual-block">
               <div className="origin-image-container">
                 <img
                   src="https://alliancegranimarmo.com/wp-content/uploads/2022/06/Infra-Page_Image-2-1-scaled.jpg"
@@ -205,6 +220,7 @@ export default function About() {
                 <div className="badge-text">Year Established in Rajasthan</div>
               </div>
             </div>
+            </FadeUp>
           </div>
         </section>
 
@@ -286,7 +302,7 @@ export default function About() {
             <div className="pillar-luxury-card">
               <div>
                 <div className="pillar-icon-wrap">💎</div>
-                <h3 className="pillar-title">150+ Exotic Collections</h3>
+                <h3 className="pillar-title">150+ Exotic Collection</h3>
                 <p className="pillar-desc">
                   From robust Indian granites and serene marbles to rare backlit Royal Gemstones like Agate and Amethyst, our catalog caters to residential, commercial, and haute couture spaces.
                 </p>
@@ -358,14 +374,20 @@ export default function About() {
         {/* --- VALUES & SUSTAINABILITY --- */}
         <section className="about-values-section">
           <div className="about-section-header">
-            <span className="about-section-tag">Ethical Stewardship</span>
-            <h2 className="about-section-title">Respecting the Stone, Protecting the Earth</h2>
-            <p className="about-section-desc">
-              Natural stone is a finite gift from our planet. We combine industrial scale with deep ecological responsibility.
-            </p>
+            <FadeUp>
+              <span className="about-section-tag">Ethical Stewardship</span>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="about-section-title">Respecting the Stone, Protecting the Earth</h2>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p className="about-section-desc">
+                Natural stone is a finite gift from our planet. We combine industrial scale with deep ecological responsibility.
+              </p>
+            </FadeUp>
           </div>
 
-          <div className="values-cards-grid">
+          <StaggerGroup className="values-cards-grid" itemSelector=".value-luxury-item">
             <div className="value-luxury-item">
               <div className="value-icon-circle">💧</div>
               <h3>100% Water Recycling</h3>
@@ -389,7 +411,7 @@ export default function About() {
                 We uphold strict fair-wage standards, modern safety gear, and comprehensive health programs for our stone cutters, polishers, and logistics teams.
               </p>
             </div>
-          </div>
+          </StaggerGroup>
         </section>
 
         {/* --- LUXURY CALL TO ACTION BANNER --- */}

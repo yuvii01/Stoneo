@@ -5,7 +5,7 @@ const FINISH_ENUM = [
   'Lapotra', 'Bush Hammered', 'Antique', 'Sandblasted'
 ];
 
-const CATEGORY_ENUM = ['Granite', 'Marble', 'Imported Marble', 'Indian Marble', 'Sandstone', 'Quartz', 'Onyx', 'Paving and Landscape', 'Other Natural Stones', 'Royal Gemstone', 'Tiles'];
+const CATEGORY_ENUM = ['Granite', 'Marble', 'Imported Marble', 'Indian Marble', 'Sandstone', 'Quartz', 'Onyx', 'Paving and Landscape', 'Other Natural Stones', 'Royal Gemstone', 'Tiles', 'Home Decor'];
 
 const productSchema = new mongoose.Schema({
   name: {

@@ -9,6 +9,8 @@ import { OTHER_NATURAL_STONES } from '../../utils/constants';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const DEFAULT_DESCRIPTION = 'Exquisite natural stone sourced from verified quarries, engineered for architectural excellence.';
 const DEFAULT_FEATURES = ['Authentic natural texture', 'Weather & frost resistant', 'High compressive strength', 'Low maintenance'];
@@ -182,8 +184,12 @@ export default function OtherNaturalStones() {
           }}
         >
           <div className="container container-heading">
-            <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Specialty Natural Stones</h1>
-            <p>Discover Quartzite, Limestone, Slate Stone, Basalt, and Kota Stone for enduring architectural design</p>
+            <FadeUp>
+              <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Specialty Natural Stones</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Discover Quartzite, Limestone, Slate Stone, Basalt, and Kota Stone for enduring architectural design</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -352,7 +358,7 @@ export default function OtherNaturalStones() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
@@ -415,7 +421,7 @@ export default function OtherNaturalStones() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {/* Pagination Controls */}
               {filteredProducts.length > itemsPerPage && (

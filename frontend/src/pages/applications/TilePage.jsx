@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useDemand } from '../../context/DemandContext';
 import NoProductsFound from '../../components/NoProductsFound';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -107,8 +109,12 @@ export default function TilePage() {
             <div className="page products-page">
                 <section className="granite-header page-header">
                     <div className="container container-heading">
-                        <h1>{displayTitle}</h1>
-                        <p>Browse our premium selection for {displayTitle.toLowerCase()} applications</p>
+                        <FadeUp>
+                            <h1>{displayTitle}</h1>
+                        </FadeUp>
+                        <FadeUp delay={0.2}>
+                            <p>Browse our premium selection for {displayTitle.toLowerCase()} applications</p>
+                        </FadeUp>
                     </div>
                 </section>
 
@@ -157,7 +163,7 @@ export default function TilePage() {
                                 onReset={clearFilters}
                             />
                         ) : (
-                            <div className="products-grid">
+                            <StaggerGroup className="products-grid" itemSelector=".product-card">
                                 {filteredProducts.map(product => (
                                     <div key={product.id} className="product-card" style={{ cursor: 'pointer' }} onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}>
                                         <div className="product-image">
@@ -195,7 +201,7 @@ export default function TilePage() {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            </StaggerGroup>
                         )}
                     </div>
                 </section>

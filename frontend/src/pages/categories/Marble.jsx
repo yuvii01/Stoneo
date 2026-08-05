@@ -8,6 +8,8 @@ import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const TOUCH_OPTIONS = ["Polished", "Honed", "Leathered", "Brushed", "Bush-Hammered", "Sandblasted"];
 const ORIGIN_OPTIONS = ["Makrana white", "Katni", "Ambaji", "Rajnagar", "Udaipur green", "Kishangarh", "Jaisalmer Yellow", "Italian", "Spanish", "Vietnamese", "Turkish", "Greece"];
@@ -174,8 +176,12 @@ export default function Marble() {
       <div className="page products-page">
         <section className="marble-header page-header">
           <div className="container container-heading">
-            <h1>Our {typeParam === 'statuario' ? 'Statuario' : categoryFilter !== 'All' ? categoryFilter : ''} Marble Collections</h1>
-            <p>Browse our premium selection of {typeParam === 'statuario' ? 'statuario' : categoryFilter.toLowerCase()} varieties</p>
+            <FadeUp>
+              <h1>Our {typeParam === 'statuario' ? 'Statuario' : categoryFilter !== 'All' ? categoryFilter : ''} Marble Collection</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Browse our premium selection of {typeParam === 'statuario' ? 'statuario' : categoryFilter.toLowerCase()} varieties</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -361,7 +367,7 @@ export default function Marble() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
@@ -427,7 +433,7 @@ export default function Marble() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {/* Pagination Controls */}
               {filteredProducts.length > itemsPerPage && (

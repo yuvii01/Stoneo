@@ -9,6 +9,8 @@ import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';
 import { useDbProducts } from '../../utils/useDbProducts';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const TOUCH_OPTIONS = ["Polished", "Leather", "Flamed", "Lapotra", "Antique"];
 const ORIGIN_OPTIONS = ["South India", "North India", "Imported", "Alaska"];
@@ -308,8 +310,12 @@ export default function Granite() {
       <div className="page products-page">
         <section className="granite-header page-header">
           <div className="container container-heading">
-            <h1>Our {typeParam === 'alaska' ? 'Alaska' : categoryFilter !== 'All' ? categoryFilter : ''} Granite Collections</h1>
-            <p>Browse our premium selection of {typeParam === 'alaska' ? 'alaska' : categoryFilter.toLowerCase()} varieties</p>
+            <FadeUp>
+              <h1>Our {typeParam === 'alaska' ? 'Alaska' : categoryFilter !== 'All' ? categoryFilter : ''} Granite Collection</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Browse our premium selection of {typeParam === 'alaska' ? 'alaska' : categoryFilter.toLowerCase()} varieties</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -482,7 +488,7 @@ export default function Granite() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {productsList.loading ? (
                   <ProductLoader text="Loading products..." />
                 ) : paginatedProducts.length === 0 ? (
@@ -548,7 +554,7 @@ export default function Granite() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {/* Pagination Controls */}
               {filteredProducts.length > itemsPerPage && (

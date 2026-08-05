@@ -5,6 +5,8 @@ import SEOHead from '../../components/SEOHead';
 import { useDemand } from '../../context/DemandContext';
 import NoProductsFound from '../../components/NoProductsFound';
 import { getBreadcrumbSchema } from '../../utils/seo';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const INTERIOR_APPLICATIONS = [
   "Interior Flooring",
@@ -155,8 +157,12 @@ export default function Interior() {
       <div className="page products-page">
         <section className="granite-header page-header" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80)' }}>
           <div className="container container-heading">
-            <h1>Interior Collections</h1>
-            <p>Browse our premium selection of interior stones and applications</p>
+            <FadeUp>
+              <h1>Interior Collection</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Browse our premium selection of interior stones and applications</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -295,7 +301,7 @@ export default function Interior() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {paginatedProducts.length === 0 ? (
                   <NoProductsFound
                     title="No Interior Stones Found"
@@ -355,7 +361,7 @@ export default function Interior() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {filteredProducts.length > itemsPerPage && (
                 <div style={{

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 export default function House() {
     const location = useLocation();
@@ -53,24 +55,27 @@ export default function House() {
                 marginBottom: '30px',
                 borderBottom: '1px solid rgba(0,0,0,0.1)'
             }}>
-                <h1 style={{
-                    fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)",
-                    fontSize: '2.5rem',
-                    fontWeight: '300',
-                    color: '#654321',
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase',
-                    margin: 0
-                }}>
-                    {pageTitle}
-                </h1>
+                <FadeUp>
+                    <h1 style={{
+                        fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)",
+                        fontSize: '2.5rem',
+                        fontWeight: '300',
+                        color: '#654321',
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        margin: 0
+                    }}>
+                        {pageTitle}
+                    </h1>
+                </FadeUp>
             </div>
 
             {/* Grid Container */}
-            <div className="house-tiles-grid" style={{ flex: 1 }}>
+            <StaggerGroup className="house-tiles-grid" style={{ flex: 1 }} itemSelector=".house-tile-card">
                 {tiles.map((tile, index) => (
                     <div
                         key={index}
+                        className="house-tile-card"
                         onClick={() => {
                             const slug = tile.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                             const base = isInterior ? '/application/interior' : '/application/exterior';
@@ -145,7 +150,7 @@ export default function House() {
                         </h2>
                     </div>
                 ))}
-            </div>
+            </StaggerGroup>
         </section>
     );
 }

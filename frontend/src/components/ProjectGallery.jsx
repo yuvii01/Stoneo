@@ -251,7 +251,7 @@ export default function ProjectGallery() {
                     navigate('/products');
                   }}
                 >
-                  Explore Stone Collections
+                  Explore Stone Collection
                 </button>
               </div>
             </div>

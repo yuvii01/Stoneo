@@ -5,6 +5,8 @@ import SEOHead from '../../components/SEOHead';
 import { useDemand } from '../../context/DemandContext';
 import NoProductsFound from '../../components/NoProductsFound';
 import { getBreadcrumbSchema } from '../../utils/seo';
+import FadeUp from '../../components/animations/FadeUp';
+import StaggerGroup from '../../components/animations/StaggerGroup';
 
 const EXTERIOR_APPLICATIONS = [
   "Elevation Cladding",
@@ -147,8 +149,12 @@ export default function Exterior() {
       <div className="page products-page">
         <section className="granite-header page-header" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80)' }}>
           <div className="container container-heading">
-            <h1>Exterior Collections</h1>
-            <p>Discover our durable range of stones for outdoor architectures and landscapes</p>
+            <FadeUp>
+              <h1>Exterior Collection</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>Discover our durable range of stones for outdoor architectures and landscapes</p>
+            </FadeUp>
           </div>
         </section>
 
@@ -287,7 +293,7 @@ export default function Exterior() {
                 </div>
               )}
 
-              <div className="products-grid">
+              <StaggerGroup className="products-grid" itemSelector=".product-card">
                 {paginatedProducts.length === 0 ? (
                   <NoProductsFound
                     title="No Exterior Stones Found"
@@ -347,7 +353,7 @@ export default function Exterior() {
                     </div>
                   ))
                 )}
-              </div>
+              </StaggerGroup>
 
               {filteredProducts.length > itemsPerPage && (
                 <div style={{

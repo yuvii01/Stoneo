@@ -105,7 +105,7 @@ content = content.replace(filterLogicRegex, `const filteredProducts = useMemo(()
 // 7. Update SEO and Header
 content = content.replace(/pageKey="granite"/, 'pageKey="paving-landscape"');
 content = content.replace(/name: 'Granite', path: '\/category\/granite'/g, "name: 'Paving & Landscape', path: '/category/paving-landscape'");
-content = content.replace(/Our \{categoryFilter !== 'All' \? categoryFilter : ''\} Granite Collections/g, "Our Paving & Landscape Collections");
+content = content.replace(/Our \{categoryFilter !== 'All' \? categoryFilter : ''\} Granite Collection/g, "Our Paving & Landscape Collection");
 content = content.replace(/Browse our premium selection of \{categoryFilter\.toLowerCase\(\)\} imported varieties/g, "Premium selection of cobbles, pavers, and landscaping stones.");
 
 // 8. Sidebar Filters update

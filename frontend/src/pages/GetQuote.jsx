@@ -7,6 +7,8 @@ import SEOHead from '../components/SEOHead';
 import { getOrganizationSchema } from '../utils/seo';
 import { useDemand } from '../context/DemandContext';
 import { useDbProducts } from '../utils/useDbProducts';
+import FadeUp from '../components/animations/FadeUp';
+import StaggerGroup from '../components/animations/StaggerGroup';
 
 const PROJECT_SCOPES = [
   "Residential Flooring",
@@ -261,14 +263,20 @@ export default function GetQuote() {
         {/* ================= HERO HEADER ================= */}
         <section className="luxury-quote-hero">
           <div className="container">
-            <div className="quote-badge-pill">
-              <span className="quote-pulse-dot"></span>
-              Quotation Desk • Instant WhatsApp Dispatch
-            </div>
-            <h1>Request a Quotation</h1>
-            <p>
-              Review your natural stone portfolio and connect directly with our specialists for pricing & sample dispatch.
-            </p>
+            <FadeUp>
+              <div className="quote-badge-pill">
+                <span className="quote-pulse-dot"></span>
+                Quotation Desk • Instant WhatsApp Dispatch
+              </div>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h1>Request a Quotation</h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p>
+                Review your natural stone portfolio and connect directly with our specialists for pricing & sample dispatch.
+              </p>
+            </FadeUp>
           </div>
         </section>
 
@@ -355,7 +363,7 @@ export default function GetQuote() {
                   </div>
 
                   <p className="empty-showcase-desc">
-                    You haven’t added any stone samples yet. Select from our <strong>Recommended Top Granites</strong> below, browse our collections, or specify custom architectural requirements in the notes on the right.
+                    You haven’t added any stone samples yet. Select from our <strong>Recommended Top Granites</strong> below, browse our Collection, or specify custom architectural requirements in the notes on the right.
                   </p>
 
                   {/* <div className="empty-showcase-steps">
@@ -405,7 +413,7 @@ export default function GetQuote() {
                     <span className="recommended-subtitle">Click "+ Add to Portfolio" to select</span>
                   </div>
 
-                  <div className="recommended-granites-grid">
+                  <StaggerGroup className="recommended-granites-grid" itemSelector=".recommended-stone-card">
                     {top3Recommended.map((stone, idx) => (
                       <div key={stone.id || stone.name || idx} className="recommended-stone-card">
                         <div className="recommended-img-wrapper">
@@ -431,7 +439,7 @@ export default function GetQuote() {
                         </div>
                       </div>
                     ))}
-                  </div>
+                  </StaggerGroup>
                 </div>
               )}
 

@@ -29,6 +29,7 @@ import BlogDetail from './pages/BlogDetail';
 import ProductDetail from './pages/ProductDetail';
 import RoyalGemStones from './pages/RoyalGemStones';
 import RoyalCollection from './pages/RoyalCollection';
+import HomeDecor from './pages/HomeDecor';
 
 // Context
 import { DemandProvider } from './context/DemandContext';
@@ -42,6 +43,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminBlogs from './pages/admin/AdminBlogs';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminRoyalGemStones from './pages/admin/AdminRoyalGemStones';
+import AdminHomeDecor from './pages/admin/AdminHomeDecor';
 
 function AppContent() {
   const location = useLocation();
@@ -79,6 +81,7 @@ function AppContent() {
           <Route path="/royal-gem-stones" element={<RoyalGemStones />} />
           <Route path="/royal-gem-stones/application/:collectionId" element={<RoyalCollection showFilters={true} />} />
           <Route path="/royal-gem-stones/stone/:collectionId" element={<RoyalCollection showFilters={false} />} />
+          <Route path="/home-decor" element={<HomeDecor />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
@@ -88,6 +91,7 @@ function AppContent() {
               <Route path="dashboard" element={<Navigate to="../blogs" replace />} />
               <Route path="blogs" element={<AdminBlogs />} />
               <Route path="products" element={<AdminProducts />} />
+              <Route path="home-decor" element={<AdminHomeDecor />} />
               <Route path="royal-gem-stones" element={<AdminRoyalGemStones />} />
             </Route>
           </Route>

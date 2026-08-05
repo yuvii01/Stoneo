@@ -32,7 +32,7 @@ export default function Products() {
   const productsList = useDbProducts('All', ALL_PRODUCTS);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  
+
   // 2. Get category from URL (e.g. ?category=Black)
   const categoryFilter = searchParams.get('category') || 'All';
 
@@ -55,7 +55,7 @@ export default function Products() {
     <div className="page products-page">
       <section className="page-header">
         <div className="container">
-          <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Granite Collections</h1>
+          <h1>Our {categoryFilter !== 'All' ? categoryFilter : ''} Granite Collection</h1>
           <p>Browse our premium selection of {categoryFilter.toLowerCase()} imported varieties</p>
         </div>
       </section>
@@ -64,7 +64,7 @@ export default function Products() {
       <section className="filter-bar">
         <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '40px' }}>
           {['All', 'Black', 'White', 'Blue', 'Gold', 'Green', 'Brown', 'Red'].map(cat => (
-            <button 
+            <button
               key={cat}
               className={`filter-btn ${categoryFilter === cat ? 'active' : ''}`}
               onClick={() => setSearchParams({ category: cat })}
@@ -98,38 +98,38 @@ export default function Products() {
               />
             ) : (
               filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
-                style={{ cursor: 'pointer' }}
-                onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}
-              >
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
+                <div
+                  key={product.id}
+                  className={`product-card ${selectedProduct?.id === product.id ? 'selected' : ''}`}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => navigate(`/products/${encodeURIComponent(product.name || product.id || product._id)}`, { state: { product } })}
+                >
+                  <div className="product-image">
+                    <img src={product.image} alt={product.name} />
 
-                  <div className="category-tag" style={{
-                    position: 'absolute',
-                    top: '10px',
-                    left: '10px',
-                    background: 'rgba(0,0,0,0.7)',
-                    color: 'white',
-                    padding: '4px 10px',
-                    fontSize: '10px',
-                    borderRadius: '4px',
-                    textTransform: 'uppercase'
-                  }}>
-                    {product.category}
+                    <div className="category-tag" style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px',
+                      background: 'rgba(0,0,0,0.7)',
+                      color: 'white',
+                      padding: '4px 10px',
+                      fontSize: '10px',
+                      borderRadius: '4px',
+                      textTransform: 'uppercase'
+                    }}>
+                      {product.category}
+                    </div>
+                  </div>
+                  <div className="product-info">
+                    <h3>{product.name}</h3>
+                    <div className="product-price" style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-primary, #b48e5d)', margin: '4px 0 8px 0' }}>
+                      Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
+                    </div>
+                    <p>{product.description}</p>
                   </div>
                 </div>
-                <div className="product-info">
-                  <h3>{product.name}</h3>
-                  <div className="product-price" style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-primary, #b48e5d)', margin: '4px 0 8px 0' }}>
-                    Starts from ₹{product.startingPrice || product.minPrice || product.price || '100'} / sq. ft.
-                  </div>
-                  <p>{product.description}</p>
-                </div>
-              </div>
-            )))}
+              )))}
           </div>
         </div>
       </section>
@@ -159,7 +159,7 @@ export default function Products() {
             </div>
             <div className="guide-card">
               <h3>Premium Selection</h3>
-              <p>Our finest collections for luxury projects and statement designs.</p>
+              <p>Our finest Collection for luxury projects and statement designs.</p>
               <ul>
                 <li>Pink Granite</li>
                 <li>Multicolor Granite</li>

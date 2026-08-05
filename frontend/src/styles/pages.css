@@ -14,6 +14,10 @@
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {
@@ -85,11 +89,13 @@
 .page-header h1 {
   color: var(--color-white);
   margin-bottom: var(--spacing-md);
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.2;
 }
 
 .page-header p {
   color: rgba(255, 255, 255, 0.9);
-  font-size: var(--font-size-large);
+  font-size: clamp(16px, 1.5vw, 18px);
   transition: all 0.3s ease;
 }
 
@@ -3248,4 +3254,9 @@
     padding: 14px 12px !important;
     justify-content: center;
   }
+}
+.category-layout-container {
+  max-width: 1600px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
 }
