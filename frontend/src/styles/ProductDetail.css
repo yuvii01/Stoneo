@@ -134,7 +134,6 @@
 
 .pd-hero-title {
   font-family: var(--font-heading, 'Cormorant Garamond', serif);
-  font-size: clamp(40px, 6vw, 72px);
   font-weight: 500;
   color: #ffffff;
   margin: 0 0 16px 0;
@@ -455,7 +454,6 @@
 
 .pd-product-title {
   font-family: var(--font-heading, 'Cormorant Garamond', serif);
-  font-size: clamp(26px, 3vw, 36px);
   font-weight: 500;
   color: var(--pd-text-primary);
   margin: 0 0 16px 0;

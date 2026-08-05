@@ -89,7 +89,6 @@
 .page-header h1 {
   color: var(--color-white);
   margin-bottom: var(--spacing-md);
-  font-size: clamp(28px, 4vw, 42px);
   line-height: 1.2;
 }
 
@@ -554,7 +553,6 @@
 
 .product-info h3 {
   font-family: var(--font-heading, 'Cormorant Garamond', serif);
-  font-size: 19px !important;
   font-weight: 600;
   line-height: 1.35;
   margin: 0 0 8px 0;
@@ -563,7 +561,7 @@
 
 @media (max-width: 768px) {
   .product-info h3 {
-    font-size: 17px !important;
+    /* letting globals handle sizing */
   }
 }
 

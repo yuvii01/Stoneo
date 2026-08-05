@@ -1,6 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import axios from 'axios';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Global Axios configuration to seamlessly support Ngrok for temporary live reviews
 axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
@@ -44,10 +48,46 @@ import AdminBlogs from './pages/admin/AdminBlogs';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminRoyalGemStones from './pages/admin/AdminRoyalGemStones';
 import AdminHomeDecor from './pages/admin/AdminHomeDecor';
+import { useEffect } from 'react';
 
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const headings = document.querySelectorAll('h1, h2, h3');
+      headings.forEach((heading) => {
+        // Skip headings that are already animated by other components (FadeUp, StaggerGroup, etc.)
+        if (
+          !heading.classList.contains('gsap-heading-animated') &&
+          !heading.closest('.fade-up-anim') &&
+          !heading.closest('.stagger-group-anim') &&
+          !heading.closest('.hero-text-animate') &&
+          !heading.classList.contains('hero-text-animate') &&
+          !heading.closest('.product-card')
+        ) {
+          heading.classList.add('gsap-heading-animated');
+          gsap.fromTo(heading,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1.2,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: heading,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+              }
+            }
+          );
+        }
+      });
+    }, 400);
+
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname]);
 
   return (
     <div className="app">

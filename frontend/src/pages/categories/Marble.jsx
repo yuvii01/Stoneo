@@ -84,7 +84,7 @@ export default function Marble() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 100
+    maxPrice: undefined
   });
 
   useEffect(() => {
@@ -375,7 +375,7 @@ export default function Marble() {
                     title="No Marble Varieties Found"
                     description="We couldn't find any marble varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ origin: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ origin: [], color: [], touch: [], maxPrice: undefined });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

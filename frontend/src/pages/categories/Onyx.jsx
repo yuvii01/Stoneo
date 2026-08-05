@@ -92,7 +92,7 @@ export default function Onyx() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 100
+    maxPrice: undefined
   });
 
   useEffect(() => {

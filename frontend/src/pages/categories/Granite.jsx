@@ -199,7 +199,7 @@ export default function Granite() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 500
+    maxPrice: undefined
   });
 
   useEffect(() => {

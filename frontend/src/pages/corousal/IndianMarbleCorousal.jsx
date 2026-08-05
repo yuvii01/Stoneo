@@ -469,8 +469,8 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
       <style>{css}</style>
       <section
         className="gc-root"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+
+
       >
         {/* Header */}
         <div className="gc-header">

@@ -464,8 +464,8 @@ export default function SandStoneCarousel() {
       <style>{css}</style>
       <section
         className="gc-root"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+
+
       >
         {/* Header */}
         <div className="gc-header">

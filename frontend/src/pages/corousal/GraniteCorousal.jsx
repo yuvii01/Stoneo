@@ -372,7 +372,7 @@ export default function GraniteCarousel() {
     scheduleResume();
   }, [goTo, scheduleResume]);
 
-  /* ── Autoplay — 5 second interval ── */
+  /* ── Autoplay — 2 second interval ── */
   useEffect(() => {
     const id = setInterval(() => {
       if (pausedRef.current) return;
@@ -383,7 +383,7 @@ export default function GraniteCarousel() {
         return next;
       });
       setTimeout(() => setLabelVisible(true), 320);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(id);
   }, []); // mount-only — reads pausedRef via ref, uses functional updater
 
@@ -472,8 +472,8 @@ const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2
       <style>{css}</style>
       <section
         className="gc-root"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+
+
       >
         {/* Header */}
         <div className="gc-header" style={{ textAlign: "center", marginBottom: "2rem" }}>

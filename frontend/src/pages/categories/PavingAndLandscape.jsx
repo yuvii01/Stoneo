@@ -88,7 +88,7 @@ export default function PavingAndLandscape() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 100
+    maxPrice: undefined
   });
 
   useEffect(() => {
@@ -461,7 +461,7 @@ export default function PavingAndLandscape() {
                     title="No Paving Stones Found"
                     description="We couldn't find any paving & landscaping stones matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: undefined });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

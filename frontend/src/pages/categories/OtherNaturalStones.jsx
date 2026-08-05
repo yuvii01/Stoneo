@@ -77,7 +77,7 @@ export default function OtherNaturalStones() {
     color: [],
     touch: [],
     thickness: [],
-    maxPrice: 100
+    maxPrice: undefined
   });
 
   useEffect(() => {
@@ -366,7 +366,7 @@ export default function OtherNaturalStones() {
                     title="No Natural Stones Found"
                     description="We couldn't find any natural stone varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: 100 });
+                      setFilters({ type: [], color: [], touch: [], maxPrice: undefined });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

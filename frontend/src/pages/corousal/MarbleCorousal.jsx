@@ -469,8 +469,8 @@ export default function MarbleCarousel() {
       <style>{css}</style>
       <section
         className="gc-root"
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+
+
       >
         {/* Header */}
         <div className="gc-header" style={{ textAlign: "center", marginBottom: "2rem" }}>

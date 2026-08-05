@@ -74,69 +74,6 @@ export default function BlogDetail() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-const DEFAULT_BLOGS = [
-    {
-        id: 'blog-1',
-        title: 'Complete Guide to Selecting Natural Marble for Luxury Homes',
-        excerpt: 'Discover essential guidelines for selecting premium Italian, Statuario, and Indian marble for architectural projects.',
-        content: 'Marble has been the crowning jewel of architectural design for millennia. From the legendary quarries of Carrara to the white stone of Makrana, natural marble brings unparalleled sophistication to residential and commercial sanctuaries.\n\n1. GEOLOGICAL ORIGINS & ELEGANCE\nEvery slab of natural marble carries a unique geological history etched in delicate veining patterns. When specifying marble for interior flooring or wall cladding, understanding porosity and finish options is crucial.',
-        category: 'Design Guide',
-        author: 'Stoneo Editorial',
-        readTime: '5 Min Read',
-        tags: ['marble', 'interior', 'tiles'],
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
-        date: 'August 2026'
-    },
-    {
-        id: 'blog-2',
-        title: 'Granite vs Quartz: The Ultimate Kitchen Countertop Comparison',
-        excerpt: 'An in-depth breakdown comparing natural granite durability against engineered quartz performance.',
-        content: 'Choosing the right kitchen countertop material comes down to balancing natural aesthetic appeal with daily maintenance requirements.\n\n1. DURABILITY & HEAT RESISTANCE\nGranite is an igneous rock formed under extreme subterranean heat and pressure, giving it unmatched thermal resistance. Engineered quartz, composed of natural quartz crystals bound with resin, provides a non-porous surface impervious to acidic stains.',
-        category: 'Material Comparison',
-        author: 'Stoneo Editorial',
-        readTime: '6 Min Read',
-        tags: ['granite', 'quartz', 'countertops'],
-        image: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=800&q=80',
-        date: 'August 2026'
-    },
-    {
-        id: 'blog-3',
-        title: 'Mastering Paving Stones for High-Traffic Outdoor Landscapes',
-        excerpt: 'How cobbles, granite pavers, and sandstone transform driveways, walkways, and garden sanctuaries.',
-        content: 'Paving stones provide structural integrity and timeless curb appeal for exterior landscapes.\n\n1. LOAD BEARING & DRAINAGE\nDriveways subject to vehicular load demand thick granite cobbles or high-density sandstone pavers. Proper sub-base compaction and permeable joint sand prevent shifting and erosion over decades of weather exposure.',
-        category: 'Landscaping',
-        author: 'Stoneo Editorial',
-        readTime: '4 Min Read',
-        tags: ['cobbles', 'paving', 'granite'],
-        image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80',
-        date: 'July 2026'
-    },
-    {
-        id: 'blog-4',
-        title: 'Care & Maintenance Monograph for Translucent Onyx Slabs',
-        excerpt: 'Proactive sealing techniques and backlit installation practices for luxury onyx features.',
-        content: 'Onyx is one of nature’s most exquisite translucent gemstones, prized for dramatic backlighting potential.\n\n1. BACKLIGHTING & SEALING PROTOCOLS\nBecause onyx is a soft calcitic stone, avoiding abrasive chemical cleaners is critical. Diffused LED light panels behind slab installations create mesmerizing ambient illumination in luxury bars and feature walls.',
-        category: 'Stone Maintenance',
-        author: 'Stoneo Editorial',
-        readTime: '5 Min Read',
-        tags: ['onyx', 'interior', 'luxury'],
-        image: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=800&q=80',
-        date: 'July 2026'
-    },
-    {
-        id: 'blog-5',
-        title: 'Choosing Slate & Quartzite for Modern Architectural Facades',
-        excerpt: 'Thermal insulation, frost resistance, and natural cleft aesthetics for exterior elevation cladding.',
-        content: 'Specialty stones like quartzite and slate offer organic textures that elevate modern architectural facades.\n\n1. ELEVATION CLADDING PERFORMANCE\nNatural slate clefting provides superior slip and water resistance, making it an architectural favorite for mountain retreats and coastal villas.',
-        category: 'Architectural Monograph',
-        author: 'Stoneo Editorial',
-        readTime: '7 Min Read',
-        tags: ['quartzite', 'slate', 'cladding'],
-        image: 'https://images.unsplash.com/photo-1600585154526-990dced4ea0d?auto=format&fit=crop&w=800&q=80',
-        date: 'June 2026'
-    }
-];
-
     const resolveBlogPost = async () => {
         setLoading(true);
         try {
@@ -160,12 +97,7 @@ const DEFAULT_BLOGS = [
             console.warn("Backend blog fetch failed:", err.message);
         }
 
-        const fallback = DEFAULT_BLOGS.find(b => String(b.id) === String(id) || String(b._id) === String(id));
-        if (fallback) {
-            setPost(fallback);
-        } else {
-            setPost(null);
-        }
+        setPost(null);
         setLoading(false);
     };
 
