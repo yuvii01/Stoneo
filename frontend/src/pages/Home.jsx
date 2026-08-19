@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TypeAnimation } from 'react-type-animation';
 
 gsap.registerPlugin(ScrollTrigger);
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,6 +23,7 @@ import ProjectGallery from '../components/ProjectGallery';
 
 export default function Home() {
   const graniteProducts = useDbProducts('Granite', GRANITE_TYPES);
+  const [typingStep, setTypingStep] = useState(0);
   const styles = {
     section: { backgroundColor: '#fdfbf8', padding: '50px 0', textAlign: 'center', overflow: 'hidden' },
   };
@@ -100,7 +102,99 @@ export default function Home() {
               preload="none"
               className="hero-video"
             ></video>
-            <div className="hero-overlay"></div>
+            <div className="hero-overlay" style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'white',
+              textAlign: 'center',
+              padding: '20px',
+              backgroundColor: 'rgba(0,0,0,0.4)'
+            }}>
+
+              {/* Line 1: STONEO INDIA */}
+              <div style={{ minHeight: 'clamp(40px, 6vw, 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {typingStep === 0 && (
+                  <TypeAnimation
+                    sequence={['STONEO INDIA', () => setTypingStep(1)]}
+                    wrapper="h1"
+                    cursor={true}
+                    speed={200}
+                    style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: '500', margin: 0, lineHeight: '1', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}
+                  />
+                )}
+                {typingStep >= 1 && (
+                  <h1 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: '500', margin: 0, lineHeight: '1', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                    STONEO INDIA
+                  </h1>
+                )}
+              </div>
+
+              {/* Line 2: SINCE 1998 */}
+              <div style={{ minHeight: 'clamp(20px, 3vw, 30px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {typingStep === 1 && (
+                  <TypeAnimation
+                    sequence={['SINCE 1998', () => setTypingStep(2)]}
+                    wrapper="h2"
+                    cursor={true}
+                    speed={200}
+                    style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(16px, 2vw, 24px)', fontWeight: '400', margin: 0, letterSpacing: '6px', color: '#f3c669', textShadow: '1px 1px 3px rgba(0,0,0,0.5)', lineHeight: '1' }}
+                  />
+                )}
+                {typingStep >= 2 && (
+                  <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(16px, 2vw, 24px)', fontWeight: '400', margin: 0, letterSpacing: '6px', color: '#f3c669', textShadow: '1px 1px 3px rgba(0,0,0,0.5)', lineHeight: '1' }}>
+                    SINCE 1998
+                  </h2>
+                )}
+              </div>
+
+              {/* Spacer above WE EXPERTISE IN */}
+              <div style={{ height: 'clamp(50px, 8vw, 80px)' }}></div>
+
+              {/* Line 3: WE EXPERTISE IN */}
+              <div style={{ minHeight: 'clamp(24px, 3.5vw, 36px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {typingStep === 2 && (
+                  <TypeAnimation
+                    sequence={[
+                      1000,
+                      'WE EXPERTISE IN',
+                      () => setTypingStep(3)
+                    ]}
+                    wrapper="h3"
+                    cursor={true}
+                    speed={200}
+                    style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(18px, 2.5vw, 28px)', fontWeight: '400', margin: 0, letterSpacing: '2px', color: '#ffffff', textShadow: '2px 2px 6px rgba(0,0,0,0.9)', lineHeight: '1' }}
+                  />
+                )}
+                {typingStep >= 3 && (
+                  <h3 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(18px, 2.5vw, 28px)', fontWeight: '400', margin: 0, letterSpacing: '2px', color: '#ffffff', textShadow: '2px 2px 6px rgba(0,0,0,0.9)', lineHeight: '1' }}>
+                    WE EXPERTISE IN
+                  </h3>
+                )}
+              </div>
+
+              {/* Spacer below WE EXPERTISE IN */}
+              <div style={{ height: 'clamp(15px, 3vw, 30px)' }}></div>
+
+              {/* Line 4: STONES */}
+              <div style={{ minHeight: 'clamp(32px, 5vw, 50px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {typingStep === 3 && (
+                  <TypeAnimation
+                    sequence={[
+                      'GRANITES', 2000,
+                      'MARBLES', 2000,
+                      'SEMI PRECIOUS STONES', 2000,
+                    ]}
+                    wrapper="h2"
+                    cursor={true}
+                    speed={50}
+                    repeat={Infinity}
+                    style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(24px, 4vw, 42px)', fontWeight: '600', margin: 0, color: '#f3c669', fontStyle: 'italic', textShadow: '2px 2px 4px rgba(0,0,0,0.8)', lineHeight: '1' }}
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </section>
 
