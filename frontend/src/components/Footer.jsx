@@ -1,170 +1,139 @@
-import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { COMPANY_INFO } from '../utils/constants';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/footer.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Footer() {
-  const navigate = useNavigate();
-  const footerRef = useRef(null);
-  const stonesRef = useRef([]);
-
-  useEffect(() => {
-    if (footerRef.current && stonesRef.current.length > 0) {
-      stonesRef.current.forEach((stone) => {
-        if (!stone) return;
-        
-        const tl = gsap.timeline({
-          delay: Math.random() * 4,
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 85%",
-            once: true,
-            toggleActions: "play none none none"
-          }
-        });
-
-        const rot = Math.random() * 360 - 180;
-        
-        tl.fromTo(stone,
-          { 
-            y: -(Math.random() * 800 + 400), 
-            opacity: 0, 
-            rotation: rot 
-          },
-          {
-            y: 0,
-            opacity: 1,
-            rotation: rot,
-            duration: Math.random() * 2 + 3.0, // 3 to 5 seconds fall
-            ease: "power3.in" // Dead stop feel, before the manual bounce
-          }
-        )
-        // Small, heavy bounce (goes up just a little, then back down fast)
-        .to(stone, { y: -12, duration: 0.15, ease: "power1.out" })
-        .to(stone, { y: 0, duration: 0.12, ease: "power1.in" });
-      });
-    }
-  }, []);
-
-  // Generate 100 stones with random positions, sizes, shapes, and colors
-  const stoneIcons = React.useMemo(() => {
-    const stoneShapes = [
-      "M12 25 C12 10 32 5 42 25 C48 35 38 45 22 45 C8 45 6 35 12 25 Z", // Rounded
-      "M18 12 Q32 2 45 18 T38 42 Q22 52 12 38 T18 12 Z", // Egg-like asymmetric
-      "M10 25 C10 15 25 5 40 15 C55 25 50 45 35 45 C20 45 5 45 10 25 Z", // Flat
-      "M12 25 L 28 8 L 48 18 L 42 38 L 28 48 L 8 38 Z", // Angular / rough cut
-    ];
-
-    const stoneColors = [
-      '#4a4a4a', // Dark Gray / Slate
-      '#7a7a7a', // Gray / Granite
-      '#bfa386', // Tan / Sandstone
-      '#d6d6d6', // Light Gray / Marble
-      '#594236', // Dark Brown
-      '#8a5a44', // Reddish Brown
-      '#c7c2b3'  // Pale Beige
-    ];
-
-    return Array.from({ length: 100 }, (_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      bottom: `${Math.random() * 30 - 10}px`,
-      size: Math.random() * 25 + 15, // 15 to 40
-      shape: stoneShapes[Math.floor(Math.random() * stoneShapes.length)],
-      color: stoneColors[Math.floor(Math.random() * stoneColors.length)]
-    }));
-  }, []);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <footer className="footer" ref={footerRef} style={{ position: 'relative', overflow: 'hidden' }}>
-      
-      {/* Falling Stones Overlay */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
-        {stoneIcons.map((stone, i) => (
-          <div
-            key={stone.id}
-            ref={el => stonesRef.current[i] = el}
-            style={{
-              position: 'absolute',
-              bottom: stone.bottom,
-              left: stone.left,
-              width: stone.size,
-              height: stone.size,
-              opacity: 0,
-            }}
-          >
-            <svg viewBox="0 0 50 50" style={{ width: '100%', height: '100%' }}>
-              <path d={stone.shape} fill={stone.color} stroke="rgba(0,0,0,0.4)" strokeWidth="1" />
-            </svg>
-          </div>
-        ))}
-      </div>
-
-      <div className="footer-container" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="footer-grid">
-          <div className="footer-section">
-            <div className="footer-logo">
-              {/* <img src="/logo2.png" alt="STONEO INDIA Logo" className="footer-logo-img" /> */}
-              {/* <img src="https://via.placeholder.com/150x50?text=Demo+Logo" alt="Demo Logo" className="footer-logo-img" /> */}
-              <span className="text-logo" style={{ color: '#fff', fontSize: '32px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-                <img src="/logos/logo_light_transparent.png" alt="Logo Light" style={{ height: '80px', objectFit: 'contain' }} />
-              </span>
+    <footer className="footer-v2">
+      <div className="footer-v2-container">
+        <div className="footer-v2-grid">
+          {/* Quick Links Column */}
+          <div className="footer-v2-col quick-links-col">
+            <h3 className="footer-v2-heading">QUICK LINKS</h3>
+            <div className="quick-links-grid">
+              <ul className="footer-v2-list">
+                <li><Link to="/" onClick={scrollToTop}>Home</Link></li>
+                <li><Link to="/about" onClick={scrollToTop}>The Company</Link></li>
+                <li><Link to="/category/granite" onClick={scrollToTop}>Granites</Link></li>
+                <li><Link to="/royal-gem-stones" onClick={scrollToTop}>Royal Gem Stones</Link></li>
+                <li><Link to="/home-decor" onClick={scrollToTop}>Home Decor</Link></li>
+              </ul>
+              <ul className="footer-v2-list">
+                <li><Link to="/application/interior" onClick={scrollToTop}>Interior</Link></li>
+                <li><Link to="/application/exterior" onClick={scrollToTop}>Exterior</Link></li>
+                <li><Link to="/get-quote" onClick={scrollToTop}>Contact Us</Link></li>
+                <li><Link to="/blogs" onClick={scrollToTop}>Blog</Link></li>
+                <li><Link to="/get-quote" onClick={scrollToTop}>Get Quote</Link></li>
+              </ul>
             </div>
-            <p className="footer-tagline">{COMPANY_INFO.tagline}</p>
-            <p className="footer-description">{COMPANY_INFO.description}</p>
           </div>
 
-          {/* <div className="footer-section">
-            <h3>Quick Links</h3>
-            <ul className="footer-links">
-              <li><a href="/">Home</a></li>
-              <li><a href="/products">Granite Types</a></li>
-              <li><a href="/projects">Projects</a></li>
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/faqs">FAQs</a></li>
+          {/* Collections Column */}
+          <div className="footer-v2-col">
+            <h3 className="footer-v2-heading">COLLECTIONS</h3>
+            <ul className="footer-v2-list">
+              <li><Link to="/category/marble?type=imported" onClick={scrollToTop}>Imported Marble</Link></li>
+              <li><Link to="/category/granite" onClick={scrollToTop}>Granites</Link></li>
+              <li><Link to="/category/marble?type=statuario" onClick={scrollToTop}>Statuario Marble</Link></li>
+              <li><Link to="/category/marble?type=italian" onClick={scrollToTop}>Italian Marble</Link></li>
+              <li><Link to="/category/marble?type=indian" onClick={scrollToTop}>White Marble</Link></li>
+              <li><Link to="/application/interior?type=kitchen-countertops" onClick={scrollToTop}>Countertops</Link></li>
+              <li><Link to="/category/quartz" onClick={scrollToTop}>Quartz Surfaces</Link></li>
             </ul>
-          </div> */}
-
-          <div className="footer-section">
-            <h3
-              onClick={() => navigate('/get-quote')}
-              style={{ cursor: 'pointer', display: 'inline-block' }}
-              title="Click to get a quote"
-            >
-              Get in Touch
-            </h3>
-            <div className="footer-contact">
-              <p>
-                <strong>📍 Address</strong>
-                {COMPANY_INFO.address}
-              </p>
-              <p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <strong>📞 Call Us</strong>
-                <a style={{ display: 'flex', alignItems: 'top' }} href={`tel:${COMPANY_INFO.phone}`}>+91-{COMPANY_INFO.phone}</a>
-              </p>
-              <p style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <strong>✉️ Email</strong>
-                <a href={`mailto:${COMPANY_INFO.email}`}>{COMPANY_INFO.email}</a>
-              </p>
-            </div>
           </div>
 
-          <div className="footer-section">
-            <h3>Business Hours</h3>
-            <p style={{ lineHeight: '1.8' }}>
-              ⏰ {COMPANY_INFO.businessHours}
-            </p>
+          {/* Contact Us Column */}
+          <div className="footer-v2-col contact-col">
+            <h3 className="footer-v2-heading">CONTACT US</h3>
+            <ul className="contact-v2-list">
+              <li>
+                <a
+                  href="https://maps.google.com/?q=Makrana+Rd,+Kali+Dungri,+Kishangarh,+Rajasthan+305801"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-link"
+                >
+                  <svg className="contact-v2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  <span>{COMPANY_INFO.address || 'Makrana Rd, Kali Dungri, Kishangarh, Rajasthan 305801'}</span>
+                </a>
+              </li>
+              {/* <li>
+                <a href="tel:+919119118118" className="contact-link">
+                  <svg className="contact-v2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                  </svg>
+                  <span>+91-9119118118</span>
+                </a>
+              </li> */}
+              <li>
+                <a href={`tel:+91${COMPANY_INFO.phone || '9602386590'}`} className="contact-link">
+                  <svg className="contact-v2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                  </svg>
+                  <span>+91-{COMPANY_INFO.phone || '9602386590'}</span>
+                </a>
+              </li>
+              <li>
+                <a href={`mailto:${COMPANY_INFO.email || 'sales@stoneoindia.com'}`} className="contact-link">
+                  <svg className="contact-v2-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <span>{COMPANY_INFO.email || 'sales@stoneoindia.com'}</span>
+                </a>
+              </li>
+            </ul>
+            <div className="social-v2-icons">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                </svg>
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                </svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                  <rect x="2" y="9" width="4" height="12"></rect>
+                  <circle cx="4" cy="4" r="2"></circle>
+                </svg>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.42a2.78 2.78 0 0 0-1.94 2C1 8.17 1 12 1 12s0 3.83.42 5.58a2.78 2.78 0 0 0 1.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.42a2.78 2.78 0 0 0 1.94-2C23 15.83 23 12 23 12s0-3.83-.42-5.58z"></path>
+                  <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="footer-bottom">
-          {/* <p>&copy; 2024 Stoneo India. All rights reserved. | Premium Granite Supplier</p> */}
-          {/* <p>&copy; 2024 Demo Company. All rights reserved. | Demo Subtitle</p> */}
-          <p>&copy; 2024 Stoneo India. All rights reserved. | Premium Granite Supplier</p>
+      <div className="footer-v2-bottom">
+        <div className="footer-v2-bottom-container">
+          <p>
+            &copy; Copyright {new Date().getFullYear()} Stoneo India. All rights reserved. | <Link to="/about" onClick={scrollToTop}>Privacy Policy</Link> | <Link to="/about" onClick={scrollToTop}>Terms & Conditions</Link> | <Link to="/" onClick={scrollToTop}>Sitemap</Link> | Powered by Stoneo
+          </p>
         </div>
       </div>
     </footer>

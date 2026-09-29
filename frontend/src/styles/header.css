@@ -106,7 +106,7 @@
 
 .header:not(.scrolled) .logo-main-img,
 .header:not(.scrolled) .logo-detail-img {
-  filter: brightness(1.6) contrast(1.2) drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
+  filter: brightness(1.6) contrast(1.2) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .text-logo {
@@ -406,18 +406,22 @@
 }
 
 .mega-menu-heading {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   color: #333;
   margin: 0;
   padding: 10px 16px;
 }
 
+.mega-menu-heading a {
+  font-size: 18px !important;
+}
+
 .mega-menu-subheading-link {
   display: block;
   margin: 16px 16px 4px !important;
   padding: 0 !important;
-  font-size: 13px !important;
+  font-size: 16px !important;
   color: #888 !important;
   font-weight: bold;
   text-decoration: none;
@@ -435,7 +439,7 @@
   text-decoration: none;
   color: #555;
   transition: background 0.2s ease, color 0.2s ease;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .dropdown-menu a:hover {
@@ -748,6 +752,7 @@
     display: block !important;
     text-decoration: none !important;
   }
+
 
   .mega-menu-subheading-link {
     font-size: 14px !important;

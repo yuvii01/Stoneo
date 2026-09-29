@@ -392,7 +392,7 @@ export default function ReviewsCorousal() {
       <div className="rev-container" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <div className="rev-header">
           <p className="rev-eyebrow">Excellence Recognized</p>
-          <h2 className="rev-title">Our Clients Testimonials</h2>
+          <h2 className="rev-title">Client hTestimonials</h2>
 
           <div className="rev-google-badge">
             <GoogleIcon />

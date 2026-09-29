@@ -8,6 +8,9 @@ import { getBreadcrumbSchema } from '../../utils/seo';
 import FadeUp from '../../components/animations/FadeUp';
 import StaggerGroup from '../../components/animations/StaggerGroup';
 
+import { ROYAL_GEM_STONE_PRODUCTS } from '../../utils/constants';
+import { gemstoneImages } from '../../gemstoneImages';
+
 const INTERIOR_APPLICATIONS = [
   "Interior Flooring",
   "Wall Cladding",
@@ -19,9 +22,18 @@ const INTERIOR_APPLICATIONS = [
 ];
 
 const COLORS = ["White", "Black", "Grey", "Gold", "Brown", "Beige", "Multicolor"];
-const MATERIALS = ["Granite", "Marble", "Quartz", "Sandstone", "Agate", "Gemstone"];
+const MATERIALS = ["Granite", "Marble", "Quartz", "Sandstone", "Semi Precious Stones"];
 
-// Generate dummy interior products
+const SEMI_PRECIOUS_DESCRIPTIONS = {
+  agate: "Discover the mesmerizing banding and translucent beauty of natural Agate. Perfect for creating a dramatic and luxurious statement piece in any space.",
+  quartz: "Experience the unparalleled clarity and brilliance of Quartz. A timeless choice that blends durability with an ethereal aesthetic.",
+  gemstone: "Indulge in the vibrant colors and rare allure of our Gemstone collection. Crafted for those who appreciate the extraordinary.",
+  shellstone: "Bring the delicate textures of the ocean into your interiors. Shellstone offers a unique, organic feel with a touch of pearlescent shine.",
+  fossil: "Own a piece of history with our Fossil stones. These incredible natural formations add a captivating historical depth to any design.",
+  jasper: "Admire the rich, earthy tones and intricate patterns of Jasper. A grounding stone that brings warmth and sophisticated character."
+};
+
+// Generate interior products including all 6 semi-precious stone types
 const generateDummyProducts = () => {
   const products = [];
   const images = [
@@ -53,6 +65,70 @@ const generateDummyProducts = () => {
       origin: "Imported"
     });
   }
+
+  // Include 6 Semi-Precious Stone Types (Agate, Quartz, Gemstone, Shellstone, Fossil, Jasper)
+  const semiPreciousCategories = ["agate", "quartz", "gemstone", "shellstone", "fossil", "jasper"];
+  let globalCount = 0;
+
+  semiPreciousCategories.forEach((cat) => {
+    const catImages = gemstoneImages[cat] || [];
+    const desc = SEMI_PRECIOUS_DESCRIPTIONS[cat] || "Bespoke luxury semi-precious stone surface.";
+    
+    catImages.forEach((imgUrl, idx) => {
+      globalCount++;
+      const rawName = imgUrl.split('/').pop().replace(/\.[^/.]+$/, "");
+      const formattedName = rawName
+        .split('_')
+        .join(' ')
+        .split('-')
+        .join(' ')
+        .replace(/\b\w/g, c => c.toUpperCase());
+
+      const appType = INTERIOR_APPLICATIONS[globalCount % INTERIOR_APPLICATIONS.length];
+      const color = formattedName.toLowerCase().includes('blue') ? 'Multicolor' :
+                    formattedName.toLowerCase().includes('black') ? 'Black' :
+                    formattedName.toLowerCase().includes('yellow') || formattedName.toLowerCase().includes('gold') ? 'Gold' :
+                    formattedName.toLowerCase().includes('green') ? 'Multicolor' :
+                    formattedName.toLowerCase().includes('rose') || formattedName.toLowerCase().includes('red') ? 'Multicolor' : 'Multicolor';
+
+      products.push({
+        id: `semiprecious-${cat}-${idx}`,
+        name: formattedName || `${cat.toUpperCase()} Surface ${idx + 1}`,
+        image: imgUrl,
+        category: color,
+        applicationType: appType,
+        material: 'Semi Precious Stones',
+        stoneType: cat.toUpperCase(),
+        isRoyalGemStone: true,
+        description: desc,
+        origin: "Imported"
+      });
+    });
+  });
+
+  // Include all Royal Gem Stone products
+  ROYAL_GEM_STONE_PRODUCTS.forEach((p, idx) => {
+    const appType = INTERIOR_APPLICATIONS[idx % INTERIOR_APPLICATIONS.length];
+    const color = p.name.includes('Blue') || p.name.includes('Lapis') || p.name.includes('Sodalite') ? 'Multicolor' :
+                  p.name.includes('Black') ? 'Black' :
+                  p.name.includes('Yellow') || p.name.includes('Golden') || p.name.includes('Tiger') ? 'Gold' :
+                  p.name.includes('Green') || p.name.includes('Moss') || p.name.includes('Malachite') ? 'Multicolor' :
+                  p.name.includes('Rose') || p.name.includes('Red') ? 'Multicolor' : 'Multicolor';
+
+    products.push({
+      id: `royal-interior-${idx}`,
+      name: p.name,
+      image: p.image,
+      category: color,
+      applicationType: appType,
+      material: 'Semi Precious Stones',
+      stoneType: p.material ? p.material.toUpperCase() : 'GEMSTONE',
+      isRoyalGemStone: true,
+      description: `Luxury semi-precious ${p.name} surface handcrafted for high-end interior ${appType.toLowerCase()}.`,
+      origin: "Imported"
+    });
+  });
+
   return products;
 };
 
@@ -83,6 +159,7 @@ export default function Interior() {
   useEffect(() => {
     const type = searchParams.get('type');
     const filter = searchParams.get('filter');
+    const material = searchParams.get('material');
     if (type) {
       const typeMap = {
         'interior-flooring': 'Interior Flooring',
@@ -98,9 +175,21 @@ export default function Interior() {
         setFilters(prev => ({ ...prev, applicationType: [mappedType] }));
       }
     } else if (filter) {
-      setFilters(prev => ({ ...prev, applicationType: [filter] }));
+      if (filter.toLowerCase().includes('semi') || filter.toLowerCase() === 'agate' || filter.toLowerCase() === 'gemstone') {
+        setFilters(prev => ({ ...prev, material: ['Semi Precious Stones'] }));
+      } else {
+        setFilters(prev => ({ ...prev, applicationType: [filter] }));
+      }
     } else {
       setFilters(prev => ({ ...prev, applicationType: [] }));
+    }
+
+    if (material) {
+      if (material.toLowerCase().includes('semi') || material.toLowerCase() === 'agate' || material.toLowerCase() === 'gemstone') {
+        setFilters(prev => ({ ...prev, material: ['Semi Precious Stones'] }));
+      } else {
+        setFilters(prev => ({ ...prev, material: [material] }));
+      }
     }
   }, [searchParams]);
 
@@ -119,7 +208,29 @@ export default function Interior() {
     return ALL_PRODUCTS.filter(p => {
       const matchesApp = filters.applicationType.length === 0 || filters.applicationType.includes(p.applicationType);
       const matchesColor = filters.color.length === 0 || filters.color.includes(p.category);
-      const matchesMaterial = filters.material.length === 0 || filters.material.includes(p.material);
+
+      let matchesMaterial = filters.material.length === 0 || filters.material.includes(p.material);
+
+      if (filters.material.some(m => {
+        const lower = (m || '').toLowerCase();
+        return lower.includes('semi') || lower === 'semiprecious stones' || lower === 'semi precious stones' || lower === 'agate' || lower === 'gemstone';
+      })) {
+        const isSemiPreciousProduct =
+          p.material === 'Semi Precious Stones' ||
+          p.material === 'Semiprecious Stones' ||
+          p.isRoyalGemStone ||
+          p.material === 'Agate' ||
+          p.material === 'Gemstone' ||
+          p.material === 'Shellstone' ||
+          p.material === 'Fossil' ||
+          p.material === 'Jasper' ||
+          (p.stoneType && ['AGATE', 'QUARTZ', 'GEMSTONE', 'SHELLSTONE', 'FOSSIL', 'JASPER'].includes(p.stoneType.toUpperCase()));
+
+        if (isSemiPreciousProduct) {
+          matchesMaterial = true;
+        }
+      }
+
       return matchesApp && matchesColor && matchesMaterial;
     });
   }, [filters]);

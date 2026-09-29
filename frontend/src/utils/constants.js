@@ -5,9 +5,9 @@ export const COMPANY_INFO = {
   // tagline: 'Quality Granite for Every Project', // 'Quality Granite for Every Project',
   address: 'Makrana Rd, Kali Dungri, Kishangarh, Rajasthan 305801', // 'Kali Dungri, Khatoli, Kishangarh, Rajasthan 305801',
   phone: '9602386590', // '9256901351',
-  email: 'demo@example.com', // 'infostoneo@gmail.com',
-  businessHours: '9:00 AM - 5:00 PM', // '10:00 AM - 7:00 PM',
-  established: '2024', // '2008',
+  email: 'sales@stoneoindia.com', // 'infostoneo@gmail.com',
+  businessHours: '9:00 AM - 6:00 PM', // '10:00 AM - 7:00 PM',
+  established: '1997', // '2008',
 };
 
 export const GRANITE_TYPES = [
