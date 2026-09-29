@@ -4,7 +4,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom'; // Required for
 import '../../styles/pages.css';
 import SEOHead from '../../components/SEOHead';
 import StonePriceSlider from '../../components/StonePriceSlider';
-import { getProductSchema, getBreadcrumbSchema } from '../../utils/seo';
+import { getBreadcrumbSchema } from '../../utils/seo';
 import { useDemand } from '../../context/DemandContext';
 import ProductLoader from '../../components/ProductLoader';
 import NoProductsFound from '../../components/NoProductsFound';

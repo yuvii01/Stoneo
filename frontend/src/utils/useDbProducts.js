@@ -12,12 +12,13 @@ const parsePrice = (val, fallback = 100) => {
   return fallback;
 };
 
-export function useDbProducts(categoryName, fallbackData = []) {
+export function useDbProducts(categoryName) {
   const [dbProducts, setDbProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     const url = (!categoryName || categoryName === 'All' || categoryName === 'all')
       ? `${import.meta.env.VITE_BACKEND_URL}/api/products/list`

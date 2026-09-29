@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { CSV_PRODUCTS } from '../../utils/constants';
 import './Admin.css';
@@ -65,11 +65,7 @@ export default function AdminRoyalGemStones() {
 
     const [dragActive, setDragActive] = useState(false);
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
-    const fetchProducts = async () => {
+    const fetchProducts = useCallback(async () => {
         try {
             setLoading(true);
             // Use lightweight list endpoint (no images) - avoids MongoDB 32MB sort memory limit crash
@@ -81,7 +77,11 @@ export default function AdminRoyalGemStones() {
             console.error("Error fetching royal gemstone products:", error);
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts]);
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;

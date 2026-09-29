@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import { CSV_PRODUCTS } from '../../utils/constants';
@@ -116,11 +116,7 @@ export default function AdminHomeDecor() {
     const [currentPage, setCurrentPage] = useState(1);
     const ITEMS_PER_PAGE = 15;
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
-    const fetchProducts = async () => {
+    const fetchProducts = useCallback(async () => {
         try {
             setLoading(true);
             // Use lightweight list endpoint (no images) - avoids MongoDB 32MB sort memory limit crash
@@ -133,7 +129,11 @@ export default function AdminHomeDecor() {
             console.error("Error fetching products:", error);
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchProducts();
+    }, [fetchProducts]);
 
     const handleDrag = function (e) {
         e.preventDefault();

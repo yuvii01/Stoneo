@@ -399,18 +399,9 @@ export default function MarbleCarousel() {
     return () => clearInterval(id);
   }, []); // mount-only — reads pausedRef via ref, uses functional updater
 
-  /* ── Hover pause/resume ── */
-  const onMouseEnter = useCallback(() => {
-    pausedRef.current = true;
-    clearTimeout(resumeTimerRef.current);
-  }, []);
-  const onMouseLeave = useCallback(() => {
-    scheduleResume();
-  }, [scheduleResume]);
-
   /* ── Touch handlers ── */
   const dragOffset = useRef(0);
-const [, forceRender] = useState(0); // for drag visual feedback
+const [dragOffsetState, setDragOffsetState] = useState(0); // for drag visual feedback
 
 const onTouchStart = useCallback((e) => {
   pausedRef.current = true;
@@ -429,21 +420,22 @@ const onTouchMove = useCallback((e) => {
   if (Math.abs(dy) > Math.abs(dx) + 5) {
     isDragging.current = false;
     dragOffset.current = 0;
-    forceRender(n => n + 1);
+    setDragOffsetState(0);
     return;
   }
 
   e.preventDefault();
   dragOffset.current = dx;
-  forceRender(n => n + 1);
+  setDragOffsetState(dx);
 }, []);
 
-const onTouchEnd = useCallback((e) => {
+const onTouchEnd = useCallback(() => {
   if (!isDragging.current) return;
   isDragging.current = false;
 
   const dx = dragOffset.current;
   dragOffset.current = 0;
+  setDragOffsetState(0);
 
   const threshold = CARD_W * 0.18;
   if (dx < -threshold) goTo(virtualIdxRef.current + 1);
@@ -455,7 +447,7 @@ const onTouchEnd = useCallback((e) => {
 
 
   /* ── Track translate ── */
-const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset.current;
+const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffsetState;
 const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2 + GAP / 2}px))`;
 
   /* ── Per-card style ── */

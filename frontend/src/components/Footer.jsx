@@ -50,32 +50,34 @@ export default function Footer() {
     }
   }, []);
 
-  const stoneShapes = [
-    "M12 25 C12 10 32 5 42 25 C48 35 38 45 22 45 C8 45 6 35 12 25 Z", // Rounded
-    "M18 12 Q32 2 45 18 T38 42 Q22 52 12 38 T18 12 Z", // Egg-like asymmetric
-    "M10 25 C10 15 25 5 40 15 C55 25 50 45 35 45 C20 45 5 45 10 25 Z", // Flat
-    "M12 25 L 28 8 L 48 18 L 42 38 L 28 48 L 8 38 Z", // Angular / rough cut
-  ];
-
-  const stoneColors = [
-    '#4a4a4a', // Dark Gray / Slate
-    '#7a7a7a', // Gray / Granite
-    '#bfa386', // Tan / Sandstone
-    '#d6d6d6', // Light Gray / Marble
-    '#594236', // Dark Brown
-    '#8a5a44', // Reddish Brown
-    '#c7c2b3'  // Pale Beige
-  ];
-
   // Generate 100 stones with random positions, sizes, shapes, and colors
-  const stoneIcons = Array.from({ length: 100 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    bottom: `${Math.random() * 30 - 10}px`,
-    size: Math.random() * 25 + 15, // 15 to 40
-    shape: stoneShapes[Math.floor(Math.random() * stoneShapes.length)],
-    color: stoneColors[Math.floor(Math.random() * stoneColors.length)]
-  }));
+  const stoneIcons = React.useMemo(() => {
+    const stoneShapes = [
+      "M12 25 C12 10 32 5 42 25 C48 35 38 45 22 45 C8 45 6 35 12 25 Z", // Rounded
+      "M18 12 Q32 2 45 18 T38 42 Q22 52 12 38 T18 12 Z", // Egg-like asymmetric
+      "M10 25 C10 15 25 5 40 15 C55 25 50 45 35 45 C20 45 5 45 10 25 Z", // Flat
+      "M12 25 L 28 8 L 48 18 L 42 38 L 28 48 L 8 38 Z", // Angular / rough cut
+    ];
+
+    const stoneColors = [
+      '#4a4a4a', // Dark Gray / Slate
+      '#7a7a7a', // Gray / Granite
+      '#bfa386', // Tan / Sandstone
+      '#d6d6d6', // Light Gray / Marble
+      '#594236', // Dark Brown
+      '#8a5a44', // Reddish Brown
+      '#c7c2b3'  // Pale Beige
+    ];
+
+    return Array.from({ length: 100 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      bottom: `${Math.random() * 30 - 10}px`,
+      size: Math.random() * 25 + 15, // 15 to 40
+      shape: stoneShapes[Math.floor(Math.random() * stoneShapes.length)],
+      color: stoneColors[Math.floor(Math.random() * stoneColors.length)]
+    }));
+  }, []);
 
   return (
     <footer className="footer" ref={footerRef} style={{ position: 'relative', overflow: 'hidden' }}>

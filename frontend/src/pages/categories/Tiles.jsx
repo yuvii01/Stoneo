@@ -235,6 +235,7 @@ export default function Tiles() {
   // Sync selected product when filter changes
   useEffect(() => {
     if (filteredProducts.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSelectedProduct(filteredProducts[0]);
     }
   }, [filteredProducts]);

@@ -54,23 +54,23 @@ export default function TilePage() {
         return `${BACKEND_URL}${thumb}`;
     };
 
-    const fetchProducts = async () => {
-        try {
-            setLoading(true);
-            const queryParam = isInterior ? 'interior' : 'exterior';
-            const res = await fetch(`${BACKEND_URL}/api/products/list?${queryParam}=${encodeURIComponent(displayTitle)}`);
-            const data = await res.json();
-            setProducts(data);
-        } catch (err) {
-            console.error('Error fetching products:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const queryParam = isInterior ? 'interior' : 'exterior';
+                const res = await fetch(`${BACKEND_URL}/api/products/list?${queryParam}=${encodeURIComponent(displayTitle)}`);
+                const data = await res.json();
+                setProducts(data);
+            } catch (err) {
+                console.error('Error fetching products:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchProducts();
-    }, [tileName]);
+    }, [tileName, displayTitle, isInterior]);
 
     // Get unique values for filter dropdowns
     const filterOptions = useMemo(() => ({

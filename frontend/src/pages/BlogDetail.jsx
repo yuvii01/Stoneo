@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CSV_PRODUCTS } from '../utils/constants';
@@ -55,26 +55,7 @@ export default function BlogDetail() {
 
     const [recentBlogsList, setRecentBlogsList] = useState([]);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        resolveBlogPost();
-        fetchRecentBlogs();
-    }, [id]);
-
-    // Handle scroll progress bar calculation
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-            setScrollProgress(Math.min(100, Math.max(0, percent)));
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const resolveBlogPost = async () => {
+    const resolveBlogPost = useCallback(async () => {
         setLoading(true);
         try {
             const res = await axios.get(`${BACKEND_URL}/api/blogs/${id}`);
@@ -99,9 +80,9 @@ export default function BlogDetail() {
 
         setPost(null);
         setLoading(false);
-    };
+    }, [id]);
 
-    const fetchRecentBlogs = async () => {
+    const fetchRecentBlogs = useCallback(async () => {
         try {
             const res = await axios.get(`${BACKEND_URL}/api/blogs`);
             const fetched = Array.isArray(res.data) ? res.data : [];
@@ -119,7 +100,13 @@ export default function BlogDetail() {
             console.warn("Could not fetch recent blogs from API:", err.message);
             setRecentBlogsList([]);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        resolveBlogPost();
+        fetchRecentBlogs();
+    }, [id, resolveBlogPost, fetchRecentBlogs]);
 
     const handleCopyLink = () => {
         if (navigator.clipboard) {

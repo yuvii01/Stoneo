@@ -393,19 +393,9 @@ export default function SandStoneCarousel() {
     return () => clearInterval(id);
   }, []); // mount-only — reads pausedRef via ref, uses functional updater
 
-  /* ── Hover pause/resume ── */
-  const onMouseEnter = useCallback(() => {
-    pausedRef.current = true;
-    clearTimeout(resumeTimerRef.current);
-  }, []);
-  const onMouseLeave = useCallback(() => {
-    scheduleResume();
-  }, [scheduleResume]);
-
   /* ── Touch handlers ── */
-  // ADD this ref near your other refs
-  const dragOffset = useRef(0);
-  const [, forceRender] = useState(0); // for drag visual feedback
+  const dragOffsetRef = useRef(0);
+  const [dragOffset, setDragOffset] = useState(0);
 
   const onTouchStart = useCallback((e) => {
     pausedRef.current = true;
@@ -413,7 +403,8 @@ export default function SandStoneCarousel() {
     touchStartX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     isDragging.current = true;
-    dragOffset.current = 0;
+    dragOffsetRef.current = 0;
+    setDragOffset(0);
   }, []);
 
   const onTouchMove = useCallback((e) => {
@@ -423,22 +414,23 @@ export default function SandStoneCarousel() {
 
     if (Math.abs(dy) > Math.abs(dx) + 5) {
       isDragging.current = false;
-      dragOffset.current = 0;
-      forceRender(n => n + 1);
+      dragOffsetRef.current = 0;
+      setDragOffset(0);
       return;
     }
 
     e.preventDefault();
-    dragOffset.current = dx;
-    forceRender(n => n + 1);
+    dragOffsetRef.current = dx;
+    setDragOffset(dx);
   }, []);
 
-  const onTouchEnd = useCallback((e) => {
+  const onTouchEnd = useCallback(() => {
     if (!isDragging.current) return;
     isDragging.current = false;
 
-    const dx = dragOffset.current;
-    dragOffset.current = 0;
+    const dx = dragOffsetRef.current;
+    dragOffsetRef.current = 0;
+    setDragOffset(0);
 
     const threshold = CARD_W * 0.18;
     if (dx < -threshold) goTo(virtualIdxRef.current + 1);
@@ -450,7 +442,7 @@ export default function SandStoneCarousel() {
 
 
   /* ── Track translate ── */
-  const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset.current;
+  const trackTranslate = -(virtualIdx * CARD_SLOT) + dragOffset;
   const trackTransform = `translateX(calc(50% + ${trackTranslate}px - ${CARD_W / 2 + GAP / 2}px))`;
 
   /* ── Per-card style ── */

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Blogs.css';
@@ -31,11 +31,7 @@ export default function Blogs() {
         };
     }, []);
 
-    useEffect(() => {
-        fetchBlogs();
-    }, []);
-
-    const fetchBlogs = async () => {
+    const fetchBlogs = useCallback(async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blogs`);
             if (res.data && Array.isArray(res.data) && res.data.length > 0) {
@@ -66,7 +62,11 @@ export default function Blogs() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [fetchBlogs]);
 
     // Filter blogs based on search query and selected tags
     const filteredBlogs = blogs.filter(blog => {

@@ -23,6 +23,20 @@ const StoneCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(3); // Start at the first real item
   const [isTransitioning, setIsTransitioning] = useState(true);
   const trackRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useEffect(() => {
+    if (trackRef.current && trackRef.current.parentElement) {
+      setContainerWidth(trackRef.current.parentElement.offsetWidth);
+      const observer = new ResizeObserver((entries) => {
+        if (entries[0]) {
+          setContainerWidth(entries[0].contentRect.width);
+        }
+      });
+      observer.observe(trackRef.current.parentElement);
+      return () => observer.disconnect();
+    }
+  }, []);
 
   const ITEM_WIDTH = 300;
   const GAP = 30;
@@ -66,8 +80,7 @@ const StoneCarousel = () => {
   };
 
   const getOffset = () => {
-    if (!trackRef.current) return 0;
-    const containerWidth = trackRef.current.parentElement.offsetWidth;
+    if (containerWidth === 0) return 0;
     const center = (containerWidth / 2) - (ITEM_WIDTH / 2);
     return center - (currentIndex * (ITEM_WIDTH + GAP));
   };

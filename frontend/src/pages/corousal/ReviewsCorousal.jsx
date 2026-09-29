@@ -451,7 +451,7 @@ export default function ReviewsCorousal() {
               } else if (isNext) {
                 translateX = 85; translateZ = -100; rotateY = -10; opacity = 0.3; zIndex = 5;
               } else {
-                opacity = 0; pointerEvents: 'none';
+                opacity = 0;
               }
             }
 

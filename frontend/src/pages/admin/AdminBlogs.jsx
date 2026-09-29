@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import imageCompression from 'browser-image-compression';
 import { CSV_PRODUCTS } from '../../utils/constants';
@@ -59,11 +59,7 @@ export default function AdminBlogs() {
 
     const [dragActive, setDragActive] = useState(false);
 
-    useEffect(() => {
-        fetchBlogs();
-    }, []);
-
-    const fetchBlogs = async () => {
+    const fetchBlogs = useCallback(async () => {
         try {
             const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/blogs`);
             setBlogs(res.data);
@@ -72,7 +68,11 @@ export default function AdminBlogs() {
             console.error("Error fetching blogs:", error);
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchBlogs();
+    }, [fetchBlogs]);
 
     const handleDrag = function (e) {
         e.preventDefault();
