@@ -363,7 +363,6 @@ export default function Header() {
 
                   <Link to="/category/granite" onClick={closeMenus} className="mega-menu-subheading-link">Granite &rsaquo;</Link>
                   <Link to="/category/granite?type=south" onClick={closeMenus}>South India Granites</Link>
-                  <Link to="/category/granite?type=north" onClick={closeMenus}>North India Granites</Link>
                   <Link to="/category/granite?type=alaska" onClick={closeMenus}>Alaska Granite</Link>
 
                   <Link to="/category/marble" onClick={closeMenus} className="mega-menu-subheading-link">Marble &rsaquo;</Link>
