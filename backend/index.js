@@ -123,7 +123,11 @@ app.get('/api/products/list', async (req, res) => {
     try {
         const filter = {};
         if (req.query.category && req.query.category !== 'All' && req.query.category !== 'all') {
-            filter.category = req.query.category;
+            if (req.query.category === 'Paving & Landscape' || req.query.category === 'Paving and Landscape') {
+                filter.category = { $in: ['Paving and Landscape', 'Paving & Landscape'] };
+            } else {
+                filter.category = req.query.category;
+            }
         }
         if (req.query.isRoyalGemStone !== undefined) {
             filter.isRoyalGemStone = req.query.isRoyalGemStone === 'true';
@@ -186,7 +190,13 @@ app.get('/api/products/:id/thumbnail', async (req, res) => {
 app.get('/api/products', async (req, res) => {
     try {
         const filter = {};
-        if (req.query.category && req.query.category !== 'All' && req.query.category !== 'all') filter.category = req.query.category;
+        if (req.query.category && req.query.category !== 'All' && req.query.category !== 'all') {
+            if (req.query.category === 'Paving & Landscape' || req.query.category === 'Paving and Landscape') {
+                filter.category = { $in: ['Paving and Landscape', 'Paving & Landscape'] };
+            } else {
+                filter.category = req.query.category;
+            }
+        }
         if (req.query.isRoyalGemStone !== undefined) {
             filter.isRoyalGemStone = req.query.isRoyalGemStone === 'true';
         }

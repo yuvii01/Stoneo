@@ -58,7 +58,7 @@ const MIN_PRICE = 30;
 const MAX_PRICE = 100;
 
 export default function PavingAndLandscape() {
-  const productsList = useDbProducts('Paving & Landscape', ALL_PRODUCTS);
+  const productsList = useDbProducts('Paving and Landscape', ALL_PRODUCTS);
   const dynamicMaxPrice = useMemo(() => {
     if (!productsList || productsList.length === 0) return 100;
     const maxVal = Math.max(...productsList.map(p => Number(p.maxPrice || p.price || 100)));

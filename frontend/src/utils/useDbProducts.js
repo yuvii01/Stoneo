@@ -12,17 +12,20 @@ const parsePrice = (val, fallback = 100) => {
   return fallback;
 };
 
-export function useDbProducts(categoryName) {
-  const [dbProducts, setDbProducts] = useState([]);
+export function useDbProducts(categoryName, fallbackData = []) {
+  const [dbProducts, setDbProducts] = useState(Array.isArray(fallbackData) && fallbackData.length > 0 ? fallbackData : []);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
-    const url = (!categoryName || categoryName === 'All' || categoryName === 'all')
+    const queryCategory = (categoryName === 'Paving & Landscape' || categoryName === 'Paving and Landscape')
+      ? 'Paving and Landscape'
+      : categoryName;
+    const url = (!queryCategory || queryCategory === 'All' || queryCategory === 'all')
       ? `${import.meta.env.VITE_BACKEND_URL}/api/products/list`
-      : `${import.meta.env.VITE_BACKEND_URL}/api/products/list?category=${encodeURIComponent(categoryName)}`;
+      : `${import.meta.env.VITE_BACKEND_URL}/api/products/list?category=${encodeURIComponent(queryCategory)}`;
 
     axios.get(url)
       .then(res => {
@@ -123,6 +126,8 @@ export function useDbProducts(categoryName) {
             };
           });
           setDbProducts(mapped);
+        } else if (Array.isArray(fallbackData) && fallbackData.length > 0) {
+          setDbProducts(fallbackData);
         } else {
           setDbProducts([]);
         }
@@ -130,7 +135,11 @@ export function useDbProducts(categoryName) {
       })
       .catch(e => {
         if (isMounted) {
-          setDbProducts([]);
+          if (Array.isArray(fallbackData) && fallbackData.length > 0) {
+            setDbProducts(fallbackData);
+          } else {
+            setDbProducts([]);
+          }
           setLoading(false);
         }
         console.error(`Failed to fetch database products for ${categoryName}:`, e);
