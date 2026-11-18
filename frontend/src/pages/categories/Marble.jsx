@@ -80,7 +80,7 @@ export default function Marble() {
   const categoryFilter = searchParams.get('category') || 'All';
 
   const [filters, setFilters] = useState({
-    origin: [],
+    origin: [...ORIGIN_OPTIONS],
     color: [],
     touch: [],
     thickness: [],
@@ -96,7 +96,7 @@ export default function Marble() {
     } else if (type === 'statuario') {
       setFilters(prev => ({ ...prev, origin: ['Statuario'] }));
     } else {
-      setFilters(prev => ({ ...prev, origin: [] }));
+      setFilters(prev => ({ ...prev, origin: [...ORIGIN_OPTIONS] }));
     }
   }, [searchParams]);
 
@@ -121,7 +121,12 @@ export default function Marble() {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
-      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(org => {
+      const isAllOrigin = (filters.origin || []).length === ORIGIN_OPTIONS.length;
+      const matchesOrigin = isAllOrigin
+        ? true
+        : (filters.origin || []).length === 0
+          ? false
+          : (filters.origin || []).some(org => {
         const pOrg = (p.origin || '').toLowerCase();
         const pName = (p.name || '').toLowerCase();
         if (org === 'Statuario') return pName.includes('statuario') || (p.description || '').toLowerCase().includes('statuario');
@@ -228,7 +233,22 @@ export default function Marble() {
               </div>
 
               <div className="filter-section">
-                <h4>Types</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4>Types</h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (filters.origin.length === ORIGIN_OPTIONS.length) {
+                        setFilters(prev => ({ ...prev, origin: [] }));
+                      } else {
+                        setFilters(prev => ({ ...prev, origin: [...ORIGIN_OPTIONS] }));
+                      }
+                    }}
+                    style={{ background: 'none', border: 'none', fontSize: '12px', color: '#a45040', cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    {filters.origin.length === ORIGIN_OPTIONS.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                </div>
 
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Imported</h5>
                 <div className="filter-checkbox-group" style={{ marginBottom: '15px' }}>
@@ -315,7 +335,7 @@ export default function Marble() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.origin.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < dynamicMaxPrice || categoryFilter !== 'All') && (
+              {(filters.origin.length !== ORIGIN_OPTIONS.length || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < dynamicMaxPrice || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -326,7 +346,7 @@ export default function Marble() {
                     </div>
                   )}
 
-                  {filters.origin.map(org => (
+                  {filters.origin.length !== ORIGIN_OPTIONS.length && filters.origin.map(org => (
                     <div key={org} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       {org}
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('origin', org)}>×</span>
@@ -356,7 +376,7 @@ export default function Marble() {
 
                   <button
                     onClick={() => {
-                      setFilters({ origin: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setFilters({ origin: [...ORIGIN_OPTIONS], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -375,7 +395,7 @@ export default function Marble() {
                     title="No Marble Varieties Found"
                     description="We couldn't find any marble varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ origin: [], color: [], touch: [], maxPrice: undefined });
+                      setFilters({ origin: [...ORIGIN_OPTIONS], color: [], touch: [], maxPrice: undefined });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

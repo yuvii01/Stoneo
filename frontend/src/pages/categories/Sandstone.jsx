@@ -119,7 +119,7 @@ export default function Sandstone() {
   const categoryFilter = searchParams.get('category') || 'All';
 
   const [filters, setFilters] = useState({
-    type: [],
+    type: [...TYPE_OPTIONS],
     color: [],
     touch: [],
     thickness: [],
@@ -136,6 +136,7 @@ export default function Sandstone() {
       else if (type === 'teakwood_sandstone') newType = ['Teakwood Sandstone'];
       else if (type === 'dholpur_sandstone') newType = ['Dholpur Sandstone'];
       else if (type === 'kandla_grey') newType = ['Kandla Grey'];
+      else newType = [...TYPE_OPTIONS];
 
       // Prevent infinite loop by checking if state actually needs to change
       if (prev.type.length === newType.length && prev.type.every((v, i) => v === newType[i])) {
@@ -164,7 +165,12 @@ export default function Sandstone() {
     return productsList.filter(p => {
       const matchesUrlCategory = categoryFilter === 'All' || (p.category && p.category.toLowerCase() === categoryFilter.toLowerCase());
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.category);
-      const matchesType = (filters.type || []).length === 0 || (filters.type || []).some(t => {
+      const isAllType = (filters.type || []).length === TYPE_OPTIONS.length;
+      const matchesType = isAllType
+        ? true
+        : (filters.type || []).length === 0
+          ? false
+          : (filters.type || []).some(t => {
         const pName = (p.name || '').toLowerCase();
         if (t === 'Kandla Grey') return pName.includes('kandla') || p.type === 'Kandla Grey';
         if (t === 'Kota Stone') return pName.includes('kota') || p.type === 'Kota Stone';
@@ -269,7 +275,22 @@ export default function Sandstone() {
               </div>
 
               <div className="filter-section">
-                <h4>Type</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4>Type</h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (filters.type.length === TYPE_OPTIONS.length) {
+                        setFilters(prev => ({ ...prev, type: [] }));
+                      } else {
+                        setFilters(prev => ({ ...prev, type: [...TYPE_OPTIONS] }));
+                      }
+                    }}
+                    style={{ background: 'none', border: 'none', fontSize: '12px', color: '#a45040', cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    {filters.type.length === TYPE_OPTIONS.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                </div>
                 <div className="filter-checkbox-group">
                   {TYPE_OPTIONS.map(org => (
                     <label key={org} className="filter-checkbox-label">
@@ -339,7 +360,7 @@ export default function Sandstone() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.type.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < dynamicMaxPrice || categoryFilter !== 'All') && (
+              {(filters.type.length !== TYPE_OPTIONS.length || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < dynamicMaxPrice || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -350,7 +371,7 @@ export default function Sandstone() {
                     </div>
                   )}
 
-                  {filters.type.map(org => (
+                  {filters.type.length !== TYPE_OPTIONS.length && filters.type.map(org => (
                     <div key={org} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       {org}
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('type', org)}>×</span>
@@ -380,7 +401,7 @@ export default function Sandstone() {
 
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setFilters({ type: [...TYPE_OPTIONS], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -399,7 +420,7 @@ export default function Sandstone() {
                     title="No Sandstone Varieties Found"
                     description="We couldn't find any sandstone varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setFilters({ type: [...TYPE_OPTIONS], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

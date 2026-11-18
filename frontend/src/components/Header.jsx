@@ -9,6 +9,7 @@ export default function Header() {
   const { demands } = useDemand();
   const location = useLocation();
   const isRoyalPage = location.pathname.includes('/royal-gem-stones');
+  const isBlogDetailPage = (location.pathname.startsWith('/blogs/') || location.pathname.startsWith('/blog/')) && location.pathname !== '/blogs';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -113,7 +114,7 @@ export default function Header() {
     });
   };
 
-  const effectiveScrolled = isRoyalPage ? false : isScrolled;
+  const effectiveScrolled = (isRoyalPage || isBlogDetailPage) ? false : isScrolled;
 
   return (
     <>
@@ -132,7 +133,7 @@ export default function Header() {
           pointerEvents: 'none'
         }}
       />
-      <header className={`header ${effectiveScrolled ? 'scrolled' : ''} ${isRoyalPage ? 'royal-theme' : ''}`}>
+      <header className={`header ${effectiveScrolled ? 'scrolled' : ''} ${isRoyalPage ? 'royal-theme' : ''} ${isBlogDetailPage ? 'black-stone-header' : ''}`}>
         <div className="header-container">
           <div className="logo-div">
             <Link to="/" className="logo" onClick={closeMenus}>

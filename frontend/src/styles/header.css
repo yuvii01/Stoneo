@@ -28,6 +28,44 @@
   box-shadow: none !important;
 }
 
+/* Black Stone Background Header for Blog Detail View */
+.header.black-stone-header {
+  background: linear-gradient(rgba(10, 10, 12, 0.82), rgba(12, 13, 16, 0.90)), url('/indian_marble_images/Black Forest.jpg') center/cover no-repeat !important;
+  background-color: #0b0c0e !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.header.black-stone-header .nav-link {
+  color: #ffffff !important;
+}
+
+.header.black-stone-header .nav-link:hover {
+  color: var(--color-primary, #d4af37) !important;
+}
+
+.header.black-stone-header .search-bar-container {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+
+.header.black-stone-header .search-bar-input {
+  color: #ffffff !important;
+}
+
+.header.black-stone-header .search-bar-input::placeholder {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.header.black-stone-header .camera-icon {
+  color: #ffffff !important;
+}
+
+.header.black-stone-header .dropdown-toggle {
+  color: #ffffff !important;
+}
+
 .header-container {
   width: 100%;
   margin: 0 auto;

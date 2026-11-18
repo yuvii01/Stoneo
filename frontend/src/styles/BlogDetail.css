@@ -30,7 +30,7 @@
     font-family: var(--font-body, 'Manrope', sans-serif);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding-top: 100px;
+    padding-top: calc(125px + 10px); /* Exactly 10px below 125px desktop/laptop header */
     padding-bottom: 120px;
     overflow-x: hidden;
 }
@@ -46,8 +46,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 0;
-    margin-bottom: 36px;
+    padding: 0 0 16px 0;
+    margin-bottom: 32px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     flex-wrap: wrap;
     gap: 16px;
@@ -876,10 +876,17 @@
 
 /* ================= 9. RESPONSIVE OPTIMIZATIONS (TABLET & MOBILE) ================= */
 @media (max-width: 768px) {
+    .bd-page-container {
+        padding-top: calc(92px + 8px); /* Exactly 8px below tablet 92px header */
+    }
+
+    .bd-top-bar,
     .bd-nav-bar {
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        gap: 14px;
+        margin-bottom: 24px;
+        padding: 0 0 12px 0;
     }
 
     .bd-top-actions {
@@ -908,6 +915,15 @@
 }
 
 @media (max-width: 480px) {
+    .bd-page-container {
+        padding-top: calc(80px + 6px); /* Exactly 6px below mobile 80px header */
+    }
+
+    .bd-back-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+
     .bd-header-section {
         margin-bottom: 24px;
     }

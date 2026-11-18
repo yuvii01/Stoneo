@@ -88,7 +88,7 @@ export default function Onyx() {
   }, []);
 
   const [filters, setFilters] = useState({
-    type: [],
+    type: [...TYPE_OPTIONS],
     color: [],
     touch: [],
     thickness: [],
@@ -104,7 +104,7 @@ export default function Onyx() {
     } else if (typeParam === 'solid') {
       setFilters(prev => ({ ...prev, type: ['Solid Color'] }));
     } else {
-      setFilters(prev => ({ ...prev, type: [] }));
+      setFilters(prev => ({ ...prev, type: [...TYPE_OPTIONS] }));
     }
   }, [searchParams]);
 
@@ -124,7 +124,12 @@ export default function Onyx() {
 
   const filteredProducts = useMemo(() => {
     return productsList.filter(p => {
-      const matchesType = (filters.type || []).length === 0 || (filters.type || []).some(t => {
+      const isAllType = (filters.type || []).length === TYPE_OPTIONS.length;
+      const matchesType = isAllType
+        ? true
+        : (filters.type || []).length === 0
+          ? false
+          : (filters.type || []).some(t => {
         const pName = (p.name || '').toLowerCase();
         if (t === 'Exotic') return pName.includes('exotic') || p.type === 'Exotic';
         if (t === 'White') return pName.includes('white') || p.type === 'White';
@@ -225,7 +230,22 @@ export default function Onyx() {
               </div>
 
               <div className="filter-section">
-                <h4>Type</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4>Type</h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (filters.type.length === TYPE_OPTIONS.length) {
+                        setFilters(prev => ({ ...prev, type: [] }));
+                      } else {
+                        setFilters(prev => ({ ...prev, type: [...TYPE_OPTIONS] }));
+                      }
+                    }}
+                    style={{ background: 'none', border: 'none', fontSize: '12px', color: '#a45040', cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    {filters.type.length === TYPE_OPTIONS.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                </div>
                 <div className="filter-checkbox-group">
                   {TYPE_OPTIONS.map(org => (
                     <label key={org} className="filter-checkbox-label">
@@ -295,11 +315,11 @@ export default function Onyx() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.type.length > 0 || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < dynamicMaxPrice) && (
+              {(filters.type.length !== TYPE_OPTIONS.length || filters.color.length > 0 || filters.touch.length > 0 || filters.maxPrice < dynamicMaxPrice) && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
-                  {filters.type.map(val => (
+                  {filters.type.length !== TYPE_OPTIONS.length && filters.type.map(val => (
                     <div key={val} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       {val}
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('type', val)}>×</span>
@@ -329,7 +349,7 @@ export default function Onyx() {
 
                   <button
                     onClick={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setFilters({ type: [...TYPE_OPTIONS], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -348,7 +368,7 @@ export default function Onyx() {
                     title="No Onyx Varieties Found"
                     description="We couldn't find any onyx varieties matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ type: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setFilters({ type: [...TYPE_OPTIONS], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

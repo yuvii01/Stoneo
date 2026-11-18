@@ -19,6 +19,11 @@ import StaggerGroup from '../../components/animations/StaggerGroup';
 
 // Merge Data
 
+const COBBLE_OPTIONS = ['Granite Cobbles', 'Sandstone Cobbles', 'Limestone Cobbles'];
+const PAVER_OPTIONS = ['Bricks', 'Sandstone', 'Travertino', 'Granite Pavers', 'Marble Pavers'];
+const STONE_OPTIONS = ['landscaping pebbles', 'Stepping stones'];
+const ALL_ORIGIN_OPTIONS = [...COBBLE_OPTIONS, ...PAVER_OPTIONS, ...STONE_OPTIONS];
+
 const THICKNESS_RANGE = ['10mm', '16mm', '20mm', '30mm', '40mm', '50mm', '60mm'];
 const COLOR_OPTIONS = ['Red', 'Brown', 'Black', 'Grey', 'Blue', 'Green', 'Ivory', 'Noce', 'White', 'Yellow', 'Mixed'];
 
@@ -84,7 +89,7 @@ export default function PavingAndLandscape() {
 
   const [filters, setFilters] = useState({
     category: [],
-    origin: [],
+    origin: [...ALL_ORIGIN_OPTIONS],
     color: [],
     touch: [],
     thickness: [],
@@ -101,6 +106,7 @@ export default function PavingAndLandscape() {
 
       if (typeParam === 'cobbles') {
         newCategory = ['Cobbles'];
+        newOrigin = [...COBBLE_OPTIONS];
       } else if (typeParam === 'cobbles-granite') {
         newOrigin = ['Granite Cobbles'];
         newCategory = ['Cobbles'];
@@ -112,6 +118,7 @@ export default function PavingAndLandscape() {
         newCategory = ['Cobbles'];
       } else if (typeParam === 'pavers') {
         newCategory = ['Pavers'];
+        newOrigin = [...PAVER_OPTIONS];
       } else if (typeParam === 'pavers-granite') {
         newOrigin = ['Granite Pavers'];
         newCategory = ['Pavers'];
@@ -126,12 +133,19 @@ export default function PavingAndLandscape() {
         newCategory = ['Pavers'];
       } else if (typeParam === 'bricks') {
         newOrigin = ['Bricks'];
+        newCategory = ['Pavers'];
       } else if (typeParam === 'stones') {
         newCategory = ['Stones'];
+        newOrigin = [...STONE_OPTIONS];
       } else if (typeParam === 'pebbles' || typeParam === 'stones-pebbles') {
         newOrigin = ['landscaping pebbles'];
+        newCategory = ['Stones'];
       } else if (typeParam === 'stepping-stones') {
         newOrigin = ['Stepping stones'];
+        newCategory = ['Stones'];
+      } else {
+        newOrigin = [...ALL_ORIGIN_OPTIONS];
+        newCategory = [];
       }
 
       if (categoryParam && categoryParam !== 'All') {
@@ -176,20 +190,25 @@ export default function PavingAndLandscape() {
         return p.category === cat;
       });
 
-      const matchesOrigin = (filters.origin || []).length === 0 || (filters.origin || []).some(o => {
-        const nameMatch = p.name.toLowerCase();
-        if (o === 'Granite Cobbles') return nameMatch.includes('granite') && p.category === 'Cobbles';
-        if (o === 'Sandstone Cobbles') return nameMatch.includes('sandstone') && p.category === 'Cobbles';
-        if (o === 'Limestone Cobbles') return (nameMatch.includes('lime') || nameMatch.includes('kota') || nameMatch.includes('tandur') || nameMatch.includes('kadappa')) && p.category === 'Cobbles';
-        if (o === 'Bricks') return nameMatch.includes('brick');
-        if (o === 'Sandstone') return nameMatch.includes('sandstone') && p.category === 'Pavers';
-        if (o === 'Travertino') return nameMatch.includes('traver');
-        if (o === 'Granite Pavers') return nameMatch.includes('granite') && p.category === 'Pavers';
-        if (o === 'Marble Pavers') return nameMatch.includes('marble') && p.category === 'Pavers';
-        if (o === 'landscaping pebbles') return nameMatch.includes('pebble');
-        if (o === 'Stepping stones') return nameMatch.includes('step') || nameMatch.includes('stepping');
-        return false;
-      });
+      const isAllOrigin = (filters.origin || []).length === ALL_ORIGIN_OPTIONS.length;
+      const matchesOrigin = isAllOrigin
+        ? true
+        : (filters.origin || []).length === 0
+          ? false
+          : (filters.origin || []).some(o => {
+              const nameMatch = (p.name || '').toLowerCase();
+              if (o === 'Granite Cobbles') return (nameMatch.includes('granite') || nameMatch.includes('sadarali')) && p.category === 'Cobbles';
+              if (o === 'Sandstone Cobbles') return (nameMatch.includes('sandstone') || nameMatch.includes('agra') || nameMatch.includes('mandana') || nameMatch.includes('modak') || nameMatch.includes('raj green') || nameMatch.includes('sagar') || nameMatch.includes('teakwood') || nameMatch.includes('mint') || nameMatch.includes('rainbow') || nameMatch.includes('autumn') || nameMatch.includes('kandla')) && p.category === 'Cobbles';
+              if (o === 'Limestone Cobbles') return (nameMatch.includes('lime') || nameMatch.includes('kota') || nameMatch.includes('tandur') || nameMatch.includes('kadappa')) && p.category === 'Cobbles';
+              if (o === 'Bricks') return nameMatch.includes('brick');
+              if (o === 'Sandstone') return (nameMatch.includes('sandstone') || nameMatch.includes('autumn') || nameMatch.includes('kandla') || nameMatch.includes('raj green') || nameMatch.includes('kota')) && p.category === 'Pavers';
+              if (o === 'Travertino') return nameMatch.includes('traver');
+              if (o === 'Granite Pavers') return nameMatch.includes('granite') && p.category === 'Pavers';
+              if (o === 'Marble Pavers') return nameMatch.includes('marble') && p.category === 'Pavers';
+              if (o === 'landscaping pebbles') return nameMatch.includes('pebble') || (!nameMatch.includes('step') && !nameMatch.includes('stepping') && p.category === 'Stones');
+              if (o === 'Stepping stones') return nameMatch.includes('step') || nameMatch.includes('stepping');
+              return false;
+            });
 
       const matchesColor = (filters.color || []).length === 0 || (filters.color || []).includes(p.color);
       const matchesThickness = (filters.thickness || []).length === 0 || (filters.thickness || []).some(th => p.thickness.some(t => parseInt(t) === th));
@@ -299,7 +318,22 @@ export default function PavingAndLandscape() {
               </div>
 
               <div className="filter-section">
-                <h4>Origin</h4>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h4>Origin</h4>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (filters.origin.length === ALL_ORIGIN_OPTIONS.length) {
+                        setFilters(prev => ({ ...prev, origin: [] }));
+                      } else {
+                        setFilters(prev => ({ ...prev, origin: [...ALL_ORIGIN_OPTIONS] }));
+                      }
+                    }}
+                    style={{ background: 'none', border: 'none', fontSize: '12px', color: '#a45040', cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    {filters.origin.length === ALL_ORIGIN_OPTIONS.length ? 'Deselect All' : 'Select All'}
+                  </button>
+                </div>
 
                 <h5 style={{ fontSize: '14px', margin: '10px 0', color: '#555' }}>Cobbles</h5>
                 <div className="filter-checkbox-group" style={{ marginBottom: '15px' }}>
@@ -401,7 +435,7 @@ export default function PavingAndLandscape() {
             {/* Products Area */}
             <div style={{ flex: 1 }}>
               {/* Active Filters Display */}
-              {(filters.category.length > 0 || filters.origin.length > 0 || filters.touch.length > 0 || filters.color.length > 0 || filters.maxPrice < dynamicMaxPrice || categoryFilter !== 'All') && (
+              {((filters.category && filters.category.length > 0) || filters.origin.length !== ALL_ORIGIN_OPTIONS.length || filters.touch.length > 0 || filters.color.length > 0 || (filters.maxPrice !== undefined && filters.maxPrice < dynamicMaxPrice) || categoryFilter !== 'All') && (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px', alignItems: 'center' }}>
                   <span style={{ fontSize: '14px', color: '#555', marginRight: '8px' }}>Active Filters:</span>
 
@@ -412,7 +446,7 @@ export default function PavingAndLandscape() {
                     </div>
                   )}
 
-                  {filters.origin.map(org => (
+                  {filters.origin.length !== ALL_ORIGIN_OPTIONS.length && filters.origin.map(org => (
                     <div key={org} style={{ padding: '4px 12px', background: '#f0f0f0', borderRadius: '16px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                       {org}
                       <span style={{ cursor: 'pointer', fontWeight: 'bold' }} onClick={() => handleFilterChange('origin', org)}>×</span>
@@ -442,7 +476,7 @@ export default function PavingAndLandscape() {
 
                   <button
                     onClick={() => {
-                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: dynamicMaxPrice });
+                      setFilters({ category: [], origin: [...ALL_ORIGIN_OPTIONS], color: [], touch: [], maxPrice: dynamicMaxPrice });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}
@@ -461,7 +495,7 @@ export default function PavingAndLandscape() {
                     title="No Paving Stones Found"
                     description="We couldn't find any paving & landscaping stones matching your selected filters. Try clearing a filter or resetting all selections."
                     onReset={() => {
-                      setFilters({ category: [], origin: [], color: [], touch: [], maxPrice: undefined });
+                      setFilters({ category: [], origin: [...ALL_ORIGIN_OPTIONS], color: [], touch: [], maxPrice: undefined });
                       setSearchParams({});
                       navigate(window.location.pathname, { replace: true });
                     }}

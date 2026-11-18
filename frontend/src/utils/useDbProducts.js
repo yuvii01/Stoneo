@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import PAVING_PRODUCTS from './paving_landscape.json';
+
+const pavingCategoryMap = new Map();
+if (Array.isArray(PAVING_PRODUCTS)) {
+  PAVING_PRODUCTS.forEach(p => {
+    if (p && p.name && p.category) {
+      pavingCategoryMap.set(p.name.toLowerCase().trim(), p.category);
+    }
+  });
+}
 
 const parsePrice = (val, fallback = 100) => {
   if (typeof val === 'number' && !isNaN(val)) return val;
@@ -90,10 +100,15 @@ export function useDbProducts(categoryName, fallbackData = []) {
 
             let inferredCategory = p.color || p.colorCategory || p.category || 'Standard';
             if (categoryName === 'Paving & Landscape' || categoryName === 'Paving and Landscape') {
-              if (lowerName.includes('cobble')) inferredCategory = 'Cobbles';
-              else if (lowerName.includes('paver') || lowerName.includes('brick') || lowerName.includes('sandstone') || lowerName.includes('granite') || lowerName.includes('marble')) inferredCategory = 'Pavers';
-              else if (lowerName.includes('pebble') || lowerName.includes('step')) inferredCategory = 'Stones';
-              else inferredCategory = p.category || 'Pavers';
+              if (pavingCategoryMap.has(lowerName)) {
+                inferredCategory = pavingCategoryMap.get(lowerName);
+              } else if (lowerName.includes('cobble')) {
+                inferredCategory = 'Cobbles';
+              } else if (lowerName.includes('pebble') || lowerName.includes('step') || lowerName.includes('boulder') || lowerName.includes('rock') || lowerName.includes('slab') || lowerName.includes('block')) {
+                inferredCategory = 'Stones';
+              } else {
+                inferredCategory = 'Pavers';
+              }
             }
 
             return {
