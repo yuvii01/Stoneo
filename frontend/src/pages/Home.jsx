@@ -118,7 +118,7 @@ export default function Home() {
               <div style={{ minHeight: 'clamp(40px, 6vw, 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {typingStep === 0 && (
                   <TypeAnimation
-                    sequence={['STONEO INDIA', () => setTypingStep(1)]}
+                    sequence={['STONEO INDIA', () => setTypingStep(2)]}
                     wrapper="h1"
                     cursor={true}
                     speed={200}
@@ -132,26 +132,8 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Line 2: SINCE 1998 */}
-              <div style={{ minHeight: 'clamp(20px, 3vw, 30px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {typingStep === 1 && (
-                  <TypeAnimation
-                    sequence={['SINCE 1998', () => setTypingStep(2)]}
-                    wrapper="h2"
-                    cursor={true}
-                    speed={200}
-                    style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(16px, 2vw, 24px)', fontWeight: '400', margin: 0, letterSpacing: '6px', color: '#f3c669', textShadow: '1px 1px 3px rgba(0,0,0,0.5)', lineHeight: '1' }}
-                  />
-                )}
-                {typingStep >= 2 && (
-                  <h2 style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: 'clamp(16px, 2vw, 24px)', fontWeight: '400', margin: 0, letterSpacing: '6px', color: '#f3c669', textShadow: '1px 1px 3px rgba(0,0,0,0.5)', lineHeight: '1' }}>
-                    SINCE 1998
-                  </h2>
-                )}
-              </div>
-
               {/* Spacer above WE EXPERTISE IN */}
-              <div style={{ height: 'clamp(50px, 8vw, 80px)' }}></div>
+              <div style={{ height: 'clamp(30px, 5vw, 50px)' }}></div>
 
               {/* Line 3: WE EXPERTISE IN */}
               <div style={{ minHeight: 'clamp(24px, 3.5vw, 36px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -199,10 +181,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="containerr">
+        <section className="containerr" style={{ marginBottom: "clamp(35px, 6vw, 70px)" }}>
           <div
             onClick={() => navigate('/royal-gem-stones')}
-            style={{ cursor: "pointer", position: "relative", width: "100%", height: "100%", borderRadius: "20px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{ cursor: "pointer", position: "relative", width: "100%", height: "100%", borderRadius: "0px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}
           >
             <video
               src="/royal_gem_stones.mp4"
@@ -232,7 +214,7 @@ export default function Home() {
                 zIndex: 2
               }}
             ></div>
-            <h1 style={{ position: "relative", zIndex: 3, color: "white", margin: 0 }}>Royal Stones</h1>
+            <h1 style={{ position: "relative", zIndex: 3, color: "white", margin: 0 }}>Explore Luxury</h1>
           </div>
         </section>
 
@@ -298,13 +280,13 @@ export default function Home() {
         </section>
 
         <section style={{ backgroundColor: "#ffffff", color: "#111", padding: "clamp(40px, 8vw, 80px) 20px", fontFamily: "var(--font-body, 'Manrope', sans-serif)" }}>
-          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "30px", textAlign: "center" }}>
+          <div style={{ maxWidth: "1200px", margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "30px", textAlign: "center" }}>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <div style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 500, letterSpacing: "2px" }}>
                 <CountUp end={1000} duration={2.5} enableScrollSpy scrollSpyOnce />+
               </div>
-              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Projects</div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Slabs & Varieties Available</div>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -316,9 +298,9 @@ export default function Home() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               <div style={{ fontFamily: "var(--font-heading, 'Cormorant Garamond', serif)", fontSize: "clamp(36px, 8vw, 56px)", fontWeight: 500, letterSpacing: "2px" }}>
-                <CountUp end={8} duration={2.5} enableScrollSpy scrollSpyOnce />
+                <CountUp end={180000} separator="," duration={2.5} enableScrollSpy scrollSpyOnce />+
               </div>
-              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Countries we serve</div>
+              <div style={{ fontSize: "clamp(12px, 3vw, 16px)", textTransform: "uppercase", letterSpacing: "2px", color: "#666" }}>Sq. Ft. Facility Area</div>
             </div>
 
           </div>
@@ -353,9 +335,9 @@ export default function Home() {
         <section className="luxury-showroom-section">
           <div className="showroom-luxury-card">
             <div className="showroom-info-col">
-              <h2>Visit Our Experience Center</h2>
+              <h2>Visit Our Experience Centre</h2>
               <p>
-                Explore thousands of premium natural stone slabs in person. Our architectural consultants are there for private tours and sample viewing.
+                Explore 8,000+ premium natural stone slabs in-person. Our architectural consultants are there for private tours and sample viewing.
               </p>
               {/* <div className="showroom-details-grid">
                 <div className="showroom-detail-item">

@@ -4,11 +4,7 @@ import '../styles/faq.css';
 const faqs = [
   {
     question: "What is the difference between Granite and Marble?",
-    answer: "Granite is an igneous rock, known for its incredible durability, heat resistance, and scratch resistance, making it ideal for kitchens. Marble is a metamorphic rock, prized for its classic elegance, luminous surface, and unique veining, but it is generally softer and requires more delicate maintenance."
-  },
-  {
-    question: "Do natural stone surfaces need to be sealed?",
-    answer: "Yes, most natural stones are inherently porous and should be sealed periodically to prevent staining and water absorption. For high-use areas like kitchens, we recommend sealing your premium stones every 1-2 years to maintain their pristine appearance."
+    answer: "Granite is an igneous rock celebrated for exceptional durability, scratch resistance, and heat tolerance—making it ideal for high-traffic zones, heavy-wear surfaces, and low-maintenance requirements (not just kitchens). Marble is a metamorphic rock prized for its timeless elegance, luminous surface, and distinctive veining, best suited for sophisticated, low-abrasion spaces requiring delicate care."
   },
   {
     question: "How do I clean and maintain my natural stone countertops?",
@@ -40,7 +36,7 @@ export default function FAQ() {
       <div className="faq-container">
         <div className="faq-header">
           <h2 className="faq-title">Frequently Asked Questions</h2>
-          <p className="faq-subtitle">Expert insights on choosing, maintaining, and understanding premium natural stones.</p>
+          <p className="faq-subtitle">Expert Insights on Choosing, Installing, and Maintaining Premium Natural Stones.</p>
         </div>
         
         <div className="faq-accordion">
@@ -54,8 +50,23 @@ export default function FAQ() {
               >
                 <div className="faq-question-container">
                   <h3 className="faq-question">{faq.question}</h3>
-                  <span className="faq-icon">
-                    {isActive ? '−' : '+'}
+                  <span className={`faq-icon ${isActive ? 'open' : ''}`}>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      style={{
+                        transform: isActive ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                      }}
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
                   </span>
                 </div>
                 <div 

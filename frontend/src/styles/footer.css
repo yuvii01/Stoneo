@@ -27,8 +27,8 @@
 
 .footer-v2-grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr 1.2fr;
-  gap: 50px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
 }
 
 .footer-v2-heading {
@@ -179,17 +179,14 @@
 @media (max-width: 992px) {
   .footer-v2-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 36px;
+    gap: 32px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .footer-v2-grid {
     grid-template-columns: 1fr;
-  }
-  .quick-links-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 24px;
   }
   .footer-v2 {
     padding-top: 45px;

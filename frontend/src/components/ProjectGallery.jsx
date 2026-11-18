@@ -130,13 +130,13 @@ export default function ProjectGallery() {
         {/* Header Section */}
         <div className="pg-header" ref={headerRef}>
           <div className="pg-tag">
-            <span>✦</span> Architectural Landmark Dossier
+            <span>✦</span> Signature Architectural Projects
           </div>
           <h2 className="pg-title">
             Crafting Earth’s <span>Timeless Masterpieces</span>
           </h2>
           <p className="pg-subtitle">
-            Explore 6 of our most celebrated architectural collaborations across India—from monolithic hotel lobbies and luxury residential estates to precision-engineered stone facades.
+            Explore our celebrated architectural collaborations across India—from monolithic hotel lobbies and luxury residential estates to precision-engineered stone facades.
           </p>
         </div>
 
@@ -172,7 +172,7 @@ export default function ProjectGallery() {
                 <p className="pg-card-location">📍 {project.location}</p>
                 <div className="pg-card-footer">
                   <span>Area: {project.area}</span>
-                  <span className="pg-explore-pill">View Dossier →</span>
+                  <span className="pg-explore-pill">Explore Project →</span>
                 </div>
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function ProjectGallery() {
         </div>
       </div>
 
-      {/* Architectural Dossier Modal */}
+      {/* Project Showcase Modal */}
       {selectedProject && (
         <div
           className="pg-modal-backdrop"
@@ -207,7 +207,7 @@ export default function ProjectGallery() {
             </div>
 
             <div className="pg-modal-info-col">
-              <span className="pg-modal-category">✦ {selectedProject.category} Project Dossier</span>
+              <span className="pg-modal-category">✦ {selectedProject.category} Showcase</span>
               <h3 className="pg-modal-title">{selectedProject.title}</h3>
               <p className="pg-modal-location">📍 {selectedProject.location}</p>
 

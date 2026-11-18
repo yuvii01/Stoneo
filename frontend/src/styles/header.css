@@ -58,7 +58,8 @@
   color: rgba(255, 255, 255, 0.75) !important;
 }
 
-.header.black-stone-header .camera-icon {
+.header.black-stone-header .camera-icon,
+.header.black-stone-header .mic-icon {
   color: #ffffff !important;
 }
 
@@ -251,6 +252,7 @@
   color: #5f6368;
 }
 
+.mic-icon-container,
 .camera-icon-container {
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
@@ -262,11 +264,32 @@
   transition: all 0.3s ease;
 }
 
+.mic-icon-container {
+  margin-right: 6px;
+}
+
+.mic-icon-container.listening {
+  background-color: #d92e2e !important;
+  animation: micPulse 1.2s infinite ease-in-out;
+}
+
+.mic-icon-container.listening .mic-icon {
+  color: #ffffff !important;
+}
+
+@keyframes micPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 46, 46, 0.6); }
+  50% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(217, 46, 46, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(217, 46, 46, 0); }
+}
+
+.header.scrolled .mic-icon-container,
 .header.scrolled .camera-icon-container {
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.mic-icon,
 .camera-icon {
   width: 16px;
   height: 16px;
@@ -274,6 +297,7 @@
   transition: color 0.3s ease;
 }
 
+.header.scrolled .mic-icon,
 .header.scrolled .camera-icon {
   color: #5f6368;
 }
@@ -307,11 +331,13 @@
     color: #5f6368;
   }
 
+  .mobile-search-bar .mic-icon-container,
   .mobile-search-bar .camera-icon-container {
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
+  .mobile-search-bar .mic-icon,
   .mobile-search-bar .camera-icon {
     color: #5f6368;
   }

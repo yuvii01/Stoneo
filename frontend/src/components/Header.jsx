@@ -18,6 +18,48 @@ export default function Header() {
   const [isVisualSearchOpen, setIsVisualSearchOpen] = useState(false);
   const [isTextSearchOpen, setIsTextSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isListening, setIsListening] = useState(false);
+
+  const startVoiceSearch = () => {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Voice search is not supported in this browser. Please type your search query.");
+      setIsTextSearchOpen(true);
+      return;
+    }
+    try {
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-IN';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results && event.results[0] && event.results[0][0] ? event.results[0][0].transcript : '';
+        if (transcript) {
+          setSearchQuery(transcript);
+          setIsTextSearchOpen(true);
+        }
+        setIsListening(false);
+      };
+
+      recognition.onerror = () => {
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    } catch {
+      setIsListening(false);
+      setIsTextSearchOpen(true);
+    }
+  };
 
   const navRef = useRef(null);
   const buttonRef = useRef(null);
@@ -167,7 +209,7 @@ export default function Header() {
             <input
               type="text"
               className="search-bar-input"
-              placeholder="Search items for your project"
+              placeholder={isListening ? "Listening..." : "Search items"}
               style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
               value={searchQuery}
               onChange={(e) => {
@@ -185,7 +227,19 @@ export default function Header() {
                 }
               }}
             />
-            <div className="camera-icon-container" onClick={() => setIsVisualSearchOpen(true)}>
+            <div
+              className={`mic-icon-container ${isListening ? 'listening' : ''}`}
+              onClick={(e) => { e.stopPropagation(); startVoiceSearch(); }}
+              title="Voice Search"
+              aria-label="Voice Search"
+            >
+              <svg className="mic-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+            </div>
+            <div className="camera-icon-container" onClick={() => setIsVisualSearchOpen(true)} title="Visual Search" aria-label="Visual Search">
               <svg className="camera-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                 <circle cx="12" cy="13" r="4"></circle>
@@ -213,7 +267,7 @@ export default function Header() {
               <input
                 type="text"
                 className="search-bar-input"
-                placeholder="Search items for your project"
+                placeholder={isListening ? "Listening..." : "Search items"}
                 style={{ outline: 'none', border: 'none', boxShadow: 'none' }}
                 value={searchQuery}
                 onChange={(e) => {
@@ -232,6 +286,18 @@ export default function Header() {
                   }
                 }}
               />
+              <div
+                className={`mic-icon-container ${isListening ? 'listening' : ''}`}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); startVoiceSearch(); }}
+                title="Voice Search"
+                aria-label="Voice Search"
+              >
+                <svg className="mic-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                  <line x1="12" y1="19" x2="12" y2="22"></line>
+                </svg>
+              </div>
               <div className="camera-icon-container" onClick={(e) => { e.preventDefault(); setIsVisualSearchOpen(true); closeMenus(); }}>
                 <svg className="camera-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>

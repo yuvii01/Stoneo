@@ -12,44 +12,50 @@ export default function Footer() {
     <footer className="footer-v2">
       <div className="footer-v2-container">
         <div className="footer-v2-grid">
-          {/* Quick Links Column */}
-          <div className="footer-v2-col quick-links-col">
-            <h3 className="footer-v2-heading">QUICK LINKS</h3>
-            <div className="quick-links-grid">
-              <ul className="footer-v2-list">
-                <li><Link to="/" onClick={scrollToTop}>Home</Link></li>
-                <li><Link to="/about" onClick={scrollToTop}>The Company</Link></li>
-                <li><Link to="/category/granite" onClick={scrollToTop}>Granites</Link></li>
-                <li><Link to="/royal-gem-stones" onClick={scrollToTop}>Royal Gem Stones</Link></li>
-                <li><Link to="/home-decor" onClick={scrollToTop}>Home Decor</Link></li>
-              </ul>
-              <ul className="footer-v2-list">
-                <li><Link to="/application/interior" onClick={scrollToTop}>Interior</Link></li>
-                <li><Link to="/application/exterior" onClick={scrollToTop}>Exterior</Link></li>
-                <li><Link to="/get-quote" onClick={scrollToTop}>Contact Us</Link></li>
-                <li><Link to="/blogs" onClick={scrollToTop}>Blog</Link></li>
-                <li><Link to="/get-quote" onClick={scrollToTop}>Get Quote</Link></li>
-              </ul>
-            </div>
+          {/* Natural Stones Column */}
+          <div className="footer-v2-col">
+            <h3 className="footer-v2-heading">NATURAL STONES</h3>
+            <ul className="footer-v2-list">
+              <li><Link to="/category/granite" onClick={scrollToTop}>Granite Collection</Link></li>
+              <li><Link to="/category/marble?type=imported" onClick={scrollToTop}>Imported & Italian Marble</Link></li>
+              <li><Link to="/category/marble?type=indian" onClick={scrollToTop}>Indian White Marble</Link></li>
+              <li><Link to="/category/sandstone" onClick={scrollToTop}>Sandstone & Cobbles</Link></li>
+              <li><Link to="/category/quartz" onClick={scrollToTop}>Quartz Surfaces</Link></li>
+              <li><Link to="/category/onyx" onClick={scrollToTop}>Exotic Onyx Slabs</Link></li>
+              <li><Link to="/royal-gem-stones" onClick={scrollToTop}>Royal Gemstone Collection</Link></li>
+            </ul>
           </div>
 
-          {/* Collections Column */}
+          {/* Applications Column */}
           <div className="footer-v2-col">
-            <h3 className="footer-v2-heading">COLLECTIONS</h3>
+            <h3 className="footer-v2-heading">APPLICATIONS</h3>
             <ul className="footer-v2-list">
-              <li><Link to="/category/marble?type=imported" onClick={scrollToTop}>Imported Marble</Link></li>
-              <li><Link to="/category/granite" onClick={scrollToTop}>Granites</Link></li>
-              <li><Link to="/category/marble?type=statuario" onClick={scrollToTop}>Statuario Marble</Link></li>
-              <li><Link to="/category/marble?type=italian" onClick={scrollToTop}>Italian Marble</Link></li>
-              <li><Link to="/category/marble?type=indian" onClick={scrollToTop}>White Marble</Link></li>
-              <li><Link to="/application/interior?type=kitchen-countertops" onClick={scrollToTop}>Countertops</Link></li>
-              <li><Link to="/category/quartz" onClick={scrollToTop}>Quartz Surfaces</Link></li>
+              <li><Link to="/application/interior?type=interior-flooring" onClick={scrollToTop}>Interior Flooring & Walls</Link></li>
+              <li><Link to="/application/interior?type=kitchen-countertops" onClick={scrollToTop}>Kitchen Countertops & Vanity</Link></li>
+              <li><Link to="/application/interior?type=staircase" onClick={scrollToTop}>Staircases & Table Tops</Link></li>
+              <li><Link to="/application/exterior?type=elevation-cladding" onClick={scrollToTop}>Exterior Cladding & Facades</Link></li>
+              <li><Link to="/application/exterior?type=outdoor-flooring" onClick={scrollToTop}>Outdoor Paving & Pathways</Link></li>
+              <li><Link to="/application/exterior?type=garden-landscaping" onClick={scrollToTop}>Garden & Pool Landscaping</Link></li>
+              <li><Link to="/home-decor" onClick={scrollToTop}>Luxury Home Decor</Link></li>
+            </ul>
+          </div>
+
+          {/* Company & Resources Column */}
+          <div className="footer-v2-col">
+            <h3 className="footer-v2-heading">COMPANY</h3>
+            <ul className="footer-v2-list">
+              <li><Link to="/about" onClick={scrollToTop}>About Stoneo India</Link></li>
+              <li><Link to="/blogs" onClick={scrollToTop}>The Stoneo Journal</Link></li>
+              <li><Link to="/get-quote" onClick={scrollToTop}>Experience Centre Tour</Link></li>
+              <li><Link to="/get-quote" onClick={scrollToTop}>Request a Quote</Link></li>
+              <li><Link to="/category/paving-landscape" onClick={scrollToTop}>Paving & Landscape</Link></li>
+              <li><Link to="/get-quote" onClick={scrollToTop}>Contact Specialist</Link></li>
             </ul>
           </div>
 
           {/* Contact Us Column */}
           <div className="footer-v2-col contact-col">
-            <h3 className="footer-v2-heading">CONTACT US</h3>
+            <h3 className="footer-v2-heading">ATELIER & CONTACT</h3>
             <ul className="contact-v2-list">
               <li>
                 <a
